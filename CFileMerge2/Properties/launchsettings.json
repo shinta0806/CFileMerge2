@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "CFileMerge2 (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "CFileMerge2 (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
