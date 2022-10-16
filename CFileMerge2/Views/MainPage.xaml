@@ -7,20 +7,20 @@
     Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
     mc:Ignorable="d">
 
-    <Grid x:Name="ContentArea">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <TextBlock
-            Grid.Row="0"
-            x:Uid="Main_Title"
-            Style="{StaticResource PageTitleStyle}" />
-
-        <Grid Grid.Row="1">
-            
-        </Grid>
-        
-    </Grid>
+    <StackPanel x:Name="ContentArea" Margin="20" >
+        <RelativePanel>
+            <TextBlock x:Name="TextBlockMake" Text="メイクファイル：" RelativePanel.AlignVerticalCenterWithPanel="True" />
+            <TextBox x:Name="TextBoxMake" RelativePanel.RightOf="TextBlockMake" RelativePanel.AlignRightWithPanel="True" Margin="0,0,110,0" />
+            <Button x:Name="ButtonBrowseMake" Content="参照" Width="100" RelativePanel.AlignRightWithPanel="True" />
+        </RelativePanel>
+        <RelativePanel Margin="0,20,0,0">
+            <Button ToolTipService.ToolTip="バージョン情報" >
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;"/>
+            </Button>
+            <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True" >
+                <Button Content="出力ファイルを開く" />
+                <Button Content="スタート" />
+            </StackPanel>
+        </RelativePanel>
+    </StackPanel>
 </Page>

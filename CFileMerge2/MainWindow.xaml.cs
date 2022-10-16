@@ -59,7 +59,7 @@ public sealed partial class MainWindow : WindowEx
 
         // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
         Width = 800;
-        Height = 150;
+        Height = 180;
 
         // 初期化完了
         _initialized = true;
