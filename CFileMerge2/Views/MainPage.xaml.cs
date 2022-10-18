@@ -6,14 +6,14 @@ namespace CFileMerge2.Views;
 
 public sealed partial class MainPage : Page
 {
-    public MainViewModel ViewModel
+    public MainPageViewModel ViewModel
     {
         get;
     }
 
     public MainPage()
     {
-        ViewModel = App.GetService<MainViewModel>();
+        ViewModel = App.GetService<MainPageViewModel>();
         InitializeComponent();
     }
 }
