@@ -2,14 +2,16 @@
 using CFileMerge2.Core.Contracts.Services;
 using CFileMerge2.Core.Helpers;
 using CFileMerge2.Helpers;
-using CFileMerge2.Models;
-
+using CFileMerge2.Models.SharedMisc;
 using Microsoft.Extensions.Options;
 
 using Windows.ApplicationModel;
 using Windows.Storage;
 
 namespace CFileMerge2.Services;
+
+// MSIX パッケージになっている時、%LocalAppData%\Packages\EF576DF4-3863-49B7-9ADF-CEB809529B9D_vt4mtrtrd3yp0\Settings\settings.dat に保存されるようだ
+// ApplicationData.Current.LocalFolder.Path で隣のフォルダーパスを取得できる
 
 public class LocalSettingsService : ILocalSettingsService
 {

@@ -10,9 +10,13 @@
 
 using System.Diagnostics;
 using System.Windows.Input;
+using CFileMerge2.Contracts.Services;
+using CFileMerge2.Models.SharedMisc;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Windows.Storage;
 using Windows.Storage.Pickers;
+using WinRT.Interop;
 
 namespace CFileMerge2.ViewModels;
 
@@ -35,6 +39,19 @@ public class MainPageViewModel : ObservableRecipient
     // ====================================================================
 
     // --------------------------------------------------------------------
+    // View 通信用のプロパティー
+    // --------------------------------------------------------------------
+
+    // メイクファイル
+    private String _makePath = String.Empty;
+    public String MakePath
+    {
+        get => _makePath;
+        set => SetProperty(ref _makePath, value);
+    }
+
+
+    // --------------------------------------------------------------------
     // コマンド
     // --------------------------------------------------------------------
 
@@ -47,14 +64,29 @@ public class MainPageViewModel : ObservableRecipient
     private async void ButtonBrowseMakeClickedAsync()
     {
         FileOpenPicker fileOpenPicker = new();
+        fileOpenPicker.FileTypeFilter.Add(Cfm2Constants.FILE_EXT_CFM2_MAKE);
         fileOpenPicker.FileTypeFilter.Add("*");
-        fileOpenPicker.FileTypeFilter.Add(".hoge");
-        fileOpenPicker.FileTypeFilter.Add(".abc|あいう");
-        fileOpenPicker.FileTypeFilter.Add(".def;かきく");
-        var hwnd = App.MainWindow.GetWindowHandle();
-        WinRT.Interop.InitializeWithWindow.Initialize(fileOpenPicker, hwnd);
-        Windows.Storage.StorageFile file = await fileOpenPicker.PickSingleFileAsync();
+        IntPtr hwnd = App.MainWindow.GetWindowHandle();
+        InitializeWithWindow.Initialize(fileOpenPicker, hwnd);
+
+        StorageFile? file = await fileOpenPicker.PickSingleFileAsync();
+        if (file == null)
+        {
+            return;
+        }
+
+        MakePath = file.Path;
+
+#if false
         Debug.WriteLine("ButtonBrowseMakeClicked() " + file.Path);
+
+        String? read = await App.GetService<ILocalSettingsService>().ReadSettingAsync<String>("TestLocalSettingsKey");
+        Debug.WriteLine("ButtonBrowseMakeClicked() read: " + read);
+        await App.GetService<ILocalSettingsService>().SaveSettingAsync("TestLocalSettingsKey", "hoge " + DateTime.Now.ToString());
+
+        Debug.WriteLine("Path: " + ApplicationData.Current.LocalFolder.Path);
+        Debug.WriteLine("Name: " + ApplicationData.Current.LocalSettings.Name);
+#endif
     }
     #endregion
 }

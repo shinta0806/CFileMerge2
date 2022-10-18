@@ -3,7 +3,7 @@ using CFileMerge2.Contracts.Services;
 using CFileMerge2.Core.Contracts.Services;
 using CFileMerge2.Core.Services;
 using CFileMerge2.Helpers;
-using CFileMerge2.Models;
+using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.Services;
 using CFileMerge2.ViewModels;
 using CFileMerge2.Views;
