@@ -9,7 +9,7 @@
 
     <Grid>
         <!-- メイン UI -->
-        <StackPanel Margin="20" Canvas.ZIndex="0" >
+        <StackPanel Margin="20" Canvas.ZIndex="0" GettingFocus="{x:Bind ViewModel.MainUiGettingFocus}" >
             <RelativePanel>
                 <TextBlock x:Name="TextBlockMake" Text="メイクファイル (M)：" RelativePanel.AlignVerticalCenterWithPanel="True" />
                 <TextBox x:Name="TextBoxMake" Text="{x:Bind ViewModel.MakePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AccessKey="M" RelativePanel.RightOf="TextBlockMake" RelativePanel.AlignRightWithPanel="True" Margin="0,0,110,0" />
@@ -33,7 +33,7 @@
         </StackPanel>
 
         <!-- プログレスエリア -->
-        <RelativePanel Background="#4D000000" Canvas.ZIndex="100" >
+        <RelativePanel Background="#4D000000" Visibility="{x:Bind ViewModel.ProgressVisibility, Mode=OneWay}" Canvas.ZIndex="100" >
             <Border Width="200" Height="100" Background="#FFFF0000" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" >
                 <Button Content="hoge" />
             </Border>

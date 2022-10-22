@@ -14,9 +14,11 @@ using CFileMerge2.Contracts.Services;
 using CFileMerge2.Models.SharedMisc;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Composition.Desktop;
@@ -54,6 +56,14 @@ public class MainPageViewModel : ObservableRecipient
     {
         get => _makePath;
         set => SetProperty(ref _makePath, value);
+    }
+
+    // プログレスエリア表示
+    private Visibility _progressVisibility = Visibility.Collapsed;
+    public Visibility ProgressVisibility
+    {
+        get => _progressVisibility;
+        set => SetProperty(ref _progressVisibility, value);
     }
 
     // --------------------------------------------------------------------
@@ -105,14 +115,48 @@ public class MainPageViewModel : ObservableRecipient
     #endregion
 
     // ====================================================================
+    // public 関数
+    // ====================================================================
+
+    // --------------------------------------------------------------------
+    // イベントハンドラー：メイン UI のフォーカスを取得しようとしている
+    // --------------------------------------------------------------------
+    public void MainUiGettingFocus(UIElement sender, GettingFocusEventArgs args)
+    {
+        Debug.WriteLine("MainUiGettingFocus() " + Environment.TickCount);
+        if (ProgressVisibility == Visibility.Visible)
+        {
+            // プログレスエリアが表示されている場合はフォーカスを取得しない
+            args.Cancel = true;
+            args.Handled = true;
+        }
+    }
+
+    // ====================================================================
     // private 関数
     // ====================================================================
 
-    private void DisableControls()
+    // --------------------------------------------------------------------
+    // プログレスエリアを非表示
+    // --------------------------------------------------------------------
+    private void HideProgressArea()
     {
-        
+        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        {
+            ProgressVisibility = Visibility.Collapsed;
+        });
     }
 
+    // --------------------------------------------------------------------
+    // プログレスエリアを表示
+    // --------------------------------------------------------------------
+    private void ShowProgressArea()
+    {
+        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        {
+            ProgressVisibility = Visibility.Visible;
+        });
+    }
 
     // --------------------------------------------------------------------
     // 合併メインルーチン
@@ -123,12 +167,16 @@ public class MainPageViewModel : ObservableRecipient
         {
             try
             {
-                DisableControls();
-                throw new Exception("hoge");
+                ShowProgressArea();
+                Thread.Sleep(5 * 1000);
             }
             catch (Exception ex)
             {
                 await App.MainWindow.CreateMessageDialog(ex.Message, "エラー").ShowAsync();
+            }
+            finally
+            {
+                HideProgressArea();
             }
         });
     }
