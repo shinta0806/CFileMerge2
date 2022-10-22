@@ -38,8 +38,12 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     public MainPageViewModel()
     {
+        // コマンド
         ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClicked);
         ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
+
+        // イベントハンドラー
+        App.MainWindow.AppWindow.Closing += AppWindow_Closing;
     }
 
     // ====================================================================
@@ -131,8 +135,11 @@ public class MainPageViewModel : ObservableRecipient
         if (ProgressVisibility == Visibility.Visible)
         {
             // プログレスエリアが表示されている場合はフォーカスを取得しない
-            args.Cancel = true;
-            args.Handled = true;
+            // 終了確認後に Cancel を直接いじると落ちるので TryCancel() を使う
+            if (args.TryCancel())
+            {
+                args.Handled = true;
+            }
         }
     }
 
@@ -163,6 +170,34 @@ public class MainPageViewModel : ObservableRecipient
     // ====================================================================
     // private 関数
     // ====================================================================
+
+    // --------------------------------------------------------------------
+    // イベントハンドラー：ウィンドウが閉じられようとしている
+    // --------------------------------------------------------------------
+    private async void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
+    {
+        if (ProgressVisibility == Visibility.Collapsed)
+        {
+            // 合併中でなければ閉じる
+            return;
+        }
+
+        // 合併中の場合はいったんキャンセル
+        args.Cancel = true;
+
+        // 確認
+        MessageDialog messageDialog = App.MainWindow.CreateMessageDialog("合併作業中です。\n終了してもよろしいですか？", Cfm2Constants.LABEL_CONFIRM);
+        messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_YES));
+        messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_NO));
+        IUICommand cmd = await messageDialog.ShowAsync();
+        if (cmd.Label != Cfm2Constants.LABEL_YES)
+        {
+            return;
+        }
+
+        // 改めて閉じる
+        App.MainWindow.Close();
+    }
 
     // --------------------------------------------------------------------
     // プログレスエリアを非表示
@@ -204,7 +239,7 @@ public class MainPageViewModel : ObservableRecipient
             }
             catch (Exception ex)
             {
-                await App.MainWindow.CreateMessageDialog(ex.Message, "エラー").ShowAsync();
+                await App.MainWindow.CreateMessageDialog(ex.Message, Cfm2Constants.LABEL_ERROR).ShowAsync();
             }
             finally
             {

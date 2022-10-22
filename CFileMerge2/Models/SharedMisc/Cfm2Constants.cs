@@ -51,4 +51,9 @@ internal class Cfm2Constants
     // タイトルバーの高さ
     public const Double TITLE_BAR_HEIGHT = 32.0;
 
+    // よく使うラベル
+    public const String LABEL_CONFIRM = "確認";
+    public const String LABEL_ERROR = "エラー";
+    public const String LABEL_NO = "いいえ";
+    public const String LABEL_YES = "はい";
 }
