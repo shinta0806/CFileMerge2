@@ -108,6 +108,12 @@ public class MainPageViewModel : ObservableRecipient
     // private 関数
     // ====================================================================
 
+    private void DisableControls()
+    {
+        
+    }
+
+
     // --------------------------------------------------------------------
     // 合併メインルーチン
     // --------------------------------------------------------------------
@@ -117,6 +123,7 @@ public class MainPageViewModel : ObservableRecipient
         {
             try
             {
+                DisableControls();
                 throw new Exception("hoge");
             }
             catch (Exception ex)
