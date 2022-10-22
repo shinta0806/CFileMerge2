@@ -22,6 +22,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Shinta;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Composition.Desktop;
@@ -216,6 +217,28 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     // --------------------------------------------------------------------
+    // OutFile タグを実行
+    // --------------------------------------------------------------------
+    private void ExexuteTagOutFile(TagInfo tagInfo)
+    {
+        if (Path.IsPathRooted(tagInfo.Value))
+        {
+            // 絶対パス
+            _mergeInfo.OutPath = tagInfo.Value;
+        }
+        else
+        {
+            // メイクファイルからの相対パス
+            _mergeInfo.OutPath = Path.GetFullPath(tagInfo.Value, Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty);
+        }
+        Debug.WriteLine("ExexuteTagOutFile() " + _mergeInfo.OutPath);
+        if (_mergeInfo.MakeFullPath.ToLower() == _mergeInfo.OutPath.ToLower())
+        {
+            throw new Exception("出力先ファイルがメイクファイルと同じです。");
+        }
+    }
+
+    // --------------------------------------------------------------------
     // プログレスエリアを非表示
     // --------------------------------------------------------------------
     private void HideProgressArea()
@@ -259,8 +282,14 @@ public class MainPageViewModel : ObservableRecipient
                 _mergeInfo = new();
 
                 // メイクファイル読み込み
-                ReadFile("メイクファイル", MakePath, null);
-                ParseInclude(_mergeInfo.Lines.First);
+                _mergeInfo.MakeFullPath = Path.GetFullPath(MakePath);
+                ReadFile("メイクファイル", _mergeInfo.MakeFullPath, null);
+
+                // 出力先ファイル設定
+                _mergeInfo.OutPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) + "\\" + Path.GetFileNameWithoutExtension(_mergeInfo.MakeFullPath) + "Output" + Common.FILE_EXT_HTML;
+
+                // メイクファイル処理
+                ParseTags(_mergeInfo.Lines.First);
 
 #if DEBUG
                 Thread.Sleep(5 * 1000);
@@ -275,35 +304,6 @@ public class MainPageViewModel : ObservableRecipient
                 HideProgressArea();
             }
         });
-    }
-
-    // --------------------------------------------------------------------
-    // Include タグを解析して内容を Lines に加える
-    // --------------------------------------------------------------------
-    private void ParseInclude(LinkedListNode<String>? line)
-    {
-        for (; ; )
-        {
-            if (line == null)
-            {
-                break;
-            }
-
-            Int32 column = 0;
-            for (; ; )
-            {
-                (Int32 addColumn, TagInfo? tagInfo) = ParseTag(line.Value, column);
-                column += addColumn;
-                if (column >= line.Value.Length)
-                {
-                    break;
-                }
-            }
-
-
-
-            line = line.Next;
-        }
     }
 
     // --------------------------------------------------------------------
@@ -357,6 +357,43 @@ public class MainPageViewModel : ObservableRecipient
         };
         Debug.WriteLine("ParseTag() [" + tagInfo.Key + "], [" + tagInfo.Value + "] add: " + addColumn);
         return (addColumn, tagInfo);
+    }
+
+    // --------------------------------------------------------------------
+    // タグを解析して内容を更新する
+    // --------------------------------------------------------------------
+    private void ParseTags(LinkedListNode<String>? line)
+    {
+        for (; ; )
+        {
+            if (line == null)
+            {
+                break;
+            }
+
+            Int32 column = 0;
+            for (; ; )
+            {
+                (Int32 addColumn, TagInfo? tagInfo) = ParseTag(line.Value, column);
+                if (tagInfo != null)
+                {
+                    switch (tagInfo.Key)
+                    {
+                        case TagKey.OutFile:
+                            ExexuteTagOutFile(tagInfo);
+                            break;
+                    }
+                }
+
+                column += addColumn;
+                if (column >= line.Value.Length)
+                {
+                    break;
+                }
+            }
+
+            line = line.Next;
+        }
     }
 
     // --------------------------------------------------------------------

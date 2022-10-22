@@ -21,6 +21,20 @@ internal class MergeInfo
     // public プロパティー
     // ====================================================================
 
+    // メイクファイルのフルパス
+    public String MakeFullPath
+    {
+        get;
+        set;
+    } = String.Empty;
+
+    // 出力先ファイル
+    public String OutPath
+    {
+        get;
+        set;
+    } = String.Empty;
+
     // インクルードフォルダー
     public String IncludeFolder
     {
