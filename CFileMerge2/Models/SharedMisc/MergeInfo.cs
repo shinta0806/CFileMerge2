@@ -35,7 +35,7 @@ internal class MergeInfo
         set;
     } = String.Empty;
 
-    // インクルードフォルダー
+    // インクルードフォルダー（末尾に '\\' はあってもなくても良い）
     public String IncludeFolder
     {
         get;

@@ -217,24 +217,41 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     // --------------------------------------------------------------------
+    // IncludeFolder タグを実行
+    // --------------------------------------------------------------------
+    private void ExecuteTagIncludeFolder(TagInfo tagInfo)
+    {
+        _mergeInfo.IncludeFolder = GetPath(tagInfo);
+        Debug.WriteLine("ExecuteTagIncludeFolder() " + _mergeInfo.IncludeFolder);
+    }
+
+    // --------------------------------------------------------------------
     // OutFile タグを実行
     // --------------------------------------------------------------------
     private void ExexuteTagOutFile(TagInfo tagInfo)
     {
-        if (Path.IsPathRooted(tagInfo.Value))
-        {
-            // 絶対パス
-            _mergeInfo.OutPath = tagInfo.Value;
-        }
-        else
-        {
-            // メイクファイルからの相対パス
-            _mergeInfo.OutPath = Path.GetFullPath(tagInfo.Value, Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty);
-        }
+        _mergeInfo.OutPath = GetPath(tagInfo);
         Debug.WriteLine("ExexuteTagOutFile() " + _mergeInfo.OutPath);
         if (_mergeInfo.MakeFullPath.ToLower() == _mergeInfo.OutPath.ToLower())
         {
             throw new Exception("出力先ファイルがメイクファイルと同じです。");
+        }
+    }
+
+    // --------------------------------------------------------------------
+    // タグの値からパスを取得
+    // --------------------------------------------------------------------
+    private String GetPath(TagInfo tagInfo)
+    {
+        if (Path.IsPathRooted(tagInfo.Value))
+        {
+            // 絶対パス
+            return tagInfo.Value;
+        }
+        else
+        {
+            // メイクファイルからの相対パス
+            return Path.GetFullPath(tagInfo.Value, Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty);
         }
     }
 
@@ -258,17 +275,6 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     // --------------------------------------------------------------------
-    // プログレスエリアを表示
-    // --------------------------------------------------------------------
-    private void ShowProgressArea()
-    {
-        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
-        {
-            ProgressVisibility = Visibility.Visible;
-        });
-    }
-
-    // --------------------------------------------------------------------
     // 合併メインルーチン
     // --------------------------------------------------------------------
     private async Task MergeAsync()
@@ -281,8 +287,11 @@ public class MainPageViewModel : ObservableRecipient
                 ShowProgressArea();
                 _mergeInfo = new();
 
-                // メイクファイル読み込み
+                // デフォルト値を設定
                 _mergeInfo.MakeFullPath = Path.GetFullPath(MakePath);
+                _mergeInfo.IncludeFolder = Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty;
+
+                // メイクファイル読み込み
                 ReadFile("メイクファイル", _mergeInfo.MakeFullPath, null);
 
                 // 出力先ファイル設定
@@ -309,19 +318,19 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // Cfm タグがあれば抽出する
     // --------------------------------------------------------------------
-    private (Int32 column, TagInfo? tagInfo) ParseTag(String str, Int32 column)
+    private (Int32 column, TagInfo? tagInfo) ParseTag(LinkedListNode<String> line, Int32 column)
     {
-        if (column >= str.Length)
+        if (column >= line.Value.Length)
         {
             // 行末まで解析した
             return (column, null);
         }
 
-        Match match = Regex.Match(str[column..], @"\<\!\-\-\s*cfm\/(.+?)\-\-\>", RegexOptions.IgnoreCase);
+        Match match = Regex.Match(line.Value[column..], @"\<\!\-\-\s*cfm\/(.+?)\-\-\>", RegexOptions.IgnoreCase);
         if (!match.Success)
         {
             // Cfm タグが無い
-            return (str.Length, null);
+            return (line.Value.Length, null);
         }
 
         Debug.Assert(match.Groups.Count >= 2, "ParseTag() match.Groups が不足");
@@ -331,7 +340,7 @@ public class MainPageViewModel : ObservableRecipient
         Debug.WriteLine("ParseTag() group[0]: " + match.Groups[0].Value);
         Debug.WriteLine("ParseTag() group[1]: " + match.Groups[1].Value);
 #endif
-        Int32 addColumn = str[column..].IndexOf(match.Value) + match.Length;
+        Int32 addColumn = line.Value[column..].IndexOf(match.Value) + match.Length;
         String tagContent = match.Groups[1].Value;
         Int32 colon = tagContent.IndexOf(':');
         if (colon < 0)
@@ -356,7 +365,11 @@ public class MainPageViewModel : ObservableRecipient
             Value = tagContent[(colon + 1)..].Trim(),
         };
         Debug.WriteLine("ParseTag() [" + tagInfo.Key + "], [" + tagInfo.Value + "] add: " + addColumn);
-        return (addColumn, tagInfo);
+
+        // タグは出力しないので削除する
+        line.Value = line.Value.Replace(match.Value, null);
+
+        return (0, tagInfo);
     }
 
     // --------------------------------------------------------------------
@@ -374,18 +387,26 @@ public class MainPageViewModel : ObservableRecipient
             Int32 column = 0;
             for (; ; )
             {
-                (Int32 addColumn, TagInfo? tagInfo) = ParseTag(line.Value, column);
+                (Int32 addColumn, TagInfo? tagInfo) = ParseTag(line, column);
                 if (tagInfo != null)
                 {
+                    // 有効なタグが見つかった
                     switch (tagInfo.Key)
                     {
                         case TagKey.OutFile:
                             ExexuteTagOutFile(tagInfo);
                             break;
+                        case TagKey.IncludeFolder:
+                            ExecuteTagIncludeFolder(tagInfo);
+                            break;
                     }
                 }
+                else
+                {
+                    // 有効なタグが無かったので解析位置を進める
+                    column += addColumn;
+                }
 
-                column += addColumn;
                 if (column >= line.Value.Length)
                 {
                     break;
@@ -439,4 +460,14 @@ public class MainPageViewModel : ObservableRecipient
         }
     }
 
+    // --------------------------------------------------------------------
+    // プログレスエリアを表示
+    // --------------------------------------------------------------------
+    private void ShowProgressArea()
+    {
+        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        {
+            ProgressVisibility = Visibility.Visible;
+        });
+    }
 }
