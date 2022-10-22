@@ -289,11 +289,15 @@ public class MainPageViewModel : ObservableRecipient
                 break;
             }
 
+            Int32 column = 0;
             for (; ; )
             {
-                Int32 column = 0;
-                (Int32 nextColumn, TagInfo? tagInfo) = ParseTag(line.Value, column);
-                break;
+                (Int32 addColumn, TagInfo? tagInfo) = ParseTag(line.Value, column);
+                column += addColumn;
+                if (column >= line.Value.Length)
+                {
+                    break;
+                }
             }
 
 
@@ -313,7 +317,7 @@ public class MainPageViewModel : ObservableRecipient
             return (column, null);
         }
 
-        Match match = Regex.Match(str[column..], @"\<\!\-\-\s*cfm\/(.+)\-\-\>", RegexOptions.IgnoreCase);
+        Match match = Regex.Match(str[column..], @"\<\!\-\-\s*cfm\/(.+?)\-\-\>", RegexOptions.IgnoreCase);
         if (!match.Success)
         {
             // Cfm タグが無い
@@ -321,17 +325,20 @@ public class MainPageViewModel : ObservableRecipient
         }
 
         Debug.Assert(match.Groups.Count >= 2, "ParseTag() match.Groups が不足");
+#if false
         Debug.WriteLine("ParseTag() match: " + match.Value);
         Debug.WriteLine("ParseTag() groups: " + match.Groups.Count);
         Debug.WriteLine("ParseTag() group[0]: " + match.Groups[0].Value);
         Debug.WriteLine("ParseTag() group[1]: " + match.Groups[1].Value);
-        Int32 nextColumn = str[column..].IndexOf(match.Value) + match.Length;
+#endif
+        Int32 addColumn = str[column..].IndexOf(match.Value) + match.Length;
         String tagContent = match.Groups[1].Value;
         Int32 colon = tagContent.IndexOf(':');
         if (colon < 0)
         {
             // キーと値を区切る ':' が無い
-            return (nextColumn, null);
+            Debug.WriteLine("ParseTag() 区切りコロン無し, add: " + addColumn);
+            return (addColumn, null);
         }
 
         TagInfo tagInfo = new()
@@ -339,8 +346,8 @@ public class MainPageViewModel : ObservableRecipient
             Key = tagContent[0..colon].Trim(),
             Value = tagContent[(colon + 1)..].Trim(),
         };
-        Debug.WriteLine("ParseTag() [" + tagInfo.Key + "], [" + tagInfo.Value + "]");
-        return (nextColumn, tagInfo);
+        Debug.WriteLine("ParseTag() [" + tagInfo.Key + "], [" + tagInfo.Value + "] add: " + addColumn);
+        return (addColumn, tagInfo);
     }
 
     // --------------------------------------------------------------------
