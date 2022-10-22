@@ -160,6 +160,15 @@ public class MainPageViewModel : ObservableRecipient
         _prevMainUiHeight = mainUiHeight;
     }
 
+    // --------------------------------------------------------------------
+    // イベントハンドラー：ページがロードされた
+    // --------------------------------------------------------------------
+    public async void PageLoaded(Object sender, RoutedEventArgs args)
+    {
+        Debug.WriteLine("GridLoaded()");
+        await LoadSettingsAsync();
+    }
+
     // ====================================================================
     // private 変数
     // ====================================================================
@@ -176,24 +185,25 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     private async void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
     {
-        if (ProgressVisibility == Visibility.Collapsed)
-        {
-            // 合併中でなければ閉じる
-            return;
-        }
-
-        // 合併中の場合はいったんキャンセル
+        // await を待つようにするため、いったんキャンセル
         args.Cancel = true;
 
-        // 確認
-        MessageDialog messageDialog = App.MainWindow.CreateMessageDialog("合併作業中です。\n終了してもよろしいですか？", Cfm2Constants.LABEL_CONFIRM);
-        messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_YES));
-        messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_NO));
-        IUICommand cmd = await messageDialog.ShowAsync();
-        if (cmd.Label != Cfm2Constants.LABEL_YES)
+        if (ProgressVisibility == Visibility.Visible)
         {
-            return;
+            // 合併中の場合は確認
+            MessageDialog messageDialog = App.MainWindow.CreateMessageDialog("合併作業中です。\n終了してもよろしいですか？", Cfm2Constants.LABEL_CONFIRM);
+            messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_YES));
+            messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_NO));
+            IUICommand cmd = await messageDialog.ShowAsync();
+            if (cmd.Label != Cfm2Constants.LABEL_YES)
+            {
+                // キャンセルが確定
+                return;
+            }
         }
+
+        // 終了処理
+        await App.GetService<ILocalSettingsService>().SaveSettingAsync(Cfm2Constants.SETTINGS_KEY_MAKE_PATH, MakePath);
 
         // 改めて閉じる
         App.MainWindow.Close();
@@ -208,6 +218,14 @@ public class MainPageViewModel : ObservableRecipient
         {
             ProgressVisibility = Visibility.Collapsed;
         });
+    }
+
+    // --------------------------------------------------------------------
+    // 設定読み込み
+    // --------------------------------------------------------------------
+    private async Task LoadSettingsAsync()
+    {
+        MakePath = await App.GetService<ILocalSettingsService>().ReadSettingAsync<String>(Cfm2Constants.SETTINGS_KEY_MAKE_PATH) ?? String.Empty;
     }
 
     // --------------------------------------------------------------------
@@ -232,6 +250,8 @@ public class MainPageViewModel : ObservableRecipient
             {
                 Debug.Assert(ProgressVisibility == Visibility.Collapsed, "MergeAsync() already running");
                 ShowProgressArea();
+
+                // メイクファイル読み込み
 
 #if DEBUG
                 Thread.Sleep(5 * 1000);

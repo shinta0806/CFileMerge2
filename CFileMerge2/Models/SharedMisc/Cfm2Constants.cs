@@ -56,4 +56,11 @@ internal class Cfm2Constants
     public const String LABEL_ERROR = "エラー";
     public const String LABEL_NO = "いいえ";
     public const String LABEL_YES = "はい";
+
+    // --------------------------------------------------------------------
+    // 設定
+    // --------------------------------------------------------------------
+
+    // メイクファイル
+    public const String SETTINGS_KEY_MAKE_PATH = "MakePath";
 }
