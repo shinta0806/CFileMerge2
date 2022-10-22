@@ -10,6 +10,8 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Models.SharedMisc;
@@ -252,12 +254,13 @@ public class MainPageViewModel : ObservableRecipient
         {
             try
             {
-                Debug.Assert(ProgressVisibility == Visibility.Collapsed, "MergeAsync() already running");
+                Debug.Assert(ProgressVisibility == Visibility.Collapsed, "MergeAsync() 既に実行中");
                 ShowProgressArea();
                 _mergeInfo = new();
 
                 // メイクファイル読み込み
                 ReadFile("メイクファイル", MakePath, null);
+                ParseInclude(_mergeInfo.Lines.First);
 
 #if DEBUG
                 Thread.Sleep(5 * 1000);
@@ -274,7 +277,76 @@ public class MainPageViewModel : ObservableRecipient
         });
     }
 
-    private void ReadFile(String kind, String path, LinkedListNode<String>? pos)
+    // --------------------------------------------------------------------
+    // Include タグを解析して内容を Lines に加える
+    // --------------------------------------------------------------------
+    private void ParseInclude(LinkedListNode<String>? line)
+    {
+        for (; ; )
+        {
+            if (line == null)
+            {
+                break;
+            }
+
+            for (; ; )
+            {
+                Int32 column = 0;
+                (Int32 nextColumn, TagInfo? tagInfo) = ParseTag(line.Value, column);
+                break;
+            }
+
+
+
+            line = line.Next;
+        }
+    }
+
+    // --------------------------------------------------------------------
+    // Cfm タグがあれば抽出する
+    // --------------------------------------------------------------------
+    private (Int32 column, TagInfo? tagInfo) ParseTag(String str, Int32 column)
+    {
+        if (column >= str.Length)
+        {
+            // 行末まで解析した
+            return (column, null);
+        }
+
+        Match match = Regex.Match(str[column..], @"\<\!\-\-\s*cfm\/(.+)\-\-\>", RegexOptions.IgnoreCase);
+        if (!match.Success)
+        {
+            // Cfm タグが無い
+            return (str.Length, null);
+        }
+
+        Debug.Assert(match.Groups.Count >= 2, "ParseTag() match.Groups が不足");
+        Debug.WriteLine("ParseTag() match: " + match.Value);
+        Debug.WriteLine("ParseTag() groups: " + match.Groups.Count);
+        Debug.WriteLine("ParseTag() group[0]: " + match.Groups[0].Value);
+        Debug.WriteLine("ParseTag() group[1]: " + match.Groups[1].Value);
+        Int32 nextColumn = str[column..].IndexOf(match.Value) + match.Length;
+        String tagContent = match.Groups[1].Value;
+        Int32 colon = tagContent.IndexOf(':');
+        if (colon < 0)
+        {
+            // キーと値を区切る ':' が無い
+            return (nextColumn, null);
+        }
+
+        TagInfo tagInfo = new()
+        {
+            Key = tagContent[0..colon].Trim(),
+            Value = tagContent[(colon + 1)..].Trim(),
+        };
+        Debug.WriteLine("ParseTag() [" + tagInfo.Key + "], [" + tagInfo.Value + "]");
+        return (nextColumn, tagInfo);
+    }
+
+    // --------------------------------------------------------------------
+    // ファイルの内容を読み込んで Lines に加える（line の直後に加える）
+    // --------------------------------------------------------------------
+    private void ReadFile(String kind, String path, LinkedListNode<String>? line)
     {
         try
         {
@@ -291,7 +363,7 @@ public class MainPageViewModel : ObservableRecipient
 
             // 先頭行の追加
             LinkedListNode<String> continuePos;
-            if (pos == null)
+            if (line == null)
             {
                 // 末尾に追加
                 continuePos = _mergeInfo.Lines.AddLast(lines[0]);
@@ -299,7 +371,7 @@ public class MainPageViewModel : ObservableRecipient
             else
             {
                 // 指定位置に追加
-                continuePos = _mergeInfo.Lines.AddAfter(pos, lines[0]);
+                continuePos = _mergeInfo.Lines.AddAfter(line, lines[0]);
             }
 
             // 残りの行の追加

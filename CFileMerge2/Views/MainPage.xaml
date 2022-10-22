@@ -11,7 +11,7 @@
     <Grid >
         <!-- メイン UI -->
         <StackPanel Margin="20" Canvas.ZIndex="0" GettingFocus="{x:Bind ViewModel.MainUiGettingFocus}" SizeChanged="{x:Bind ViewModel.MainUiSizeChanged}" >
-            <RelativePanel>
+            <RelativePanel >
                 <TextBlock x:Name="TextBlockMake" Text="メイクファイル (M)：" RelativePanel.AlignVerticalCenterWithPanel="True" />
                 <TextBox x:Name="TextBoxMake" Text="{x:Bind ViewModel.MakePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AccessKey="M" FontFamily="Yu Gothic UI" RelativePanel.RightOf="TextBlockMake" RelativePanel.AlignRightWithPanel="True" Margin="0,0,110,0" />
                 <Button x:Name="ButtonBrowseMake" Content="参照 (B)" AccessKey="B" Width="100" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonBrowseMakeClickedCommand}" />

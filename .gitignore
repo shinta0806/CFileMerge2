@@ -363,5 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Project
-*.cfm2
 *.xlsx
+CFileMerge2_JPN.cfm2
+Debug.cfm2

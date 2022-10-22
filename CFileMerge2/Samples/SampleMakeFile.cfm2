@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<!-- Cfm/OutFile: Sample.html -->
+<!-- Cfm/IncludeFolder: ./ -->
+<!-- Cfm/IncludeDefaultExt: cfm2 -->
+<!-- Cfm/Set: AppName = ちょちょいとファイル合併 2&nbsp; -->
+<!-- Cfm/Set: Food = 唐揚げ -->
+<head>
+  <meta charset="UTF-8">
+  <title><!-- Cfm/Var: AppName -->サンプル</title>
+</head>
+<body>
+
+<h1 id="Start">はじめに</h1>
+    
+<div>
+  これは<!-- Cfm/Var: AppName -->のサンプルです。<br>
+  <br>
+  メイクファイルとして SampleMakeFile.cfm2 を指定すると、<br>
+</div>
+<ul>
+  <li>別ファイルをインクルードして結合</li>
+  <li>目次生成</li>
+  <li>変数置換</li>
+</ul>
+<div>
+  などができます。<br>
+</div>
+
+<h1 id="Aiueo">あいうえお</h1>
+
+<div>
+  あ<br>
+  <br>
+  い<br>
+  <br>
+  う<br>
+  <br>
+  え<br>
+  <br>
+  お<br>
+</div>
+
+<h1 id="Kakikukeko">かきくけこ</h1>
+
+<h2 id="Ka">か</h2>
+
+<div>
+  か<br>
+</div>
+
+<h2 id="Ki">き</h2>
+
+<div>
+  き<br>
+</div>
+
+<h2 id="Ku">く</h2>
+
+<div>
+  く<br>
+</div>
+
+<h2 id="Ke">け</h2>
+
+<div>
+  け<br>
+</div>
+
+<h2 id="Ko">こ</h2>
+
+<div>
+  こ<br>
+</div>
+
+<!-- Cfm/Include: SampleIncludeFile -->
+
+<h1 id="SaShiSuSeSo">さしすせそ</h1>
+
+<div>
+  さ<br>
+  <br>
+  し<br>
+  <br>
+  す<br>
+  <br>
+  せ<br>
+  <br>
+  そ<br>
+</div>
+
+<h1 id="TaChiTsuTeTo">たちつてと</h1>
+
+<div>
+  た<br>
+  <br>
+  ち<br>
+  <br>
+  つ<br>
+  <br>
+  て<br>
+  <br>
+  と<br>
+</div>
+
+</body>
+</html>
