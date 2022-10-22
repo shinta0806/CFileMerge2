@@ -17,4 +17,14 @@ using System.Threading.Tasks;
 namespace CFileMerge2.Models.SharedMisc;
 internal class MergeInfo
 {
+    // ====================================================================
+    // public プロパティー
+    // ====================================================================
+
+    // 合併後の内容
+    public LinkedList<String> Lines
+    {
+        get;
+    } = new();
+
 }

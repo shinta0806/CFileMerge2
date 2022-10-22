@@ -8,6 +8,7 @@
 // 
 // ----------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Input;
 using CFileMerge2.Contracts.Services;
@@ -173,8 +174,8 @@ public class MainPageViewModel : ObservableRecipient
     // private 変数
     // ====================================================================
 
-    // 合併後の内容
-    //private LinkedList<String> _Merged
+    // 合併作業用の情報
+    private MergeInfo _mergeInfo = new();
 
     // 前回のメイン UI の高さ
     private Double _prevMainUiHeight;
@@ -253,8 +254,10 @@ public class MainPageViewModel : ObservableRecipient
             {
                 Debug.Assert(ProgressVisibility == Visibility.Collapsed, "MergeAsync() already running");
                 ShowProgressArea();
+                _mergeInfo = new();
 
                 // メイクファイル読み込み
+                ReadFile("メイクファイル", MakePath, null);
 
 #if DEBUG
                 Thread.Sleep(5 * 1000);
@@ -270,4 +273,45 @@ public class MainPageViewModel : ObservableRecipient
             }
         });
     }
+
+    private void ReadFile(String kind, String path, LinkedListNode<String>? pos)
+    {
+        try
+        {
+            if (String.IsNullOrEmpty(path))
+            {
+                throw new Exception("ファイルが指定されていません。");
+            }
+
+            String[] lines = File.ReadAllLines(path);
+            if (lines.Length == 0)
+            {
+                throw new Exception("内容が空です。");
+            }
+
+            // 先頭行の追加
+            LinkedListNode<String> continuePos;
+            if (pos == null)
+            {
+                // 末尾に追加
+                continuePos = _mergeInfo.Lines.AddLast(lines[0]);
+            }
+            else
+            {
+                // 指定位置に追加
+                continuePos = _mergeInfo.Lines.AddAfter(pos, lines[0]);
+            }
+
+            // 残りの行の追加
+            for (Int32 i = 1; i < lines.Length; i++)
+            {
+                continuePos = _mergeInfo.Lines.AddAfter(continuePos, lines[i]);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(kind + "を読み込めませんでした。\n" + path + "\n\n" + ex.Message);
+        }
+    }
+
 }
