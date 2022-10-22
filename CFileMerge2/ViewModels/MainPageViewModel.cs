@@ -14,8 +14,13 @@ using CFileMerge2.Contracts.Services;
 using CFileMerge2.Models.SharedMisc;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.UI.Composition.Desktop;
+using Windows.UI.Popups;
 using WinRT.Interop;
 
 namespace CFileMerge2.ViewModels;
@@ -31,7 +36,8 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     public MainPageViewModel()
     {
-        ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClickedAsync);
+        ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClicked);
+        ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
     }
 
     // ====================================================================
@@ -50,7 +56,6 @@ public class MainPageViewModel : ObservableRecipient
         set => SetProperty(ref _makePath, value);
     }
 
-
     // --------------------------------------------------------------------
     // コマンド
     // --------------------------------------------------------------------
@@ -61,7 +66,7 @@ public class MainPageViewModel : ObservableRecipient
         get;
     }
 
-    private async void ButtonBrowseMakeClickedAsync()
+    private async void ButtonBrowseMakeClicked()
     {
         FileOpenPicker fileOpenPicker = new();
         fileOpenPicker.FileTypeFilter.Add(Cfm2Constants.FILE_EXT_CFM2_MAKE);
@@ -89,4 +94,36 @@ public class MainPageViewModel : ObservableRecipient
 #endif
     }
     #endregion
+
+    #region スタートボタンの制御
+    public ICommand ButtonGoClickedCommand
+    {
+        get;
+    }
+
+    private async void ButtonGoClicked() => await MergeAsync();
+    #endregion
+
+    // ====================================================================
+    // private 関数
+    // ====================================================================
+
+    // --------------------------------------------------------------------
+    // 合併メインルーチン
+    // --------------------------------------------------------------------
+    private async Task MergeAsync()
+    {
+        await Task.Run(async () =>
+        {
+            try
+            {
+                throw new Exception("hoge");
+            }
+            catch (Exception ex)
+            {
+                await App.MainWindow.CreateMessageDialog(ex.Message, "エラー").ShowAsync();
+            }
+        });
+    }
+
 }
