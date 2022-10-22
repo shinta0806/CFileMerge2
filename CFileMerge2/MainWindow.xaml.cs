@@ -59,11 +59,10 @@ public sealed partial class MainWindow : WindowEx
 
         // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
         Width = 800;
+
+        // Height は後で MainPageViewModel により指定されるはずなので、ここでは仮指定
+        // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
         Height = 200;
-
-        var viewModel = App.GetService<MainPageViewModel>();
-        Debug.WriteLine("InitializeIfNeeded() " + viewModel.MainUiHeight);
-
 
         // 初期化完了
         _initialized = true;
