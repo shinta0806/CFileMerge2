@@ -57,11 +57,20 @@ public sealed partial class MainWindow : WindowEx
             return;
         }
 
+#if DEBUG
+        Title = "［デバッグ］" + Title;
+#endif
+#if TEST
+        Title = "［テスト］" + Title;
+#endif
+
         // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
+        // Depend: 効くようになればこのコードは不要
         Width = 800;
 
         // Height は後で MainPageViewModel により指定されるはずなので、ここでは仮指定
         // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
+        // Depend: Window.SizeToContent が実装されればこのコードは不要
         Height = 200;
 
         // 初期化完了

@@ -138,6 +138,7 @@ public class MainPageViewModel : ObservableRecipient
 
     // --------------------------------------------------------------------
     // イベントハンドラー：メイン UI のサイズが変更された
+    // Depend: Window.SizeToContent が実装されればこのコードは不要
     // --------------------------------------------------------------------
     public void MainUiSizeChanged(Object sender, SizeChangedEventArgs args)
     {
@@ -194,8 +195,12 @@ public class MainPageViewModel : ObservableRecipient
         {
             try
             {
+                Debug.Assert(ProgressVisibility == Visibility.Collapsed, "MergeAsync() already running");
                 ShowProgressArea();
+
+#if DEBUG
                 Thread.Sleep(5 * 1000);
+#endif
             }
             catch (Exception ex)
             {
@@ -207,5 +212,4 @@ public class MainPageViewModel : ObservableRecipient
             }
         });
     }
-
 }
