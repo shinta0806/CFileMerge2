@@ -9,7 +9,7 @@
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.Helpers;
-
+using CFileMerge2.ViewModels;
 using Microsoft.UI.Xaml;
 
 using System.Diagnostics;
@@ -59,7 +59,11 @@ public sealed partial class MainWindow : WindowEx
 
         // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
         Width = 800;
-        Height = 180;
+        Height = 200;
+
+        var viewModel = App.GetService<MainPageViewModel>();
+        Debug.WriteLine("InitializeIfNeeded() " + viewModel.MainUiHeight);
+
 
         // 初期化完了
         _initialized = true;
@@ -70,7 +74,7 @@ public sealed partial class MainWindow : WindowEx
     // --------------------------------------------------------------------
     private void WindowActivated(Object sender, WindowActivatedEventArgs e)
     {
-        if(e.WindowActivationState== WindowActivationState.CodeActivated)
+        if (e.WindowActivationState == WindowActivationState.CodeActivated)
         {
             InitializeIfNeeded();
         }

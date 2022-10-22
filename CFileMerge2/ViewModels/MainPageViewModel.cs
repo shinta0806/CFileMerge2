@@ -67,6 +67,17 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     // --------------------------------------------------------------------
+    // 一般のプロパティー
+    // --------------------------------------------------------------------
+
+    // メイン UI 高さ
+    public Double MainUiHeight
+    {
+        get;
+        private set;
+    }
+
+    // --------------------------------------------------------------------
     // コマンド
     // --------------------------------------------------------------------
 
@@ -130,6 +141,15 @@ public class MainPageViewModel : ObservableRecipient
             args.Cancel = true;
             args.Handled = true;
         }
+    }
+
+    // --------------------------------------------------------------------
+    // イベントハンドラー：メイン UI のサイズが変更された
+    // --------------------------------------------------------------------
+    public void MainUiSizeChanged(Object sender, SizeChangedEventArgs args)
+    {
+        MainUiHeight = ((StackPanel)sender).ActualHeight;
+        Debug.WriteLine("MainUiSizeChanged() " + MainUiHeight);
     }
 
     // ====================================================================
