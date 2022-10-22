@@ -49,4 +49,9 @@ internal class MergeInfo
         get;
     } = new();
 
+    // 作業中に発生したエラー
+    public List<String> Errors
+    {
+        get;
+    } = new();
 }

@@ -9,6 +9,7 @@
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.Helpers;
+using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.ViewModels;
 using Microsoft.UI.Xaml;
 
@@ -29,10 +30,15 @@ public sealed partial class MainWindow : WindowEx
     {
         InitializeComponent();
 
+        // チェック
+        Debug.Assert(Cfm2Constants.TAG_KEYS.Length == (Int32)TagKey.__End__, "MainWindow() TAG_KEYS が変");
+
+        // 初期化
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
         Content = null;
         //Title = "AppDisplayName".GetLocalized();
 
+        // イベントハンドラー
         Activated += WindowActivated;
     }
 

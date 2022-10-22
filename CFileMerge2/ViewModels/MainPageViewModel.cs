@@ -337,13 +337,22 @@ public class MainPageViewModel : ObservableRecipient
         if (colon < 0)
         {
             // キーと値を区切る ':' が無い
-            Debug.WriteLine("ParseTag() 区切りコロン無し, add: " + addColumn);
+            Debug.WriteLine("ParseTag() 区切りコロン無し, " + tagContent + ", add: " + addColumn);
+            _mergeInfo.Errors.Add("Cfm タグに区切りコロンがありません：" + tagContent);
+            return (addColumn, null);
+        }
+
+        Int32 key = Array.IndexOf(Cfm2Constants.TAG_KEYS, tagContent[0..colon].Trim().ToLower());
+        if (key < 0)
+        {
+            Debug.WriteLine("ParseTag() サポートされていないキー, " + tagContent + ", add: " + addColumn);
+            _mergeInfo.Errors.Add("サポートされていない Cfm タグです：" + tagContent);
             return (addColumn, null);
         }
 
         TagInfo tagInfo = new()
         {
-            Key = tagContent[0..colon].Trim(),
+            Key = (TagKey)key,
             Value = tagContent[(colon + 1)..].Trim(),
         };
         Debug.WriteLine("ParseTag() [" + tagInfo.Key + "], [" + tagInfo.Value + "] add: " + addColumn);

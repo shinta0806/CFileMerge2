@@ -20,6 +20,18 @@ namespace CFileMerge2.Models.SharedMisc;
 // public 列挙子
 // ====================================================================
 
+// Cfm タグのキー
+public enum TagKey
+{
+    OutFile,            // 出力先ファイル
+    IncludeFolder,      // インクルードフォルダー
+    IncludeDefaultExt,  // インクルード拡張子
+    Include,            // インクルード
+    Set,                // 変数設定
+    Var,                // 変数使用
+    __End__,
+}
+
 internal class Cfm2Constants
 {
     // ====================================================================
@@ -60,4 +72,12 @@ internal class Cfm2Constants
 
     // メイクファイル
     public const String SETTINGS_KEY_MAKE_PATH = "MakePath";
+
+    // --------------------------------------------------------------------
+    // タグ
+    // --------------------------------------------------------------------
+
+    // TagKey に対応するタグキー文字列
+    public static readonly String[] TAG_KEYS = { "outfile", "includefolder", "includedefaultext", "include", "set", "var" };
+
 }

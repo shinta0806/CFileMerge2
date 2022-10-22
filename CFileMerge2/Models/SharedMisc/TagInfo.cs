@@ -18,11 +18,11 @@ namespace CFileMerge2.Models.SharedMisc;
 internal class TagInfo
 {
     // キー
-    public String Key
+    public TagKey Key
     {
         get;
         set;
-    } = String.Empty;
+    }
 
     // 値
     public String Value
