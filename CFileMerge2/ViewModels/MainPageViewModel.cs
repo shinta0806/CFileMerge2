@@ -156,7 +156,7 @@ public class MainPageViewModel : ObservableRecipient
             return;
         }
 
-        App.MainWindow.Height = mainUiHeight + Cfm2Constants.TITLE_BAR_HEIGHT;
+        App.MainWindow.AppWindow.ResizeClient(new Windows.Graphics.SizeInt32(App.MainWindow.AppWindow.ClientSize.Width, (Int32)mainUiHeight));
         _prevMainUiHeight = mainUiHeight;
     }
 
@@ -172,6 +172,9 @@ public class MainPageViewModel : ObservableRecipient
     // ====================================================================
     // private 変数
     // ====================================================================
+
+    // 合併後の内容
+    //private LinkedList<String> _Merged
 
     // 前回のメイン UI の高さ
     private Double _prevMainUiHeight;
