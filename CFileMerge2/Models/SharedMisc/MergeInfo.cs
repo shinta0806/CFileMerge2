@@ -80,9 +80,9 @@ internal class MergeInfo
     } = new();
 
     /// <summary>
-    /// 作業中に発生したエラー
+    /// 作業中に発生した警告
     /// </summary>
-    public List<String> Errors
+    public List<String> Warnings
     {
         get;
     } = new();

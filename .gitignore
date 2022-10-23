@@ -362,7 +362,12 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# Project
+# Materials
 *.xlsx
+
+# MakeFiles
 CFileMerge2_JPN.cfm2
 Debug_*.cfm2
+
+# Outputs
+CFileMerge2/Samples/*.html

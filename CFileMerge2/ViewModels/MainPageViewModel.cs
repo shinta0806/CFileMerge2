@@ -29,6 +29,7 @@ using Windows.Storage.Pickers;
 using Windows.UI.Composition.Desktop;
 using Windows.UI.Popups;
 using WinRT.Interop;
+using WinUIEx.Messaging;
 
 namespace CFileMerge2.ViewModels;
 
@@ -298,14 +299,14 @@ public class MainPageViewModel : ObservableRecipient
         Int32 eqPos = tagInfo.Value.IndexOf('=');
         if (eqPos < 0)
         {
-            _mergeInfo.Errors.Add("Set タグが「変数名 = 変数値」の形式になっていません：" + tagInfo.Value);
+            _mergeInfo.Warnings.Add("Set タグが「変数名 = 変数値」の形式になっていません：" + tagInfo.Value);
             return;
         }
 
         String varName = tagInfo.Value[0..eqPos].Trim().ToLower();
         if (String.IsNullOrEmpty(varName))
         {
-            _mergeInfo.Errors.Add("Set タグの変数名が指定されていません：" + tagInfo.Value);
+            _mergeInfo.Warnings.Add("Set タグの変数名が指定されていません：" + tagInfo.Value);
             return;
         }
 
@@ -323,12 +324,12 @@ public class MainPageViewModel : ObservableRecipient
         String varName = tagInfo.Value.Trim().ToLower();
         if (String.IsNullOrEmpty(varName))
         {
-            _mergeInfo.Errors.Add("Var タグの変数名が指定されていません。");
+            _mergeInfo.Warnings.Add("Var タグの変数名が指定されていません。");
             return;
         }
         if (!_mergeInfo.Vars.ContainsKey(varName))
         {
-            _mergeInfo.Errors.Add("Var タグで指定された変数名が Set タグで宣言されていません：" + tagInfo.Value);
+            _mergeInfo.Warnings.Add("Var タグで指定された変数名が Set タグで宣言されていません：" + tagInfo.Value);
             return;
         }
 
@@ -388,6 +389,7 @@ public class MainPageViewModel : ObservableRecipient
             {
                 Debug.Assert(ProgressVisibility == Visibility.Collapsed, "MergeAsync() 既に実行中");
                 ShowProgressArea();
+                Int32 startTick = Environment.TickCount;
                 _mergeInfo = new();
 
                 // デフォルト値を設定
@@ -398,9 +400,30 @@ public class MainPageViewModel : ObservableRecipient
                 // メイクファイル読み込み（再帰）
                 ParseFile(_mergeInfo.MakeFullPath, _mergeInfo.Lines, null);
 
+                // 出力
+                Directory.CreateDirectory(Path.GetDirectoryName(_mergeInfo.OutFullPath) ?? String.Empty);
+                File.WriteAllLines(_mergeInfo.OutFullPath, _mergeInfo.Lines);
+
 #if DEBUG
                 Thread.Sleep(5 * 1000);
 #endif
+
+                // 報告
+                if (_mergeInfo.Warnings.Any())
+                {
+                    // 警告あり
+                    String message = "警告があります。\n";
+                    for (Int32 i = 0; i < _mergeInfo.Warnings.Count; i++)
+                    {
+                        message += _mergeInfo.Warnings[i] + "\n";
+                    }
+                    await App.MainWindow.CreateMessageDialog(message, Cfm2Constants.LABEL_WARNING).ShowAsync();
+                }
+                else
+                {
+                    // 完了
+                    await App.MainWindow.CreateMessageDialog("完了しました。\n経過時間："+(Environment.TickCount-startTick).ToString("#,0")+" ミリ秒", Cfm2Constants.LABEL_INFORMATION).ShowAsync();
+                }
             }
             catch (Exception ex)
             {
@@ -506,7 +529,7 @@ public class MainPageViewModel : ObservableRecipient
         {
             // キーと値を区切る ':' が無い
             Debug.WriteLine("ParseTag() 区切りコロン無し, " + tagContent + ", add: " + addColumn);
-            _mergeInfo.Errors.Add("Cfm タグに区切りコロンがありません：" + tagContent);
+            _mergeInfo.Warnings.Add("Cfm タグに区切りコロンがありません：" + tagContent);
             return (addColumn, null);
         }
 
@@ -514,7 +537,7 @@ public class MainPageViewModel : ObservableRecipient
         if (key < 0)
         {
             Debug.WriteLine("ParseTag() サポートされていないキー, " + tagContent + ", add: " + addColumn);
-            _mergeInfo.Errors.Add("サポートされていない Cfm タグです：" + tagContent);
+            _mergeInfo.Warnings.Add("サポートされていない Cfm タグです：" + tagContent);
             return (addColumn, null);
         }
 

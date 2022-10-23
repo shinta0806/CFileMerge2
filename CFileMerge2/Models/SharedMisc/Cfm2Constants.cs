@@ -58,7 +58,9 @@ internal class Cfm2Constants
     // よく使うラベル
     public const String LABEL_CONFIRM = "確認";
     public const String LABEL_ERROR = "エラー";
+    public const String LABEL_INFORMATION = "情報";
     public const String LABEL_NO = "いいえ";
+    public const String LABEL_WARNING = "警告";
     public const String LABEL_YES = "はい";
 
     // --------------------------------------------------------------------
