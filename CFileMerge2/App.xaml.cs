@@ -1,9 +1,7 @@
-﻿using System.Diagnostics;
-using CFileMerge2.Activation;
+﻿using CFileMerge2.Activation;
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Core.Contracts.Services;
 using CFileMerge2.Core.Services;
-using CFileMerge2.Helpers;
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.Services;
@@ -88,14 +86,14 @@ public partial class App : Application
     {
         base.OnLaunched(args);
 
-        Debug.WriteLine("OnLaunched()");
-
         // モデル生成
         _ = Cfm2Model.Instance;
 
         // 環境設定読み込み
+        // メインウィンドウで読み込むと await の関係でメインページと順番がちぐはぐになったりするので、ここで読み込む必要がある
         await Cfm2Model.Instance.EnvModel.LoadCfm2Settings();
 
+        // ここからメインウィンドウが実用になるようだ
         await App.GetService<IActivationService>().ActivateAsync(args);
     }
 }

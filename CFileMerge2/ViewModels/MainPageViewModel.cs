@@ -8,32 +8,27 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
-using CFileMerge2.Contracts.Services;
+
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.VisualBasic;
-using Newtonsoft.Json.Linq;
+
 using Shinta;
+
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.UI.Composition.Desktop;
 using Windows.UI.Popups;
-using WinRT.Interop;
-using WinUIEx.Messaging;
 
 namespace CFileMerge2.ViewModels;
 
@@ -43,13 +38,11 @@ public class MainPageViewModel : ObservableRecipient
     // コンストラクター
     // ====================================================================
 
-    // --------------------------------------------------------------------
-    // メインコンストラクター
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// メインコンストラクター
+    /// </summary>
     public MainPageViewModel()
     {
-        Debug.WriteLine("MainPageViewModel()");
-
         // コマンド
         ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClicked);
         ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
@@ -67,7 +60,9 @@ public class MainPageViewModel : ObservableRecipient
     // View 通信用のプロパティー
     // --------------------------------------------------------------------
 
-    // メイクファイルのパス（相対パスも可）
+    /// <summary>
+    /// メイクファイルのパス（相対パスも可）
+    /// </summary>
     private String _makePath = String.Empty;
     public String MakePath
     {
@@ -75,7 +70,9 @@ public class MainPageViewModel : ObservableRecipient
         set => SetProperty(ref _makePath, value);
     }
 
-    // プログレスエリア表示
+    /// <summary>
+    /// プログレスエリア表示
+    /// </summary>
     private Visibility _progressVisibility = Visibility.Collapsed;
     public Visibility ProgressVisibility
     {
@@ -169,17 +166,19 @@ public class MainPageViewModel : ObservableRecipient
     // public 関数
     // ====================================================================
 
-    // --------------------------------------------------------------------
-    // 環境設定を適用
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// 環境設定を適用
+    /// </summary>
     private void ApplySettings()
     {
         MakePath = Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath;
     }
 
-    // --------------------------------------------------------------------
-    // イベントハンドラー：メイン UI のフォーカスを取得しようとしている
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// イベントハンドラー：メイン UI のフォーカスを取得しようとしている
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
     public void MainUiGettingFocus(UIElement sender, GettingFocusEventArgs args)
     {
         Debug.WriteLine("MainUiGettingFocus() " + Environment.TickCount);
@@ -194,10 +193,12 @@ public class MainPageViewModel : ObservableRecipient
         }
     }
 
-    // --------------------------------------------------------------------
-    // イベントハンドラー：メイン UI のサイズが変更された
-    // Depend: Window.SizeToContent が実装されればこのコードは不要
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// イベントハンドラー：メイン UI のサイズが変更された
+    /// Depend: Window.SizeToContent が実装されればこのコードは不要
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
     public void MainUiSizeChanged(Object sender, SizeChangedEventArgs args)
     {
         Double mainUiHeight = ((StackPanel)sender).ActualHeight;
@@ -211,12 +212,13 @@ public class MainPageViewModel : ObservableRecipient
         _prevMainUiHeight = mainUiHeight;
     }
 
-    // --------------------------------------------------------------------
-    // イベントハンドラー：ページがロードされた
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// イベントハンドラー：ページがロードされた
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
     public void PageLoaded(Object sender, RoutedEventArgs args)
     {
-        Debug.WriteLine("GridLoaded()");
         ApplySettings();
     }
 
@@ -224,19 +226,25 @@ public class MainPageViewModel : ObservableRecipient
     // private 変数
     // ====================================================================
 
-    // 合併作業用の情報
+    /// <summary>
+    /// 合併作業用の情報
+    /// </summary>
     private MergeInfo _mergeInfo = new();
 
-    // 前回のメイン UI の高さ
+    /// <summary>
+    /// 前回のメイン UI の高さ
+    /// </summary>
     private Double _prevMainUiHeight;
 
     // ====================================================================
     // private 関数
     // ====================================================================
 
-    // --------------------------------------------------------------------
-    // イベントハンドラー：ウィンドウが閉じられようとしている
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// イベントハンドラー：ウィンドウが閉じられようとしている
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
     private async void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
     {
         // await を待つようにするため、いったんキャンセル
@@ -264,9 +272,13 @@ public class MainPageViewModel : ObservableRecipient
         App.MainWindow.Close();
     }
 
-    // --------------------------------------------------------------------
-    // Include タグを実行
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// Include タグを実行
+    /// </summary>
+    /// <param name="tagInfo"></param>
+    /// <param name="parentLines"></param>
+    /// <param name="parentLine"></param>
+    /// <exception cref="Exception"></exception>
     private void ExecuteCfmTagInclude(CfmTagInfo tagInfo, LinkedList<String> parentLines, LinkedListNode<String> parentLine)
     {
         // インクルードパスを取得（IncludeFolder を加味する必要があるため GetPath() は使えない）
@@ -296,9 +308,10 @@ public class MainPageViewModel : ObservableRecipient
         ParseFile(path, parentLines, parentLine);
     }
 
-    // --------------------------------------------------------------------
-    // IncludeDefaultExt タグを実行
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// IncludeDefaultExt タグを実行
+    /// </summary>
+    /// <param name="tagInfo"></param>
     private void ExecuteCfmTagIncludeDefaultExt(CfmTagInfo tagInfo)
     {
         _mergeInfo.IncludeDefaultExt = tagInfo.Value;
@@ -309,9 +322,11 @@ public class MainPageViewModel : ObservableRecipient
         Debug.WriteLine("ExecuteTagIncludeDefaultExt() " + _mergeInfo.IncludeDefaultExt);
     }
 
-    // --------------------------------------------------------------------
-    // IncludeFolder タグを実行
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// IncludeFolder タグを実行
+    /// </summary>
+    /// <param name="tagInfo"></param>
+    /// <exception cref="Exception"></exception>
     private void ExecuteCfmTagIncludeFolder(CfmTagInfo tagInfo)
     {
         _mergeInfo.IncludeFolderFullPath = GetPath(tagInfo);
@@ -323,9 +338,11 @@ public class MainPageViewModel : ObservableRecipient
         }
     }
 
-    // --------------------------------------------------------------------
-    // OutFile タグを実行
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// OutFile タグを実行
+    /// </summary>
+    /// <param name="tagInfo"></param>
+    /// <exception cref="Exception"></exception>
     private void ExexuteCfmTagOutFile(CfmTagInfo tagInfo)
     {
         _mergeInfo.OutFullPath = GetPath(tagInfo);
@@ -336,9 +353,10 @@ public class MainPageViewModel : ObservableRecipient
         }
     }
 
-    // --------------------------------------------------------------------
-    // Set タグを実行
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// Set タグを実行
+    /// </summary>
+    /// <param name="tagInfo"></param>
     private void ExecuteCfmTagSet(CfmTagInfo tagInfo)
     {
         // 変数名と変数値に分割
@@ -361,18 +379,21 @@ public class MainPageViewModel : ObservableRecipient
         _mergeInfo.Vars[varName] = varValue;
     }
 
-    // --------------------------------------------------------------------
-    // Toc タグを実行
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// Toc タグを実行
+    /// </summary>
     private void ExecuteCfmTagToc()
     {
         // 実際に目次を作成するのは、メイクファイルをすべて読み込んだ後なので、ここでは必要性の記録に留める
         _mergeInfo.TocNeeded = true;
     }
 
-    // --------------------------------------------------------------------
-    // Var タグを実行
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// Var タグを実行
+    /// </summary>
+    /// <param name="tagInfo"></param>
+    /// <param name="line"></param>
+    /// <param name="column"></param>
     private void ExecuteCfmTagVar(CfmTagInfo tagInfo, LinkedListNode<String> line, Int32 column)
     {
         // 変数名取得
@@ -391,9 +412,12 @@ public class MainPageViewModel : ObservableRecipient
         line.Value = line.Value.Insert(column, _mergeInfo.Vars[varName]);
     }
 
-    // --------------------------------------------------------------------
-    // タグの値からパスを取得
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// タグの値からパスを取得
+    /// </summary>
+    /// <param name="tagInfo"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     private String GetPath(CfmTagInfo tagInfo)
     {
         if (String.IsNullOrEmpty(tagInfo.Value))
@@ -412,9 +436,9 @@ public class MainPageViewModel : ObservableRecipient
         }
     }
 
-    // --------------------------------------------------------------------
-    // プログレスエリアを非表示
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// プログレスエリアを非表示
+    /// </summary>
     private void HideProgressArea()
     {
         App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
@@ -423,9 +447,9 @@ public class MainPageViewModel : ObservableRecipient
         });
     }
 
-    // --------------------------------------------------------------------
-    // 目次作成
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// 目次作成
+    /// </summary>
     private void InsertToc()
     {
         _mergeInfo.Toc.Add("<div class=\"" + Cfm2Constants.TOC_AREA_CLASS_NAME + "\">");
@@ -434,11 +458,12 @@ public class MainPageViewModel : ObservableRecipient
         ParseCfmTagsForToc();
     }
 
-    // --------------------------------------------------------------------
-    // 合併メインルーチン
-    // 続行不可能なエラーは直ちに Exception を投げる
-    // 続行可能なエラーは MergeInfo.Errors に貯めて最後に表示する
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// 合併メインルーチン
+    /// 続行不可能なエラーは直ちに Exception を投げる
+    /// 続行可能なエラーは MergeInfo.Errors に貯めて最後に表示する
+    /// </summary>
+    /// <returns></returns>
     private async Task MergeAsync()
     {
         await Task.Run(async () =>
@@ -492,10 +517,10 @@ public class MainPageViewModel : ObservableRecipient
         });
     }
 
-    // --------------------------------------------------------------------
-    // 合併コア
-    // 出力は行わない
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// 合併コア
+    /// 出力は行わない
+    /// </summary>
     private void MergeCore()
     {
         _mergeInfo = new();
@@ -509,9 +534,13 @@ public class MainPageViewModel : ObservableRecipient
         ParseFile(_mergeInfo.MakeFullPath, _mergeInfo.Lines, null);
     }
 
-    // --------------------------------------------------------------------
-    // Cfm タグがあれば抽出する
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// Cfm タグがあれば抽出する
+    /// </summary>
+    /// <param name="line"></param>
+    /// <param name="column"></param>
+    /// <param name="removeTocTag"></param>
+    /// <returns></returns>
     private (CfmTagInfo? tagInfo, Int32 column) ParseCfmTag(LinkedListNode<String> line, Int32 column, Boolean removeTocTag)
     {
         if (column >= line.Value.Length)
@@ -528,12 +557,6 @@ public class MainPageViewModel : ObservableRecipient
         }
 
         Debug.Assert(match.Groups.Count >= 2, "ParseCfmTag() match.Groups が不足");
-#if false
-        Debug.WriteLine("ParseTag() match: " + match.Value);
-        Debug.WriteLine("ParseTag() groups: " + match.Groups.Count);
-        Debug.WriteLine("ParseTag() group[0]: " + match.Groups[0].Value);
-        Debug.WriteLine("ParseTag() group[1]: " + match.Groups[1].Value);
-#endif
         Int32 addColumn = match.Index + match.Length;
         String tagContent = match.Groups[1].Value;
         Int32 colon = tagContent.IndexOf(':');
@@ -575,9 +598,11 @@ public class MainPageViewModel : ObservableRecipient
         return (tagInfo, addColumn);
     }
 
-    // --------------------------------------------------------------------
-    // Cfm タグを解析して内容を更新する（全体用）
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// Cfm タグを解析して内容を更新する（全体用）
+    /// </summary>
+    /// <param name="lines"></param>
+    /// <param name="startLine"></param>
     private void ParseCfmTagsForMain(LinkedList<String> lines, LinkedListNode<String> startLine)
     {
         LinkedListNode<String>? line = startLine;
@@ -640,9 +665,9 @@ public class MainPageViewModel : ObservableRecipient
         }
     }
 
-    // --------------------------------------------------------------------
-    // Cfm タグを解析して内容を更新する（目次作成用）
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// Cfm タグを解析して内容を更新する（目次作成用）
+    /// </summary>
     private void ParseCfmTagsForToc()
     {
         LinkedListNode<String>? line = _mergeInfo.Lines.First;
@@ -683,10 +708,14 @@ public class MainPageViewModel : ObservableRecipient
         }
     }
 
-    // --------------------------------------------------------------------
-    // ファイルの内容を読み込み解析する
-    // 解析後の内容を parentLine の直後に追加（parentLine が null の場合は先頭に追加）
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// ファイルの内容を読み込み解析する
+    /// 解析後の内容を parentLine の直後に追加（parentLine が null の場合は先頭に追加）
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="parentLines"></param>
+    /// <param name="parentLine"></param>
+    /// <exception cref="Exception"></exception>
     private void ParseFile(String path, LinkedList<String> parentLines, LinkedListNode<String>? parentLine)
     {
         if (String.IsNullOrEmpty(path))
@@ -744,9 +773,12 @@ public class MainPageViewModel : ObservableRecipient
         _mergeInfo.IncludeStack.RemoveAt(_mergeInfo.IncludeStack.Count - 1);
     }
 
-    // --------------------------------------------------------------------
-    // HTML Hx タグがあれば抽出する
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// HTML Hx タグがあれば抽出する
+    /// </summary>
+    /// <param name="line"></param>
+    /// <param name="column"></param>
+    /// <returns></returns>
     private (HxTagInfo? tagInfo, Int32 column) ParseHxTag(LinkedListNode<String> line, Int32 column)
     {
         if (column >= line.Value.Length)
@@ -763,12 +795,6 @@ public class MainPageViewModel : ObservableRecipient
         }
 
         Debug.Assert(hxMatch.Groups.Count >= 2, "ParseHxTag() hxMatch.Groups が不足");
-#if false
-        Debug.WriteLine("ParseTag() match: " + match.Value);
-        Debug.WriteLine("ParseTag() groups: " + match.Groups.Count);
-        Debug.WriteLine("ParseTag() group[0]: " + match.Groups[0].Value);
-        Debug.WriteLine("ParseTag() group[1]: " + match.Groups[1].Value);
-#endif
         Int32 addColumn = hxMatch.Index + hxMatch.Length;
 
         // ランク確認
@@ -819,9 +845,9 @@ public class MainPageViewModel : ObservableRecipient
         return (hxTagInfo, addColumn);
     }
 
-    // --------------------------------------------------------------------
-    // HTML Hx タグを解析して目次情報を収集する
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// HTML Hx タグを解析して目次情報を収集する
+    /// </summary>
     private void ParseHxTags()
     {
         LinkedListNode<String>? line = _mergeInfo.Lines.First;
@@ -854,9 +880,9 @@ public class MainPageViewModel : ObservableRecipient
         }
     }
 
-    // --------------------------------------------------------------------
-    // プログレスエリアを表示
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// プログレスエリアを表示
+    /// </summary>
     private void ShowProgressArea()
     {
         App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>

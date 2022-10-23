@@ -8,13 +8,11 @@
 //
 // ----------------------------------------------------------------------------
 
-using CFileMerge2.Helpers;
-using CFileMerge2.Models.Cfm2Models;
-using CFileMerge2.Models.SharedMisc;
-using CFileMerge2.ViewModels;
-using Microsoft.UI.Xaml;
-
 using System.Diagnostics;
+
+using CFileMerge2.Models.SharedMisc;
+
+using Microsoft.UI.Xaml;
 
 namespace CFileMerge2;
 
@@ -24,12 +22,11 @@ public sealed partial class MainWindow : WindowEx
     // コンストラクター
     // ====================================================================
 
-    // --------------------------------------------------------------------
-    // メインコンストラクター
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// メインコンストラクター
+    /// </summary>
     public MainWindow()
     {
-        Debug.WriteLine("MainWindow()");
         InitializeComponent();
 
         // チェック
@@ -38,7 +35,6 @@ public sealed partial class MainWindow : WindowEx
         // 初期化
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
         Content = null;
-        //Title = "AppDisplayName".GetLocalized();
 
         // イベントハンドラー
         Activated += WindowActivated;
@@ -48,16 +44,18 @@ public sealed partial class MainWindow : WindowEx
     // private 変数
     // ====================================================================
 
-    // 初期化済
+    /// <summary>
+    /// 初期化済フラグ
+    /// </summary>
     private Boolean _initialized;
 
     // ====================================================================
     // private 関数
     // ====================================================================
 
-    // --------------------------------------------------------------------
-    // 必要に応じて初期化
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// 必要に応じて初期化
+    /// </summary>
     private void InitializeIfNeeded()
     {
         if (_initialized)
@@ -86,12 +84,14 @@ public sealed partial class MainWindow : WindowEx
         _initialized = true;
     }
 
-    // --------------------------------------------------------------------
-    // Activated / Deactivated
-    // --------------------------------------------------------------------
-    private void WindowActivated(Object sender, WindowActivatedEventArgs e)
+    /// <summary>
+    /// Activated / Deactivated
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    private void WindowActivated(Object sender, WindowActivatedEventArgs args)
     {
-        if (e.WindowActivationState == WindowActivationState.CodeActivated)
+        if (args.WindowActivationState == WindowActivationState.CodeActivated)
         {
             InitializeIfNeeded();
         }
