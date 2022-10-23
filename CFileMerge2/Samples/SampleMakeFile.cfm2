@@ -8,6 +8,72 @@
 <head>
   <meta charset="UTF-8">
   <title><!-- Cfm/Var: AppName -->サンプル</title>
+  <style>
+    body
+    {
+      margin: 0 20px 20px 20px;
+      padding: 0;
+    }
+    h1
+    {
+      margin: 20px 0 0 0;
+      padding: 5px 0 5px 20px;
+      border-left: solid 20px #3333FF;
+      color: #000066;
+      background-color: #99CCFF;
+    }
+    h2
+    {
+      width: 90%;
+      margin: 20px 0 0 0;
+      padding: 5px 0 5px 20px;
+      border-left: solid 10px #3333FF;
+      color: #000066;
+      background-color: #CCECFF;
+    }
+    div
+    {
+      margin: 20px 0 0 0;
+    }
+    div.TocArea::before
+    {
+      display: block;
+      margin-bottom: 20px;
+      border-bottom: solid 1px #CCCC99;
+      content: "＝＝＝　Table of Contents　＝＝＝";
+      text-align: center;
+      color: #CCCC99;
+    }
+    div.TocArea
+    {
+      margin: 20px 10% 0 10%;
+      padding: 20px;
+      border: dotted 3px #CCCC99;
+      border-radius: 20px;
+      background-color: #FFFFEE;
+    }
+    div.TocItemH1::before
+    {
+      margin-right: 5px;
+      content: "◆";
+      color: #CCCC99;
+    }
+    div.TocItemH1
+    {
+      margin: 0;
+    }
+    div.TocItemH2::before
+    {
+      margin-left: 20px;
+      margin-right: 5px;
+      content: "◇";
+      color: #CCCC99;
+    }
+    div.TocItemH2
+    {
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
 
