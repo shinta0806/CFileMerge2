@@ -22,6 +22,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Newtonsoft.Json.Linq;
 using Shinta;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -221,7 +222,12 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     private void ExecuteTagIncludeDefaultExt(TagInfo tagInfo)
     {
-
+        _mergeInfo.IncludeDefaultExt = tagInfo.Value;
+        if (!String.IsNullOrEmpty(_mergeInfo.IncludeDefaultExt) && _mergeInfo.IncludeDefaultExt[0] != '.')
+        {
+            _mergeInfo.IncludeDefaultExt = '.' + _mergeInfo.IncludeDefaultExt;
+        }
+        Debug.WriteLine("ExecuteTagIncludeDefaultExt() " + _mergeInfo.IncludeDefaultExt);
     }
 
     // --------------------------------------------------------------------

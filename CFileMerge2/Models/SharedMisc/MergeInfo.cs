@@ -43,19 +43,11 @@ internal class MergeInfo
     } = String.Empty;
 
     // インクルード拡張子（先頭にピリオド）
-    private String _includeDefaultExt = Cfm2Constants.FILE_EXT_CFM2_MAKE;
     public String IncludeDefaultExt
     {
-        get => _includeDefaultExt;
-        set
-        {
-            _includeDefaultExt = value;
-            if (!String.IsNullOrEmpty(_includeDefaultExt) && _includeDefaultExt[0] != '.')
-            {
-                _includeDefaultExt = '.' + _includeDefaultExt;
-            }
-        }
-    }
+        get;
+        set;
+    } = Cfm2Constants.FILE_EXT_CFM2_MAKE;
 
     // 合併後の内容
     public LinkedList<String> Lines
