@@ -11,6 +11,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection.Metadata;
+using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -361,6 +362,15 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     // --------------------------------------------------------------------
+    // Toc タグを実行
+    // --------------------------------------------------------------------
+    private void ExecuteCfmTagToc()
+    {
+        // 実際に目次を作成するのは、メイクファイルをすべて読み込んだ後なので、ここでは必要性の記録に留める
+        _mergeInfo.TocNeeded = true;
+    }
+
+    // --------------------------------------------------------------------
     // Var タグを実行
     // --------------------------------------------------------------------
     private void ExecuteCfmTagVar(CfmTagInfo tagInfo, LinkedListNode<String> line, Int32 column)
@@ -418,7 +428,10 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     private void InsertToc()
     {
-        //ParseHxTags();
+        _mergeInfo.Toc.Add("<div class=\"" + Cfm2Constants.TOC_AREA_CLASS_NAME + "\">");
+        ParseHxTags();
+        _mergeInfo.Toc.Add("</div>");
+        ParseCfmTagsForToc();
     }
 
     // --------------------------------------------------------------------
@@ -438,7 +451,10 @@ public class MainPageViewModel : ObservableRecipient
                 MergeCore();
 
                 // 目次作成
-                InsertToc();
+                if (_mergeInfo.TocNeeded)
+                {
+                    InsertToc();
+                }
 
                 // 出力
                 Directory.CreateDirectory(Path.GetDirectoryName(_mergeInfo.OutFullPath) ?? String.Empty);
@@ -511,7 +527,7 @@ public class MainPageViewModel : ObservableRecipient
             return (null, line.Value.Length);
         }
 
-        Debug.Assert(match.Groups.Count >= 2, "ParseTag() match.Groups が不足");
+        Debug.Assert(match.Groups.Count >= 2, "ParseCfmTag() match.Groups が不足");
 #if false
         Debug.WriteLine("ParseTag() match: " + match.Value);
         Debug.WriteLine("ParseTag() groups: " + match.Groups.Count);
@@ -560,7 +576,7 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     // --------------------------------------------------------------------
-    // Cfm タグを解析して内容を更新する
+    // Cfm タグを解析して内容を更新する（全体用）
     // --------------------------------------------------------------------
     private void ParseCfmTagsForMain(LinkedList<String> lines, LinkedListNode<String> startLine)
     {
@@ -598,6 +614,55 @@ public class MainPageViewModel : ObservableRecipient
                         case TagKey.Var:
                             ExecuteCfmTagVar(tagInfo, line, column + addColumn);
                             break;
+                        case TagKey.Toc:
+                            ExecuteCfmTagToc();
+                            break;
+                        default:
+                            Debug.Assert(false, "ParseCfmTagsForMain() Cfm タグ捕捉漏れ");
+                            break;
+                    }
+                }
+
+                // 解析位置（列）を進める
+                column += addColumn;
+                if (column >= line.Value.Length)
+                {
+                    break;
+                }
+            }
+
+            // 次の行へ
+            line = line.Next;
+            if (line == null)
+            {
+                break;
+            }
+        }
+    }
+
+    // --------------------------------------------------------------------
+    // Cfm タグを解析して内容を更新する（目次作成用）
+    // --------------------------------------------------------------------
+    private void ParseCfmTagsForToc()
+    {
+        LinkedListNode<String>? line = _mergeInfo.Lines.First;
+        Debug.Assert(line != null, "ParseHxTags() _mergeInfo.Lines が空");
+
+        // 行をたどるループ
+        for (; ; )
+        {
+            Int32 column = 0;
+
+            // 列をたどるループ
+            for (; ; )
+            {
+                (CfmTagInfo? tagInfo, Int32 addColumn) = ParseCfmTag(line, column, true);
+                if (tagInfo != null)
+                {
+                    // 有効なタグが見つかった（タグに対応する文字列は削除されている）
+                    if (tagInfo.Key == TagKey.Toc)
+                    {
+                        line.Value = line.Value.Insert(column + addColumn, String.Join('\n', _mergeInfo.Toc));
                     }
                 }
 
@@ -677,6 +742,116 @@ public class MainPageViewModel : ObservableRecipient
         // インクルード履歴ポップ
         Debug.Assert(_mergeInfo.IncludeStack.Last() == path, "ParseFile() インクルード履歴破損");
         _mergeInfo.IncludeStack.RemoveAt(_mergeInfo.IncludeStack.Count - 1);
+    }
+
+    // --------------------------------------------------------------------
+    // HTML Hx タグがあれば抽出する
+    // --------------------------------------------------------------------
+    private (HxTagInfo? tagInfo, Int32 column) ParseHxTag(LinkedListNode<String> line, Int32 column)
+    {
+        if (column >= line.Value.Length)
+        {
+            // 行末まで解析した
+            return (null, column);
+        }
+
+        Match hxMatch = Regex.Match(line.Value[column..], @"\<h([1-6])\s.+?\>", RegexOptions.IgnoreCase);
+        if (!hxMatch.Success)
+        {
+            // Hx タグが無い
+            return (null, line.Value.Length);
+        }
+
+        Debug.Assert(hxMatch.Groups.Count >= 2, "ParseHxTag() hxMatch.Groups が不足");
+#if false
+        Debug.WriteLine("ParseTag() match: " + match.Value);
+        Debug.WriteLine("ParseTag() groups: " + match.Groups.Count);
+        Debug.WriteLine("ParseTag() group[0]: " + match.Groups[0].Value);
+        Debug.WriteLine("ParseTag() group[1]: " + match.Groups[1].Value);
+#endif
+        Int32 addColumn = hxMatch.Index + hxMatch.Length;
+
+        // ランク確認
+        Int32.TryParse(hxMatch.Groups[1].Value, out Int32 rank);
+        if (rank < Cfm2Constants.HX_TAG_RANK_MIN || rank > Cfm2Constants.HX_TAG_RANK_MAX)
+        {
+            _mergeInfo.Warnings.Add("HTML H タグのランクが HTML Living Standard 仕様の範囲外です：" + hxMatch.Value);
+            return (null, addColumn);
+        }
+        if (!Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets[rank])
+        {
+            // 環境設定により対象外
+            return (null, addColumn);
+        }
+
+        // ID 属性を抽出する
+        Match idMatch = Regex.Match(hxMatch.Value, @"id\s*?=\s*?" + "\"" + "(.+?)" + "\"", RegexOptions.IgnoreCase);
+        if (!idMatch.Success)
+        {
+            // ID 属性が無い
+            _mergeInfo.Warnings.Add("HTML H タグに ID 属性がないため目次が作成できません：" + hxMatch.Value);
+            return (null, addColumn);
+        }
+        Debug.Assert(idMatch.Groups.Count >= 2, "ParseHxTag() idMatch.Groups が不足");
+        String id = idMatch.Groups[1].Value;
+
+        // 見出しを抽出する
+        Int32 captionBeginPos = column + hxMatch.Index + hxMatch.Length;
+        Int32 captionEndPos = line.Value.IndexOf("</h", captionBeginPos, StringComparison.OrdinalIgnoreCase);
+        if (captionEndPos < 0)
+        {
+            _mergeInfo.Warnings.Add("HTML H タグが閉じられていないため目次が作成できません：" + hxMatch.Value);
+            return (null, addColumn);
+        }
+        String caption = line.Value[captionBeginPos..captionEndPos].Trim();
+
+        // 目次情報追加
+        _mergeInfo.Toc.Add("<div class=\"" + Cfm2Constants.TOC_ITEM_CLASS_NAME_PREFIX + rank + "\"><a href=\"#" + id + "\">" + caption + "</a></div>");
+
+        // ToDo: これいらないのでは？
+        HxTagInfo hxTagInfo = new()
+        {
+            Rank = rank,
+            Id = id,
+            Caption = caption,
+        };
+
+        return (hxTagInfo, addColumn);
+    }
+
+    // --------------------------------------------------------------------
+    // HTML Hx タグを解析して目次情報を収集する
+    // --------------------------------------------------------------------
+    private void ParseHxTags()
+    {
+        LinkedListNode<String>? line = _mergeInfo.Lines.First;
+        Debug.Assert(line != null, "ParseHxTags() _mergeInfo.Lines が空");
+
+        // 行をたどるループ
+        for (; ; )
+        {
+            Int32 column = 0;
+
+            // 列をたどるループ
+            for (; ; )
+            {
+                (HxTagInfo? tagInfo, Int32 addColumn) = ParseHxTag(line, column);
+
+                // 解析位置（列）を進める
+                column += addColumn;
+                if (column >= line.Value.Length)
+                {
+                    break;
+                }
+            }
+
+            // 次の行へ
+            line = line.Next;
+            if (line == null)
+            {
+                break;
+            }
+        }
     }
 
     // --------------------------------------------------------------------

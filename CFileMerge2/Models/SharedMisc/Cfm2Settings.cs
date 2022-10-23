@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CFileMerge2.Models.Cfm2Models;
 
 namespace CFileMerge2.Models.SharedMisc;
 
@@ -37,6 +38,15 @@ internal class Cfm2Settings
     // --------------------------------------------------------------------
     // 設定
     // --------------------------------------------------------------------
+
+    /// <summary>
+    /// h1～h6 に対して目次を作成するかどうか
+    /// </summary>
+    public Boolean[] TocTargets
+    {
+        get;
+        set;
+    } = new Boolean[Cfm2Constants.HX_TAG_RANK_MAX + 1];
 
     // --------------------------------------------------------------------
     // 終了時の状態（ちょちょいとファイル合併 2 専用）
@@ -68,6 +78,23 @@ internal class Cfm2Settings
     public DateTime RssCheckDate
     {
         get; set;
+    }
+
+    // ====================================================================
+    // public 関数
+    // ====================================================================
+
+    /// <summary>
+    /// 調整
+    /// </summary>
+    public void Adjust()
+    {
+        if (!TocTargets.Contains(true))
+        {
+            // 目次作成対象が 1 つもない場合はデフォルトを対象にする
+            TocTargets[1] = true;
+            TocTargets[2] = true;
+        }
     }
 
 }

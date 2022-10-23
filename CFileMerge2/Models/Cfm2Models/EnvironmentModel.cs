@@ -58,6 +58,7 @@ internal class EnvironmentModel
         try
         {
             Cfm2Settings = await App.GetService<ILocalSettingsService>().ReadSettingAsync<Cfm2Settings>(Cfm2Constants.SETTINGS_KEY_CFM2_SETTINGS) ?? new Cfm2Settings();
+            Cfm2Settings.Adjust();
         }
         catch (Exception)
         {

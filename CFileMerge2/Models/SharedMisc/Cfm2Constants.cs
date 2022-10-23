@@ -87,4 +87,10 @@ internal class Cfm2Constants
     // <hx> タグの最大ランク <h6>
     public const Int32 HX_TAG_RANK_MAX = 6;
 
+    // Toc エリアクラス
+    public const String TOC_AREA_CLASS_NAME = "TocArea";
+
+    // Toc アイテムクラスプレフィックス
+    public const String TOC_ITEM_CLASS_NAME_PREFIX = "TocItemH";
+
 }

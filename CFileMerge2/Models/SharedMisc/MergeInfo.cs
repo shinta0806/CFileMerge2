@@ -72,6 +72,15 @@ internal class MergeInfo
     } = new();
 
     /// <summary>
+    /// 目次作成が必要か（Cfm Toc タグがメイクファイルに存在するか）
+    /// </summary>
+    public Boolean TocNeeded
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
     /// 目次情報（HTML タグ）
     /// </summary>
     public List<String> Toc
