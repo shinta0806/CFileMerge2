@@ -121,9 +121,22 @@ public class MainPageViewModel : ObservableRecipient
         {
             if (String.IsNullOrEmpty(_mergeInfo.OutFullPath))
             {
-                Debug.Assert(ProgressVisibility == Visibility.Collapsed, "ButtonOpenOutFileClicked() 既に実行中");
-                ShowProgressArea();
-                MergeCore();
+                await Task.Run(async () =>
+                {
+                    try
+                    {
+                        Debug.Assert(ProgressVisibility == Visibility.Collapsed, "ButtonOpenOutFileClicked() 既に実行中");
+                        ShowProgressArea();
+                        MergeCore();
+#if DEBUG
+                        Thread.Sleep(3 * 1000);
+#endif
+                    }
+                    catch (Exception ex)
+                    {
+                        await App.MainWindow.CreateMessageDialog(ex.Message, Cfm2Constants.LABEL_ERROR).ShowAsync();
+                    }
+                });
             }
             Common.ShellExecute(_mergeInfo.OutFullPath);
         }
@@ -241,7 +254,7 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // Include タグを実行
     // --------------------------------------------------------------------
-    private void ExecuteTagInclude(TagInfo tagInfo, LinkedList<String> parentLines, LinkedListNode<String> parentLine)
+    private void ExecuteCfmTagInclude(TagInfo tagInfo, LinkedList<String> parentLines, LinkedListNode<String> parentLine)
     {
         // インクルードパスを取得（IncludeFolder を加味する必要があるため GetPath() は使えない）
         String path;
@@ -273,7 +286,7 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // IncludeDefaultExt タグを実行
     // --------------------------------------------------------------------
-    private void ExecuteTagIncludeDefaultExt(TagInfo tagInfo)
+    private void ExecuteCfmTagIncludeDefaultExt(TagInfo tagInfo)
     {
         _mergeInfo.IncludeDefaultExt = tagInfo.Value;
         if (!String.IsNullOrEmpty(_mergeInfo.IncludeDefaultExt) && _mergeInfo.IncludeDefaultExt[0] != '.')
@@ -286,7 +299,7 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // IncludeFolder タグを実行
     // --------------------------------------------------------------------
-    private void ExecuteTagIncludeFolder(TagInfo tagInfo)
+    private void ExecuteCfmTagIncludeFolder(TagInfo tagInfo)
     {
         _mergeInfo.IncludeFolderFullPath = GetPath(tagInfo);
         Debug.WriteLine("ExecuteTagIncludeFolder() " + _mergeInfo.IncludeFolderFullPath);
@@ -300,7 +313,7 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // OutFile タグを実行
     // --------------------------------------------------------------------
-    private void ExexuteTagOutFile(TagInfo tagInfo)
+    private void ExexuteCfmTagOutFile(TagInfo tagInfo)
     {
         _mergeInfo.OutFullPath = GetPath(tagInfo);
         Debug.WriteLine("ExexuteTagOutFile() " + _mergeInfo.OutFullPath);
@@ -313,7 +326,7 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // Set タグを実行
     // --------------------------------------------------------------------
-    private void ExecuteTagSet(TagInfo tagInfo)
+    private void ExecuteCfmTagSet(TagInfo tagInfo)
     {
         // 変数名と変数値に分割
         Int32 eqPos = tagInfo.Value.IndexOf('=');
@@ -338,7 +351,7 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // Var タグを実行
     // --------------------------------------------------------------------
-    private void ExecuteTagVar(TagInfo tagInfo, LinkedListNode<String> line, Int32 column)
+    private void ExecuteCfmTagVar(TagInfo tagInfo, LinkedListNode<String> line, Int32 column)
     {
         // 変数名取得
         String varName = tagInfo.Value.Trim().ToLower();
@@ -477,6 +490,131 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     // --------------------------------------------------------------------
+    // Cfm タグがあれば抽出する
+    // --------------------------------------------------------------------
+    private (Int32 column, TagInfo? tagInfo) ParseCfmTag(LinkedListNode<String> line, Int32 column, Boolean removeTocTag)
+    {
+        if (column >= line.Value.Length)
+        {
+            // 行末まで解析した
+            return (column, null);
+        }
+
+        Match match = Regex.Match(line.Value[column..], @"\<\!\-\-\s*?cfm\/(.+?)\-\-\>", RegexOptions.IgnoreCase);
+        if (!match.Success)
+        {
+            // Cfm タグが無い
+            return (line.Value.Length, null);
+        }
+
+        Debug.Assert(match.Groups.Count >= 2, "ParseTag() match.Groups が不足");
+#if false
+        Debug.WriteLine("ParseTag() match: " + match.Value);
+        Debug.WriteLine("ParseTag() groups: " + match.Groups.Count);
+        Debug.WriteLine("ParseTag() group[0]: " + match.Groups[0].Value);
+        Debug.WriteLine("ParseTag() group[1]: " + match.Groups[1].Value);
+#endif
+        Int32 addColumn = match.Index + match.Length;
+        String tagContent = match.Groups[1].Value;
+        Int32 colon = tagContent.IndexOf(':');
+        if (colon < 0)
+        {
+            // キーと値を区切る ':' が無い
+            Debug.WriteLine("ParseTag() 区切りコロン無し, " + tagContent + ", add: " + addColumn);
+            _mergeInfo.Warnings.Add("Cfm タグに区切りコロンがありません：" + tagContent);
+            return (addColumn, null);
+        }
+
+        Int32 key = Array.IndexOf(Cfm2Constants.TAG_KEYS, tagContent[0..colon].Trim().ToLower());
+        if (key < 0)
+        {
+            Debug.WriteLine("ParseTag() サポートされていないキー, " + tagContent + ", add: " + addColumn);
+            _mergeInfo.Warnings.Add("サポートされていない Cfm タグです：" + tagContent);
+            return (addColumn, null);
+        }
+
+        TagInfo tagInfo = new()
+        {
+            Key = (TagKey)key,
+            Value = tagContent[(colon + 1)..].Trim(),
+        };
+        Debug.WriteLine("ParseTag() [" + tagInfo.Key + "], [" + tagInfo.Value + "] add: " + addColumn);
+
+        if (!removeTocTag && tagInfo.Key == TagKey.Toc)
+        {
+        }
+        else
+        {
+            // タグは出力しないので削除する
+            line.Value = line.Value.Replace(match.Value, null);
+
+            // タグの分、追加位置を差し引く
+            addColumn -= match.Length;
+        }
+
+        return (addColumn, tagInfo);
+    }
+
+    // --------------------------------------------------------------------
+    // タグを解析して内容を更新する
+    // --------------------------------------------------------------------
+    private void ParseCfmTagsForMain(LinkedList<String> lines, LinkedListNode<String> startLine)
+    {
+        LinkedListNode<String>? line = startLine;
+
+        // 行をたどるループ
+        for (; ; )
+        {
+            Int32 column = 0;
+
+            // 列をたどるループ
+            for (; ; )
+            {
+                (Int32 addColumn, TagInfo? tagInfo) = ParseCfmTag(line, column, false);
+                if (tagInfo != null)
+                {
+                    // 有効なタグが見つかった（タグに対応する文字列は削除されている）
+                    switch (tagInfo.Key)
+                    {
+                        case TagKey.OutFile:
+                            ExexuteCfmTagOutFile(tagInfo);
+                            break;
+                        case TagKey.IncludeFolder:
+                            ExecuteCfmTagIncludeFolder(tagInfo);
+                            break;
+                        case TagKey.IncludeDefaultExt:
+                            ExecuteCfmTagIncludeDefaultExt(tagInfo);
+                            break;
+                        case TagKey.Include:
+                            ExecuteCfmTagInclude(tagInfo, lines, line);
+                            break;
+                        case TagKey.Set:
+                            ExecuteCfmTagSet(tagInfo);
+                            break;
+                        case TagKey.Var:
+                            ExecuteCfmTagVar(tagInfo, line, column + addColumn);
+                            break;
+                    }
+                }
+
+                // 解析位置（列）を進める
+                column += addColumn;
+                if (column >= line.Value.Length)
+                {
+                    break;
+                }
+            }
+
+            // 次の行へ
+            line = line.Next;
+            if (line == null)
+            {
+                break;
+            }
+        }
+    }
+
+    // --------------------------------------------------------------------
     // ファイルの内容を読み込み解析する
     // 解析後の内容を parentLine の直後に追加（parentLine が null の場合は先頭に追加）
     // --------------------------------------------------------------------
@@ -508,7 +646,7 @@ public class MainPageViewModel : ObservableRecipient
 
         // このファイルの階層以下を解析
         Debug.Assert(childLines.First != null, "ParseFile() 内容が空");
-        ParseTags(childLines, childLines.First);
+        ParseCfmTagsForMain(childLines, childLines.First);
         Debug.WriteLine("ParseFile() chileLines: " + childLines.Count + ", " + path);
 
         // 先頭行の追加
@@ -535,122 +673,6 @@ public class MainPageViewModel : ObservableRecipient
         // インクルード履歴ポップ
         Debug.Assert(_mergeInfo.IncludeStack.Last() == path, "ParseFile() インクルード履歴破損");
         _mergeInfo.IncludeStack.RemoveAt(_mergeInfo.IncludeStack.Count - 1);
-    }
-
-    // --------------------------------------------------------------------
-    // Cfm タグがあれば抽出する
-    // --------------------------------------------------------------------
-    private (Int32 column, TagInfo? tagInfo) ParseTag(LinkedListNode<String> line, Int32 column)
-    {
-        if (column >= line.Value.Length)
-        {
-            // 行末まで解析した
-            return (column, null);
-        }
-
-        Match match = Regex.Match(line.Value[column..], @"\<\!\-\-\s*cfm\/(.+?)\-\-\>", RegexOptions.IgnoreCase);
-        if (!match.Success)
-        {
-            // Cfm タグが無い
-            return (line.Value.Length, null);
-        }
-
-        Debug.Assert(match.Groups.Count >= 2, "ParseTag() match.Groups が不足");
-#if false
-        Debug.WriteLine("ParseTag() match: " + match.Value);
-        Debug.WriteLine("ParseTag() groups: " + match.Groups.Count);
-        Debug.WriteLine("ParseTag() group[0]: " + match.Groups[0].Value);
-        Debug.WriteLine("ParseTag() group[1]: " + match.Groups[1].Value);
-#endif
-        Int32 addColumn = line.Value[column..].IndexOf(match.Value) + match.Length;
-        String tagContent = match.Groups[1].Value;
-        Int32 colon = tagContent.IndexOf(':');
-        if (colon < 0)
-        {
-            // キーと値を区切る ':' が無い
-            Debug.WriteLine("ParseTag() 区切りコロン無し, " + tagContent + ", add: " + addColumn);
-            _mergeInfo.Warnings.Add("Cfm タグに区切りコロンがありません：" + tagContent);
-            return (addColumn, null);
-        }
-
-        Int32 key = Array.IndexOf(Cfm2Constants.TAG_KEYS, tagContent[0..colon].Trim().ToLower());
-        if (key < 0)
-        {
-            Debug.WriteLine("ParseTag() サポートされていないキー, " + tagContent + ", add: " + addColumn);
-            _mergeInfo.Warnings.Add("サポートされていない Cfm タグです：" + tagContent);
-            return (addColumn, null);
-        }
-
-        TagInfo tagInfo = new()
-        {
-            Key = (TagKey)key,
-            Value = tagContent[(colon + 1)..].Trim(),
-        };
-        Debug.WriteLine("ParseTag() [" + tagInfo.Key + "], [" + tagInfo.Value + "] add: " + addColumn);
-
-        // タグは出力しないので削除する
-        line.Value = line.Value.Replace(match.Value, null);
-
-        return (match.Groups[0].Index, tagInfo);
-    }
-
-    // --------------------------------------------------------------------
-    // タグを解析して内容を更新する
-    // --------------------------------------------------------------------
-    private void ParseTags(LinkedList<String> lines, LinkedListNode<String> startLine)
-    {
-        LinkedListNode<String>? line = startLine;
-
-        // 行をたどるループ
-        for (; ; )
-        {
-            Int32 column = 0;
-
-            // 列をたどるループ
-            for (; ; )
-            {
-                (Int32 addColumn, TagInfo? tagInfo) = ParseTag(line, column);
-                if (tagInfo != null)
-                {
-                    // 有効なタグが見つかった（タグに対応する文字列は削除されている）
-                    switch (tagInfo.Key)
-                    {
-                        case TagKey.OutFile:
-                            ExexuteTagOutFile(tagInfo);
-                            break;
-                        case TagKey.IncludeFolder:
-                            ExecuteTagIncludeFolder(tagInfo);
-                            break;
-                        case TagKey.IncludeDefaultExt:
-                            ExecuteTagIncludeDefaultExt(tagInfo);
-                            break;
-                        case TagKey.Include:
-                            ExecuteTagInclude(tagInfo, lines, line);
-                            break;
-                        case TagKey.Set:
-                            ExecuteTagSet(tagInfo);
-                            break;
-                        case TagKey.Var:
-                            ExecuteTagVar(tagInfo, line, column + addColumn);
-                            break;
-                    }
-                }
-
-                // 解析位置（列）を進める
-                column += addColumn;
-                if (column >= line.Value.Length)
-                {
-                    break;
-                }
-            }
-
-            // 次の行へ
-            line = line.Next;
-            if (line == null)
-            {
-                break;
-            }
-        }
     }
 
     // --------------------------------------------------------------------
