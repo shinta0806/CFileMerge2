@@ -10,6 +10,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -22,6 +23,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json.Linq;
 using Shinta;
 using Windows.Storage;
@@ -46,6 +48,7 @@ public class MainPageViewModel : ObservableRecipient
     {
         // コマンド
         ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClicked);
+        ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
         ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
 
         // イベントハンドラー
@@ -92,11 +95,9 @@ public class MainPageViewModel : ObservableRecipient
 
     private async void ButtonBrowseMakeClicked()
     {
-        FileOpenPicker fileOpenPicker = new();
+        FileOpenPicker fileOpenPicker = App.MainWindow.CreateOpenFilePicker();
         fileOpenPicker.FileTypeFilter.Add(Cfm2Constants.FILE_EXT_CFM2_MAKE);
         fileOpenPicker.FileTypeFilter.Add("*");
-        IntPtr hwnd = App.MainWindow.GetWindowHandle();
-        InitializeWithWindow.Initialize(fileOpenPicker, hwnd);
 
         StorageFile? file = await fileOpenPicker.PickSingleFileAsync();
         if (file == null)
@@ -105,17 +106,36 @@ public class MainPageViewModel : ObservableRecipient
         }
 
         MakePath = file.Path;
+    }
+    #endregion
 
-#if false
-        Debug.WriteLine("ButtonBrowseMakeClicked() " + file.Path);
+    #region 出力ファイルを開くボタンの制御
+    public ICommand ButtonOpenOutFileClickedCommand
+    {
+        get;
+    }
 
-        String? read = await App.GetService<ILocalSettingsService>().ReadSettingAsync<String>("TestLocalSettingsKey");
-        Debug.WriteLine("ButtonBrowseMakeClicked() read: " + read);
-        await App.GetService<ILocalSettingsService>().SaveSettingAsync("TestLocalSettingsKey", "hoge " + DateTime.Now.ToString());
+    private async void ButtonOpenOutFileClicked()
+    {
+        try
+        {
+            if (String.IsNullOrEmpty(_mergeInfo.OutFullPath))
+            {
+                Debug.Assert(ProgressVisibility == Visibility.Collapsed, "ButtonOpenOutFileClicked() 既に実行中");
+                ShowProgressArea();
+                MergeCore();
+            }
+            Common.ShellExecute(_mergeInfo.OutFullPath);
+        }
+        catch (Exception ex)
+        {
+            await App.MainWindow.CreateMessageDialog(ex.Message, Cfm2Constants.LABEL_ERROR).ShowAsync();
+        }
+        finally
+        {
+            HideProgressArea();
+        }
 
-        Debug.WriteLine("Path: " + ApplicationData.Current.LocalFolder.Path);
-        Debug.WriteLine("Name: " + ApplicationData.Current.LocalSettings.Name);
-#endif
     }
     #endregion
 
@@ -369,6 +389,14 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     // --------------------------------------------------------------------
+    // 目次作成
+    // --------------------------------------------------------------------
+    private void InsertToc()
+    {
+
+    }
+
+    // --------------------------------------------------------------------
     // 設定読み込み
     // --------------------------------------------------------------------
     private async Task LoadSettingsAsync()
@@ -390,15 +418,10 @@ public class MainPageViewModel : ObservableRecipient
                 Debug.Assert(ProgressVisibility == Visibility.Collapsed, "MergeAsync() 既に実行中");
                 ShowProgressArea();
                 Int32 startTick = Environment.TickCount;
-                _mergeInfo = new();
+                MergeCore();
 
-                // デフォルト値を設定
-                _mergeInfo.MakeFullPath = Path.GetFullPath(MakePath);
-                _mergeInfo.IncludeFolderFullPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty;
-                _mergeInfo.OutFullPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) + "\\" + Path.GetFileNameWithoutExtension(_mergeInfo.MakeFullPath) + "Output" + Common.FILE_EXT_HTML;
-
-                // メイクファイル読み込み（再帰）
-                ParseFile(_mergeInfo.MakeFullPath, _mergeInfo.Lines, null);
+                // 目次作成
+                InsertToc();
 
                 // 出力
                 Directory.CreateDirectory(Path.GetDirectoryName(_mergeInfo.OutFullPath) ?? String.Empty);
@@ -422,7 +445,7 @@ public class MainPageViewModel : ObservableRecipient
                 else
                 {
                     // 完了
-                    await App.MainWindow.CreateMessageDialog("完了しました。\n経過時間："+(Environment.TickCount-startTick).ToString("#,0")+" ミリ秒", Cfm2Constants.LABEL_INFORMATION).ShowAsync();
+                    await App.MainWindow.CreateMessageDialog("完了しました。\n経過時間：" + (Environment.TickCount - startTick).ToString("#,0") + " ミリ秒", Cfm2Constants.LABEL_INFORMATION).ShowAsync();
                 }
             }
             catch (Exception ex)
@@ -434,6 +457,23 @@ public class MainPageViewModel : ObservableRecipient
                 HideProgressArea();
             }
         });
+    }
+
+    // --------------------------------------------------------------------
+    // 合併コア
+    // 出力は行わない
+    // --------------------------------------------------------------------
+    private void MergeCore()
+    {
+        _mergeInfo = new();
+
+        // デフォルト値を設定
+        _mergeInfo.MakeFullPath = Path.GetFullPath(MakePath);
+        _mergeInfo.IncludeFolderFullPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty;
+        _mergeInfo.OutFullPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) + "\\" + Path.GetFileNameWithoutExtension(_mergeInfo.MakeFullPath) + "Output" + Common.FILE_EXT_HTML;
+
+        // メイクファイル読み込み（再帰）
+        ParseFile(_mergeInfo.MakeFullPath, _mergeInfo.Lines, null);
     }
 
     // --------------------------------------------------------------------
