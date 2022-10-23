@@ -15,6 +15,7 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using CFileMerge2.Contracts.Services;
+using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -168,6 +169,14 @@ public class MainPageViewModel : ObservableRecipient
     // ====================================================================
 
     // --------------------------------------------------------------------
+    // 環境設定を適用
+    // --------------------------------------------------------------------
+    private void ApplySettings()
+    {
+        MakePath = Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath;
+    }
+
+    // --------------------------------------------------------------------
     // イベントハンドラー：メイン UI のフォーカスを取得しようとしている
     // --------------------------------------------------------------------
     public void MainUiGettingFocus(UIElement sender, GettingFocusEventArgs args)
@@ -204,10 +213,10 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // イベントハンドラー：ページがロードされた
     // --------------------------------------------------------------------
-    public async void PageLoaded(Object sender, RoutedEventArgs args)
+    public void PageLoaded(Object sender, RoutedEventArgs args)
     {
         Debug.WriteLine("GridLoaded()");
-        await LoadSettingsAsync();
+        ApplySettings();
     }
 
     // ====================================================================
@@ -247,7 +256,8 @@ public class MainPageViewModel : ObservableRecipient
         }
 
         // 終了処理
-        await App.GetService<ILocalSettingsService>().SaveSettingAsync(Cfm2Constants.SETTINGS_KEY_MAKE_PATH, MakePath);
+        Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath = MakePath;
+        await Cfm2Model.Instance.EnvModel.SaveCfm2Settings();
 
         // 改めて閉じる
         App.MainWindow.Close();
@@ -409,14 +419,6 @@ public class MainPageViewModel : ObservableRecipient
     private void InsertToc()
     {
         //ParseHxTags();
-    }
-
-    // --------------------------------------------------------------------
-    // 設定読み込み
-    // --------------------------------------------------------------------
-    private async Task LoadSettingsAsync()
-    {
-        MakePath = await App.GetService<ILocalSettingsService>().ReadSettingAsync<String>(Cfm2Constants.SETTINGS_KEY_MAKE_PATH) ?? String.Empty;
     }
 
     // --------------------------------------------------------------------

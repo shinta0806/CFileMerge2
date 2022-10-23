@@ -32,9 +32,6 @@ public sealed partial class MainWindow : WindowEx
         Debug.WriteLine("MainWindow()");
         InitializeComponent();
 
-        // モデル生成
-        _ = Cfm2Model.Instance;
-
         // チェック
         Debug.Assert(Cfm2Constants.CFM_TAG_KEYS.Length == (Int32)TagKey.__End__, "MainWindow() TAG_KEYS が変");
 

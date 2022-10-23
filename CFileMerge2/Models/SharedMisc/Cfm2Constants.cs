@@ -67,8 +67,8 @@ internal class Cfm2Constants
     // 設定
     // --------------------------------------------------------------------
 
-    // メイクファイル
-    public const String SETTINGS_KEY_MAKE_PATH = "MakePath";
+    // 環境設定
+    public const String SETTINGS_KEY_CFM2_SETTINGS = "Cfm2Settings";
 
     // --------------------------------------------------------------------
     // Cfm タグ

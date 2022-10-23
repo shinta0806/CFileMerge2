@@ -1,8 +1,10 @@
-﻿using CFileMerge2.Activation;
+﻿using System.Diagnostics;
+using CFileMerge2.Activation;
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Core.Contracts.Services;
 using CFileMerge2.Core.Services;
 using CFileMerge2.Helpers;
+using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.Services;
 using CFileMerge2.ViewModels;
@@ -85,6 +87,14 @@ public partial class App : Application
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
         base.OnLaunched(args);
+
+        Debug.WriteLine("OnLaunched()");
+
+        // モデル生成
+        _ = Cfm2Model.Instance;
+
+        // 環境設定読み込み
+        await Cfm2Model.Instance.EnvModel.LoadCfm2Settings();
 
         await App.GetService<IActivationService>().ActivateAsync(args);
     }
