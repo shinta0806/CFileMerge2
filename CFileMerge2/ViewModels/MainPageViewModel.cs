@@ -218,6 +218,42 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     // --------------------------------------------------------------------
+    // Include タグを実行
+    // --------------------------------------------------------------------
+    private void ExecuteTagInclude(TagInfo tagInfo)
+    {
+        // インクルードパスを取得（IncludeFolder を加味する必要があるため GetPath() は使えない）
+        String path;
+        if (Path.IsPathRooted(tagInfo.Value))
+        {
+            // 絶対パス
+            path = tagInfo.Value;
+        }
+        else
+        {
+            if (String.IsNullOrEmpty(_mergeInfo.IncludeFolder))
+            {
+                // メイクファイルからの相対パス
+                path = Path.GetFullPath(tagInfo.Value, Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty);
+            }
+            else
+            {
+                // インクルードフォルダーからの相対パス
+                path = Path.GetFullPath(tagInfo.Value, _mergeInfo.IncludeFolder);
+            }
+        }
+        if (!Path.HasExtension(path))
+        {
+            path += _mergeInfo.IncludeDefaultExt;
+        }
+        if (path.ToLower() == _mergeInfo.MakeFullPath.ToLower())
+        {
+            throw new Exception("メイクファイルをインクルードすることはできません。");
+        }
+        Debug.WriteLine("ExecuteTagInclude() " + path);
+    }
+
+    // --------------------------------------------------------------------
     // IncludeDefaultExt タグを実行
     // --------------------------------------------------------------------
     private void ExecuteTagIncludeDefaultExt(TagInfo tagInfo)
@@ -239,7 +275,8 @@ public class MainPageViewModel : ObservableRecipient
         Debug.WriteLine("ExecuteTagIncludeFolder() " + _mergeInfo.IncludeFolder);
         if (!Directory.Exists(_mergeInfo.IncludeFolder))
         {
-            throw new Exception("インクルードフォルダーが存在しません：" + tagInfo.Value);
+            // 続行可能といえば続行可能であるが、Include できない際に原因が分かりづらくなるのでここでエラーとする
+            throw new Exception("インクルードフォルダーが存在しません：\n" + tagInfo.Value);
         }
     }
 
@@ -250,7 +287,7 @@ public class MainPageViewModel : ObservableRecipient
     {
         _mergeInfo.OutPath = GetPath(tagInfo);
         Debug.WriteLine("ExexuteTagOutFile() " + _mergeInfo.OutPath);
-        if (_mergeInfo.MakeFullPath.ToLower() == _mergeInfo.OutPath.ToLower())
+        if (_mergeInfo.OutPath.ToLower() == _mergeInfo.MakeFullPath.ToLower())
         {
             throw new Exception("出力先ファイルがメイクファイルと同じです。");
         }
@@ -294,6 +331,8 @@ public class MainPageViewModel : ObservableRecipient
 
     // --------------------------------------------------------------------
     // 合併メインルーチン
+    // 続行不可能なエラーは直ちに Exception を投げる
+    // 続行可能なエラーは MergeInfo.Errors に貯めて最後に表示する
     // --------------------------------------------------------------------
     private async Task MergeAsync()
     {
@@ -308,12 +347,10 @@ public class MainPageViewModel : ObservableRecipient
                 // デフォルト値を設定
                 _mergeInfo.MakeFullPath = Path.GetFullPath(MakePath);
                 _mergeInfo.IncludeFolder = Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty;
+                _mergeInfo.OutPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) + "\\" + Path.GetFileNameWithoutExtension(_mergeInfo.MakeFullPath) + "Output" + Common.FILE_EXT_HTML;
 
                 // メイクファイル読み込み
                 ReadFile("メイクファイル", _mergeInfo.MakeFullPath, null);
-
-                // 出力先ファイル設定
-                _mergeInfo.OutPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) + "\\" + Path.GetFileNameWithoutExtension(_mergeInfo.MakeFullPath) + "Output" + Common.FILE_EXT_HTML;
 
                 // メイクファイル処理
                 ParseTags(_mergeInfo.Lines.First);
@@ -419,6 +456,9 @@ public class MainPageViewModel : ObservableRecipient
                             break;
                         case TagKey.IncludeDefaultExt:
                             ExecuteTagIncludeDefaultExt(tagInfo);
+                            break;
+                        case TagKey.Include:
+                            ExecuteTagInclude(tagInfo);
                             break;
                     }
                 }
