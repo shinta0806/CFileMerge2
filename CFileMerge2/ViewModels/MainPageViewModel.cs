@@ -315,6 +315,27 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     // --------------------------------------------------------------------
+    // Var タグを実行
+    // --------------------------------------------------------------------
+    private void ExecuteTagVar(TagInfo tagInfo, LinkedListNode<String> line, Int32 column)
+    {
+        // 変数名取得
+        String varName = tagInfo.Value.Trim().ToLower();
+        if (String.IsNullOrEmpty(varName))
+        {
+            _mergeInfo.Errors.Add("Var タグの変数名が指定されていません。");
+            return;
+        }
+        if (!_mergeInfo.Vars.ContainsKey(varName))
+        {
+            _mergeInfo.Errors.Add("Var タグで指定された変数名が Set タグで宣言されていません：" + tagInfo.Value);
+            return;
+        }
+
+        line.Value = line.Value.Insert(column, _mergeInfo.Vars[varName]);
+    }
+
+    // --------------------------------------------------------------------
     // タグの値からパスを取得
     // --------------------------------------------------------------------
     private String GetPath(TagInfo tagInfo)
@@ -507,7 +528,7 @@ public class MainPageViewModel : ObservableRecipient
         // タグは出力しないので削除する
         line.Value = line.Value.Replace(match.Value, null);
 
-        return (0, tagInfo);
+        return (match.Groups[0].Index, tagInfo);
     }
 
     // --------------------------------------------------------------------
@@ -546,14 +567,14 @@ public class MainPageViewModel : ObservableRecipient
                         case TagKey.Set:
                             ExecuteTagSet(tagInfo);
                             break;
+                        case TagKey.Var:
+                            ExecuteTagVar(tagInfo, line, column + addColumn);
+                            break;
                     }
                 }
-                else
-                {
-                    // 有効なタグが無かったので解析位置（列）を進める
-                    column += addColumn;
-                }
 
+                // 解析位置（列）を進める
+                column += addColumn;
                 if (column >= line.Value.Length)
                 {
                     break;
