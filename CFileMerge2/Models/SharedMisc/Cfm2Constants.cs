@@ -14,7 +14,20 @@ namespace CFileMerge2.Models.SharedMisc;
 // public 列挙子
 // ====================================================================
 
-// Cfm タグのキー
+/// <summary>
+/// 合併作業のステップ
+/// </summary>
+public enum MergeStep
+{
+    ParseFile,
+    InsertToc,
+    Output,
+    __End__,
+}
+
+/// <summary>
+/// Cfm タグのキー
+/// </summary>
 public enum TagKey
 {
     OutFile,            // 出力先ファイル
@@ -93,4 +106,10 @@ internal class Cfm2Constants
     // Toc アイテムクラスプレフィックス
     public const String TOC_ITEM_CLASS_NAME_PREFIX = "TocItemH";
 
+    // --------------------------------------------------------------------
+    // 合併作業量
+    // --------------------------------------------------------------------
+
+    // MergeStep ごとの概算作業量（ParseFile を 100 とする）
+    public static readonly Int32[] MERGE_STEP_AMOUNT = { 100, 50, 5 };
 }

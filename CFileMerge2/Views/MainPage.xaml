@@ -35,8 +35,11 @@
 
         <!-- プログレスエリア -->
         <RelativePanel Background="#4D000000" Visibility="{x:Bind ViewModel.ProgressVisibility, Mode=OneWay}" Canvas.ZIndex="100" >
-            <Border Width="200" Height="100" Background="#FFFF0000" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" >
-                <Button Content="hoge" />
+            <Border BorderThickness="1" CornerRadius="8" BorderBrush="#4D000000" Background="#FFFFFFFF" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" >
+                <StackPanel Margin="20" Orientation="Horizontal" >
+                    <TextBlock Text="処理中..." />
+                    <ProgressBar Minimum="0" Maximum="1" Value="{x:Bind ViewModel.ProgressValue}" Width="200" Margin="20 0 0 0" />
+                </StackPanel>
             </Border>
         </RelativePanel>
     </Grid>

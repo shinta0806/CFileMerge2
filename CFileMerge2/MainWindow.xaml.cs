@@ -31,6 +31,7 @@ public sealed partial class MainWindow : WindowEx
 
         // チェック
         Debug.Assert(Cfm2Constants.CFM_TAG_KEYS.Length == (Int32)TagKey.__End__, "MainWindow() TAG_KEYS が変");
+        Debug.Assert(Cfm2Constants.MERGE_STEP_AMOUNT.Length == (Int32)MergeStep.__End__, "MainWindow() MERGE_STEP_AMOUNT が変");
 
         // 初期化
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));

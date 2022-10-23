@@ -80,6 +80,16 @@ public class MainPageViewModel : ObservableRecipient
         set => SetProperty(ref _progressVisibility, value);
     }
 
+    /// <summary>
+    /// 進捗（0～1 の小数）
+    /// </summary>
+    private Double _progressValue;
+    public Double ProgressValue
+    {
+        get => _progressValue;
+        set => SetProperty(ref _progressValue, value);
+    }
+
     // --------------------------------------------------------------------
     // 一般のプロパティー
     // --------------------------------------------------------------------
@@ -881,12 +891,49 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     /// <summary>
+    /// プログレスバーの進捗率を設定
+    /// </summary>
+    private void SetProgressValue(MergeStep mergeStep, Double currentProgress)
+    {
+        Double amount = 0;
+
+        // 今までのステップの作業量
+        for (Int32 i = 0; i < (Int32)mergeStep; i++)
+        {
+            amount += Cfm2Constants.MERGE_STEP_AMOUNT[i];
+        }
+
+        // 今のステップの作業量
+        amount += Cfm2Constants.MERGE_STEP_AMOUNT[(Int32)mergeStep] * currentProgress;
+
+        // 全作業量
+        Int32 total = 0;
+        for (Int32 i = 0; i < (Int32)MergeStep.__End__; i++)
+        {
+            total += Cfm2Constants.MERGE_STEP_AMOUNT[i];
+        }
+
+        // 進捗率
+        Double progress = amount / total;
+
+        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        {
+            // インクルードにより一時的に進捗率が下がる場合があるが、表示上は下げない
+            if (progress > ProgressValue)
+            {
+                ProgressValue = progress;
+            }
+        });
+    }
+
+    /// <summary>
     /// プログレスエリアを表示
     /// </summary>
     private void ShowProgressArea()
     {
         App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
+            ProgressValue = 0.0;
             ProgressVisibility = Visibility.Visible;
         });
     }
