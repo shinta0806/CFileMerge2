@@ -46,6 +46,8 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     public MainPageViewModel()
     {
+        Debug.WriteLine("MainPageViewModel()");
+
         // コマンド
         ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClicked);
         ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
@@ -63,7 +65,7 @@ public class MainPageViewModel : ObservableRecipient
     // View 通信用のプロパティー
     // --------------------------------------------------------------------
 
-    // メイクファイル
+    // メイクファイルのパス（相対パスも可）
     private String _makePath = String.Empty;
     public String MakePath
     {
@@ -254,13 +256,13 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // Include タグを実行
     // --------------------------------------------------------------------
-    private void ExecuteCfmTagInclude(TagInfo tagInfo, LinkedList<String> parentLines, LinkedListNode<String> parentLine)
+    private void ExecuteCfmTagInclude(CfmTagInfo tagInfo, LinkedList<String> parentLines, LinkedListNode<String> parentLine)
     {
         // インクルードパスを取得（IncludeFolder を加味する必要があるため GetPath() は使えない）
         String path;
         if (String.IsNullOrEmpty(tagInfo.Value))
         {
-            throw new Exception(Cfm2Constants.TAG_KEYS[(Int32)tagInfo.Key] + " タグのパスが指定されていません。");
+            throw new Exception(Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key] + " タグのパスが指定されていません。");
         }
         if (Path.IsPathRooted(tagInfo.Value))
         {
@@ -286,7 +288,7 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // IncludeDefaultExt タグを実行
     // --------------------------------------------------------------------
-    private void ExecuteCfmTagIncludeDefaultExt(TagInfo tagInfo)
+    private void ExecuteCfmTagIncludeDefaultExt(CfmTagInfo tagInfo)
     {
         _mergeInfo.IncludeDefaultExt = tagInfo.Value;
         if (!String.IsNullOrEmpty(_mergeInfo.IncludeDefaultExt) && _mergeInfo.IncludeDefaultExt[0] != '.')
@@ -299,7 +301,7 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // IncludeFolder タグを実行
     // --------------------------------------------------------------------
-    private void ExecuteCfmTagIncludeFolder(TagInfo tagInfo)
+    private void ExecuteCfmTagIncludeFolder(CfmTagInfo tagInfo)
     {
         _mergeInfo.IncludeFolderFullPath = GetPath(tagInfo);
         Debug.WriteLine("ExecuteTagIncludeFolder() " + _mergeInfo.IncludeFolderFullPath);
@@ -313,7 +315,7 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // OutFile タグを実行
     // --------------------------------------------------------------------
-    private void ExexuteCfmTagOutFile(TagInfo tagInfo)
+    private void ExexuteCfmTagOutFile(CfmTagInfo tagInfo)
     {
         _mergeInfo.OutFullPath = GetPath(tagInfo);
         Debug.WriteLine("ExexuteTagOutFile() " + _mergeInfo.OutFullPath);
@@ -326,7 +328,7 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // Set タグを実行
     // --------------------------------------------------------------------
-    private void ExecuteCfmTagSet(TagInfo tagInfo)
+    private void ExecuteCfmTagSet(CfmTagInfo tagInfo)
     {
         // 変数名と変数値に分割
         Int32 eqPos = tagInfo.Value.IndexOf('=');
@@ -351,7 +353,7 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // Var タグを実行
     // --------------------------------------------------------------------
-    private void ExecuteCfmTagVar(TagInfo tagInfo, LinkedListNode<String> line, Int32 column)
+    private void ExecuteCfmTagVar(CfmTagInfo tagInfo, LinkedListNode<String> line, Int32 column)
     {
         // 変数名取得
         String varName = tagInfo.Value.Trim().ToLower();
@@ -372,11 +374,11 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // タグの値からパスを取得
     // --------------------------------------------------------------------
-    private String GetPath(TagInfo tagInfo)
+    private String GetPath(CfmTagInfo tagInfo)
     {
         if (String.IsNullOrEmpty(tagInfo.Value))
         {
-            throw new Exception(Cfm2Constants.TAG_KEYS[(Int32)tagInfo.Key] + " タグのパスが指定されていません。");
+            throw new Exception(Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key] + " タグのパスが指定されていません。");
         }
         if (Path.IsPathRooted(tagInfo.Value))
         {
@@ -406,7 +408,7 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     private void InsertToc()
     {
-
+        //ParseHxTags();
     }
 
     // --------------------------------------------------------------------
@@ -492,19 +494,19 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // Cfm タグがあれば抽出する
     // --------------------------------------------------------------------
-    private (Int32 column, TagInfo? tagInfo) ParseCfmTag(LinkedListNode<String> line, Int32 column, Boolean removeTocTag)
+    private (CfmTagInfo? tagInfo, Int32 column) ParseCfmTag(LinkedListNode<String> line, Int32 column, Boolean removeTocTag)
     {
         if (column >= line.Value.Length)
         {
             // 行末まで解析した
-            return (column, null);
+            return (null, column);
         }
 
         Match match = Regex.Match(line.Value[column..], @"\<\!\-\-\s*?cfm\/(.+?)\-\-\>", RegexOptions.IgnoreCase);
         if (!match.Success)
         {
             // Cfm タグが無い
-            return (line.Value.Length, null);
+            return (null, line.Value.Length);
         }
 
         Debug.Assert(match.Groups.Count >= 2, "ParseTag() match.Groups が不足");
@@ -522,18 +524,18 @@ public class MainPageViewModel : ObservableRecipient
             // キーと値を区切る ':' が無い
             Debug.WriteLine("ParseTag() 区切りコロン無し, " + tagContent + ", add: " + addColumn);
             _mergeInfo.Warnings.Add("Cfm タグに区切りコロンがありません：" + tagContent);
-            return (addColumn, null);
+            return (null, addColumn);
         }
 
-        Int32 key = Array.IndexOf(Cfm2Constants.TAG_KEYS, tagContent[0..colon].Trim().ToLower());
+        Int32 key = Array.IndexOf(Cfm2Constants.CFM_TAG_KEYS, tagContent[0..colon].Trim().ToLower());
         if (key < 0)
         {
             Debug.WriteLine("ParseTag() サポートされていないキー, " + tagContent + ", add: " + addColumn);
             _mergeInfo.Warnings.Add("サポートされていない Cfm タグです：" + tagContent);
-            return (addColumn, null);
+            return (null, addColumn);
         }
 
-        TagInfo tagInfo = new()
+        CfmTagInfo tagInfo = new()
         {
             Key = (TagKey)key,
             Value = tagContent[(colon + 1)..].Trim(),
@@ -552,11 +554,11 @@ public class MainPageViewModel : ObservableRecipient
             addColumn -= match.Length;
         }
 
-        return (addColumn, tagInfo);
+        return (tagInfo, addColumn);
     }
 
     // --------------------------------------------------------------------
-    // タグを解析して内容を更新する
+    // Cfm タグを解析して内容を更新する
     // --------------------------------------------------------------------
     private void ParseCfmTagsForMain(LinkedList<String> lines, LinkedListNode<String> startLine)
     {
@@ -570,7 +572,7 @@ public class MainPageViewModel : ObservableRecipient
             // 列をたどるループ
             for (; ; )
             {
-                (Int32 addColumn, TagInfo? tagInfo) = ParseCfmTag(line, column, false);
+                (CfmTagInfo? tagInfo, Int32 addColumn) = ParseCfmTag(line, column, false);
                 if (tagInfo != null)
                 {
                     // 有効なタグが見つかった（タグに対応する文字列は削除されている）

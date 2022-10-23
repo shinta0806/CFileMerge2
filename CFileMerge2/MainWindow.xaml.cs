@@ -9,6 +9,7 @@
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.Helpers;
+using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.ViewModels;
 using Microsoft.UI.Xaml;
@@ -28,10 +29,14 @@ public sealed partial class MainWindow : WindowEx
     // --------------------------------------------------------------------
     public MainWindow()
     {
+        Debug.WriteLine("MainWindow()");
         InitializeComponent();
 
+        // モデル生成
+        _ = Cfm2Model.Instance;
+
         // チェック
-        Debug.Assert(Cfm2Constants.TAG_KEYS.Length == (Int32)TagKey.__End__, "MainWindow() TAG_KEYS が変");
+        Debug.Assert(Cfm2Constants.CFM_TAG_KEYS.Length == (Int32)TagKey.__End__, "MainWindow() TAG_KEYS が変");
 
         // 初期化
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
@@ -63,6 +68,7 @@ public sealed partial class MainWindow : WindowEx
             return;
         }
 
+        Debug.WriteLine("InitializeIfNeeded()");
 #if DEBUG
         Title = "［デバッグ］" + Title;
 #endif

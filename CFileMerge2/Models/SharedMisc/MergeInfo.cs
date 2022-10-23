@@ -72,6 +72,15 @@ internal class MergeInfo
     } = new();
 
     /// <summary>
+    /// 目次情報（HTML タグ）
+    /// </summary>
+    public List<String> Toc
+    {
+        get;
+        set;
+    } = new();
+
+    /// <summary>
     /// 合併後の内容
     /// </summary>
     public LinkedList<String> Lines

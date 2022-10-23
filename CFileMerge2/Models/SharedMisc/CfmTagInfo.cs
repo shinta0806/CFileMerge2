@@ -10,7 +10,7 @@
 
 namespace CFileMerge2.Models.SharedMisc;
 
-internal class TagInfo
+internal class CfmTagInfo
 {
     // キー
     public TagKey Key

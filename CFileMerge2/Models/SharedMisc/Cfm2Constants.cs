@@ -71,10 +71,20 @@ internal class Cfm2Constants
     public const String SETTINGS_KEY_MAKE_PATH = "MakePath";
 
     // --------------------------------------------------------------------
-    // タグ
+    // Cfm タグ
     // --------------------------------------------------------------------
 
     // TagKey に対応するタグキー文字列（小文字にする）
-    public static readonly String[] TAG_KEYS = { "outfile", "includefolder", "includedefaultext", "include", "set", "var", "toc" };
+    public static readonly String[] CFM_TAG_KEYS = { "outfile", "includefolder", "includedefaultext", "include", "set", "var", "toc" };
+
+    // --------------------------------------------------------------------
+    // HTML タグ
+    // --------------------------------------------------------------------
+
+    // <hx> タグの最小ランク <h1>
+    public const Int32 HX_TAG_RANK_MIN = 1;
+
+    // <hx> タグの最大ランク <h6>
+    public const Int32 HX_TAG_RANK_MAX = 6;
 
 }
