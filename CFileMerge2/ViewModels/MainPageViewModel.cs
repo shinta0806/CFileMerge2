@@ -236,8 +236,8 @@ public class MainPageViewModel : ObservableRecipient
         else
         {
             // インクルードフォルダーからの相対パス
-            Debug.Assert(!String.IsNullOrEmpty(_mergeInfo.IncludeFolder), "ExecuteTagInclude() IncludeFolder が初期化されていない");
-            path = Path.GetFullPath(tagInfo.Value, _mergeInfo.IncludeFolder);
+            Debug.Assert(!String.IsNullOrEmpty(_mergeInfo.IncludeFolderFullPath), "ExecuteTagInclude() IncludeFolder が初期化されていない");
+            path = Path.GetFullPath(tagInfo.Value, _mergeInfo.IncludeFolderFullPath);
         }
         if (!Path.HasExtension(path))
         {
@@ -267,9 +267,9 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     private void ExecuteTagIncludeFolder(TagInfo tagInfo)
     {
-        _mergeInfo.IncludeFolder = GetPath(tagInfo);
-        Debug.WriteLine("ExecuteTagIncludeFolder() " + _mergeInfo.IncludeFolder);
-        if (!Directory.Exists(_mergeInfo.IncludeFolder))
+        _mergeInfo.IncludeFolderFullPath = GetPath(tagInfo);
+        Debug.WriteLine("ExecuteTagIncludeFolder() " + _mergeInfo.IncludeFolderFullPath);
+        if (!Directory.Exists(_mergeInfo.IncludeFolderFullPath))
         {
             // 続行可能といえば続行可能であるが、Include できない際に原因が分かりづらくなるのでここでエラーとする
             throw new Exception("インクルードフォルダーが存在しません：\n" + tagInfo.Value);
@@ -281,12 +281,37 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     private void ExexuteTagOutFile(TagInfo tagInfo)
     {
-        _mergeInfo.OutPath = GetPath(tagInfo);
-        Debug.WriteLine("ExexuteTagOutFile() " + _mergeInfo.OutPath);
-        if (String.Compare(_mergeInfo.OutPath, _mergeInfo.MakeFullPath, true) == 0)
+        _mergeInfo.OutFullPath = GetPath(tagInfo);
+        Debug.WriteLine("ExexuteTagOutFile() " + _mergeInfo.OutFullPath);
+        if (String.Compare(_mergeInfo.OutFullPath, _mergeInfo.MakeFullPath, true) == 0)
         {
             throw new Exception("出力先ファイルがメイクファイルと同じです。");
         }
+    }
+
+    // --------------------------------------------------------------------
+    // Set タグを実行
+    // --------------------------------------------------------------------
+    private void ExecuteTagSet(TagInfo tagInfo)
+    {
+        // 変数名と変数値に分割
+        Int32 eqPos = tagInfo.Value.IndexOf('=');
+        if (eqPos < 0)
+        {
+            _mergeInfo.Errors.Add("Set タグが「変数名 = 変数値」の形式になっていません：" + tagInfo.Value);
+            return;
+        }
+
+        String varName = tagInfo.Value[0..eqPos].Trim().ToLower();
+        if (String.IsNullOrEmpty(varName))
+        {
+            _mergeInfo.Errors.Add("Set タグの変数名が指定されていません：" + tagInfo.Value);
+            return;
+        }
+
+        String varValue = tagInfo.Value[(eqPos + 1)..].Trim();
+
+        _mergeInfo.Vars[varName] = varValue;
     }
 
     // --------------------------------------------------------------------
@@ -346,8 +371,8 @@ public class MainPageViewModel : ObservableRecipient
 
                 // デフォルト値を設定
                 _mergeInfo.MakeFullPath = Path.GetFullPath(MakePath);
-                _mergeInfo.IncludeFolder = Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty;
-                _mergeInfo.OutPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) + "\\" + Path.GetFileNameWithoutExtension(_mergeInfo.MakeFullPath) + "Output" + Common.FILE_EXT_HTML;
+                _mergeInfo.IncludeFolderFullPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty;
+                _mergeInfo.OutFullPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) + "\\" + Path.GetFileNameWithoutExtension(_mergeInfo.MakeFullPath) + "Output" + Common.FILE_EXT_HTML;
 
                 // メイクファイル読み込み（再帰）
                 ParseFile(_mergeInfo.MakeFullPath, _mergeInfo.Lines, null);
@@ -517,6 +542,9 @@ public class MainPageViewModel : ObservableRecipient
                             break;
                         case TagKey.Include:
                             ExecuteTagInclude(tagInfo, lines, line);
+                            break;
+                        case TagKey.Set:
+                            ExecuteTagSet(tagInfo);
                             break;
                     }
                 }

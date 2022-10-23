@@ -8,61 +8,80 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace CFileMerge2.Models.SharedMisc;
+
 internal class MergeInfo
 {
     // ====================================================================
     // public プロパティー
     // ====================================================================
 
-    // メイクファイルのフルパス
+    /// <summary>
+    /// メイクファイルのフルパス
+    /// </summary>
     public String MakeFullPath
     {
         get;
         set;
     } = String.Empty;
 
-    // 出力先ファイルのフルパス
-    public String OutPath
+    /// <summary>
+    /// 出力先ファイルのフルパス
+    /// </summary>
+    public String OutFullPath
     {
         get;
         set;
     } = String.Empty;
 
-    // インクルードフォルダーのフルパス（末尾に '\\' はあってもなくても良い）
-    public String IncludeFolder
+    /// <summary>
+    /// インクルードフォルダーのフルパス（末尾に '\\' はあってもなくても良い）
+    /// </summary>
+    public String IncludeFolderFullPath
     {
         get;
         set;
     } = String.Empty;
 
-    // インクルード拡張子（先頭にピリオド）
+    /// <summary>
+    /// インクルード拡張子（先頭にピリオド）
+    /// </summary>
     public String IncludeDefaultExt
     {
         get;
         set;
     } = Cfm2Constants.FILE_EXT_CFM2_MAKE;
 
-    // インクルード履歴
+    /// <summary>
+    /// インクルード履歴
+    /// </summary>
     public List<String> IncludeStack
     {
         get;
         set;
     } = new();
 
-    // 合併後の内容
+    /// <summary>
+    /// メイクファイルで定義された変数（変数名、変数値）
+    /// 変数名は小文字で格納
+    /// </summary>
+    public Dictionary<String, String> Vars
+    {
+        get;
+        set;
+    } = new();
+
+    /// <summary>
+    /// 合併後の内容
+    /// </summary>
     public LinkedList<String> Lines
     {
         get;
     } = new();
 
-    // 作業中に発生したエラー
+    /// <summary>
+    /// 作業中に発生したエラー
+    /// </summary>
     public List<String> Errors
     {
         get;

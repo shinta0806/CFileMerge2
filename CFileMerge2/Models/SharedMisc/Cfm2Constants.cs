@@ -8,12 +8,6 @@
 //
 // ----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace CFileMerge2.Models.SharedMisc;
 
 // ====================================================================
@@ -29,6 +23,7 @@ public enum TagKey
     Include,            // インクルード
     Set,                // 変数設定
     Var,                // 変数使用
+    Toc,                // 目次
     __End__,
 }
 
@@ -77,7 +72,7 @@ internal class Cfm2Constants
     // タグ
     // --------------------------------------------------------------------
 
-    // TagKey に対応するタグキー文字列
-    public static readonly String[] TAG_KEYS = { "outfile", "includefolder", "includedefaultext", "include", "set", "var" };
+    // TagKey に対応するタグキー文字列（小文字にする）
+    public static readonly String[] TAG_KEYS = { "outfile", "includefolder", "includedefaultext", "include", "set", "var", "toc" };
 
 }
