@@ -28,14 +28,14 @@ internal class MergeInfo
         set;
     } = String.Empty;
 
-    // 出力先ファイル
+    // 出力先ファイルのフルパス
     public String OutPath
     {
         get;
         set;
     } = String.Empty;
 
-    // インクルードフォルダー（末尾に '\\' はあってもなくても良い）
+    // インクルードフォルダーのフルパス（末尾に '\\' はあってもなくても良い）
     public String IncludeFolder
     {
         get;

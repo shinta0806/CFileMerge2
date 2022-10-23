@@ -217,12 +217,24 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     // --------------------------------------------------------------------
+    // IncludeDefaultExt タグを実行
+    // --------------------------------------------------------------------
+    private void ExecuteTagIncludeDefaultExt(TagInfo tagInfo)
+    {
+
+    }
+
+    // --------------------------------------------------------------------
     // IncludeFolder タグを実行
     // --------------------------------------------------------------------
     private void ExecuteTagIncludeFolder(TagInfo tagInfo)
     {
         _mergeInfo.IncludeFolder = GetPath(tagInfo);
         Debug.WriteLine("ExecuteTagIncludeFolder() " + _mergeInfo.IncludeFolder);
+        if (!Directory.Exists(_mergeInfo.IncludeFolder))
+        {
+            throw new Exception("インクルードフォルダーが存在しません：" + tagInfo.Value);
+        }
     }
 
     // --------------------------------------------------------------------
@@ -398,6 +410,9 @@ public class MainPageViewModel : ObservableRecipient
                             break;
                         case TagKey.IncludeFolder:
                             ExecuteTagIncludeFolder(tagInfo);
+                            break;
+                        case TagKey.IncludeDefaultExt:
+                            ExecuteTagIncludeDefaultExt(tagInfo);
                             break;
                     }
                 }
