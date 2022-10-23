@@ -224,6 +224,10 @@ public class MainPageViewModel : ObservableRecipient
     {
         // インクルードパスを取得（IncludeFolder を加味する必要があるため GetPath() は使えない）
         String path;
+        if (String.IsNullOrEmpty(tagInfo.Value))
+        {
+            throw new Exception(Cfm2Constants.TAG_KEYS[(Int32)tagInfo.Key] + " タグのパスが指定されていません。");
+        }
         if (Path.IsPathRooted(tagInfo.Value))
         {
             // 絶対パス
@@ -242,7 +246,7 @@ public class MainPageViewModel : ObservableRecipient
         Debug.WriteLine("ExecuteTagInclude() " + path);
 
         // インクルード
-        ParseFile("インクルードファイル", path, parentLines, parentLine);
+        ParseFile(path, parentLines, parentLine);
     }
 
     // --------------------------------------------------------------------
@@ -290,6 +294,10 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     private String GetPath(TagInfo tagInfo)
     {
+        if (String.IsNullOrEmpty(tagInfo.Value))
+        {
+            throw new Exception(Cfm2Constants.TAG_KEYS[(Int32)tagInfo.Key] + " タグのパスが指定されていません。");
+        }
         if (Path.IsPathRooted(tagInfo.Value))
         {
             // 絶対パス
@@ -342,7 +350,7 @@ public class MainPageViewModel : ObservableRecipient
                 _mergeInfo.OutPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) + "\\" + Path.GetFileNameWithoutExtension(_mergeInfo.MakeFullPath) + "Output" + Common.FILE_EXT_HTML;
 
                 // メイクファイル読み込み（再帰）
-                ParseFile("メイクファイル", _mergeInfo.MakeFullPath, _mergeInfo.Lines, null);
+                ParseFile(_mergeInfo.MakeFullPath, _mergeInfo.Lines, null);
 
 #if DEBUG
                 Thread.Sleep(5 * 1000);
@@ -363,64 +371,61 @@ public class MainPageViewModel : ObservableRecipient
     // ファイルの内容を読み込み解析する
     // 解析後の内容を parentLine の直後に追加（parentLine が null の場合は先頭に追加）
     // --------------------------------------------------------------------
-    private void ParseFile(String kind, String path, LinkedList<String> parentLines, LinkedListNode<String>? parentLine)
+    private void ParseFile(String path, LinkedList<String> parentLines, LinkedListNode<String>? parentLine)
     {
-        try
+        if (String.IsNullOrEmpty(path))
         {
-            if (String.IsNullOrEmpty(path))
-            {
-                throw new Exception("ファイルが指定されていません。");
-            }
-            if (_mergeInfo.IncludeStack.Any(x => String.Compare(x, path, true) == 0))
-            {
-                throw new Exception("インクルードが循環しています：\n" + path);
-            }
+            throw new Exception("ファイルが指定されていません。");
+        }
+        if (!File.Exists(path))
+        {
+            throw new Exception("ファイルが見つかりません：\n" + path);
+        }
+        if (_mergeInfo.IncludeStack.Any(x => String.Compare(x, path, true) == 0))
+        {
+            throw new Exception("インクルードが循環しています：\n" + path);
+        }
 
-            // インクルード履歴プッシュ
-            _mergeInfo.IncludeStack.Add(path);
+        // インクルード履歴プッシュ
+        _mergeInfo.IncludeStack.Add(path);
 
-            // このファイルの階層以下の内容
-            String[] childLineStrings = File.ReadAllLines(path);
-            if (childLineStrings.Length == 0)
-            {
-                throw new Exception("内容が空です。");
-            }
-            LinkedList<String> childLines = new(childLineStrings);
+        // このファイルの階層以下の内容
+        String[] childLineStrings = File.ReadAllLines(path);
+        if (childLineStrings.Length == 0)
+        {
+            throw new Exception("内容が空です：\n" + path);
+        }
+        LinkedList<String> childLines = new(childLineStrings);
 
-            // このファイルの階層以下を解析
-            Debug.Assert(childLines.First != null, "ParseFile() 内容が空");
-            ParseTags(childLines, childLines.First);
-            Debug.WriteLine("ParseFile() chileLines: " + childLines.Count + ", " + path);
+        // このファイルの階層以下を解析
+        Debug.Assert(childLines.First != null, "ParseFile() 内容が空");
+        ParseTags(childLines, childLines.First);
+        Debug.WriteLine("ParseFile() chileLines: " + childLines.Count + ", " + path);
 
-            // 先頭行の追加
-            LinkedListNode<String>? childLine = childLines.First;
-            if (parentLine == null)
-            {
-                // 先頭に追加
-                parentLine = parentLines.AddFirst(childLine.Value);
-            }
-            else
-            {
-                // parentLine に追加
-                parentLine = parentLines.AddAfter(parentLine, childLine.Value);
-            }
+        // 先頭行の追加
+        LinkedListNode<String>? childLine = childLines.First;
+        if (parentLine == null)
+        {
+            // 先頭に追加
+            parentLine = parentLines.AddFirst(childLine.Value);
+        }
+        else
+        {
+            // parentLine に追加
+            parentLine = parentLines.AddAfter(parentLine, childLine.Value);
+        }
+        childLine = childLine.Next;
+
+        // 残りの行の追加
+        while (childLine != null)
+        {
+            parentLine = parentLines.AddAfter(parentLine, childLine.Value);
             childLine = childLine.Next;
-
-            // 残りの行の追加
-            while (childLine != null)
-            {
-                parentLine = parentLines.AddAfter(parentLine, childLine.Value);
-                childLine = childLine.Next;
-            }
-
-            // インクルード履歴ポップ
-            Debug.Assert(_mergeInfo.IncludeStack.Last() == path, "ParseFile() インクルード履歴破損");
-            _mergeInfo.IncludeStack.RemoveAt(_mergeInfo.IncludeStack.Count - 1);
         }
-        catch (Exception ex)
-        {
-            throw new Exception(kind + "を読み込めませんでした。\n" + path + "\n\n" + ex.Message);
-        }
+
+        // インクルード履歴ポップ
+        Debug.Assert(_mergeInfo.IncludeStack.Last() == path, "ParseFile() インクルード履歴破損");
+        _mergeInfo.IncludeStack.RemoveAt(_mergeInfo.IncludeStack.Count - 1);
     }
 
     // --------------------------------------------------------------------
