@@ -49,6 +49,13 @@ internal class MergeInfo
         set;
     } = Cfm2Constants.FILE_EXT_CFM2_MAKE;
 
+    // インクルード履歴
+    public List<String> IncludeStack
+    {
+        get;
+        set;
+    } = new();
+
     // 合併後の内容
     public LinkedList<String> Lines
     {

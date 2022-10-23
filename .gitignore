@@ -365,4 +365,4 @@ FodyWeavers.xsd
 # Project
 *.xlsx
 CFileMerge2_JPN.cfm2
-Debug.cfm2
+Debug_*.cfm2
