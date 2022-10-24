@@ -486,16 +486,18 @@ public class MainPageViewModel : ObservableRecipient
                 MergeCore();
 
                 // 目次作成
+                SetProgressValue(MergeStep.InsertToc, 0.0);
                 if (_mergeInfo.TocNeeded)
                 {
                     InsertToc();
                 }
 
                 // 出力
+                SetProgressValue(MergeStep.Output, 0.0);
                 Directory.CreateDirectory(Path.GetDirectoryName(_mergeInfo.OutFullPath) ?? String.Empty);
                 File.WriteAllLines(_mergeInfo.OutFullPath, _mergeInfo.Lines);
 
-#if DEBUG
+#if DEBUGz
                 Thread.Sleep(5 * 1000);
 #endif
 
@@ -641,7 +643,14 @@ public class MainPageViewModel : ObservableRecipient
                             ExecuteCfmTagIncludeDefaultExt(tagInfo);
                             break;
                         case TagKey.Include:
+                            Int32 prevLines = lines.Count;
                             ExecuteCfmTagInclude(tagInfo, lines, line);
+                            Int32 deltaLines = lines.Count - prevLines;
+                            for (Int32 i = 0; i < deltaLines; i++)
+                            {
+                                line = line.Next;
+                                Debug.Assert(line != null, "ParseCfmTagsForMain() インクルードしているのに line が足りない");
+                            }
                             break;
                         case TagKey.Set:
                             ExecuteCfmTagSet(tagInfo);
@@ -668,6 +677,14 @@ public class MainPageViewModel : ObservableRecipient
 
             // 次の行へ
             line = line.Next;
+            _mergeInfo.NumProgressLines++;
+            if (_mergeInfo.NumProgressLines % Cfm2Constants.PROGRESS_INTERVAL == 0)
+            {
+                SetProgressValue(MergeStep.ParseFile, (Double)_mergeInfo.NumProgressLines / _mergeInfo.NumTotalLines);
+#if DEBUG
+                Thread.Sleep(1000);
+#endif
+            }
             if (line == null)
             {
                 break;
@@ -750,6 +767,7 @@ public class MainPageViewModel : ObservableRecipient
         {
             throw new Exception("内容が空です：\n" + path);
         }
+        _mergeInfo.NumTotalLines += childLineStrings.Length;
         LinkedList<String> childLines = new(childLineStrings);
 
         // このファイルの階層以下を解析
@@ -781,6 +799,7 @@ public class MainPageViewModel : ObservableRecipient
         // インクルード履歴ポップ
         Debug.Assert(_mergeInfo.IncludeStack.Last() == path, "ParseFile() インクルード履歴破損");
         _mergeInfo.IncludeStack.RemoveAt(_mergeInfo.IncludeStack.Count - 1);
+        Debug.WriteLine("ParseFile() end: " + _mergeInfo.NumProgressLines + " / " + _mergeInfo.NumTotalLines);
     }
 
     /// <summary>
@@ -862,6 +881,7 @@ public class MainPageViewModel : ObservableRecipient
     {
         LinkedListNode<String>? line = _mergeInfo.Lines.First;
         Debug.Assert(line != null, "ParseHxTags() _mergeInfo.Lines が空");
+        Int32 numProgressLines = 0;
 
         // 行をたどるループ
         for (; ; )
@@ -883,6 +903,14 @@ public class MainPageViewModel : ObservableRecipient
 
             // 次の行へ
             line = line.Next;
+            numProgressLines++;
+            if (numProgressLines % Cfm2Constants.PROGRESS_INTERVAL == 0)
+            {
+                SetProgressValue(MergeStep.InsertToc, (Double)numProgressLines / _mergeInfo.Lines.Count);
+#if DEBUG
+                Thread.Sleep(1000);
+#endif
+            }
             if (line == null)
             {
                 break;

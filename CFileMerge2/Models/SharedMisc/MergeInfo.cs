@@ -98,6 +98,24 @@ internal class MergeInfo
     } = new();
 
     /// <summary>
+    /// 作業済の行数
+    /// </summary>
+    public Int32 NumProgressLines
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// 合併後のトータル行数
+    /// </summary>
+    public Int32 NumTotalLines
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
     /// 作業中に発生した警告
     /// </summary>
     public List<String> Warnings

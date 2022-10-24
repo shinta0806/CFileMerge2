@@ -112,4 +112,8 @@ internal class Cfm2Constants
 
     // MergeStep ごとの概算作業量（ParseFile を 100 とする）
     public static readonly Int32[] MERGE_STEP_AMOUNT = { 100, 50, 5 };
+
+    // 何行ごとに進捗表示するか
+    public const Int32 PROGRESS_INTERVAL = 10;
+
 }

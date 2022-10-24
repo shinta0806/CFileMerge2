@@ -38,7 +38,7 @@
             <Border BorderThickness="1" CornerRadius="8" BorderBrush="#4D000000" Background="#FFFFFFFF" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" >
                 <StackPanel Margin="20" Orientation="Horizontal" >
                     <TextBlock Text="処理中..." />
-                    <ProgressBar Minimum="0" Maximum="1" Value="{x:Bind ViewModel.ProgressValue}" Width="200" Margin="20 0 0 0" />
+                    <ProgressBar Minimum="0" Maximum="1" Value="{x:Bind ViewModel.ProgressValue, Mode=OneWay}" Width="200" Margin="20 0 0 0" />
                 </StackPanel>
             </Border>
         </RelativePanel>
