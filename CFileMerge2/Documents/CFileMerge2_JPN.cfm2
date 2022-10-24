@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<!-- Cfm/OutFile: CFileMerge2_JPN.html -->
+<!-- Cfm/IncludeFolder: ../../../../_HelpParts -->
+<!-- Cfm/IncludeDefaultExt: html -->
+<!-- Cfm/Set: AppName = ちょちょいとファイル合併 2&nbsp; -->
+<!-- Cfm/Set: AppMajVer = Ver 1.0 -->
+<!-- Cfm/Include: ヘッダー -->
+<body>
+
+<!-- 先頭に戻るボタン -->
+<div id="Top"></div>
+<a href="#Top">
+<div id="PageTopButton">
+  <div id="PageTopButtonText">▲</div>
+</div>
+</a>
+
+<!-- ★★★　メインコンテンツ　★★★ -->
+<div id="MainCol">
+
+<h1 id="Hajimeni">はじめに</h1>
+
+<h2 id="Gaiyou">概要</h2>
+
+<p>
+  <a href="HelpParts/CFileMerge2_Icon.png" target="_blank"><img src="HelpParts/CFileMerge2_Icon.png" alt="" width="128" align="right" border="0" hspace="10" vspace="10"></a>
+  <!-- Cfm/Var: AppName -->は、静的 HTML によるヘルプの作成をアシストする、開発者向けのツールです。<br>
+  <br>
+  メイクファイルを作成しておくことにより、<br>
+</p>
+<ul>
+  <li>別ファイルをインクルードして結合</li>
+  <li>目次生成</li>
+  <li>変数置換</li>
+</ul>
+<p>
+  などができます。<br clear="right">
+</p>
+
+<blockquote>
+（補足）<br>
+本ヘルプで縮小表示されている画像は、クリックすると原寸大で表示されます。<br>
+</blockquote>
+
+
+
+
+
+
+
+</div><!-- MainCol -->
+
+<!-- Cfm/Include: メニュー -->
+
+</body>
+
+</html>

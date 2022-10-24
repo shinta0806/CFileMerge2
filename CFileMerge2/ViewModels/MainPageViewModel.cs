@@ -682,7 +682,7 @@ public class MainPageViewModel : ObservableRecipient
             {
                 SetProgressValue(MergeStep.ParseFile, (Double)_mergeInfo.NumProgressLines / _mergeInfo.NumTotalLines);
 #if DEBUG
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
 #endif
             }
             if (line == null)
@@ -908,7 +908,7 @@ public class MainPageViewModel : ObservableRecipient
             {
                 SetProgressValue(MergeStep.InsertToc, (Double)numProgressLines / _mergeInfo.Lines.Count);
 #if DEBUG
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
 #endif
             }
             if (line == null)
