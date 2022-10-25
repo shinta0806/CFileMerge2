@@ -35,7 +35,9 @@
   <li>変数置換</li>
 </ul>
 <p>
-  などができます。<br clear="right">
+  などができます。<br>
+  <br>
+  ちなみに、本ヘルプも<!-- Cfm/Var: AppName -->で作成されており、左側の目次も自動生成されたものです。<br clear="right">
 </p>
 
 <blockquote>
