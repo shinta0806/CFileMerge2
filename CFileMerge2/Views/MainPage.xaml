@@ -30,7 +30,7 @@
                                 </MenuFlyoutItem.KeyboardAccelerators>
                             </MenuFlyoutItem>
                             <MenuFlyoutSeparator/>
-                            <MenuFlyoutItem Text="サンプルフォルダー" >
+                            <MenuFlyoutItem Text="サンプルフォルダー" Command="{x:Bind ViewModel.MenuFlyoutItemSampleFolderClickedCommand}" >
                                 <MenuFlyoutItem.KeyboardAccelerators>
                                     <KeyboardAccelerator Key="S" />
                                 </MenuFlyoutItem.KeyboardAccelerators>

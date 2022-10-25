@@ -9,6 +9,7 @@
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
@@ -46,6 +47,7 @@ public class MainPageViewModel : ObservableRecipient
         // コマンド
         ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClicked);
         ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
+        MenuFlyoutItemSampleFolderClickedCommand = new RelayCommand(MenuFlyoutItemSampleFolderClicked);
         ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
 
         // イベントハンドラー
@@ -160,6 +162,18 @@ public class MainPageViewModel : ObservableRecipient
             HideProgressArea();
         }
 
+    }
+    #endregion
+
+    #region サンプルフォルダーフライアウトの制御
+    public ICommand MenuFlyoutItemSampleFolderClickedCommand
+    {
+        get;
+    }
+
+    private void MenuFlyoutItemSampleFolderClicked()
+    {
+        Debug.WriteLine("MenuFlyoutItemSampleFolderClicked()");
     }
     #endregion
 
