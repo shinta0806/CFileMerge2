@@ -48,6 +48,7 @@ public class MainPageViewModel : ObservableRecipient
         ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClicked);
         ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
         MenuFlyoutItemSampleFolderClickedCommand = new RelayCommand(MenuFlyoutItemSampleFolderClicked);
+        MenuFlyoutItemAboutClickedCommand = new RelayCommand(MenuFlyoutItemAboutClicked);
         ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
 
         // イベントハンドラー
@@ -188,6 +189,19 @@ public class MainPageViewModel : ObservableRecipient
         {
             await App.MainWindow.CreateMessageDialog(ex.Message, Cfm2Constants.LABEL_ERROR).ShowAsync();
         }
+    }
+    #endregion
+
+    #region バージョン情報フライアウトの制御
+    public ICommand MenuFlyoutItemAboutClickedCommand
+    {
+        get;
+    }
+
+    private async void MenuFlyoutItemAboutClicked()
+    {
+        await App.MainWindow.CreateMessageDialog(Cfm2Constants.APP_NAME_J + "\n" + Cfm2Constants.APP_VER + "  " + Cfm2Constants.APP_DISTRIB + "\n"
+                + Cfm2Constants.COPYRIGHT_J, Cfm2Constants.LABEL_INFORMATION).ShowAsync();
     }
     #endregion
 
