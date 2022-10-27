@@ -21,7 +21,7 @@
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE9CE;"/>
                     <Button.Flyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem Text="ヘルプ" >
+                            <MenuFlyoutItem Text="ヘルプ" Command="{x:Bind ViewModel.MenuFlyoutItemHelpClickedCommand}" >
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE9CE;"/>
                                 </MenuFlyoutItem.Icon>

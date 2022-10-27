@@ -10,11 +10,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Models.SharedMisc;
+using CommunityToolkit.Mvvm.Input;
 using Shinta;
 
 namespace CFileMerge2.Models.Cfm2Models;
@@ -31,6 +35,9 @@ internal class EnvironmentModel
     {
         // 最初にログの設定をする
         //SetLogWriter();
+
+        // コマンド
+        HelpClickedCommand = new RelayCommand<String>(HelpClicked);
 
         // 環境設定の Load() はしない（YlModel.Instance 生成途中で EnvironmentModel が生成され、エラー発生時に YukaListerModel.Instance 経由でのログ記録ができないため）
     }
@@ -78,6 +85,29 @@ internal class EnvironmentModel
             return _exeFullFolder;
         }
     }
+
+    // --------------------------------------------------------------------
+    // コマンド
+    // --------------------------------------------------------------------
+
+    #region ヘルプリンクの制御
+    public ICommand HelpClickedCommand
+    {
+        get;
+    }
+
+    private async void HelpClicked(String? parameter)
+    {
+        try
+        {
+            await Cfm2Common.ShowHelpAsync(parameter);
+        }
+        catch (Exception ex)
+        {
+            await App.MainWindow.CreateMessageDialog("ヘルプ表示時エラー：\n" + ex.Message, Cfm2Constants.LABEL_ERROR).ShowAsync();
+        }
+    }
+    #endregion
 
     // ====================================================================
     // public 関数

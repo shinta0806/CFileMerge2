@@ -165,6 +165,13 @@ public class MainPageViewModel : ObservableRecipient
     }
     #endregion
 
+    #region ヘルプフライアウトの制御
+    public ICommand MenuFlyoutItemHelpClickedCommand
+    {
+        get => Cfm2Model.Instance.EnvModel.HelpClickedCommand;
+    }
+    #endregion
+
     #region サンプルフォルダーフライアウトの制御
     public ICommand MenuFlyoutItemSampleFolderClickedCommand
     {
