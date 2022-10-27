@@ -365,11 +365,11 @@ FodyWeavers.xsd
 # Materials
 *.xlsx
 
-# MakeFiles
-Debug_*.cfm2
+# TestData
+CFileMerge2/TestData/*
 
 # Outputs
-CFileMerge2/Samples/*.html
+CFileMerge2/Documents/Samples/*.html
 
 # Misc
 desktop.ini

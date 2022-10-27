@@ -171,9 +171,16 @@ public class MainPageViewModel : ObservableRecipient
         get;
     }
 
-    private void MenuFlyoutItemSampleFolderClicked()
+    private async void MenuFlyoutItemSampleFolderClicked()
     {
-        Debug.WriteLine("MenuFlyoutItemSampleFolderClicked()");
+        try
+        {
+            Common.ShellExecute(Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + Cfm2Constants.FOLDER_NAME_SAMPLE);
+        }
+        catch (Exception ex)
+        {
+            await App.MainWindow.CreateMessageDialog(ex.Message, Cfm2Constants.LABEL_ERROR).ShowAsync();
+        }
     }
     #endregion
 
@@ -319,8 +326,8 @@ public class MainPageViewModel : ObservableRecipient
         else
         {
             // インクルードフォルダーからの相対パス
-            Debug.Assert(!String.IsNullOrEmpty(_mergeInfo.IncludeFolderFullPath), "ExecuteTagInclude() IncludeFolder が初期化されていない");
-            path = Path.GetFullPath(tagInfo.Value, _mergeInfo.IncludeFolderFullPath);
+            Debug.Assert(!String.IsNullOrEmpty(_mergeInfo.IncludeFullFolder), "ExecuteTagInclude() IncludeFolder が初期化されていない");
+            path = Path.GetFullPath(tagInfo.Value, _mergeInfo.IncludeFullFolder);
         }
         if (!Path.HasExtension(path))
         {
@@ -353,9 +360,9 @@ public class MainPageViewModel : ObservableRecipient
     /// <exception cref="Exception"></exception>
     private void ExecuteCfmTagIncludeFolder(CfmTagInfo tagInfo)
     {
-        _mergeInfo.IncludeFolderFullPath = GetPath(tagInfo);
-        Debug.WriteLine("ExecuteTagIncludeFolder() " + _mergeInfo.IncludeFolderFullPath);
-        if (!Directory.Exists(_mergeInfo.IncludeFolderFullPath))
+        _mergeInfo.IncludeFullFolder = GetPath(tagInfo);
+        Debug.WriteLine("ExecuteTagIncludeFolder() " + _mergeInfo.IncludeFullFolder);
+        if (!Directory.Exists(_mergeInfo.IncludeFullFolder))
         {
             // 続行可能といえば続行可能であるが、Include できない際に原因が分かりづらくなるのでここでエラーとする
             throw new Exception("インクルードフォルダーが存在しません：\n" + tagInfo.Value);
@@ -553,7 +560,7 @@ public class MainPageViewModel : ObservableRecipient
 
         // デフォルト値を設定
         _mergeInfo.MakeFullPath = Path.GetFullPath(MakePath);
-        _mergeInfo.IncludeFolderFullPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty;
+        _mergeInfo.IncludeFullFolder = Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty;
         _mergeInfo.OutFullPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) + "\\" + Path.GetFileNameWithoutExtension(_mergeInfo.MakeFullPath) + "Output" + Common.FILE_EXT_HTML;
 
         // メイクファイル読み込み（再帰）

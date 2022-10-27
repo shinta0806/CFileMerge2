@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Models.SharedMisc;
+using Shinta;
 
 namespace CFileMerge2.Models.Cfm2Models;
 internal class EnvironmentModel
@@ -44,6 +45,39 @@ internal class EnvironmentModel
 
     // 環境設定
     public Cfm2Settings Cfm2Settings { get; private set; } = new();
+
+    // EXE フルパス
+    private String? _exeFullPath;
+    public String ExeFullPath
+    {
+        get
+        {
+            if (_exeFullPath == null)
+            {
+                // 単一ファイル時にも内容が格納される GetCommandLineArgs を用いる（Assembly 系の Location は不可）
+                _exeFullPath = Environment.GetCommandLineArgs()[0];
+                if (Path.GetExtension(_exeFullPath).ToLower() != Common.FILE_EXT_EXE)
+                {
+                    _exeFullPath = Path.ChangeExtension(_exeFullPath, Common.FILE_EXT_EXE);
+                }
+            }
+            return _exeFullPath;
+        }
+    }
+
+    // EXE フォルダーのフルパス（末尾 '\\'）
+    private String? _exeFullFolder;
+    public String ExeFullFolder
+    {
+        get
+        {
+            if (_exeFullFolder == null)
+            {
+                _exeFullFolder = Path.GetDirectoryName(ExeFullPath) + "\\";
+            }
+            return _exeFullFolder;
+        }
+    }
 
     // ====================================================================
     // public 関数

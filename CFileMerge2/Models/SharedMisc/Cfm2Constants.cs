@@ -60,6 +60,19 @@ internal class Cfm2Constants
 #endif
 
     // --------------------------------------------------------------------
+    // フォルダー名
+    // --------------------------------------------------------------------
+
+    // ドキュメントフォルダー名
+    public const String FOLDER_NAME_DOCUMENTS = "Documents\\";
+
+    // ヘルプ部品フォルダー名
+    public const String FOLDER_NAME_HELP_PARTS = "HelpParts\\";
+
+    // サンプルフォルダー
+    public const String FOLDER_NAME_SAMPLE = "Samples\\";
+
+    // --------------------------------------------------------------------
     // 拡張子
     // --------------------------------------------------------------------
     public const String FILE_EXT_CFM2_MAKE = ".cfm2";

@@ -37,7 +37,7 @@ internal class MergeInfo
     /// <summary>
     /// インクルードフォルダーのフルパス（末尾に '\\' はあってもなくても良い）
     /// </summary>
-    public String IncludeFolderFullPath
+    public String IncludeFullFolder
     {
         get;
         set;
