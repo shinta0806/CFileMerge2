@@ -7,16 +7,17 @@
   xmlns:genTemplate="http://schemas.microsoft.com/appx/developer/templatestudio"
   xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
   xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
-  IgnorableNamespaces="uap rescap genTemplate">
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  IgnorableNamespaces="uap rescap genTemplate mp">
 
   <Identity
-    Name="EF576DF4-3863-49B7-9ADF-CEB809529B9D"
-    Publisher="CN=shinta"
-    Version="1.0.0.0" />
+    Name="22724SHINTA.ChochoitoFileMerge2"
+    Publisher="CN=C3D46685-F0CB-48EC-96C4-8660C676A069"
+    Version="1.0.2.0" />
 
   <Properties>
-    <DisplayName>CFileMerge2</DisplayName>
-    <PublisherDisplayName>shinta</PublisherDisplayName>
+    <DisplayName>Chochoito File Merge 2</DisplayName>
+    <PublisherDisplayName>SHINTA</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -70,4 +71,5 @@
     <genTemplate:Item Name="platform" Value="WinUI" />
     <genTemplate:Item Name="appmodel" Value="Desktop" />
   </genTemplate:Metadata>
+
 </Package>
