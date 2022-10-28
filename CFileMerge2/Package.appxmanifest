@@ -13,7 +13,7 @@
   <Identity
     Name="22724SHINTA.ChochoitoFileMerge2"
     Publisher="CN=C3D46685-F0CB-48EC-96C4-8660C676A069"
-    Version="1.0.5.0" />
+    Version="1.0.13.0" />
 
   <Properties>
     <DisplayName>Chochoito File Merge 2</DisplayName>
