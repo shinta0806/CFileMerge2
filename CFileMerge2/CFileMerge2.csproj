@@ -22,6 +22,7 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <DefaultLanguage>en-US</DefaultLanguage>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\..\_Common\ShintaCommon.cs" Link="_Common\ShintaCommon.cs" />
@@ -96,26 +97,32 @@
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <NoWarn>IDE0007;IDE0025;IDE0049</NoWarn>
+    <DefineConstants>DISTRIB_STORE</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <NoWarn>IDE0007;IDE0025;IDE0049</NoWarn>
+    <DefineConstants>DISTRIB_STORE</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <NoWarn>IDE0007;IDE0025;IDE0049</NoWarn>
+    <DefineConstants>DISTRIB_STORE</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <NoWarn>IDE0007;IDE0025;IDE0049</NoWarn>
+    <DefineConstants>DISTRIB_STORE</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
     <NoWarn>IDE0007;IDE0025;IDE0049</NoWarn>
+    <DefineConstants>DISTRIB_STORE</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm64'">
     <NoWarn>IDE0007;IDE0025;IDE0049</NoWarn>
+    <DefineConstants>DISTRIB_STORE</DefineConstants>
   </PropertyGroup>
 
   <Target Name="_RemoveFrameworkReferences" BeforeTargets="_ConvertItems;_CalculateInputsForGenerateCurrentProjectAppxManifest">
