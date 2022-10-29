@@ -81,7 +81,7 @@
     <None Update="Documents\HelpParts\*.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Documents\Samples\*.cfm2">
+    <None Update="Documents\Samples\*.cfm2*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Documents\ThirdPartyDocuments\GongSolutionsWPFDragDrop\LICENSE">

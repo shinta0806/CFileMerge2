@@ -102,9 +102,39 @@
   「メイクファイル」欄に、サンプルフォルダー内にある「SampleMakeFile.cfm2」のフルパスを入力します。<br>
   <br>
   もしくは、相対パスで「Documents\Samples\SampleMakeFile.cfm2」と入力します。<br>
-  <br>
+</p>
+
+<blockquote>
+  （注意）<br>
+  サンプルフォルダーにはもう 1 つのファイル「SampleIncludeFile.cfm2include」もありますが、こちらはインクルードされるサンプルです。メイクファイル欄には「SampleMakeFile.cfm2」を指定してください。<br>
+</blockquote>
+
+<p>
   <a href="HelpParts/CFileMerge2_MakefileBrowser.png" target="_blank"><img src="HelpParts/CFileMerge2_MakefileBrowser.png" alt="" width="256" align="right" hspace="10" vspace="10"></a>
-  メイクファイルの中身は HTML ファイルです。従って、メイクファイルを Web ブラウザで開くと内容を見ることができます。<br>
+  メイクファイルの中身は HTML ファイルです。従って、サンプルのメイクファイルを Web ブラウザで開くと内容を見ることができます。<br>
+  <br>
+  メイクファイルが通常の HTML ファイルと異なるのは、HTML コメントの形式をした「Cfm タグ」が埋め込まれていることです。<br>
+  <br>
+  例えば、「&lt;!-- Cfm/Toc: --&gt;」という Cfm タグを埋め込まれていると、その場所に目次が生成されることになります。<br>
+  <br>
+  サンプルのメイクファイルをテキストエディタで開くと、Cfm タグの様子が分かるかと思います。<br clear="right">
+</p>
+
+<h2 id="HtmlHelpSeisei">HTML ヘルプ生成</h2>
+
+<p>
+  メイクファイルを指定したら、「スタート」ボタンをクリックすると HTML ヘルプが生成されます。<br>
+  <br>
+  サンプルのメイクファイルでは、Cfm タグで HTML ヘルプのパスが指定されており、「C:\Temp\Sample.html」に HTML ヘルプが生成されます。<br>
+  <br>
+  <a href="HelpParts/CFileMerge2_SampleToc.png" target="_blank"><img src="HelpParts/CFileMerge2_SampleToc.png" alt="" width="256" align="right" hspace="10" vspace="10"></a>
+  「出力ファイルを開く」ボタンをクリックすると、生成された HTML ヘルプがブラウザで開かれます。<br>
+  <br>
+  HTML ヘルプの先頭に目次が生成されています。あくまでも HTML ですので、目次の書式などは CSS で自由に変更することができます。<br>
+  <br>
+  以上でチュートリアルは終了です。<br>
+  <br>
+  より詳しい使い方は次章以降をご覧ください。<br clear="right">
 </p>
 
 
@@ -144,6 +174,7 @@
 <div class="TocItemH1"><a href="#Tutorial">チュートリアル</a></div>
 <div class="TocItemH2"><a href="#Kido">起動</a></div>
 <div class="TocItemH2"><a href="#MakefileShitei">メイクファイル指定</a></div>
+<div class="TocItemH2"><a href="#HtmlHelpSeisei">HTML ヘルプ生成</a></div>
 </div>
 
 </div><!-- LCol -->
