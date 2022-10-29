@@ -395,7 +395,7 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     /// <param name="tagInfo"></param>
     /// <exception cref="Exception"></exception>
-    private void ExexuteCfmTagOutFile(CfmTagInfo tagInfo)
+    private void ExecuteCfmTagOutFile(CfmTagInfo tagInfo)
     {
         _mergeInfo.OutFullPath = GetPath(tagInfo);
         Debug.WriteLine("ExexuteTagOutFile() " + _mergeInfo.OutFullPath);
@@ -676,7 +676,7 @@ public class MainPageViewModel : ObservableRecipient
                     switch (tagInfo.Key)
                     {
                         case TagKey.OutFile:
-                            ExexuteCfmTagOutFile(tagInfo);
+                            ExecuteCfmTagOutFile(tagInfo);
                             break;
                         case TagKey.IncludeFolder:
                             ExecuteCfmTagIncludeFolder(tagInfo);

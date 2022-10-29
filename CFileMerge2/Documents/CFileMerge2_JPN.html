@@ -38,13 +38,13 @@
 </p>
 <ul>
   <li>別ファイルをインクルードして結合</li>
-  <li>目次生成</li>
+  <li>目次挿入</li>
   <li>変数置換</li>
 </ul>
 <p>
   などができます。<br>
   <br>
-  ちなみに、本ヘルプもちょちょいとファイル合併 2&nbsp;で作成されており、左側の目次も自動生成されたものです。<br clear="right">
+  ちなみに、本ヘルプもちょちょいとファイル合併 2&nbsp;で作成されており、左側の目次も自動挿入されたものです。<br clear="right">
 </p>
 
 <blockquote>
@@ -115,7 +115,7 @@
   <br>
   メイクファイルが通常の HTML ファイルと異なるのは、HTML コメントの形式をした「Cfm タグ」が埋め込まれていることです。<br>
   <br>
-  例えば、「&lt;!-- Cfm/Toc: --&gt;」という Cfm タグを埋め込まれていると、その場所に目次が生成されることになります。<br>
+  例えば、「&lt;!-- Cfm/Toc: --&gt;」という Cfm タグを埋め込まれていると、その場所に目次が挿入されることになります。<br>
   <br>
   サンプルのメイクファイルをテキストエディタで開くと、Cfm タグの様子が分かるかと思います。<br clear="right">
 </p>
@@ -130,7 +130,7 @@
   <a href="HelpParts/CFileMerge2_SampleToc.png" target="_blank"><img src="HelpParts/CFileMerge2_SampleToc.png" alt="" width="256" align="right" hspace="10" vspace="10"></a>
   「出力ファイルを開く」ボタンをクリックすると、作成された HTML ヘルプがブラウザで開かれます。<br>
   <br>
-  HTML ヘルプの先頭に目次が生成されています。あくまでも HTML ですので、目次の書式などは CSS で自由に変更することができます。<br>
+  HTML ヘルプの先頭に目次が挿入されています。あくまでも HTML ですので、目次の書式などは CSS で自由に変更することができます。<br>
   <br>
   以上でチュートリアルは終了です。<br>
   <br>
@@ -150,7 +150,7 @@
 <p>
   となります。<br>
   <br>
-  Cfm タグは HTML コメントの形式で、例えば「&lt;!-- Cfm/Toc: --&gt;」という Cfm タグではその場所に目次が生成されます。また、「&lt;!-- Cfm/Include: インクルードファイル名 --&gt;」という Cfm タグではその場所に別の HTML ファイルを読み込むことができます。<br>
+  Cfm タグは HTML コメントの形式で、例えば「&lt;!-- Cfm/Toc: --&gt;」という Cfm タグではその場所に目次が挿入されます。また、「&lt;!-- Cfm/Include: インクルードファイル名 --&gt;」という Cfm タグではその場所に別の HTML ファイルを読み込むことができます。<br>
   <br>
   Cfm タグを活用することで、手作業ですべての HTML ヘルプを作成するよりも効率的になります。<br>
   <br>
@@ -189,12 +189,16 @@
 </pre>
 <p>
   タグ名の大文字小文字は区別されません。タグ値の両側の空白文字は無視されます。<br>
+  <br>
+  なお、Cfm タグ同士は前方（文書頭に近い方）のみ参照されます。例えば、<a href="#CfmTagVar">Var タグ</a>は前方にある<a href="#CfmTagSet">Set タグ</a>で設定された変数のみを表示できますので、Set タグ ➡ Var タグの順に記載する必要があります。<br>
 </p>
 
 <h2 id="CfmTagInclude">インクルード（Include）</h2>
 
 <p>
   別の HTML ファイルを読み込んで挿入します。<br>
+  <br>
+  複数の HTML ヘルプで共通の部品がある場合などに便利です。<br>
 </p>
 
 <table>
@@ -255,6 +259,8 @@
 
 <p>
   基準フォルダー名は絶対パスで記載することもできますし、メイクファイルのあるフォルダーからの相対パスで記載することもできます。<br>
+  <br>
+  例）<br>
 </p>
 
 <pre>
@@ -267,14 +273,109 @@
   IncludeFolder タグが指定されなかった場合の基準フォルダーはメイクファイルのあるフォルダーです。<br>
 </p>
 
+<h2 id="CfmTagOutFile">出力ファイル（OutFile）</h2>
 
+<p>
+  出力する HTML ヘルプのファイル名を指定します。<br>
+</p>
 
+<table>
+  <tr><th>書式</th><td>&lt;!-- Cfm/OutFile: 出力ファイル名 --&gt;</td></tr>
+</table>
 
+<p>
+  出力ファイル名は絶対パスで記載することもできますし、メイクファイルのあるフォルダーからの相対パスで記載することもできます。<br>
+  <br>
+  例）<br>
+</p>
 
+<pre>
+&lt;!-- Cfm/OutFile: C:\Output\Help1.html --&gt;
+&lt;!-- Cfm/OutFile: Help2.html --&gt;
+&lt;!-- Cfm/OutFile: ..\..\Help3.html --&gt;
+</pre>
 
+<p>
+  OutFile タグが指定されなかった場合、メイクファイル名の末尾に「Output.html」が付与されたファイル名に出力されます。<br>
+</p>
 
+<h2 id="CfmTagSet">変数設定（Set）</h2>
 
+<p>
+  変数に値を設定します。<a href="#CfmTagVar">Var タグ</a>で変数の値を表示できるようになります。<br>
+  <br>
+  アプリ名など頻出単語の表記揺れをなくし統一表記にする場合などに便利です。<br>
+</p>
 
+<table>
+  <tr><th>書式</th><td>&lt;!-- Cfm/Set: 変数名 = 変数値 --&gt;</td></tr>
+</table>
+
+<p>
+  変数名および変数値の両側の空白文字は無視されます。変数値の両側に空白文字を設定したい場合は「&amp;nbsp;」を使うと良いでしょう。<br>
+  <br>
+  例）<br>
+</p>
+
+<pre>
+&lt;!-- Cfm/Set: Score = 95 --&gt;
+&lt;!-- Cfm/Set: Name = 山田太郎 --&gt;
+&lt;!-- Cfm/Set: Space = 右にスペース&amp;nbsp; --&gt;
+</pre>
+
+<h2 id="CfmTagToc">目次挿入（Toc）</h2>
+
+<p>
+  文書全体の &lt;h1&gt; タグ、&lt;h2&gt; タグを見出しとした目次を挿入します。<br>
+</p>
+
+<table>
+  <tr><th>書式</th><td>&lt;!-- Cfm/Toc: --&gt;</td></tr>
+</table>
+
+<p>
+  Toc の後ろのコロンを忘れずに記載してください。<br>
+  <br>
+  例）<br>
+</p>
+
+<pre>
+&lt;!-- Cfm/Toc: --&gt;
+</pre>
+
+<p>
+  目次の対象となるのは &lt;h1&gt; タグと &lt;h2&gt; タグです。<br>
+  <br>
+  それぞれの &lt;h1&gt; &lt;h2&gt; タグには id 属性が記載されている必要があります。<br>
+  <br>
+  例）<br>
+</p>
+
+<pre>
+&lt;h1 id="Beginning"&gt;はじめに&lt;/h1&gt;
+&lt;h2 id="FAQ"&gt;よくある質問&lt;/h2&gt;
+</pre>
+
+<h2 id="CfmTagVar">変数表示（Var）</h2>
+
+<p>
+  <a href="#CfmTagSet">Set タグ</a>で設定した変数値を表示します。<br>
+</p>
+
+<table>
+  <tr><th>書式</th><td>&lt;!-- Cfm/Var: 変数名 --&gt;</td></tr>
+</table>
+
+<p>
+  例）<br>
+</p>
+
+<pre>
+&lt;!-- Cfm/Var: Score --&gt;
+&lt;!-- Cfm/Var: Name --&gt;
+&lt;!-- Cfm/Var: Space --&gt;
+</pre>
+  
 
 
 
@@ -304,6 +405,10 @@
 <div class="TocItemH2"><a href="#CfmTagInclude">インクルード（Include）</a></div>
 <div class="TocItemH2"><a href="#CfmTagIncludeDefaultExt">インクルード拡張子（IncludeDefaultExt）</a></div>
 <div class="TocItemH2"><a href="#CfmTagIncludeFolder">インクルードフォルダー（IncludeFolder）</a></div>
+<div class="TocItemH2"><a href="#CfmTagOutFile">出力ファイル（OutFile）</a></div>
+<div class="TocItemH2"><a href="#CfmTagSet">変数設定（Set）</a></div>
+<div class="TocItemH2"><a href="#CfmTagToc">目次挿入（Toc）</a></div>
+<div class="TocItemH2"><a href="#CfmTagVar">変数表示（Var）</a></div>
 </div>
 
 </div><!-- LCol -->
