@@ -113,15 +113,15 @@
   サンプルのメイクファイルをテキストエディタで開くと、Cfm タグの様子が分かるかと思います。<br clear="right">
 </p>
 
-<h2 id="HtmlHelpSeisei">HTML ヘルプ生成</h2>
+<h2 id="HtmlHelpSakusei">HTML ヘルプ作成</h2>
 
 <p>
-  メイクファイルを指定したら、「スタート」ボタンをクリックすると HTML ヘルプが生成されます。<br>
+  メイクファイルを指定したら、「スタート」ボタンをクリックすると HTML ヘルプが作成されます。<br>
   <br>
-  サンプルのメイクファイルでは、Cfm タグで HTML ヘルプのパスが指定されており、「C:\Temp\Sample.html」に HTML ヘルプが生成されます。<br>
+  サンプルのメイクファイルでは、Cfm タグで HTML ヘルプのパスが指定されており、「C:\Temp\Sample.html」に HTML ヘルプが作成されます。<br>
   <br>
   <a href="HelpParts/CFileMerge2_SampleToc.png" target="_blank"><img src="HelpParts/CFileMerge2_SampleToc.png" alt="" width="256" align="right" hspace="10" vspace="10"></a>
-  「出力ファイルを開く」ボタンをクリックすると、生成された HTML ヘルプがブラウザで開かれます。<br>
+  「出力ファイルを開く」ボタンをクリックすると、作成された HTML ヘルプがブラウザで開かれます。<br>
   <br>
   HTML ヘルプの先頭に目次が生成されています。あくまでも HTML ですので、目次の書式などは CSS で自由に変更することができます。<br>
   <br>
@@ -129,6 +129,89 @@
   <br>
   より詳しい使い方は次章以降をご覧ください。<br clear="right">
 </p>
+
+<h1 id="Tsukaikata">使い方</h1>
+
+<p>
+  <a href="#Tutorial">チュートリアル章</a>で実践したように、<!-- Cfm/Var: AppName -->ではメイクファイルを元に HTML ヘルプを作成します。<br>
+  <br>
+  メイクファイル自体も HTML ファイルで、かつ、Cfm タグを埋め込んだものになりますので、<br>
+</p>
+<ul>
+  <li>HTML ファイル　＋　Cfm タグ　➡　メイクファイル</li>
+</ul>
+<p>
+  となります。<br>
+  <br>
+  Cfm タグは HTML コメントの形式で、例えば「&lt;!-- Cfm/Toc: --&gt;」という Cfm タグではその場所に目次が生成されます。また、「&lt;!-- Cfm/Include: インクルードファイル名 --&gt;」という Cfm タグではその場所に別の HTML ファイルを読み込むことができます。<br>
+  <br>
+  Cfm タグを活用することで、手作業ですべての HTML ヘルプを作成するよりも効率的になります。<br>
+  <br>
+  Cfm タグの仕様については次章をご覧ください。<br>
+</p>
+
+<h1 id="CfmTagShiyou">Cfm タグ仕様</h1>
+
+<h2 id="CfmTagCommon">共通仕様</h2>
+
+<p>
+  本節では、Cfm タグに共通する仕様について説明します。<br>
+  <br>
+  Cfm タグは HTML コメント形式で、<br>
+</p>
+<pre>
+&lt;!-- Cfm/タグ名: タグ値 --&gt;
+</pre>
+<p>
+  のように記載します。<br>
+  <br>
+  Cfm の後ろにスラッシュ、タグ名の後ろにコロンが必要です。<br>
+  <br>
+  例）<br>
+</p>
+<pre>
+&lt;!-- Cfm/Include: SampleIncludeFile --&gt;
+</pre>
+<p>
+  Cfm タグによってはタグ値がないものもありますが、その場合もコロンは必要です。<br>
+  <br>
+  例）<br>
+</p>
+<pre>
+&lt;!-- Cfm/Toc: --&gt;
+</pre>
+<p>
+  タグ名の大文字小文字は区別されません。タグ値の両側の空白文字は無視されます。<br>
+</p>
+
+<h2 id="CfmTagInclude">インクルード（Include）</h2>
+
+<p>
+  別の HTML ファイルを読み込んで挿入します。<br>
+</p>
+
+<table>
+  <tr><th>書式</th><td>&lt;!-- Cfm/Include: インクルードファイル名 --&gt;</td></tr>
+</table>
+
+<p>
+  インクルードファイル名は絶対パスで記載することもできますし、メイクファイルからの相対パスで記載することもできます。<br>
+  <br>
+  インクルードファイル名の拡張子は省略することができます。省略した場合は、IncludeDefaultExt タグで指定した拡張子が使われます。<br>
+  <br>
+  インクルードファイルもメイクファイル同様に Cfm タグを使うことができます。例えば、メイクファイルでファイル A をインクルードし、ファイル A でファイル B をインクルードする、といった使い方ができます。<br>
+  <br>
+  例）<br>
+</p>
+
+<pre>
+&lt;!-- Cfm/Include: C:\Include\Hoge1.html --&gt;
+&lt;!-- Cfm/Include: Hoge2.cfm2 --&gt;
+&lt;!-- Cfm/Include: Hoge3 --&gt;
+</pre>
+
+
+
 
 
 
