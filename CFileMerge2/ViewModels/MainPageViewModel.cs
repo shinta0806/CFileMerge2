@@ -949,7 +949,7 @@ public class MainPageViewModel : ObservableRecipient
             if (numProgressLines % Cfm2Constants.PROGRESS_INTERVAL == 0)
             {
                 SetProgressValue(MergeStep.InsertToc, (Double)numProgressLines / _mergeInfo.Lines.Count);
-#if DEBUG
+#if DEBUGz
                 Thread.Sleep(20);
 #endif
             }

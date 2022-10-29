@@ -157,13 +157,13 @@
 <p>
   本節では、Cfm タグに共通する仕様について説明します。<br>
   <br>
-  Cfm タグは HTML コメント形式で、<br>
+  Cfm タグは HTML コメント形式で記載し、書式は<br>
 </p>
-<pre>
-&lt;!-- Cfm/タグ名: タグ値 --&gt;
-</pre>
+<table>
+  <tr><th>書式</th><td>&lt;!-- Cfm/タグ名: タグ値 --&gt;</td></tr>
+</table>
 <p>
-  のように記載します。<br>
+  です。<br>
   <br>
   Cfm の後ろにスラッシュ、タグ名の後ろにコロンが必要です。<br>
   <br>
@@ -195,9 +195,9 @@
 </table>
 
 <p>
-  インクルードファイル名は絶対パスで記載することもできますし、メイクファイルからの相対パスで記載することもできます。<br>
+  インクルードファイル名は絶対パスで記載することもできますし、<a href="#CfmTagIncludeFolder">IncludeFolder タグ</a>で指定したフォルダーからの相対パスで記載することもできます。<br>
   <br>
-  インクルードファイル名の拡張子は省略することができます。省略した場合は、IncludeDefaultExt タグで指定した拡張子が使われます。<br>
+  インクルードファイル名の拡張子は省略することができます。省略した場合は、<a href="#CfmTagIncludeDefaultExt">IncludeDefaultExt タグ</a>で指定した拡張子が使われます。<br>
   <br>
   インクルードファイルもメイクファイル同様に Cfm タグを使うことができます。例えば、メイクファイルでファイル A をインクルードし、ファイル A でファイル B をインクルードする、といった使い方ができます。<br>
   <br>
@@ -206,19 +206,59 @@
 
 <pre>
 &lt;!-- Cfm/Include: C:\Include\Hoge1.html --&gt;
-&lt;!-- Cfm/Include: Hoge2.cfm2 --&gt;
-&lt;!-- Cfm/Include: Hoge3 --&gt;
+&lt;!-- Cfm/Include: Hoge2.html --&gt;
+&lt;!-- Cfm/Include: ..\..\Hoge3.cfm2 --&gt;
+&lt;!-- Cfm/Include: Hoge4 --&gt;
 </pre>
 
+<h2 id="CfmTagIncludeDefaultExt">インクルード拡張子（IncludeDefaultExt）</h2>
 
+<p>
+  <a href="#CfmTagInclude">Include タグ</a>で拡張子が指定されなかった場合のデフォルト拡張子を指定します。<br>
+</p>
 
+<table>
+  <tr><th>書式</th><td>&lt;!-- Cfm/IncludeDefaultExt: デフォルト拡張子 --&gt;</td></tr>
+</table>
 
+<p>
+  拡張子の先頭にピリオドがあってもなくても構いません。<br>
+  <br>
+  例）<br>
+</p>
 
+<pre>
+&lt;!-- Cfm/IncludeDefaultExt: .cfm2 --&gt;
+&lt;!-- Cfm/IncludeDefaultExt: html --&gt;
+</pre>
 
+<p>
+  IncludeDefaultExt タグが指定されなかった場合のデフォルト拡張子はメイクファイルの拡張子と同じ .cfm2 です。<br>
+</p>
 
+<h2 id="CfmTagIncludeFolder">インクルードフォルダー（IncludeFolder）</h2>
 
+<p>
+  <a href="#CfmTagInclude">Include タグ</a>で相対パスが記載された場合の基準フォルダーを指定します。<br>
+</p>
 
+<table>
+  <tr><th>書式</th><td>&lt;!-- Cfm/IncludeFolder: 基準フォルダー名 --&gt;</td></tr>
+</table>
 
+<p>
+  基準フォルダー名は絶対パスで記載することもできますし、メイクファイルのあるフォルダーからの相対パスで記載することもできます。<br>
+</p>
+
+<pre>
+&lt;!-- Cfm/IncludeFolder: C:\Include1 --&gt;
+&lt;!-- Cfm/IncludeFolder: Include2 --&gt;
+&lt;!-- Cfm/IncludeFolder: ..\..\Include3 --&gt;
+</pre>
+
+<p>
+  IncludeFolder タグが指定されなかった場合の基準フォルダーはメイクファイルのあるフォルダーです。<br>
+</p>
 
 
 
