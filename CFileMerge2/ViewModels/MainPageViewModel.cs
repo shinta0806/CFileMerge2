@@ -580,7 +580,7 @@ public class MainPageViewModel : ObservableRecipient
         _mergeInfo = new();
 
         // デフォルト値を設定
-        _mergeInfo.MakeFullPath = Path.GetFullPath(MakePath);
+        _mergeInfo.MakeFullPath = Path.GetFullPath(MakePath, Cfm2Model.Instance.EnvModel.ExeFullFolder);
         _mergeInfo.IncludeFullFolder = Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty;
         _mergeInfo.OutFullPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) + "\\" + Path.GetFileNameWithoutExtension(_mergeInfo.MakeFullPath) + "Output" + Common.FILE_EXT_HTML;
 

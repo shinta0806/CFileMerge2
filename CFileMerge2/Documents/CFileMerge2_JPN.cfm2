@@ -59,6 +59,65 @@
   更新（バージョンアップ）は自動的に行われます。更新版が公開された場合、何度か<!-- Cfm/Var: AppName -->を使用しているうちに自動的に更新されますので、通常は何ら更新作業は必要ありません。自動更新を待つのではなくすぐに更新したい場合は、Microsoft Store で更新してください。<br>
 </p>
 
+<h1 id="Tutorial">チュートリアル</h1>
+
+<p>
+  <!-- Cfm/Var: AppName -->で HTML ヘルプを作成する一連の流れを説明します。<br>
+</p>
+
+<h2 id="Kido">起動</h2>
+
+<p>
+  <a href="HelpParts/CFileMerge2_StartMenu.png" target="_blank"><img src="HelpParts/CFileMerge2_StartMenu.png"
+    alt="" width="256" align="right" hspace="10" vspace="10"></a>
+  スタートメニューの「た」行の位置に<!-- Cfm/Var: AppName -->が登録されているので、クリックして起動します。<br clear="right">
+  <br>
+  <a href="HelpParts/CFileMerge2_MainWindow_Launched.png" target="_blank"><img src="HelpParts/CFileMerge2_MainWindow_Launched.png" alt="" width="256" align="right" hspace="10" vspace="10"></a>
+  メインウィンドウが表示されます。<br clear="right">
+</p>
+
+<h2 id="MakefileShitei">メイクファイル指定</h2>
+
+<p>
+  HTML ヘルプを作成するために、メイクファイルを指定します。<br>
+  <br>
+  本チュートリアルでは、サンプルとして用意されているメイクファイルを指定します。<br>
+  <br>
+  <img src="HelpParts/CFileMerge2_ButtonHelp.png" alt="" height="32" class="InlineImg">（ヘルプボタン）をクリックし、［サンプルフォルダー］メニューをクリックすると、サンプルが用意されているフォルダーが開きます。<br>
+</p>
+
+<blockquote>
+  （補足）<br>
+  ヘルプボタン初回クリック時はメニューが狭く表示されますが、2 度目以降は普通に表示されます。<br>
+</blockquote>
+
+<p>
+  「メイクファイル」欄に、サンプルフォルダー内にある「SampleMakeFile.cfm2」のフルパスを入力します。<br>
+  <br>
+  もしくは、相対パスで「Documents\Samples\SampleMakeFile.cfm2」と入力します。<br>
+  <br>
+  <a href="HelpParts/CFileMerge2_MakefileBrowser.png" target="_blank"><img src="HelpParts/CFileMerge2_MakefileBrowser.png" alt="" width="256" align="right" hspace="10" vspace="10"></a>
+  メイクファイルの中身は HTML ファイルです。従って、メイクファイルを Web ブラウザで開くと内容を見ることができます。<br>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
