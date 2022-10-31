@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CFileMerge2", "CFileMerge2\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CFileMerge2.Core", "CFileMerge2.Core\CFileMerge2.Core.csproj", "{C74040AB-72FD-44D7-8B0F-0126D21193CA}"
 EndProject
-Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "CFileMerge2_Package", "CFileMerge2_Package\CFileMerge2_Package.wapproj", "{384A017B-2A8A-42F1-96D2-B2FE5FCFFF63}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -25,12 +23,6 @@ Global
 		{C74040AB-72FD-44D7-8B0F-0126D21193CA}.Debug|x64.Build.0 = Debug|x64
 		{C74040AB-72FD-44D7-8B0F-0126D21193CA}.Release|x64.ActiveCfg = Release|x64
 		{C74040AB-72FD-44D7-8B0F-0126D21193CA}.Release|x64.Build.0 = Release|x64
-		{384A017B-2A8A-42F1-96D2-B2FE5FCFFF63}.Debug|x64.ActiveCfg = Debug|x64
-		{384A017B-2A8A-42F1-96D2-B2FE5FCFFF63}.Debug|x64.Build.0 = Debug|x64
-		{384A017B-2A8A-42F1-96D2-B2FE5FCFFF63}.Debug|x64.Deploy.0 = Debug|x64
-		{384A017B-2A8A-42F1-96D2-B2FE5FCFFF63}.Release|x64.ActiveCfg = Release|x64
-		{384A017B-2A8A-42F1-96D2-B2FE5FCFFF63}.Release|x64.Build.0 = Release|x64
-		{384A017B-2A8A-42F1-96D2-B2FE5FCFFF63}.Release|x64.Deploy.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
