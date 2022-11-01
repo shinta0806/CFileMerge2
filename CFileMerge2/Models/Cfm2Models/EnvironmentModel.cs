@@ -8,29 +8,24 @@
 //
 // ----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
+
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Models.SharedMisc;
-using CommunityToolkit.Mvvm.Input;
+
 using Shinta;
 
 namespace CFileMerge2.Models.Cfm2Models;
+
 internal class EnvironmentModel
 {
     // ====================================================================
     // コンストラクター
     // ====================================================================
 
-    // --------------------------------------------------------------------
-    // メインコンストラクター
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// メインコンストラクター
+    /// </summary>
     public EnvironmentModel()
     {
         // 最初にログの設定をする
@@ -50,10 +45,14 @@ internal class EnvironmentModel
     // 一般プロパティー
     // --------------------------------------------------------------------
 
-    // 環境設定
+    /// <summary>
+    /// 環境設定
+    /// </summary>
     public Cfm2Settings Cfm2Settings { get; private set; } = new();
 
-    // EXE フルパス
+    /// <summary>
+    /// EXE フルパス
+    /// </summary>
     private String? _exeFullPath;
     public String ExeFullPath
     {
@@ -72,7 +71,9 @@ internal class EnvironmentModel
         }
     }
 
-    // EXE フォルダーのフルパス（末尾 '\\'）
+    /// <summary>
+    /// EXE フォルダーのフルパス（末尾 '\\'）
+    /// </summary>
     private String? _exeFullFolder;
     public String ExeFullFolder
     {

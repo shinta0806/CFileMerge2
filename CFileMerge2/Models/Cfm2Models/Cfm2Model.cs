@@ -8,12 +8,6 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace CFileMerge2.Models.Cfm2Models;
 
 internal class Cfm2Model
@@ -22,9 +16,9 @@ internal class Cfm2Model
     // コンストラクター
     // ====================================================================
 
-    // --------------------------------------------------------------------
-    // メインコンストラクター
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// メインコンストラクター
+    /// </summary>
     public Cfm2Model()
     {
     }
@@ -33,14 +27,17 @@ internal class Cfm2Model
     // static プロパティー
     // ====================================================================
 
-    // 唯一のインスタンス
+    /// <summary>
+    /// 唯一のインスタンス
+    /// </summary>
     public static Cfm2Model Instance { get; } = new();
 
     // ====================================================================
     // public プロパティー
     // ====================================================================
 
-    // 環境設定
+    /// <summary>
+    /// 環境設定
+    /// </summary>
     public EnvironmentModel EnvModel { get; } = new();
-
 }
