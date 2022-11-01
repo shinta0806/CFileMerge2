@@ -9,7 +9,6 @@
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
-using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
@@ -142,7 +141,7 @@ public class MainPageViewModel : ObservableRecipient
                         Debug.Assert(ProgressVisibility == Visibility.Collapsed, "ButtonOpenOutFileClicked() 既に実行中");
                         ShowProgressArea();
                         MergeCore();
-#if DEBUG
+#if DEBUGz
                         Thread.Sleep(3 * 1000);
 #endif
                     }
@@ -162,7 +161,6 @@ public class MainPageViewModel : ObservableRecipient
         {
             HideProgressArea();
         }
-
     }
     #endregion
 
@@ -229,9 +227,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// イベントハンドラー：メイン UI のフォーカスを取得しようとしている
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    public void MainUiGettingFocus(UIElement sender, GettingFocusEventArgs args)
+    public void MainUiGettingFocus(UIElement _, GettingFocusEventArgs args)
     {
         Debug.WriteLine("MainUiGettingFocus() " + Environment.TickCount);
         if (ProgressVisibility == Visibility.Visible)
@@ -249,9 +245,7 @@ public class MainPageViewModel : ObservableRecipient
     /// イベントハンドラー：メイン UI のサイズが変更された
     /// Depend: Window.SizeToContent が実装されればこのコードは不要
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    public void MainUiSizeChanged(Object sender, SizeChangedEventArgs args)
+    public void MainUiSizeChanged(Object sender, SizeChangedEventArgs _)
     {
         Double mainUiHeight = ((StackPanel)sender).ActualHeight;
         Debug.WriteLine("MainUiSizeChanged() " + mainUiHeight);
@@ -267,9 +261,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// イベントハンドラー：ページがロードされた
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    public void PageLoaded(Object sender, RoutedEventArgs args)
+    public void PageLoaded(Object _1, RoutedEventArgs _2)
     {
         ApplySettings();
     }
@@ -295,8 +287,6 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// イベントハンドラー：ウィンドウが閉じられようとしている
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
     private async void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
     {
         // await を待つようにするため、いったんキャンセル
@@ -327,9 +317,9 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// Include タグを実行
     /// </summary>
-    /// <param name="tagInfo"></param>
-    /// <param name="parentLines"></param>
-    /// <param name="parentLine"></param>
+    /// <param name="tagInfo">タグ情報</param>
+    /// <param name="parentLines">親となる行群</param>
+    /// <param name="parentLine">挿入位置</param>
     /// <exception cref="Exception"></exception>
     private void ExecuteCfmTagInclude(CfmTagInfo tagInfo, LinkedList<String> parentLines, LinkedListNode<String> parentLine)
     {
@@ -363,7 +353,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// IncludeDefaultExt タグを実行
     /// </summary>
-    /// <param name="tagInfo"></param>
+    /// <param name="tagInfo">タグ情報</param>
     private void ExecuteCfmTagIncludeDefaultExt(CfmTagInfo tagInfo)
     {
         _mergeInfo.IncludeDefaultExt = tagInfo.Value;
@@ -377,7 +367,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// IncludeFolder タグを実行
     /// </summary>
-    /// <param name="tagInfo"></param>
+    /// <param name="tagInfo">タグ情報</param>
     /// <exception cref="Exception"></exception>
     private void ExecuteCfmTagIncludeFolder(CfmTagInfo tagInfo)
     {
@@ -393,7 +383,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// OutFile タグを実行
     /// </summary>
-    /// <param name="tagInfo"></param>
+    /// <param name="tagInfo">タグ情報</param>
     /// <exception cref="Exception"></exception>
     private void ExecuteCfmTagOutFile(CfmTagInfo tagInfo)
     {
@@ -408,7 +398,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// Set タグを実行
     /// </summary>
-    /// <param name="tagInfo"></param>
+    /// <param name="tagInfo">タグ情報</param>
     private void ExecuteCfmTagSet(CfmTagInfo tagInfo)
     {
         // 変数名と変数値に分割
@@ -443,9 +433,9 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// Var タグを実行
     /// </summary>
-    /// <param name="tagInfo"></param>
-    /// <param name="line"></param>
-    /// <param name="column"></param>
+    /// <param name="tagInfo">タグ情報</param>
+    /// <param name="line">タグのある行</param>
+    /// <param name="column">タグのある桁</param>
     private void ExecuteCfmTagVar(CfmTagInfo tagInfo, LinkedListNode<String> line, Int32 column)
     {
         // 変数名取得
@@ -467,7 +457,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// タグの値からパスを取得
     /// </summary>
-    /// <param name="tagInfo"></param>
+    /// <param name="tagInfo">タグ情報</param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     private String GetPath(CfmTagInfo tagInfo)
@@ -512,7 +502,7 @@ public class MainPageViewModel : ObservableRecipient
 
     /// <summary>
     /// 合併メインルーチン
-    /// 続行不可能なエラーは直ちに Exception を投げる
+    /// 続行不可能なエラーは直ちに Exception で中止する
     /// 続行可能なエラーは MergeInfo.Errors に貯めて最後に表示する
     /// </summary>
     /// <returns></returns>
@@ -590,11 +580,12 @@ public class MainPageViewModel : ObservableRecipient
 
     /// <summary>
     /// Cfm タグがあれば抽出する
+    /// 抽出したタグは line から削除する
     /// </summary>
-    /// <param name="line"></param>
-    /// <param name="column"></param>
-    /// <param name="removeTocTag"></param>
-    /// <returns></returns>
+    /// <param name="line">解析対象行</param>
+    /// <param name="column">解析開始桁</param>
+    /// <param name="removeTocTag">抽出したタグが Toc タグだった場合に削除するかどうか</param>
+    /// <returns>抽出した Cfm タグ, 次の解析開始桁</returns>
     private (CfmTagInfo? tagInfo, Int32 column) ParseCfmTag(LinkedListNode<String> line, Int32 column, Boolean removeTocTag)
     {
         if (column >= line.Value.Length)
@@ -655,8 +646,8 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// Cfm タグを解析して内容を更新する（全体用）
     /// </summary>
-    /// <param name="lines"></param>
-    /// <param name="startLine"></param>
+    /// <param name="lines">解析対象の行群</param>
+    /// <param name="startLine">解析開始行</param>
     private void ParseCfmTagsForMain(LinkedList<String> lines, LinkedListNode<String> startLine)
     {
         LinkedListNode<String>? line = startLine;
@@ -781,9 +772,9 @@ public class MainPageViewModel : ObservableRecipient
     /// ファイルの内容を読み込み解析する
     /// 解析後の内容を parentLine の直後に追加（parentLine が null の場合は先頭に追加）
     /// </summary>
-    /// <param name="path"></param>
-    /// <param name="parentLines"></param>
-    /// <param name="parentLine"></param>
+    /// <param name="path">読み込むファイルのフルパス</param>
+    /// <param name="parentLines">親の行群</param>
+    /// <param name="parentLine">読み込んだ内容を挿入する位置</param>
     /// <exception cref="Exception"></exception>
     private void ParseFile(String path, LinkedList<String> parentLines, LinkedListNode<String>? parentLine)
     {
@@ -847,8 +838,8 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// HTML Hx タグがあれば抽出する
     /// </summary>
-    /// <param name="line"></param>
-    /// <param name="column"></param>
+    /// <param name="line">解析対象行</param>
+    /// <param name="column">解析開始桁</param>
     /// <returns></returns>
     private (HxTagInfo? tagInfo, Int32 column) ParseHxTag(LinkedListNode<String> line, Int32 column)
     {
@@ -963,6 +954,8 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// プログレスバーの進捗率を設定
     /// </summary>
+    /// <param name="mergeStep">現在のステップ</param>
+    /// <param name="currentProgress">現在のステップの中での進捗率</param>
     private void SetProgressValue(MergeStep mergeStep, Double currentProgress)
     {
         Double amount = 0;

@@ -57,7 +57,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Samples\" />
     <Folder Include="Strings\ja-jp\" />
     <Folder Include="_Common\" />
   </ItemGroup>
