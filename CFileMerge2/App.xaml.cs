@@ -1,4 +1,18 @@
-﻿using CFileMerge2.Activation;
+﻿// ============================================================================
+// 
+// アプリケーションのコードビハインド
+// 
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// The .NET Generic Host provides dependency injection, configuration, logging, and other services.
+// https://docs.microsoft.com/dotnet/core/extensions/generic-host
+// https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
+// https://docs.microsoft.com/dotnet/core/extensions/configuration
+// https://docs.microsoft.com/dotnet/core/extensions/logging
+// ----------------------------------------------------------------------------
+
+using CFileMerge2.Activation;
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Core.Contracts.Services;
 using CFileMerge2.Core.Services;
@@ -14,32 +28,15 @@ using Microsoft.UI.Xaml;
 
 namespace CFileMerge2;
 
-// To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
 public partial class App : Application
 {
-    // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
-    // https://docs.microsoft.com/dotnet/core/extensions/generic-host
-    // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
-    // https://docs.microsoft.com/dotnet/core/extensions/configuration
-    // https://docs.microsoft.com/dotnet/core/extensions/logging
-    public IHost Host
-    {
-        get;
-    }
+    // ====================================================================
+    // コンストラクター
+    // ====================================================================
 
-    public static T GetService<T>()
-        where T : class
-    {
-        if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
-        {
-            throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
-        }
-
-        return service;
-    }
-
-    public static WindowEx MainWindow { get; } = new MainWindow();
-
+    /// <summary>
+    /// メインコンストラクター
+    /// </summary>
     public App()
     {
         InitializeComponent();
@@ -76,12 +73,55 @@ public partial class App : Application
         UnhandledException += App_UnhandledException;
     }
 
-    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    // ====================================================================
+    // public プロパティー
+    // ====================================================================
+
+    /// <summary>
+    /// ホスト
+    /// </summary>
+    public IHost Host
     {
-        // TODO: Log and handle exceptions as appropriate.
-        // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
+        get;
     }
 
+    /// <summary>
+    /// メインウィンドウ
+    /// </summary>
+    public static WindowEx MainWindow
+    {
+        get;
+    } = new MainWindow();
+
+    // ====================================================================
+    // public 関数
+    // ====================================================================
+
+    /// <summary>
+    /// サービス取得
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    public static T GetService<T>()
+        where T : class
+    {
+        if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
+        {
+            throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
+        }
+
+        return service;
+    }
+
+    // ====================================================================
+    // protected 関数
+    // ====================================================================
+
+    /// <summary>
+    /// イベントハンドラー：起動
+    /// </summary>
+    /// <param name="args"></param>
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
         base.OnLaunched(args);
@@ -95,5 +135,20 @@ public partial class App : Application
 
         // ここからメインウィンドウが実用になるようだ
         await App.GetService<IActivationService>().ActivateAsync(args);
+    }
+
+    // ====================================================================
+    // private 関数
+    // ====================================================================
+
+    /// <summary>
+    /// 集約エラーハンドラー
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    {
+        // TODO: Log and handle exceptions as appropriate.
+        // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
     }
 }

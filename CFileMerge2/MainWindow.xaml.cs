@@ -5,7 +5,9 @@
 // ============================================================================
 
 // ----------------------------------------------------------------------------
-// ToDo: 環境設定、メイクファイル D&D、メイクファイル履歴、文字コード・改行コード保全、コマンドライン起動、関連付け、id 属性なし警告、状況依存ヘルプ用ファイル、状況依存ヘルプ実装
+// ToDo: 環境設定、メイクファイル D&D、メイクファイル履歴、文字コード・改行コード保全、
+// コマンドライン起動、関連付け、id 属性なし警告、状況依存ヘルプ用ファイル、状況依存ヘルプ実装
+// 集約イベントハンドラー
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
@@ -88,9 +90,7 @@ public sealed partial class MainWindow : WindowEx
     /// <summary>
     /// Activated / Deactivated
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    private void WindowActivated(Object sender, WindowActivatedEventArgs args)
+    private void WindowActivated(Object _, WindowActivatedEventArgs args)
     {
         if (args.WindowActivationState == WindowActivationState.CodeActivated)
         {
