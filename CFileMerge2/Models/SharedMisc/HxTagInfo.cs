@@ -8,12 +8,6 @@
 // <h1 id="hoge">見出し</h1>
 // ----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace CFileMerge2.Models.SharedMisc;
 
 internal class HxTagInfo

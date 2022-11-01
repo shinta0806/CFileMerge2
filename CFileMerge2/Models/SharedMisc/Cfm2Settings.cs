@@ -8,13 +8,6 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CFileMerge2.Models.Cfm2Models;
-
 namespace CFileMerge2.Models.SharedMisc;
 
 internal class Cfm2Settings
@@ -23,10 +16,10 @@ internal class Cfm2Settings
     // コンストラクター
     // ====================================================================
 
-    // --------------------------------------------------------------------
-    // メインコンストラクター
-    // EnvironmentModel 構築時に呼びだされるため、LogWriter は指定できない
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// メインコンストラクター
+    /// EnvironmentModel 構築時に呼びだされるため、LogWriter は指定できない
+    /// </summary>
     public Cfm2Settings()
     {
     }
@@ -65,19 +58,31 @@ internal class Cfm2Settings
     // 終了時の状態（一般）
     // --------------------------------------------------------------------
 
-    // 前回起動時の世代
-    public String PrevLaunchGeneration { get; set; } = String.Empty;
+    /// <summary>
+    /// 前回起動時のバージョン
+    /// </summary>
+    public String PrevLaunchVer
+    {
+        get;
+        set;
+    } = String.Empty;
 
-    // 前回起動時のバージョン
-    public String PrevLaunchVer { get; set; } = String.Empty;
+    /// <summary>
+    /// 前回起動時のパス
+    /// </summary>
+    public String PrevLaunchPath
+    {
+        get;
+        set;
+    } = String.Empty;
 
-    // 前回起動時のパス
-    public String PrevLaunchPath { get; set; } = String.Empty;
-
-    // RSS 確認日
+    /// <summary>
+    /// RSS 確認日
+    /// </summary>
     public DateTime RssCheckDate
     {
-        get; set;
+        get;
+        set;
     }
 
     // ====================================================================
@@ -96,5 +101,4 @@ internal class Cfm2Settings
             TocTargets[2] = true;
         }
     }
-
 }

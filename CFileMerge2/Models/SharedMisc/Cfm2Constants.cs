@@ -49,6 +49,7 @@ internal class Cfm2Constants
     // --------------------------------------------------------------------
     // アプリの基本情報
     // --------------------------------------------------------------------
+
     public const String APP_ID = "CFileMerge2";
     public const String APP_NAME_J = "ちょちょいとファイル合併 2 ";
     public const String APP_VER = "Ver 1.00";
@@ -63,25 +64,37 @@ internal class Cfm2Constants
     // フォルダー名
     // --------------------------------------------------------------------
 
-    // ドキュメントフォルダー名
+    /// <summary>
+    /// ドキュメントフォルダー名
+    /// </summary>
     public const String FOLDER_NAME_DOCUMENTS = "Documents\\";
 
-    // ヘルプ部品フォルダー名
+    /// <summary>
+    /// ヘルプ部品フォルダー名
+    /// </summary>
     public const String FOLDER_NAME_HELP_PARTS = "HelpParts\\";
 
-    // サンプルフォルダー
+    /// <summary>
+    /// サンプルフォルダー
+    /// </summary>
     public const String FOLDER_NAME_SAMPLE = "Samples\\";
 
     // --------------------------------------------------------------------
     // 拡張子
     // --------------------------------------------------------------------
+
+    /// <summary>
+    /// メイクファイル
+    /// </summary>
     public const String FILE_EXT_CFM2_MAKE = ".cfm2";
 
     // --------------------------------------------------------------------
     // UI
     // --------------------------------------------------------------------
 
-    // よく使うラベル
+    /// <summary>
+    /// よく使うラベル
+    /// </summary>
     public const String LABEL_CONFIRM = "確認";
     public const String LABEL_ERROR = "エラー";
     public const String LABEL_INFORMATION = "情報";
@@ -93,40 +106,55 @@ internal class Cfm2Constants
     // 設定
     // --------------------------------------------------------------------
 
-    // 環境設定
+    /// <summary>
+    /// 環境設定
+    /// </summary>
     public const String SETTINGS_KEY_CFM2_SETTINGS = "Cfm2Settings";
 
     // --------------------------------------------------------------------
     // Cfm タグ
     // --------------------------------------------------------------------
 
-    // TagKey に対応するタグキー文字列（小文字にする）
+    /// <summary>
+    /// TagKey に対応するタグキー文字列（小文字にする）
+    /// </summary>
     public static readonly String[] CFM_TAG_KEYS = { "outfile", "includefolder", "includedefaultext", "include", "set", "var", "toc" };
 
     // --------------------------------------------------------------------
     // HTML タグ
     // --------------------------------------------------------------------
 
-    // <hx> タグの最小ランク <h1>
+    /// <summary>
+    /// <hx> タグの最小ランク <h1>
+    /// </summary>
     public const Int32 HX_TAG_RANK_MIN = 1;
 
-    // <hx> タグの最大ランク <h6>
+    /// <summary>
+    /// <hx> タグの最大ランク <h6>
+    /// </summary>
     public const Int32 HX_TAG_RANK_MAX = 6;
 
-    // Toc エリアクラス
+    /// <summary>
+    /// Toc エリアクラス
+    /// </summary>
     public const String TOC_AREA_CLASS_NAME = "TocArea";
 
-    // Toc アイテムクラスプレフィックス
+    /// <summary>
+    /// Toc アイテムクラスプレフィックス
+    /// </summary>
     public const String TOC_ITEM_CLASS_NAME_PREFIX = "TocItemH";
 
     // --------------------------------------------------------------------
     // 合併作業量
     // --------------------------------------------------------------------
 
-    // MergeStep ごとの概算作業量（ParseFile を 100 とする）
+    /// <summary>
+    /// MergeStep ごとの概算作業量（ParseFile を 100 とする）
+    /// </summary>
     public static readonly Int32[] MERGE_STEP_AMOUNT = { 100, 100, 5 };
 
-    // 何行ごとに進捗表示するか
+    /// <summary>
+    /// 何行ごとに進捗表示するか
+    /// </summary>
     public const Int32 PROGRESS_INTERVAL = 10;
-
 }

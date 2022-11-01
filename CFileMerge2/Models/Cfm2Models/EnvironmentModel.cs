@@ -13,6 +13,8 @@ using System.Windows.Input;
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Models.SharedMisc;
 
+using CommunityToolkit.Mvvm.Input;
+
 using Shinta;
 
 namespace CFileMerge2.Models.Cfm2Models;

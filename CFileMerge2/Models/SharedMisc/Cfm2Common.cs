@@ -8,13 +8,8 @@
 //
 // ----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CFileMerge2.Models.Cfm2Models;
+
 using Shinta;
 
 namespace CFileMerge2.Models.SharedMisc;
@@ -22,12 +17,14 @@ namespace CFileMerge2.Models.SharedMisc;
 internal class Cfm2Common
 {
     // ====================================================================
-    // public メンバー関数
+    // public 関数
     // ====================================================================
 
-    // --------------------------------------------------------------------
-    // ヘルプの表示
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// ヘルプの表示
+    /// </summary>
+    /// <param name="anchor"></param>
+    /// <returns></returns>
     public static async Task ShowHelpAsync(String? anchor = null)
     {
         String? helpPath = null;
@@ -62,10 +59,11 @@ internal class Cfm2Common
     }
 
     // ====================================================================
-    // private 変数
+    // private 定数
     // ====================================================================
 
-    // ヘルプファイル名
+    /// <summary>
+    /// ヘルプファイル名
+    /// </summary>
     private const String FILE_NAME_HELP_PREFIX = Cfm2Constants.APP_ID + "_JPN";
-
 }

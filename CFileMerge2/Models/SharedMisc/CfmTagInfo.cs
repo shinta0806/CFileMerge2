@@ -12,14 +12,18 @@ namespace CFileMerge2.Models.SharedMisc;
 
 internal class CfmTagInfo
 {
-    // キー
+    /// <summary>
+    /// キー
+    /// </summary>
     public TagKey Key
     {
         get;
         set;
     }
 
-    // 値
+    /// <summary>
+    /// 値
+    /// </summary>
     public String Value
     {
         get;
