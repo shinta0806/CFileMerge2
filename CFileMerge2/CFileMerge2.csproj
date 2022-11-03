@@ -28,6 +28,7 @@
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\_Common\SerilogUtils.cs" Link="_Common\SerilogUtils.cs" />
     <Compile Include="..\..\..\_Common\ShintaCommon.cs" Link="_Common\ShintaCommon.cs" />
   </ItemGroup>
 
@@ -40,6 +41,10 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
+    <PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="WinUIEx" Version="1.8.0" />
   </ItemGroup>
 

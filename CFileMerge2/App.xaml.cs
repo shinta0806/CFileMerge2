@@ -12,6 +12,8 @@
 // https://docs.microsoft.com/dotnet/core/extensions/logging
 // ----------------------------------------------------------------------------
 
+using System.Diagnostics;
+
 using CFileMerge2.Activation;
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Core.Contracts.Services;
@@ -25,6 +27,8 @@ using CFileMerge2.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+
+using Windows.Storage;
 
 namespace CFileMerge2;
 
@@ -132,6 +136,7 @@ public partial class App : Application
         // 環境設定読み込み
         // メインウィンドウで読み込むと await の関係でメインページと順番がちぐはぐになったりするので、ここで読み込む必要がある
         await Cfm2Model.Instance.EnvModel.LoadCfm2Settings();
+        Debug.WriteLine("OnLaunched() " + ApplicationData.Current.LocalFolder.Path);
 
         // ここからメインウィンドウが実用になるようだ
         await App.GetService<IActivationService>().ActivateAsync(args);

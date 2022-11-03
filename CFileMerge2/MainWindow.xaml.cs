@@ -16,6 +16,10 @@ using CFileMerge2.Models.SharedMisc;
 
 using Microsoft.UI.Xaml;
 
+using Serilog;
+
+using Shinta;
+
 namespace CFileMerge2;
 
 public sealed partial class MainWindow : WindowEx
@@ -40,7 +44,8 @@ public sealed partial class MainWindow : WindowEx
         Content = null;
 
         // イベントハンドラー
-        Activated += WindowActivated;
+        Activated += MainWindow_Activated;
+        Closed += MainWindow_Closed;
     }
 
     // ====================================================================
@@ -88,13 +93,21 @@ public sealed partial class MainWindow : WindowEx
     }
 
     /// <summary>
-    /// Activated / Deactivated
+    /// イベントハンドラー：Activated / Deactivated
     /// </summary>
-    private void WindowActivated(Object _, WindowActivatedEventArgs args)
+    private void MainWindow_Activated(Object _, WindowActivatedEventArgs args)
     {
         if (args.WindowActivationState == WindowActivationState.CodeActivated)
         {
             InitializeIfNeeded();
         }
+    }
+
+    /// <summary>
+    /// イベントハンドラー：ウィンドウクローズ
+    /// </summary>
+    private void MainWindow_Closed(object sender, WindowEventArgs args)
+    {
+        Log.Information("終了しました：" + Cfm2Constants.APP_NAME_J + " " + Cfm2Constants.APP_VER + " --------------------");
     }
 }

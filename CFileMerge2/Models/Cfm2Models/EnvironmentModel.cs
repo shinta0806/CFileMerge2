@@ -15,6 +15,8 @@ using CFileMerge2.Models.SharedMisc;
 
 using CommunityToolkit.Mvvm.Input;
 
+using Serilog;
+
 using Shinta;
 
 namespace CFileMerge2.Models.Cfm2Models;
@@ -31,12 +33,12 @@ internal class EnvironmentModel
     public EnvironmentModel()
     {
         // 最初にログの設定をする
-        //SetLogWriter();
+        SetLog();
 
         // コマンド
         HelpClickedCommand = new RelayCommand<String>(HelpClicked);
 
-        // 環境設定の Load() はしない（YlModel.Instance 生成途中で EnvironmentModel が生成され、エラー発生時に YukaListerModel.Instance 経由でのログ記録ができないため）
+        // await できないため環境設定は読み込まない
     }
 
     // ====================================================================
@@ -145,5 +147,25 @@ internal class EnvironmentModel
         catch (Exception)
         {
         }
+    }
+
+    // ====================================================================
+    // private 関数
+    // ====================================================================
+
+    /// <summary>
+    /// ログ設定
+    /// </summary>
+    private void SetLog()
+    {
+        // ロガー生成
+        SerilogUtils.CreateLogger(5 * 1024 * 1024, 5);
+
+        // 起動ログ
+        Log.Information("起動しました：" + Cfm2Constants.APP_NAME_J + " " + Cfm2Constants.APP_VER + " ====================");
+        Log.Information("プロセス動作モード：" + (Environment.Is64BitProcess ? "64" : "32"));
+#if DEBUG
+        Log.Debug("デバッグモード：" + Common.DEBUG_ENABLED_MARK);
+#endif
     }
 }
