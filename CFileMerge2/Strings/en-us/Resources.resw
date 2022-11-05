@@ -127,4 +127,20 @@
     <value>Main</value>
     <comment>Page title for MainPage</comment>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+    <comment>LogEventLevel</comment>
+  </data>
+  <data name="Fatal" xml:space="preserve">
+    <value>Fatal</value>
+    <comment>LogEventLevel</comment>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+    <comment>LogEventLevel</comment>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+    <comment>LogEventLevel</comment>
+  </data>
 </root>

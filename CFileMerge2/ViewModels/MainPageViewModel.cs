@@ -841,19 +841,19 @@ public class MainPageViewModel : ObservableRecipient
     /// <param name="line">解析対象行</param>
     /// <param name="column">解析開始桁</param>
     /// <returns></returns>
-    private (HxTagInfo? tagInfo, Int32 column) ParseHxTag(LinkedListNode<String> line, Int32 column)
+    private Int32 ParseHxTag(LinkedListNode<String> line, Int32 column)
     {
         if (column >= line.Value.Length)
         {
             // 行末まで解析した
-            return (null, column);
+            return column;
         }
 
         Match hxMatch = Regex.Match(line.Value[column..], @"\<h([1-6])\s.+?\>", RegexOptions.IgnoreCase);
         if (!hxMatch.Success)
         {
             // Hx タグが無い
-            return (null, line.Value.Length);
+            return line.Value.Length;
         }
 
         Debug.Assert(hxMatch.Groups.Count >= 2, "ParseHxTag() hxMatch.Groups が不足");
@@ -864,12 +864,12 @@ public class MainPageViewModel : ObservableRecipient
         if (rank < Cfm2Constants.HX_TAG_RANK_MIN || rank > Cfm2Constants.HX_TAG_RANK_MAX)
         {
             _mergeInfo.Warnings.Add("HTML H タグのランクが HTML Living Standard 仕様の範囲外です：" + hxMatch.Value);
-            return (null, addColumn);
+            return addColumn;
         }
         if (!Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets[rank])
         {
             // 環境設定により対象外
-            return (null, addColumn);
+            return addColumn;
         }
 
         // ID 属性を抽出する
@@ -878,7 +878,7 @@ public class MainPageViewModel : ObservableRecipient
         {
             // ID 属性が無い
             _mergeInfo.Warnings.Add("HTML H タグに ID 属性がないため目次が作成できません：" + hxMatch.Value);
-            return (null, addColumn);
+            return addColumn;
         }
         Debug.Assert(idMatch.Groups.Count >= 2, "ParseHxTag() idMatch.Groups が不足");
         String id = idMatch.Groups[1].Value;
@@ -889,22 +889,14 @@ public class MainPageViewModel : ObservableRecipient
         if (captionEndPos < 0)
         {
             _mergeInfo.Warnings.Add("HTML H タグが閉じられていないため目次が作成できません：" + hxMatch.Value);
-            return (null, addColumn);
+            return addColumn;
         }
         String caption = line.Value[captionBeginPos..captionEndPos].Trim();
 
         // 目次情報追加
         _mergeInfo.Toc.Add("<div class=\"" + Cfm2Constants.TOC_ITEM_CLASS_NAME_PREFIX + rank + "\"><a href=\"#" + id + "\">" + caption + "</a></div>");
 
-        // ToDo: これいらないのでは？
-        HxTagInfo hxTagInfo = new()
-        {
-            Rank = rank,
-            Id = id,
-            Caption = caption,
-        };
-
-        return (hxTagInfo, addColumn);
+        return addColumn;
     }
 
     /// <summary>
@@ -924,7 +916,7 @@ public class MainPageViewModel : ObservableRecipient
             // 列をたどるループ
             for (; ; )
             {
-                (HxTagInfo? tagInfo, Int32 addColumn) = ParseHxTag(line, column);
+                Int32 addColumn = ParseHxTag(line, column);
 
                 // 解析位置（列）を進める
                 column += addColumn;
