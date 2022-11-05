@@ -8,11 +8,12 @@
 //
 // ----------------------------------------------------------------------------
 
+using System.Diagnostics;
 using System.Windows.Input;
 
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Models.SharedMisc;
-
+using CFileMerge2.Services;
 using CommunityToolkit.Mvvm.Input;
 
 using Serilog;
@@ -150,6 +151,15 @@ internal class EnvironmentModel
     }
 
     // ====================================================================
+    // private 定数
+    // ====================================================================
+
+    /// <summary>
+    /// ログファイル名
+    /// </summary>
+    private const String FILE_NAME_LOG = "Log" + Common.FILE_EXT_TXT;
+
+    // ====================================================================
     // private 関数
     // ====================================================================
 
@@ -159,7 +169,7 @@ internal class EnvironmentModel
     private void SetLog()
     {
         // ロガー生成
-        SerilogUtils.CreateLogger(5 * 1024 * 1024, 5);
+        SerilogUtils.CreateLogger(5 * 1024 * 1024, 5, ((LocalSettingsService)App.GetService<ILocalSettingsService>()).Folder() + "Log.txt");
 
         // 起動ログ
         Log.Information("起動しました：" + Cfm2Constants.APP_NAME_J + " " + Cfm2Constants.APP_VER + " ====================");

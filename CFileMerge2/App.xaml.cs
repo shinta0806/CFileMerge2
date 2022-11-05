@@ -136,7 +136,6 @@ public partial class App : Application
         // 環境設定読み込み
         // メインウィンドウで読み込むと await の関係でメインページと順番がちぐはぐになったりするので、ここで読み込む必要がある
         await Cfm2Model.Instance.EnvModel.LoadCfm2Settings();
-        Debug.WriteLine("OnLaunched() " + ApplicationData.Current.LocalFolder.Path);
 
         // ここからメインウィンドウが実用になるようだ
         await App.GetService<IActivationService>().ActivateAsync(args);
