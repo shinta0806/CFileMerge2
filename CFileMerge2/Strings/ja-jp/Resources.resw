@@ -129,14 +129,18 @@
   </data>
   <data name="Information" xml:space="preserve">
     <value>情報</value>
-    <comment>MessageDialog タイトル</comment>
+    <comment>LogEventLevel</comment>
   </data>
   <data name="Error" xml:space="preserve">
     <value>エラー</value>
-    <comment>MessageDialog タイトル</comment>
+    <comment>LogEventLevel</comment>
+  </data>
+  <data name="Fatal" xml:space="preserve">
+    <value>致命的エラー</value>
+    <comment>LogEventLevel</comment>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>警告</value>
-    <comment>MessageDialog タイトル</comment>
+    <comment>LogEventLevel</comment>
   </data>
 </root>

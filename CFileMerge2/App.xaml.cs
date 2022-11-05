@@ -12,6 +12,7 @@
 // https://docs.microsoft.com/dotnet/core/extensions/logging
 // ----------------------------------------------------------------------------
 
+using System.Diagnostics;
 using CFileMerge2.Activation;
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Core.Contracts.Services;
@@ -25,6 +26,8 @@ using CFileMerge2.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+
+using Serilog.Events;
 
 namespace CFileMerge2;
 
@@ -144,12 +147,14 @@ public partial class App : Application
 
     /// <summary>
     /// 集約エラーハンドラー
+    /// MSIX パッケージ時も非 MSIX パッケージ時も、ここには到達しないようだ
     /// </summary>
     /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
+    /// <param name="args"></param>
+    private async void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
     {
-        // TODO: Log and handle exceptions as appropriate.
-        // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
+        Debug.WriteLine("App_UnhandledException() " + args.Exception.Message);
+        await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Fatal, "不明なエラーが発生しました。アプリケーションを終了します。\n"
+                + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace);
     }
 }
