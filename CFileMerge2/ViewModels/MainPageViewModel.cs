@@ -23,7 +23,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-
+using Serilog.Events;
 using Shinta;
 
 using Windows.Storage;
@@ -547,7 +547,7 @@ public class MainPageViewModel : ObservableRecipient
                 else
                 {
                     // 完了
-                    await App.MainWindow.CreateMessageDialog("完了しました。\n経過時間：" + (Environment.TickCount - startTick).ToString("#,0") + " ミリ秒", Cfm2Constants.LABEL_INFORMATION).ShowAsync();
+                    await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Information, "完了しました。\n経過時間：" + (Environment.TickCount - startTick).ToString("#,0") + " ミリ秒");
                 }
             }
             catch (Exception ex)

@@ -5,7 +5,7 @@
 // ============================================================================
 
 // ----------------------------------------------------------------------------
-// ToDo: 環境設定、メイクファイル D&D、メイクファイル履歴、文字コード・改行コード保全、
+// ToDo: 環境設定、メイクファイル履歴、文字コード・改行コード保全、
 // コマンドライン起動、関連付け、id 属性なし警告、状況依存ヘルプ用ファイル、状況依存ヘルプ実装
 // 集約イベントハンドラー
 // ----------------------------------------------------------------------------
@@ -17,8 +17,6 @@ using CFileMerge2.Models.SharedMisc;
 using Microsoft.UI.Xaml;
 
 using Serilog;
-
-using Shinta;
 
 namespace CFileMerge2;
 
@@ -105,6 +103,7 @@ public sealed partial class MainWindow : WindowEx
 
     /// <summary>
     /// イベントハンドラー：ウィンドウクローズ
+    /// 非 MSIX パッケージ時は実行されない、もしくは、実行が完了しないようだ
     /// </summary>
     private void MainWindow_Closed(object sender, WindowEventArgs args)
     {

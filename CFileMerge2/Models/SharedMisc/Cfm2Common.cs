@@ -8,8 +8,10 @@
 //
 // ----------------------------------------------------------------------------
 
+using System;
 using CFileMerge2.Models.Cfm2Models;
-
+using CFileMerge2.Helpers;
+using Serilog;
 using Shinta;
 
 namespace CFileMerge2.Models.SharedMisc;
@@ -56,6 +58,18 @@ internal class Cfm2Common
         {
             await App.MainWindow.CreateMessageDialog("ヘルプを表示できませんでした。\n" + ex.Message + "\n" + helpPath, Cfm2Constants.LABEL_ERROR).ShowAsync();
         }
+    }
+
+    /// <summary>
+    /// ログの記録と表示
+    /// </summary>
+    /// <param name="logEventLevel"></param>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    public static async Task ShowLogMessageDialogAsync(Serilog.Events.LogEventLevel logEventLevel, String message)
+    {
+        Log.Write(logEventLevel, message);
+        await App.MainWindow.CreateMessageDialog(message, logEventLevel.ToString().GetLocalized()).ShowAsync();
     }
 
     // ====================================================================

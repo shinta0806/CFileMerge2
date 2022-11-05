@@ -12,8 +12,6 @@
 // https://docs.microsoft.com/dotnet/core/extensions/logging
 // ----------------------------------------------------------------------------
 
-using System.Diagnostics;
-
 using CFileMerge2.Activation;
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Core.Contracts.Services;
@@ -27,8 +25,6 @@ using CFileMerge2.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-
-using Windows.Storage;
 
 namespace CFileMerge2;
 
@@ -74,6 +70,7 @@ public partial class App : Application
         }).
         Build();
 
+        // 集約エラーハンドラー設定
         UnhandledException += App_UnhandledException;
     }
 
@@ -150,7 +147,7 @@ public partial class App : Application
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
     {
         // TODO: Log and handle exceptions as appropriate.
         // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.

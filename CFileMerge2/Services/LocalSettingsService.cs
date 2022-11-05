@@ -5,9 +5,9 @@
 // ============================================================================
 
 // ----------------------------------------------------------------------------
-// 保存先フォルダー
+// 保存先ファイル
 //   MSIX パッケージ時：%LocalAppData%\Packages\22724SHINTA.ChochoitoFileMerge2_7y6dzca6yqjvw\Settings\settings.dat
-//   非 MSIX パッケージ時：
+//   非 MSIX パッケージ時：%LocalAppData%\SHINTA\CFileMerge2\ApplicationData\LocalSettings.json
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.Contracts.Services;
