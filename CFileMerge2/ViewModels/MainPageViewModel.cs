@@ -694,6 +694,14 @@ public class MainPageViewModel : ObservableRecipient
             }
 
             File.WriteAllLines(_mergeInfo.AnchorOutFullFolder + Path.GetFileNameWithoutExtension(_mergeInfo.OutFullPath) + "_" + hxTagInfos[i].Id + Common.FILE_EXT_HTML, anchorFileContents);
+
+            if (i % Cfm2Constants.PROGRESS_INTERVAL == 0)
+            {
+                SetProgressValue(MergeStep.OutputAnchor, (Double)i / hxTagInfos.Count);
+#if DEBUGz
+                Thread.Sleep(500);
+#endif
+            }
         }
     }
 

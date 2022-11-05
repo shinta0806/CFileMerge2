@@ -80,17 +80,6 @@ internal class MergeInfo
         set;
     }
 
-#if false
-    /// <summary>
-    /// 目次情報（HTML タグ）
-    /// </summary>
-    public List<String> Toc
-    {
-        get;
-        set;
-    } = new();
-#endif
-
     /// <summary>
     /// アンカーメイクファイルのフルパス
     /// </summary>
