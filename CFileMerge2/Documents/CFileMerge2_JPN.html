@@ -195,6 +195,84 @@
   なお、Cfm タグ同士は前方（文書頭に近い方）のみ参照されます。例えば、<a href="#CfmTagVar">Var タグ</a>は前方にある<a href="#CfmTagSet">Set タグ</a>で設定された変数のみを表示できますので、Set タグ ➡ Var タグの順に記載する必要があります。<br>
 </p>
 
+<h2 id="CfmTagAnchorPath">アンカーパス（AnchorPath）</h2>
+
+<p>
+  アンカーメイクファイルで使用する Cfm タグです。アンカーメイクファイルについては <a href="#CfmTagGenerateAnchorFiles">GenerateAnchorFiles タグ</a>をご覧ください。<br>
+  <br>
+  出力先ファイルとそのアンカーへのパスを挿入します。<br>
+</p>
+
+<table>
+  <tr><th>書式</th><td>&lt;!-- Cfm/AnchorPath: --&gt;</td></tr>
+</table>
+
+<p>
+  AnchorPath の後ろのコロンを忘れずに記載してください。<br>
+  <br>
+  例）<br>
+</p>
+
+<pre>
+&lt;!-- Cfm/AnchorPath: --&gt;
+</pre>
+
+<h2 id="CfmTagGenerateAnchorFiles">アンカーファイル作成（GenerateAnchorFiles）</h2>
+
+<p>
+  アンカーファイルを作成します。<br>
+  <br>
+  アンカーファイルとは、出力ファイルの指定の見出しへの遷移を目的としたファイルです。Web の場合は、<br>
+</p>
+
+<pre>
+  https://www.example.com/index.html#SomeTitle
+</pre>
+
+<p>
+  のように「#」に続けてアンカーを指定することにより、当該部分を表示することができます。しかし、ローカルディスクのファイルとして HTML ヘルプを作成した場合、ブラウザで<br>
+</p>
+
+<pre>
+  C:\Temp\Help.html#SomeTitle
+</pre>
+
+<p>
+  を開いても「#SomeTitle」に遷移せず、文書頭が表示されてしまいます。<br>
+  <br>
+  そこで、ブラウザで<br>
+</p>
+
+<pre>
+  C:\Temp\Help.html\HelpParts\Help_SomeTitle.html
+</pre>
+
+<p>
+  を開くと<br>
+</p>
+
+<pre>
+  C:\Temp\Help.html#SomeTitle
+</pre>
+
+<p>
+  に遷移するようにします。Help_SomeTitle.html がアンカーファイルです。<br>
+</p>
+
+<table>
+  <tr><th>書式</th><td>&lt;!-- Cfm/GenerateAnchorFiles: アンカーメイクファイル名, アンカーファイルを作成するフォルダー名 --&gt;</td></tr>
+</table>
+
+<p>
+  GenerateAnchorFiles タグは原則としてメイクファイルのどこに記述しても構いません。GenerateAnchorFiles タグがあればアンカーファイルを作成し、なければアンカーファイルは作成しません。<br>
+  <br>
+  アンカーメイクファイル名は、アンカーファイルの内容になるファイルを指定します。アンカーメイクファイル内に <a href="#CfmTagAnchorPath">AnchorPath タグ</a>を記述しておくことで、出力ファイルへの遷移をするようにします。アンカーメイクファイルのサンプルについては、サンプルフォルダー内にある SampleAnchorMakeFile.cfm2anchor を参考にしてください。<br>
+  <br>
+  アンカーファイルを作成するフォルダー名には、アンカーファイル群を作成するフォルダーを指定します。通常は出力先ファイルのあるフォルダーからの相対パスで指定します。<br>
+  <br>
+  アンカーファイルを作成するフォルダー名は省略可能です。省略した場合、「HelpParts」が指定されます。<br>
+</p>
+
 <h2 id="CfmTagInclude">インクルード（Include）</h2>
 
 <p>
@@ -486,33 +564,35 @@
 <div id="LCol">
 
 <div class="TocArea">
-<div class="TocItemH1"><a href="#Hajimeni">はじめに</a></div>
-<div class="TocItemH2"><a href="#Gaiyou">概要</a></div>
-<div class="TocItemH2"><a href="#Dousakankyou">動作環境</a></div>
-<div class="TocItemH2"><a href="#Install">インストール</a></div>
-<div class="TocItemH1"><a href="#Tutorial">チュートリアル</a></div>
-<div class="TocItemH2"><a href="#Kido">起動</a></div>
-<div class="TocItemH2"><a href="#MakefileShitei">メイクファイル指定</a></div>
-<div class="TocItemH2"><a href="#HtmlHelpSakusei">HTML ヘルプ作成</a></div>
-<div class="TocItemH1"><a href="#Tsukaikata">使い方</a></div>
-<div class="TocItemH1"><a href="#CfmTagShiyou">Cfm タグ仕様</a></div>
-<div class="TocItemH2"><a href="#CfmTagCommon">共通仕様</a></div>
-<div class="TocItemH2"><a href="#CfmTagInclude">インクルード（Include）</a></div>
-<div class="TocItemH2"><a href="#CfmTagIncludeDefaultExt">インクルード拡張子（IncludeDefaultExt）</a></div>
-<div class="TocItemH2"><a href="#CfmTagIncludeFolder">インクルードフォルダー（IncludeFolder）</a></div>
-<div class="TocItemH2"><a href="#CfmTagOutFile">出力ファイル（OutFile）</a></div>
-<div class="TocItemH2"><a href="#CfmTagSet">変数設定（Set）</a></div>
-<div class="TocItemH2"><a href="#CfmTagToc">目次挿入（Toc）</a></div>
-<div class="TocItemH2"><a href="#CfmTagVar">変数表示（Var）</a></div>
-<div class="TocItemH1"><a href="#Komattatokiwa">困ったときは</a></div>
-<div class="TocItemH1"><a href="#Onegai">お願い</a></div>
-<div class="TocItemH2"><a href="#NiconicoUser">ニコニコユーザー</a></div>
-<div class="TocItemH2"><a href="#Fantia">クリエイター支援サイト</a></div>
-<div class="TocItemH1"><a href="#Sonota">その他</a></div>
-<div class="TocItemH2"><a href="#Database">データベース</a></div>
-<div class="TocItemH2"><a href="#License">ライセンス</a></div>
-<div class="TocItemH2"><a href="#Kaiteirireki">改訂履歴</a></div>
-<div class="TocItemH2"><a href="#Shaji">謝辞</a></div>
+  <div class="TocItemH1"><a href="#Hajimeni">はじめに</a></div>
+  <div class="TocItemH2"><a href="#Gaiyou">概要</a></div>
+  <div class="TocItemH2"><a href="#Dousakankyou">動作環境</a></div>
+  <div class="TocItemH2"><a href="#Install">インストール</a></div>
+  <div class="TocItemH1"><a href="#Tutorial">チュートリアル</a></div>
+  <div class="TocItemH2"><a href="#Kido">起動</a></div>
+  <div class="TocItemH2"><a href="#MakefileShitei">メイクファイル指定</a></div>
+  <div class="TocItemH2"><a href="#HtmlHelpSakusei">HTML ヘルプ作成</a></div>
+  <div class="TocItemH1"><a href="#Tsukaikata">使い方</a></div>
+  <div class="TocItemH1"><a href="#CfmTagShiyou">Cfm タグ仕様</a></div>
+  <div class="TocItemH2"><a href="#CfmTagCommon">共通仕様</a></div>
+  <div class="TocItemH2"><a href="#CfmTagAnchorPath">アンカーパス（AnchorPath）</a></div>
+  <div class="TocItemH2"><a href="#CfmTagGenerateAnchorFiles">アンカーファイル作成（GenerateAnchorFiles）</a></div>
+  <div class="TocItemH2"><a href="#CfmTagInclude">インクルード（Include）</a></div>
+  <div class="TocItemH2"><a href="#CfmTagIncludeDefaultExt">インクルード拡張子（IncludeDefaultExt）</a></div>
+  <div class="TocItemH2"><a href="#CfmTagIncludeFolder">インクルードフォルダー（IncludeFolder）</a></div>
+  <div class="TocItemH2"><a href="#CfmTagOutFile">出力ファイル（OutFile）</a></div>
+  <div class="TocItemH2"><a href="#CfmTagSet">変数設定（Set）</a></div>
+  <div class="TocItemH2"><a href="#CfmTagToc">目次挿入（Toc）</a></div>
+  <div class="TocItemH2"><a href="#CfmTagVar">変数表示（Var）</a></div>
+  <div class="TocItemH1"><a href="#Komattatokiwa">困ったときは</a></div>
+  <div class="TocItemH1"><a href="#Onegai">お願い</a></div>
+  <div class="TocItemH2"><a href="#NiconicoUser">ニコニコユーザー</a></div>
+  <div class="TocItemH2"><a href="#Fantia">クリエイター支援サイト</a></div>
+  <div class="TocItemH1"><a href="#Sonota">その他</a></div>
+  <div class="TocItemH2"><a href="#Database">データベース</a></div>
+  <div class="TocItemH2"><a href="#License">ライセンス</a></div>
+  <div class="TocItemH2"><a href="#Kaiteirireki">改訂履歴</a></div>
+  <div class="TocItemH2"><a href="#Shaji">謝辞</a></div>
 </div>
 
 </div><!-- LCol -->

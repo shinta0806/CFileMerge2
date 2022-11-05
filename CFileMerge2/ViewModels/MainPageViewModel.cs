@@ -328,7 +328,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// Anchor タグを実行
     /// </summary>
-    private void ExecuteCfmTagAnchor(LinkedListNode<String> line, Int32 column)
+    private void ExecuteCfmTagAnchorPath(LinkedListNode<String> line, Int32 column)
     {
         _mergeInfo.AnchorPositions.Add(new(line, column));
     }
@@ -824,8 +824,8 @@ public class MainPageViewModel : ObservableRecipient
                         case TagKey.GenerateAnchorFiles:
                             ExecuteCfmTagGenerateAnchorFiles(tagInfo);
                             break;
-                        case TagKey.Anchor:
-                            ExecuteCfmTagAnchor(line, column + addColumn);
+                        case TagKey.AnchorPath:
+                            ExecuteCfmTagAnchorPath(line, column + addColumn);
                             break;
                         default:
                             Debug.Assert(false, "ParseCfmTagsForMain() Cfm タグ捕捉漏れ");
