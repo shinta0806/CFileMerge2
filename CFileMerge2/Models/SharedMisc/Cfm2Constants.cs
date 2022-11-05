@@ -22,6 +22,7 @@ public enum MergeStep
     ParseFile,
     InsertToc,
     Output,
+    OutputAnchor,
     __End__,
 }
 
@@ -30,13 +31,15 @@ public enum MergeStep
 /// </summary>
 public enum TagKey
 {
-    OutFile,            // 出力先ファイル
-    IncludeFolder,      // インクルードフォルダー
-    IncludeDefaultExt,  // インクルード拡張子
-    Include,            // インクルード
-    Set,                // 変数設定
-    Var,                // 変数使用
-    Toc,                // 目次
+    OutFile,                // 出力先ファイル
+    IncludeFolder,          // インクルードフォルダー
+    IncludeDefaultExt,      // インクルード拡張子
+    Include,                // インクルード
+    Set,                    // 変数設定
+    Var,                    // 変数使用
+    Toc,                    // 目次
+    GenerateAnchorFiles,    // アンカーファイルを作成
+    Anchor,                 // アンカー
     __End__,
 }
 
@@ -55,7 +58,7 @@ internal class Cfm2Constants
     public const String APP_VER = "Ver 1.00";
     public const String COPYRIGHT_J = "Copyright (C) 2022 by SHINTA";
 #if DISTRIB_STORE
-		public const String APP_DISTRIB = "ストア版";
+    public const String APP_DISTRIB = "ストア版";
 #else
     public const String APP_DISTRIB = "zip 版";
 #endif
@@ -118,7 +121,7 @@ internal class Cfm2Constants
     /// <summary>
     /// TagKey に対応するタグキー文字列（小文字にする）
     /// </summary>
-    public static readonly String[] CFM_TAG_KEYS = { "outfile", "includefolder", "includedefaultext", "include", "set", "var", "toc" };
+    public static readonly String[] CFM_TAG_KEYS = { "outfile", "includefolder", "includedefaultext", "include", "set", "var", "toc", "generateanchorfiles", "anchor" };
 
     // --------------------------------------------------------------------
     // HTML タグ
@@ -151,7 +154,7 @@ internal class Cfm2Constants
     /// <summary>
     /// MergeStep ごとの概算作業量（ParseFile を 100 とする）
     /// </summary>
-    public static readonly Int32[] MERGE_STEP_AMOUNT = { 100, 100, 5 };
+    public static readonly Int32[] MERGE_STEP_AMOUNT = { 100, 100, 5, 50 };
 
     /// <summary>
     /// 何行ごとに進捗表示するか

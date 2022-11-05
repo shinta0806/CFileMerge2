@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="10;URL='<!-- Cfm/Anchor: -->'">
+<title><!-- Cfm/Var: AppName -->ヘルプ</title>
+</head>
+
+<body>
+<p>
+<!-- Cfm/Var: AppName -->のヘルプを表示する準備をしています...<br>
+<br>
+しばらくたってもヘルプが表示されない場合は、<a href="<!-- Cfm/Anchor: -->">こちら</a>をクリックして下さい。<br>
+</p>
+</body>
+
+</html>

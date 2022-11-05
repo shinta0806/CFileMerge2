@@ -9,6 +9,7 @@
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
@@ -25,7 +26,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Serilog.Events;
 using Shinta;
-
+using Windows.ApplicationModel.Background;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Popups;
@@ -266,6 +267,16 @@ public class MainPageViewModel : ObservableRecipient
         ApplySettings();
     }
 
+
+    // ====================================================================
+    // private 定数
+    // ====================================================================
+
+    /// <summary>
+    /// アンカーファイルの出力先フォルダー
+    /// </summary>
+    private const String ANCHOR_OUT_DEFAULT = "HelpParts";
+
     // ====================================================================
     // private 変数
     // ====================================================================
@@ -312,6 +323,44 @@ public class MainPageViewModel : ObservableRecipient
 
         // 改めて閉じる
         App.MainWindow.Close();
+    }
+
+    /// <summary>
+    /// Anchor タグを実行
+    /// </summary>
+    private void ExecuteCfmTagAnchor(LinkedListNode<String> line, Int32 column)
+    {
+        _mergeInfo.AnchorPositions.Add(new(line, column));
+    }
+
+    /// <summary>
+    /// GenerateAnchorFiles タグを実行
+    /// </summary>
+    /// <param name="tagInfo">タグ情報</param>
+    private void ExecuteCfmTagGenerateAnchorFiles(CfmTagInfo tagInfo)
+    {
+        String[] tagValues = tagInfo.Value.Split(',');
+        for (Int32 i = 0; i < tagValues.Length; i++)
+        {
+            tagValues[i] = tagValues[i].Trim();
+        }
+
+        // アンカーメイクファイル
+        _mergeInfo.AnchorMakeFullPath = GetPathByMakeFullPath(tagValues[0], TagKey.GenerateAnchorFiles.ToString() + " タグのアンカーメイクファイル");
+
+        // アンカー出力先
+        String outSrc;
+        if (tagValues.Length < 2)
+        {
+            // デフォルトの出力先
+            outSrc = ANCHOR_OUT_DEFAULT;
+        }
+        else
+        {
+            // タグ値
+            outSrc = tagValues[1];
+        }
+        _mergeInfo.AnchorOutFullFolder = GetPath(outSrc, Path.GetDirectoryName(_mergeInfo.OutFullPath) ?? String.Empty, "アンカー出力先フォルダー") + "\\";
     }
 
     /// <summary>
@@ -371,7 +420,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <exception cref="Exception"></exception>
     private void ExecuteCfmTagIncludeFolder(CfmTagInfo tagInfo)
     {
-        _mergeInfo.IncludeFullFolder = GetPath(tagInfo);
+        _mergeInfo.IncludeFullFolder = GetPathByMakeFullPath(tagInfo);
         Debug.WriteLine("ExecuteTagIncludeFolder() " + _mergeInfo.IncludeFullFolder);
         if (!Directory.Exists(_mergeInfo.IncludeFullFolder))
         {
@@ -387,7 +436,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <exception cref="Exception"></exception>
     private void ExecuteCfmTagOutFile(CfmTagInfo tagInfo)
     {
-        _mergeInfo.OutFullPath = GetPath(tagInfo);
+        _mergeInfo.OutFullPath = GetPathByMakeFullPath(tagInfo);
         Debug.WriteLine("ExexuteTagOutFile() " + _mergeInfo.OutFullPath);
         if (String.Compare(_mergeInfo.OutFullPath, _mergeInfo.MakeFullPath, true) == 0)
         {
@@ -455,27 +504,52 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     /// <summary>
-    /// タグの値からパスを取得
+    /// フルパスを取得（絶対パスまたは相対パスより）
+    /// </summary>
+    /// <param name="path">絶対パスまたは相対パス</param>
+    /// <param name="basePath">相対パスの基準フォルダー</param>
+    /// <param name="srcName">記述元（エラー表示用）</param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    private String GetPath(String path, String basePath, String srcName)
+    {
+        if (String.IsNullOrEmpty(path))
+        {
+            throw new Exception(srcName + "のパスが指定されていません。");
+        }
+        if (Path.IsPathRooted(path))
+        {
+            // 絶対パス
+            return path;
+        }
+        else
+        {
+            // 相対パス
+            return Path.GetFullPath(path, basePath);
+        }
+    }
+
+    /// <summary>
+    /// フルパスを取得（絶対パスまたはメイクファイルからの相対パスより）
+    /// </summary>
+    /// <param name="path">絶対パスまたはメイクファイルからの相対パス</param>
+    /// <param name="srcName">記述元（エラー表示用）</param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    private String GetPathByMakeFullPath(String path, String srcName)
+    {
+        return GetPath(path, Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty, srcName);
+    }
+
+    /// <summary>
+    /// タグの値からフルパスを取得（絶対パスまたはメイクファイルからの相対パスより）
     /// </summary>
     /// <param name="tagInfo">タグ情報</param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    private String GetPath(CfmTagInfo tagInfo)
+    private String GetPathByMakeFullPath(CfmTagInfo tagInfo)
     {
-        if (String.IsNullOrEmpty(tagInfo.Value))
-        {
-            throw new Exception(Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key] + " タグのパスが指定されていません。");
-        }
-        if (Path.IsPathRooted(tagInfo.Value))
-        {
-            // 絶対パス
-            return tagInfo.Value;
-        }
-        else
-        {
-            // メイクファイルからの相対パス
-            return Path.GetFullPath(tagInfo.Value, Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty);
-        }
+        return GetPathByMakeFullPath(tagInfo.Value, Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key] + " タグ");
     }
 
     /// <summary>
@@ -487,17 +561,6 @@ public class MainPageViewModel : ObservableRecipient
         {
             ProgressVisibility = Visibility.Collapsed;
         });
-    }
-
-    /// <summary>
-    /// 目次作成
-    /// </summary>
-    private void InsertToc()
-    {
-        _mergeInfo.Toc.Add("<div class=\"" + Cfm2Constants.TOC_AREA_CLASS_NAME + "\">");
-        ParseHxTags();
-        _mergeInfo.Toc.Add("</div>");
-        ParseCfmTagsForToc();
     }
 
     /// <summary>
@@ -521,13 +584,21 @@ public class MainPageViewModel : ObservableRecipient
                 SetProgressValue(MergeStep.InsertToc, 0.0);
                 if (_mergeInfo.TocNeeded)
                 {
-                    InsertToc();
+                    ParseCfmTagsForToc();
                 }
 
                 // 出力
                 SetProgressValue(MergeStep.Output, 0.0);
                 Directory.CreateDirectory(Path.GetDirectoryName(_mergeInfo.OutFullPath) ?? String.Empty);
                 File.WriteAllLines(_mergeInfo.OutFullPath, _mergeInfo.Lines);
+
+                // アンカー出力
+                SetProgressValue(MergeStep.OutputAnchor, 0.0);
+                if (!String.IsNullOrEmpty(_mergeInfo.AnchorMakeFullPath))
+                {
+                    OutputAnchors();
+                }
+                SetProgressValue(MergeStep.OutputAnchor, 100.0);
 
 #if DEBUGz
                 Thread.Sleep(5 * 1000);
@@ -576,6 +647,54 @@ public class MainPageViewModel : ObservableRecipient
 
         // メイクファイル読み込み（再帰）
         ParseFile(_mergeInfo.MakeFullPath, _mergeInfo.Lines, null);
+    }
+
+    /// <summary>
+    /// アンカーファイル群を出力
+    /// </summary>
+    private void OutputAnchors()
+    {
+        // アンカー出力先フォルダー作成
+        Directory.CreateDirectory(_mergeInfo.AnchorOutFullFolder);
+
+        // アンカーファイル作成対象の Hx タグを検索
+        List<HxTagInfo> hxTagInfos = ParseHxTags(Cfm2Model.Instance.EnvModel.Cfm2Settings.AnchorTargets);
+
+        // アンカーメイクファイル読み込み（再帰）
+        _mergeInfo.AnchorPositions.Clear();
+        LinkedList<String> lines = new();
+        ParseFile(_mergeInfo.AnchorMakeFullPath, lines, null);
+
+        // アンカー挿入位置の行番号を計算
+        List<KeyValuePair<Int32, Int32>> anchorPositionIndexes = new();
+        for (Int32 i = 0; i < _mergeInfo.AnchorPositions.Count; i++)
+        {
+            Int32 lineIndex = -1;
+            LinkedListNode<String>? line = _mergeInfo.AnchorPositions[i].Key;
+            while (line != null)
+            {
+                lineIndex++;
+                line = line.Previous;
+            }
+            anchorPositionIndexes.Add(new(lineIndex, _mergeInfo.AnchorPositions[i].Value));
+        }
+
+        // アンカーファイルのフォルダーを基準とした時の出力ファイルの相対パス
+        String relativePath = Path.GetRelativePath(_mergeInfo.AnchorOutFullFolder, _mergeInfo.OutFullPath).Replace('\\', '/');
+
+        // アンカーファイル出力
+        for (Int32 i = 0; i < hxTagInfos.Count; i++)
+        {
+            List<String> anchorFileContents = new(lines);
+
+            // アンカー置換
+            for (Int32 j = 0; j < anchorPositionIndexes.Count; j++)
+            {
+                anchorFileContents[anchorPositionIndexes[j].Key] = anchorFileContents[anchorPositionIndexes[j].Key].Insert(anchorPositionIndexes[j].Value, relativePath + "#" + hxTagInfos[i].Id);
+            }
+
+            File.WriteAllLines(_mergeInfo.AnchorOutFullFolder + Path.GetFileNameWithoutExtension(_mergeInfo.OutFullPath) + "_" + hxTagInfos[i].Id + Common.FILE_EXT_HTML, anchorFileContents);
+        }
     }
 
     /// <summary>
@@ -694,6 +813,12 @@ public class MainPageViewModel : ObservableRecipient
                         case TagKey.Toc:
                             ExecuteCfmTagToc();
                             break;
+                        case TagKey.GenerateAnchorFiles:
+                            ExecuteCfmTagGenerateAnchorFiles(tagInfo);
+                            break;
+                        case TagKey.Anchor:
+                            ExecuteCfmTagAnchor(line, column + addColumn);
+                            break;
                         default:
                             Debug.Assert(false, "ParseCfmTagsForMain() Cfm タグ捕捉漏れ");
                             break;
@@ -747,7 +872,16 @@ public class MainPageViewModel : ObservableRecipient
                     // 有効なタグが見つかった（タグに対応する文字列は削除されている）
                     if (tagInfo.Key == TagKey.Toc)
                     {
-                        line.Value = line.Value.Insert(column + addColumn, String.Join('\n', _mergeInfo.Toc));
+                        StringBuilder stringBuilder = new();
+                        stringBuilder.Append("<div class=\"" + Cfm2Constants.TOC_AREA_CLASS_NAME + "\">\n");
+                        List<HxTagInfo> hxTagInfos = ParseHxTags(Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets);
+                        for (Int32 i = 0; i < hxTagInfos.Count; i++)
+                        {
+                            stringBuilder.Append("  <div class=\"" + Cfm2Constants.TOC_ITEM_CLASS_NAME_PREFIX + hxTagInfos[i].Rank + "\"><a href=\"#" +
+                                    hxTagInfos[i].Id + "\">" + hxTagInfos[i].Caption + "</a></div>\n");
+                        }
+                        stringBuilder.Append("</div>");
+                        line.Value = line.Value.Insert(column + addColumn, stringBuilder.ToString());
                     }
                 }
 
@@ -841,19 +975,19 @@ public class MainPageViewModel : ObservableRecipient
     /// <param name="line">解析対象行</param>
     /// <param name="column">解析開始桁</param>
     /// <returns></returns>
-    private Int32 ParseHxTag(LinkedListNode<String> line, Int32 column)
+    private (Int32 addColumn, HxTagInfo? hxTagInfo) ParseHxTag(LinkedListNode<String> line, Int32 column, Boolean[] targetRanks)
     {
         if (column >= line.Value.Length)
         {
             // 行末まで解析した
-            return column;
+            return (column, null);
         }
 
         Match hxMatch = Regex.Match(line.Value[column..], @"\<h([1-6])\s.+?\>", RegexOptions.IgnoreCase);
         if (!hxMatch.Success)
         {
             // Hx タグが無い
-            return line.Value.Length;
+            return (line.Value.Length, null);
         }
 
         Debug.Assert(hxMatch.Groups.Count >= 2, "ParseHxTag() hxMatch.Groups が不足");
@@ -864,12 +998,12 @@ public class MainPageViewModel : ObservableRecipient
         if (rank < Cfm2Constants.HX_TAG_RANK_MIN || rank > Cfm2Constants.HX_TAG_RANK_MAX)
         {
             _mergeInfo.Warnings.Add("HTML H タグのランクが HTML Living Standard 仕様の範囲外です：" + hxMatch.Value);
-            return addColumn;
+            return (addColumn, null);
         }
-        if (!Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets[rank])
+        if (!targetRanks[rank])
         {
             // 環境設定により対象外
-            return addColumn;
+            return (addColumn, null);
         }
 
         // ID 属性を抽出する
@@ -878,7 +1012,7 @@ public class MainPageViewModel : ObservableRecipient
         {
             // ID 属性が無い
             _mergeInfo.Warnings.Add("HTML H タグに ID 属性がないため目次が作成できません：" + hxMatch.Value);
-            return addColumn;
+            return (addColumn, null);
         }
         Debug.Assert(idMatch.Groups.Count >= 2, "ParseHxTag() idMatch.Groups が不足");
         String id = idMatch.Groups[1].Value;
@@ -889,24 +1023,30 @@ public class MainPageViewModel : ObservableRecipient
         if (captionEndPos < 0)
         {
             _mergeInfo.Warnings.Add("HTML H タグが閉じられていないため目次が作成できません：" + hxMatch.Value);
-            return addColumn;
+            return (addColumn, null);
         }
         String caption = line.Value[captionBeginPos..captionEndPos].Trim();
 
         // 目次情報追加
-        _mergeInfo.Toc.Add("<div class=\"" + Cfm2Constants.TOC_ITEM_CLASS_NAME_PREFIX + rank + "\"><a href=\"#" + id + "\">" + caption + "</a></div>");
+        HxTagInfo hxTagInfo = new()
+        {
+            Rank = rank,
+            Id = id,
+            Caption = caption,
+        };
 
-        return addColumn;
+        return (addColumn, hxTagInfo);
     }
 
     /// <summary>
     /// HTML Hx タグを解析して目次情報を収集する
     /// </summary>
-    private void ParseHxTags()
+    private List<HxTagInfo> ParseHxTags(Boolean[] targetRanks)
     {
         LinkedListNode<String>? line = _mergeInfo.Lines.First;
         Debug.Assert(line != null, "ParseHxTags() _mergeInfo.Lines が空");
         Int32 numProgressLines = 0;
+        List<HxTagInfo> hxTagInfos = new();
 
         // 行をたどるループ
         for (; ; )
@@ -916,7 +1056,11 @@ public class MainPageViewModel : ObservableRecipient
             // 列をたどるループ
             for (; ; )
             {
-                Int32 addColumn = ParseHxTag(line, column);
+                (Int32 addColumn, HxTagInfo? hxTagInfo) = ParseHxTag(line, column, targetRanks);
+                if (hxTagInfo != null)
+                {
+                    hxTagInfos.Add(hxTagInfo);
+                }
 
                 // 解析位置（列）を進める
                 column += addColumn;
@@ -941,6 +1085,7 @@ public class MainPageViewModel : ObservableRecipient
                 break;
             }
         }
+        return hxTagInfos;
     }
 
     /// <summary>

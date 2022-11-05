@@ -80,6 +80,7 @@ internal class MergeInfo
         set;
     }
 
+#if false
     /// <summary>
     /// 目次情報（HTML タグ）
     /// </summary>
@@ -88,6 +89,33 @@ internal class MergeInfo
         get;
         set;
     } = new();
+#endif
+
+    /// <summary>
+    /// アンカーメイクファイルのフルパス
+    /// </summary>
+    public String AnchorMakeFullPath
+    {
+        get;
+        set;
+    } = String.Empty;
+
+    /// <summary>
+    /// アンカーメイクファイル中のアンカー挿入位置
+    /// </summary>
+    public List<KeyValuePair<LinkedListNode<String>, Int32>> AnchorPositions
+    {
+        get;
+    } = new();
+
+    /// <summary>
+    /// アンカーファイルの出力先フォルダーのフルパス（末尾 '\\'）
+    /// </summary>
+    public String AnchorOutFullFolder
+    {
+        get;
+        set;
+    } = String.Empty;
 
     /// <summary>
     /// 合併後の内容

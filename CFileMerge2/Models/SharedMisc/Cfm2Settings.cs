@@ -41,6 +41,15 @@ internal class Cfm2Settings
         set;
     } = new Boolean[Cfm2Constants.HX_TAG_RANK_MAX + 1];
 
+    /// <summary>
+    /// h1～h6 に対してアンカーファイルを作成するかどうか
+    /// </summary>
+    public Boolean[] AnchorTargets
+    {
+        get;
+        set;
+    } = new Boolean[Cfm2Constants.HX_TAG_RANK_MAX + 1];
+
     // --------------------------------------------------------------------
     // 終了時の状態（ちょちょいとファイル合併 2 専用）
     // --------------------------------------------------------------------
@@ -99,6 +108,13 @@ internal class Cfm2Settings
             // 目次作成対象が 1 つもない場合はデフォルトを対象にする
             TocTargets[1] = true;
             TocTargets[2] = true;
+        }
+
+        if (!AnchorTargets.Contains(true))
+        {
+            // アンカー作成対象が 1 つもない場合はデフォルトを対象にする
+            AnchorTargets[1] = true;
+            AnchorTargets[2] = true;
         }
     }
 }
