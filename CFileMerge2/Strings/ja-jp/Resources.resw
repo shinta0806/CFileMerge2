@@ -127,4 +127,16 @@
     <value>Main</value>
     <comment>Page title for MainPage</comment>
   </data>
+  <data name="Information" xml:space="preserve">
+    <value>情報</value>
+    <comment>MessageDialog タイトル</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>エラー</value>
+    <comment>MessageDialog タイトル</comment>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>警告</value>
+    <comment>MessageDialog タイトル</comment>
+  </data>
 </root>

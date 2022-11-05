@@ -18,6 +18,7 @@ using CFileMerge2.Services;
 using CommunityToolkit.Mvvm.Input;
 
 using Serilog;
+using Serilog.Events;
 
 using Shinta;
 
@@ -111,7 +112,7 @@ internal class EnvironmentModel
         }
         catch (Exception ex)
         {
-            await App.MainWindow.CreateMessageDialog("ヘルプ表示時エラー：\n" + ex.Message, Cfm2Constants.LABEL_ERROR).ShowAsync();
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "ヘルプ表示時エラー：\n" + ex.Message);
         }
     }
     #endregion

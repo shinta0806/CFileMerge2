@@ -8,10 +8,12 @@
 //
 // ----------------------------------------------------------------------------
 
-using System;
-using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Helpers;
+using CFileMerge2.Models.Cfm2Models;
+
 using Serilog;
+using Serilog.Events;
+
 using Shinta;
 
 namespace CFileMerge2.Models.SharedMisc;
@@ -45,8 +47,8 @@ internal class Cfm2Common
                 }
                 catch (Exception ex)
                 {
-                    await App.MainWindow.CreateMessageDialog("状況に応じたヘルプを表示できませんでした：\n" + ex.Message + "\n" + helpPath
-                            + "\n通常のヘルプを表示します。", Cfm2Constants.LABEL_ERROR).ShowAsync();
+                    await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "状況に応じたヘルプを表示できませんでした：\n" + ex.Message + "\n" + helpPath
+                            + "\n通常のヘルプを表示します。");
                 }
             }
 
@@ -56,7 +58,7 @@ internal class Cfm2Common
         }
         catch (Exception ex)
         {
-            await App.MainWindow.CreateMessageDialog("ヘルプを表示できませんでした。\n" + ex.Message + "\n" + helpPath, Cfm2Constants.LABEL_ERROR).ShowAsync();
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "ヘルプを表示できませんでした。\n" + ex.Message + "\n" + helpPath);
         }
     }
 

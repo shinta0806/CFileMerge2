@@ -147,7 +147,7 @@ public class MainPageViewModel : ObservableRecipient
                     }
                     catch (Exception ex)
                     {
-                        await App.MainWindow.CreateMessageDialog(ex.Message, Cfm2Constants.LABEL_ERROR).ShowAsync();
+                        await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, ex.Message);
                     }
                 });
             }
@@ -155,7 +155,7 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await App.MainWindow.CreateMessageDialog(ex.Message, Cfm2Constants.LABEL_ERROR).ShowAsync();
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, ex.Message);
         }
         finally
         {
@@ -185,7 +185,7 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await App.MainWindow.CreateMessageDialog(ex.Message, Cfm2Constants.LABEL_ERROR).ShowAsync();
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, ex.Message);
         }
     }
     #endregion
@@ -542,7 +542,7 @@ public class MainPageViewModel : ObservableRecipient
                     {
                         message += _mergeInfo.Warnings[i] + "\n";
                     }
-                    await App.MainWindow.CreateMessageDialog(message, Cfm2Constants.LABEL_WARNING).ShowAsync();
+                    await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Warning, message);
                 }
                 else
                 {
@@ -552,7 +552,7 @@ public class MainPageViewModel : ObservableRecipient
             }
             catch (Exception ex)
             {
-                await App.MainWindow.CreateMessageDialog(ex.Message, Cfm2Constants.LABEL_ERROR).ShowAsync();
+                await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, ex.Message);
             }
             finally
             {
