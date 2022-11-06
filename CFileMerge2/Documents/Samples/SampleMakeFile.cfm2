@@ -5,7 +5,7 @@
 <!-- Cfm/IncludeDefaultExt: cfm2include -->
 <!-- Cfm/Set: AppName = ちょちょいとファイル合併 2&nbsp; -->
 <!-- Cfm/Set: Food = 唐揚げ -->
-<!-- Cfm/GenerateAnchorFiles:SampleAnchorMakeFile.cfm2anchor, AnchorFiles -->
+<!-- Cfm/GenerateAnchorFiles:SampleAnchorMakeFile.cfm2anchor, HelpParts -->
 <head>
   <meta charset="UTF-8">
   <title><!-- Cfm/Var: AppName -->サンプル</title>

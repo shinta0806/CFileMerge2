@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="10;URL='<!-- Cfm/AnchorPath: -->'">
+  <meta http-equiv="refresh" content="0;URL='<!-- Cfm/AnchorPath: -->'">
   <title><!-- Cfm/Var: AppName -->ヘルプ</title>
   <style>
     .loading
