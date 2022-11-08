@@ -24,6 +24,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Serilog;
 using Serilog.Events;
 using Shinta;
 using Windows.ApplicationModel.Background;
@@ -44,6 +45,10 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     public MainPageViewModel()
     {
+        // チェック
+        Debug.Assert(Cfm2Constants.CFM_TAG_KEYS.Length == (Int32)TagKey.__End__, "MainPageViewModel() TAG_KEYS が変");
+        Debug.Assert(Cfm2Constants.MERGE_STEP_AMOUNT.Length == (Int32)MergeStep.__End__, "MainPageViewModel() MERGE_STEP_AMOUNT が変");
+
         // コマンド
         ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClicked);
         ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
@@ -264,6 +269,7 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     public void PageLoaded(Object _1, RoutedEventArgs _2)
     {
+        InitializeIfNeeded();
         ApplySettings();
     }
 
@@ -290,6 +296,11 @@ public class MainPageViewModel : ObservableRecipient
     /// 前回のメイン UI の高さ
     /// </summary>
     private Double _prevMainUiHeight;
+
+    /// <summary>
+    /// 初期化済フラグ
+    /// </summary>
+    private Boolean _initialized;
 
     // ====================================================================
     // private 関数
@@ -320,6 +331,7 @@ public class MainPageViewModel : ObservableRecipient
         // 終了処理
         Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath = MakePath;
         await Cfm2Model.Instance.EnvModel.SaveCfm2Settings();
+        Log.Information("終了しました：" + Cfm2Constants.APP_NAME_J + " " + Cfm2Constants.APP_VER + " --------------------");
 
         // 改めて閉じる
         App.MainWindow.Close();
@@ -561,6 +573,37 @@ public class MainPageViewModel : ObservableRecipient
         {
             ProgressVisibility = Visibility.Collapsed;
         });
+    }
+
+    /// <summary>
+    /// 必要に応じて初期化
+    /// </summary>
+    private void InitializeIfNeeded()
+    {
+        if (_initialized)
+        {
+            return;
+        }
+
+        Debug.WriteLine("InitializeIfNeeded()");
+#if DEBUG
+        App.MainWindow.Title = "［デバッグ］" + App.MainWindow.Title;
+#endif
+#if TEST
+        Title = "［テスト］" + Title;
+#endif
+
+        // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
+        // Depend: 効くようになればこのコードは不要
+        App.MainWindow.Width = 800;
+
+        // Height は後で MainPageViewModel により指定されるはずなので、ここでは仮指定
+        // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
+        // Depend: Window.SizeToContent が実装されればこのコードは不要
+        App.MainWindow.Height = 200;
+
+        // 初期化完了
+        _initialized = true;
     }
 
     /// <summary>

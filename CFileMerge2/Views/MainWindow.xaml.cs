@@ -7,7 +7,7 @@
 // ----------------------------------------------------------------------------
 // ToDo: 環境設定、メイクファイル履歴、文字コード・改行コード保全、
 // コマンドライン起動、関連付け、id 属性なし警告、状況依存ヘルプ用ファイル、状況依存ヘルプ実装
-// 集約イベントハンドラー、起動中はアンカーファイルの更新が反映されない？
+// 集約イベントハンドラー、起動中はアンカーファイルの更新が反映されない？、バージョン情報
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
@@ -18,7 +18,7 @@ using Microsoft.UI.Xaml;
 
 using Serilog;
 
-namespace CFileMerge2;
+namespace CFileMerge2.Views;
 
 public sealed partial class MainWindow : WindowEx
 {
@@ -33,17 +33,13 @@ public sealed partial class MainWindow : WindowEx
     {
         InitializeComponent();
 
-        // チェック
-        Debug.Assert(Cfm2Constants.CFM_TAG_KEYS.Length == (Int32)TagKey.__End__, "MainWindow() TAG_KEYS が変");
-        Debug.Assert(Cfm2Constants.MERGE_STEP_AMOUNT.Length == (Int32)MergeStep.__End__, "MainWindow() MERGE_STEP_AMOUNT が変");
-
         // 初期化
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
         Content = null;
 
         // イベントハンドラー
-        Activated += MainWindow_Activated;
-        Closed += MainWindow_Closed;
+        //Activated += MainWindow_Activated;
+        //Closed += MainWindow_Closed;
     }
 
     // ====================================================================
@@ -53,12 +49,13 @@ public sealed partial class MainWindow : WindowEx
     /// <summary>
     /// 初期化済フラグ
     /// </summary>
-    private Boolean _initialized;
+    //private Boolean _initialized;
 
     // ====================================================================
     // private 関数
     // ====================================================================
 
+#if false
     /// <summary>
     /// 必要に応じて初期化
     /// </summary>
@@ -109,4 +106,5 @@ public sealed partial class MainWindow : WindowEx
     {
         Log.Information("終了しました：" + Cfm2Constants.APP_NAME_J + " " + Cfm2Constants.APP_VER + " --------------------");
     }
+#endif
 }

@@ -18,7 +18,6 @@ internal class Cfm2Settings
 
     /// <summary>
     /// メインコンストラクター
-    /// EnvironmentModel 構築時に呼びだされるため、LogWriter は指定できない
     /// </summary>
     public Cfm2Settings()
     {
