@@ -141,6 +141,11 @@ internal class Cfm2Constants
     /// </summary>
     public static readonly Thickness MARGIN_DEFAULT_THICKNESS = new(MARGIN_DEFAULT);
 
+    /// <summary>
+    /// 要素名
+    /// </summary>
+    public const String ELEMENT_NAME_BUTTON_OK = "ButtonOk";
+
     // --------------------------------------------------------------------
     // 設定
     // --------------------------------------------------------------------

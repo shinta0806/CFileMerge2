@@ -9,7 +9,6 @@
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -17,6 +16,7 @@ using System.Windows.Input;
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.Views;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -24,15 +24,15 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Input;
+
 using Serilog;
 using Serilog.Events;
+
 using Shinta;
-using Windows.ApplicationModel.Background;
+
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.Storage.Pickers.Provider;
 using Windows.UI.Popups;
 
 namespace CFileMerge2.ViewModels;

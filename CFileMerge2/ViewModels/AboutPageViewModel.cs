@@ -10,12 +10,15 @@
 
 using System.Diagnostics;
 using System.Windows.Input;
+
 using CFileMerge2.Models.SharedMisc;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 namespace CFileMerge2.ViewModels;
 
@@ -51,12 +54,21 @@ public class AboutPageViewModel : ObservableRecipient
     private void ButtonOkClicked()
     {
         Debug.WriteLine("ButtonOkClicked()");
+        _window.Close();
     }
     #endregion
 
     // ====================================================================
     // public 関数
     // ====================================================================
+
+    /// <summary>
+    /// イベントハンドラー：Escape キー押下
+    /// </summary>
+    public void KeyboardAcceleratorEscapeInvoked(KeyboardAccelerator _1, KeyboardAcceleratorInvokedEventArgs _2)
+    {
+        _window.Close();
+    }
 
     /// <summary>
     /// イベントハンドラー：メインパネルのサイズが変更された
@@ -81,6 +93,11 @@ public class AboutPageViewModel : ObservableRecipient
     public void PageLoaded(Object _1, RoutedEventArgs _2)
     {
         InitializeIfNeeded();
+
+        // フォーカス
+        FrameworkElement frameworkElement = (FrameworkElement)_window.Content;
+        Button button = (Button)frameworkElement.FindName(Cfm2Constants.ELEMENT_NAME_BUTTON_OK);
+        button.Focus(FocusState.Programmatic);
     }
 
     // ====================================================================

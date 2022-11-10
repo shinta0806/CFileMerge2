@@ -13,9 +13,9 @@
         <!-- メイン UI -->
         <StackPanel Margin="{x:Bind msm:Cfm2Constants.MARGIN_DEFAULT_THICKNESS}" Canvas.ZIndex="0" GettingFocus="{x:Bind ViewModel.MainPanelGettingFocus}" SizeChanged="{x:Bind ViewModel.MainPanelSizeChanged}" >
             <RelativePanel >
-                <TextBlock x:Name="TextBlockMake" Text="メイクファイル (M)：" RelativePanel.AlignVerticalCenterWithPanel="True" />
-                <TextBox x:Name="TextBoxMake" Text="{x:Bind ViewModel.MakePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AccessKey="M" FontFamily="Yu Gothic UI" RelativePanel.RightOf="TextBlockMake" RelativePanel.AlignRightWithPanel="True" Margin="0,0,110,0" />
-                <Button x:Name="ButtonBrowseMake" Content="参照 (B)" AccessKey="B" Width="100" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonBrowseMakeClickedCommand}" />
+                <TextBlock Name="TextBlockMake" Text="メイクファイル (M)：" RelativePanel.AlignVerticalCenterWithPanel="True" />
+                <TextBox Name="TextBoxMake" Text="{x:Bind ViewModel.MakePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AccessKey="M" FontFamily="Yu Gothic UI" RelativePanel.RightOf="TextBlockMake" RelativePanel.AlignRightWithPanel="True" Margin="0,0,110,0" />
+                <Button Name="ButtonBrowseMake" Content="参照 (B)" AccessKey="B" Width="100" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonBrowseMakeClickedCommand}" />
             </RelativePanel>
             <RelativePanel Margin="0,10,0,0">
                 <Button ToolTipService.ToolTip="ヘルプ" AccessKey="H" >
