@@ -24,7 +24,7 @@
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <DefaultLanguage>en-US</DefaultLanguage>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>6EBF3C092ECCCEFFEFE8CA77F18F61B9398751CA</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>6A6B41543E57A99B0D1F78590CFB7348A7D5F9C3</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
   <ItemGroup>
