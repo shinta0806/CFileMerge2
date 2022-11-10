@@ -14,6 +14,8 @@
 // 集約イベントハンドラー、起動中はアンカーファイルの更新が反映されない？、バージョン情報
 // ----------------------------------------------------------------------------
 
+using CFileMerge2.Models.SharedMisc;
+
 namespace CFileMerge2.Views;
 
 public sealed partial class MainWindow : WindowEx
@@ -30,7 +32,7 @@ public sealed partial class MainWindow : WindowEx
         InitializeComponent();
 
         // 初期化
-        AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
+        AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
         Content = null;
     }
 }

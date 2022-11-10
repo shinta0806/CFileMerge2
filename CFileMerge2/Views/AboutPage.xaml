@@ -9,7 +9,7 @@
     Loaded="{x:Bind ViewModel.PageLoaded}" 
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Margin="20" VerticalAlignment="Top" SizeChanged="{x:Bind ViewModel.SizeChanged}" >
+    <StackPanel Margin="20" VerticalAlignment="Top" SizeChanged="{x:Bind ViewModel.MainPanelSizeChanged}" >
 
         <!-- バージョン情報 -->
         <RelativePanel >
@@ -32,19 +32,19 @@
             <StackPanel Margin="10" >
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Text="E メール：" HorizontalTextAlignment="Right" Width="90" VerticalAlignment="Center" />
-                    <TextBlock Text="shinta.0806@gmail.com" Padding="{x:Bind msm:Cfm2Constants.HYPERLINK_BUTTON_PADDING}" />
+                    <TextBlock Text="shinta.0806@gmail.com" Padding="{x:Bind msm:Cfm2Constants.HYPERLINK_BUTTON_PADDING_THICKNESS}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Text="ホームページ：" HorizontalTextAlignment="Right" Width="90" VerticalAlignment="Center" />
-                    <HyperlinkButton Content="{x:Bind msm:Cfm2Constants.AUTHOR_WEB}" NavigateUri="{x:Bind msm:Cfm2Constants.AUTHOR_WEB}" Padding="{x:Bind msm:Cfm2Constants.HYPERLINK_BUTTON_PADDING}" />
+                    <HyperlinkButton Content="{x:Bind msm:Cfm2Constants.AUTHOR_WEB}" NavigateUri="{x:Bind msm:Cfm2Constants.AUTHOR_WEB}" Padding="{x:Bind msm:Cfm2Constants.HYPERLINK_BUTTON_PADDING_THICKNESS}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Text="Twitter：" HorizontalTextAlignment="Right" Width="90" VerticalAlignment="Center" />
-                    <HyperlinkButton Content="{x:Bind msm:Cfm2Constants.AUTHOR_TWITTER}" NavigateUri="{x:Bind msm:Cfm2Constants.AUTHOR_TWITTER}" Padding="{x:Bind msm:Cfm2Constants.HYPERLINK_BUTTON_PADDING}" />
+                    <HyperlinkButton Content="{x:Bind msm:Cfm2Constants.AUTHOR_TWITTER}" NavigateUri="{x:Bind msm:Cfm2Constants.AUTHOR_TWITTER}" Padding="{x:Bind msm:Cfm2Constants.HYPERLINK_BUTTON_PADDING_THICKNESS}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Text="ファンサイト：" HorizontalTextAlignment="Right" Width="90" VerticalAlignment="Center" />
-                    <HyperlinkButton Content="{x:Bind msm:Cfm2Constants.AUTHOR_FANTIA}" NavigateUri="{x:Bind msm:Cfm2Constants.AUTHOR_FANTIA}" Padding="{x:Bind msm:Cfm2Constants.HYPERLINK_BUTTON_PADDING}" />
+                    <HyperlinkButton Content="{x:Bind msm:Cfm2Constants.AUTHOR_FANTIA}" NavigateUri="{x:Bind msm:Cfm2Constants.AUTHOR_FANTIA}" Padding="{x:Bind msm:Cfm2Constants.HYPERLINK_BUTTON_PADDING_THICKNESS}" />
                 </StackPanel>
             </StackPanel>
         </Border>
@@ -57,11 +57,11 @@
             <StackPanel Margin="10" >
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Text="配布ページ：" HorizontalTextAlignment="Right" Width="90" VerticalAlignment="Center" />
-                    <HyperlinkButton Content="{x:Bind msm:Cfm2Constants.DISTRIB_WEB}" NavigateUri="{x:Bind msm:Cfm2Constants.DISTRIB_WEB}" Padding="{x:Bind msm:Cfm2Constants.HYPERLINK_BUTTON_PADDING}" />
+                    <HyperlinkButton Content="{x:Bind msm:Cfm2Constants.DISTRIB_WEB}" NavigateUri="{x:Bind msm:Cfm2Constants.DISTRIB_WEB}" Padding="{x:Bind msm:Cfm2Constants.HYPERLINK_BUTTON_PADDING_THICKNESS}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Text="サポートページ：" HorizontalTextAlignment="Right" Width="90" VerticalAlignment="Center" />
-                    <HyperlinkButton Content="{x:Bind msm:Cfm2Constants.SUPPORT_WEB}" NavigateUri="{x:Bind msm:Cfm2Constants.SUPPORT_WEB}" Padding="{x:Bind msm:Cfm2Constants.HYPERLINK_BUTTON_PADDING}" />
+                    <HyperlinkButton Content="{x:Bind msm:Cfm2Constants.SUPPORT_WEB}" NavigateUri="{x:Bind msm:Cfm2Constants.SUPPORT_WEB}" Padding="{x:Bind msm:Cfm2Constants.HYPERLINK_BUTTON_PADDING_THICKNESS}" />
                 </StackPanel>
             </StackPanel>
         </Border>

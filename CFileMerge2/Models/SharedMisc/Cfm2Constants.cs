@@ -104,6 +104,15 @@ internal class Cfm2Constants
     public const String FILE_EXT_CFM2_MAKE = ".cfm2";
 
     // --------------------------------------------------------------------
+    // バイナリ内部パス
+    // --------------------------------------------------------------------
+
+    /// <summary>
+    /// アイコン
+    /// </summary>
+    public const String CONTENT_PATH_ICON = "Assets/WindowIcon.ico";
+
+    // --------------------------------------------------------------------
     // UI
     // --------------------------------------------------------------------
 
@@ -120,7 +129,17 @@ internal class Cfm2Constants
     /// <summary>
     /// ハイパーリンクボタンの余白
     /// </summary>
-    public static readonly Thickness HYPERLINK_BUTTON_PADDING = new(3.0);
+    public static readonly Thickness HYPERLINK_BUTTON_PADDING_THICKNESS = new(3.0);
+
+    /// <summary>
+    /// マージンのデフォルト
+    /// </summary>
+    public const Double MARGIN_DEFAULT = 20.0;
+
+    /// <summary>
+    /// マージンのデフォルト
+    /// </summary>
+    public static readonly Thickness MARGIN_DEFAULT_THICKNESS = new(MARGIN_DEFAULT);
 
     // --------------------------------------------------------------------
     // 設定

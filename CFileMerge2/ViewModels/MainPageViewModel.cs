@@ -263,9 +263,9 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     /// <summary>
-    /// イベントハンドラー：メイン UI のフォーカスを取得しようとしている
+    /// イベントハンドラー：メインパネルのフォーカスを取得しようとしている
     /// </summary>
-    public void MainUiGettingFocus(UIElement _, GettingFocusEventArgs args)
+    public void MainPanelGettingFocus(UIElement _, GettingFocusEventArgs args)
     {
         Debug.WriteLine("MainUiGettingFocus() " + Environment.TickCount);
         if (ProgressVisibility == Visibility.Visible)
@@ -280,10 +280,11 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     /// <summary>
-    /// イベントハンドラー：メイン UI のサイズが変更された
+    /// イベントハンドラー：メインパネルのサイズが変更された
+    /// なぜか他のウィンドウと同じように VerticalAlignment="Top" を指定するとうまくいかない
     /// Depend: Window.SizeToContent が実装されればこのコードは不要
     /// </summary>
-    public void MainUiSizeChanged(Object sender, SizeChangedEventArgs _)
+    public void MainPanelSizeChanged(Object sender, SizeChangedEventArgs _)
     {
         Double mainUiHeight = ((StackPanel)sender).ActualHeight;
         Debug.WriteLine("MainUiSizeChanged() mainUiHeight: " + mainUiHeight);

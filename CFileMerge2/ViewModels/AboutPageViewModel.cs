@@ -59,6 +59,23 @@ public class AboutPageViewModel : ObservableRecipient
     // ====================================================================
 
     /// <summary>
+    /// イベントハンドラー：メインパネルのサイズが変更された
+    /// Depend: Window.SizeToContent が実装されればこのコードは不要
+    /// </summary>
+    public void MainPanelSizeChanged(Object sender, SizeChangedEventArgs _)
+    {
+        Double mainUiHeight = ((FrameworkElement)sender).ActualHeight + 40;
+        Debug.WriteLine("MainUiSizeChanged() mainUiHeight: " + mainUiHeight);
+        if (mainUiHeight < _prevMainUiHeight)
+        {
+            return;
+        }
+
+        _window.AppWindow.ResizeClient(new Windows.Graphics.SizeInt32(_window.AppWindow.ClientSize.Width, (Int32)mainUiHeight));
+        _prevMainUiHeight = mainUiHeight;
+    }
+
+    /// <summary>
     /// イベントハンドラー：ページがロードされた
     /// </summary>
     public void PageLoaded(Object _1, RoutedEventArgs _2)
@@ -114,22 +131,4 @@ public class AboutPageViewModel : ObservableRecipient
         // 初期化完了
         _initialized = true;
     }
-
-    /// <summary>
-    /// イベントハンドラー：メイン UI のサイズが変更された
-    /// Depend: Window.SizeToContent が実装されればこのコードは不要
-    /// </summary>
-    public void SizeChanged(Object sender, SizeChangedEventArgs _)
-    {
-        Double mainUiHeight = ((FrameworkElement)sender).ActualHeight + 40;
-        Debug.WriteLine("MainUiSizeChanged() mainUiHeight: " + mainUiHeight);
-        if (mainUiHeight < _prevMainUiHeight)
-        {
-            return;
-        }
-
-        _window.AppWindow.ResizeClient(new Windows.Graphics.SizeInt32(_window.AppWindow.ClientSize.Width, (Int32)mainUiHeight));
-        _prevMainUiHeight = mainUiHeight;
-    }
-
 }

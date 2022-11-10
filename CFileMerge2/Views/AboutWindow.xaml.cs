@@ -8,6 +8,8 @@
 // ウィンドウでの MVVM が困難であると思われるので、ウィンドウへの操作はページのビューモデルで行う
 // ----------------------------------------------------------------------------
 
+using CFileMerge2.Models.SharedMisc;
+
 namespace CFileMerge2.Views;
 
 public sealed partial class AboutWindow : WindowEx
@@ -23,7 +25,8 @@ public sealed partial class AboutWindow : WindowEx
     {
         InitializeComponent();
 
-        AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
+        // 初期化
+        AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
         Content = new AboutPage(this);
     }
 }
