@@ -213,6 +213,7 @@ public class MainPageViewModel : ObservableRecipient
 
     private async void MenuFlyoutItemAboutClicked()
     {
+
         //Windows.UI.WindowManagement.AppWindow a =await Windows.UI.WindowManagement.AppWindow.TryCreateAsync();
 
         AboutWindow aboutWindow = new();
@@ -285,7 +286,7 @@ public class MainPageViewModel : ObservableRecipient
     public void MainUiSizeChanged(Object sender, SizeChangedEventArgs _)
     {
         Double mainUiHeight = ((StackPanel)sender).ActualHeight;
-        Debug.WriteLine("MainUiSizeChanged() " + mainUiHeight);
+        Debug.WriteLine("MainUiSizeChanged() mainUiHeight: " + mainUiHeight);
         if (mainUiHeight < _prevMainUiHeight)
         {
             return;
@@ -624,13 +625,14 @@ public class MainPageViewModel : ObservableRecipient
 #endif
 
         // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
-        // Depend: 効くようになればこのコードは不要
+        // ToDo: 効くようになればこのコードは不要
         App.MainWindow.Width = 800;
 
         // Height は後で MainPageViewModel により指定されるはずなので、ここでは仮指定
         // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
-        // Depend: Window.SizeToContent が実装されればこのコードは不要
-        App.MainWindow.Height = 200;
+        // 何らかの理由によりウィンドウサイズが大きくなった場合、なぜか前バージョン以下の数値だと効果を発揮しないので、前バージョンより 1 大きな値にする
+        // ToDo: Window.SizeToContent が実装されればこのコードは不要
+        App.MainWindow.Height = 201;
 
         // 初期化完了
         _initialized = true;
@@ -701,6 +703,7 @@ public class MainPageViewModel : ObservableRecipient
             finally
             {
                 HideProgressArea();
+                ReresizeClient();
             }
         });
     }
@@ -1167,6 +1170,16 @@ public class MainPageViewModel : ObservableRecipient
             }
         }
         return hxTagInfos;
+    }
+
+    /// <summary>
+    /// 前回調整時のウィンドウサイズに再度設定
+    /// MainUiSizeChanged() イベントハンドラー内だと効かないことがあるのでその対策
+    /// ToDo: Window.SizeToContent が実装されればこのコードは不要
+    /// </summary>
+    private void ReresizeClient()
+    {
+        App.MainWindow.AppWindow.ResizeClient(new Windows.Graphics.SizeInt32(App.MainWindow.AppWindow.ClientSize.Width, (Int32)_prevMainUiHeight));
     }
 
     /// <summary>
