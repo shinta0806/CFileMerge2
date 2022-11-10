@@ -33,7 +33,10 @@ public class AboutPageViewModel : ObservableRecipient
     /// </summary>
     public AboutPageViewModel(WindowEx window)
     {
+        // 初期化
         _window = window;
+
+        // コマンド
         ButtonOkClickedCommand = new RelayCommand(ButtonOkClicked);
     }
 
@@ -77,7 +80,7 @@ public class AboutPageViewModel : ObservableRecipient
     public void MainPanelSizeChanged(Object sender, SizeChangedEventArgs _)
     {
         Double mainUiHeight = ((FrameworkElement)sender).ActualHeight + 40;
-        Debug.WriteLine("MainUiSizeChanged() mainUiHeight: " + mainUiHeight);
+        Debug.WriteLine("AboutPageViewModel.MainPanelSizeChanged() mainUiHeight: " + mainUiHeight);
         if (mainUiHeight < _prevMainUiHeight)
         {
             return;
@@ -92,7 +95,7 @@ public class AboutPageViewModel : ObservableRecipient
     /// </summary>
     public void PageLoaded(Object _1, RoutedEventArgs _2)
     {
-        InitializeIfNeeded();
+        Initialize();
 
         // フォーカス
         FrameworkElement frameworkElement = (FrameworkElement)_window.Content;
@@ -114,26 +117,16 @@ public class AboutPageViewModel : ObservableRecipient
     /// </summary>
     private Double _prevMainUiHeight;
 
-    /// <summary>
-    /// 初期化済フラグ
-    /// </summary>
-    private Boolean _initialized;
-
     // ====================================================================
     // private 関数
     // ====================================================================
 
     /// <summary>
-    /// 必要に応じて初期化
+    /// 初期化
     /// </summary>
-    private void InitializeIfNeeded()
+    private void Initialize()
     {
-        if (_initialized)
-        {
-            return;
-        }
-
-        Debug.WriteLine("AboutPageViewModel.InitializeIfNeeded()");
+        Debug.WriteLine("AboutPageViewModel.Initialize()");
         _window.Title = Cfm2Constants.APP_NAME_J + "のバージョン情報";
 
         // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
@@ -144,8 +137,5 @@ public class AboutPageViewModel : ObservableRecipient
         // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
         // Depend: Window.SizeToContent が実装されればこのコードは不要
         _window.Height = 600;
-
-        // 初期化完了
-        _initialized = true;
     }
 }

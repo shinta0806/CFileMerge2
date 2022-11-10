@@ -27,11 +27,6 @@ public sealed partial class AboutPage : Page
     {
         ViewModel = new AboutPageViewModel(window);
         InitializeComponent();
-
-#if false
-        var a = (Button)FindName("ButtonOk");
-        var b = a.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
-#endif
     }
 
     // ====================================================================

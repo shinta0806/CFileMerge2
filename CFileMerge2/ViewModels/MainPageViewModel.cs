@@ -61,6 +61,7 @@ public class MainPageViewModel : ObservableRecipient
 
         // イベントハンドラー
         App.MainWindow.AppWindow.Closing += AppWindowClosing;
+        App.MainWindow.Activated += MainWindowActivated;
     }
 
     // ====================================================================
@@ -292,7 +293,7 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     public void PageLoaded(Object _1, RoutedEventArgs _2)
     {
-        InitializeIfNeeded();
+        Initialize();
         ApplySettings();
     }
 
@@ -318,11 +319,6 @@ public class MainPageViewModel : ObservableRecipient
     /// 前回のメイン UI の高さ
     /// </summary>
     private Double _prevMainUiHeight;
-
-    /// <summary>
-    /// 初期化済フラグ
-    /// </summary>
-    private Boolean _initialized;
 
     /// <summary>
     /// 開いているダイアログウィンドウ
@@ -631,16 +627,11 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     /// <summary>
-    /// 必要に応じて初期化
+    /// 初期化
     /// </summary>
-    private void InitializeIfNeeded()
+    private void Initialize()
     {
-        if (_initialized)
-        {
-            return;
-        }
-
-        Debug.WriteLine("InitializeIfNeeded()");
+        Debug.WriteLine("Initialize()");
 #if DEBUG
         App.MainWindow.Title = "［デバッグ］" + App.MainWindow.Title;
 #endif
@@ -657,11 +648,6 @@ public class MainPageViewModel : ObservableRecipient
         // 何らかの理由によりウィンドウサイズが大きくなった場合、なぜか前バージョン以下の数値だと効果を発揮しないので、前バージョンより 1 大きな値にする
         // ToDo: Window.SizeToContent が実装されればこのコードは不要
         App.MainWindow.Height = 201;
-
-        App.MainWindow.Activated += MainWindowActivated;
-
-        // 初期化完了
-        _initialized = true;
     }
 
     /// <summary>
