@@ -19,6 +19,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+
 using Serilog.Events;
 using Serilog;
 
@@ -89,15 +90,24 @@ public class AboutPageViewModel : ObservableRecipient
     /// </summary>
     public void MainPanelSizeChanged(Object sender, SizeChangedEventArgs _)
     {
-        Double mainUiHeight = ((FrameworkElement)sender).ActualHeight + 40;
-        Debug.WriteLine("AboutPageViewModel.MainPanelSizeChanged() mainUiHeight: " + mainUiHeight);
-        if (mainUiHeight < _prevMainUiHeight)
+        try
         {
-            return;
-        }
+            Double mainUiHeight = ((FrameworkElement)sender).ActualHeight + Cfm2Constants.MARGIN_DEFAULT * 2;
+            Debug.WriteLine("AboutPageViewModel.MainPanelSizeChanged() mainUiHeight: " + mainUiHeight);
+            if (mainUiHeight < _prevMainUiHeight)
+            {
+                return;
+            }
 
-        _window.AppWindow.ResizeClient(new Windows.Graphics.SizeInt32(_window.AppWindow.ClientSize.Width, (Int32)mainUiHeight));
-        _prevMainUiHeight = mainUiHeight;
+            _window.AppWindow.ResizeClient(new Windows.Graphics.SizeInt32(_window.AppWindow.ClientSize.Width, (Int32)mainUiHeight));
+            _prevMainUiHeight = mainUiHeight;
+        }
+        catch (Exception ex)
+        {
+            // ユーザー起因では発生しないイベントなのでログのみ
+            Log.Error("メインパネルサイズ変更時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
     }
 
     /// <summary>
@@ -105,12 +115,21 @@ public class AboutPageViewModel : ObservableRecipient
     /// </summary>
     public void PageLoaded(Object _1, RoutedEventArgs _2)
     {
-        Initialize();
+        try
+        {
+            Initialize();
 
-        // フォーカス
-        FrameworkElement frameworkElement = (FrameworkElement)_window.Content;
-        Button button = (Button)frameworkElement.FindName(Cfm2Constants.ELEMENT_NAME_BUTTON_OK);
-        button.Focus(FocusState.Programmatic);
+            // フォーカス
+            FrameworkElement frameworkElement = (FrameworkElement)_window.Content;
+            Button button = (Button)frameworkElement.FindName(Cfm2Constants.ELEMENT_NAME_BUTTON_OK);
+            button.Focus(FocusState.Programmatic);
+        }
+        catch (Exception ex)
+        {
+            // ユーザー起因では発生しないイベントなのでログのみ
+            Log.Error("ページロード時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
     }
 
     // ====================================================================

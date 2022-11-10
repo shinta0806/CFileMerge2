@@ -303,7 +303,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// イベントハンドラー：メインパネルのサイズが変更された
     /// なぜか他のウィンドウと同じように VerticalAlignment="Top" を指定するとうまくいかない
-    /// Depend: Window.SizeToContent が実装されればこのコードは不要
+    /// ToDo: Window.SizeToContent が実装されればこのコードは不要
     /// </summary>
     public void MainPanelSizeChanged(Object sender, SizeChangedEventArgs _)
     {
