@@ -113,6 +113,7 @@ internal class EnvironmentModel
         catch (Exception ex)
         {
             await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "ヘルプ表示時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
     #endregion

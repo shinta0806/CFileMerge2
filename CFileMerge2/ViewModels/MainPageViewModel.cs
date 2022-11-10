@@ -128,23 +128,25 @@ public class MainPageViewModel : ObservableRecipient
 
     private async void ButtonBrowseMakeClicked()
     {
-        FileOpenPicker fileOpenPicker = App.MainWindow.CreateOpenFilePicker();
-        fileOpenPicker.FileTypeFilter.Add(Cfm2Constants.FILE_EXT_CFM2_MAKE);
-        fileOpenPicker.FileTypeFilter.Add("*");
-
-#if DEBUG
-        Guid IInitializeWithWindowIID = new(0x3E68D4BD, 0x7135, 0x4D10, 0x80, 0x18, 0x9F, 0xB6, 0xD9, 0xF3, 0x3F, 0xA1);
-        var asObjRef = global::WinRT.MarshalInspectable<object>.CreateMarshaler2(fileOpenPicker, IInitializeWithWindowIID);
-        var ThisPtr = asObjRef.GetAbi();
-#endif
-
-        StorageFile? file = await fileOpenPicker.PickSingleFileAsync();
-        if (file == null)
+        try
         {
-            return;
-        }
+            FileOpenPicker fileOpenPicker = App.MainWindow.CreateOpenFilePicker();
+            fileOpenPicker.FileTypeFilter.Add(Cfm2Constants.FILE_EXT_CFM2_MAKE);
+            fileOpenPicker.FileTypeFilter.Add("*");
 
-        MakePath = file.Path;
+            StorageFile? file = await fileOpenPicker.PickSingleFileAsync();
+            if (file == null)
+            {
+                return;
+            }
+
+            MakePath = file.Path;
+        }
+        catch (Exception ex)
+        {
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "参照時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
     }
     #endregion
 
@@ -158,9 +160,11 @@ public class MainPageViewModel : ObservableRecipient
     {
         try
         {
+            Boolean open = true;
+
             if (String.IsNullOrEmpty(_mergeInfo.OutFullPath))
             {
-                await Task.Run(async () =>
+                open = await Task.Run<Boolean>(async () =>
                 {
                     try
                     {
@@ -170,18 +174,26 @@ public class MainPageViewModel : ObservableRecipient
 #if DEBUGz
                         Thread.Sleep(3 * 1000);
 #endif
+                        return true;
                     }
                     catch (Exception ex)
                     {
-                        await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, ex.Message);
+                        await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く処理時エラー：\n" + ex.Message);
+                        Log.Information("スタックトレース：\n" + ex.StackTrace);
+                        return false;
                     }
                 });
             }
-            Common.ShellExecute(_mergeInfo.OutFullPath);
+
+            if (open)
+            {
+                Common.ShellExecute(_mergeInfo.OutFullPath);
+            }
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, ex.Message);
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
         finally
         {
@@ -211,7 +223,8 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, ex.Message);
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "サンプルフォルダー表示時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
     #endregion
@@ -224,8 +237,16 @@ public class MainPageViewModel : ObservableRecipient
 
     private async void MenuFlyoutItemAboutClicked()
     {
-        AboutWindow aboutWindow = new();
-        await ShowDialogAsync(aboutWindow);
+        try
+        {
+            AboutWindow aboutWindow = new();
+            await ShowDialogAsync(aboutWindow);
+        }
+        catch (Exception ex)
+        {
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "バージョン情報表示時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
     }
     #endregion
 
@@ -255,18 +276,27 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     public void MainPanelGettingFocus(UIElement _, GettingFocusEventArgs args)
     {
-        Debug.WriteLine("MainUiGettingFocus() " + Environment.TickCount);
-        if (OverlapVisibility == Visibility.Collapsed)
+        try
         {
-            // オーバーラップエリアが非表示（なにも作業等をしていない状態）ならそのままフォーカスを取得する
-            return;
-        }
+            Debug.WriteLine("MainUiGettingFocus() " + Environment.TickCount);
+            if (OverlapVisibility == Visibility.Collapsed)
+            {
+                // オーバーラップエリアが非表示（なにも作業等をしていない状態）ならそのままフォーカスを取得する
+                return;
+            }
 
-        // オーバーラップエリアが表示されている場合はフォーカスを取得しない
-        // 終了確認後に Cancel を直接いじると落ちるので TryCancel() を使う
-        if (args.TryCancel())
+            // オーバーラップエリアが表示されている場合はフォーカスを取得しない
+            // 終了確認後に Cancel を直接いじると落ちるので TryCancel() を使う
+            if (args.TryCancel())
+            {
+                args.Handled = true;
+            }
+        }
+        catch (Exception ex)
         {
-            args.Handled = true;
+            // 終了確認後の可能性もあるので表示せずにログのみ
+            Log.Error("メインパネルフォーカス時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
 
@@ -277,15 +307,24 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     public void MainPanelSizeChanged(Object sender, SizeChangedEventArgs _)
     {
-        Double mainUiHeight = ((StackPanel)sender).ActualHeight;
-        Debug.WriteLine("MainUiSizeChanged() mainUiHeight: " + mainUiHeight);
-        if (mainUiHeight < _prevMainUiHeight)
+        try
         {
-            return;
-        }
+            Double mainUiHeight = ((StackPanel)sender).ActualHeight;
+            Debug.WriteLine("MainUiSizeChanged() mainUiHeight: " + mainUiHeight);
+            if (mainUiHeight < _prevMainUiHeight)
+            {
+                return;
+            }
 
-        App.MainWindow.AppWindow.ResizeClient(new Windows.Graphics.SizeInt32(App.MainWindow.AppWindow.ClientSize.Width, (Int32)mainUiHeight));
-        _prevMainUiHeight = mainUiHeight;
+            App.MainWindow.AppWindow.ResizeClient(new SizeInt32(App.MainWindow.AppWindow.ClientSize.Width, (Int32)mainUiHeight));
+            _prevMainUiHeight = mainUiHeight;
+        }
+        catch (Exception ex)
+        {
+            // ユーザー起因では発生しないイベントなのでログのみ
+            Log.Error("メインパネルサイズ変更時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
     }
 
     /// <summary>
@@ -293,8 +332,17 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     public void PageLoaded(Object _1, RoutedEventArgs _2)
     {
-        Initialize();
-        ApplySettings();
+        try
+        {
+            Initialize();
+            ApplySettings();
+        }
+        catch (Exception ex)
+        {
+            // ユーザー起因では発生しないイベントなのでログのみ
+            Log.Error("ページロード時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
     }
 
     // ====================================================================
@@ -723,7 +771,8 @@ public class MainPageViewModel : ObservableRecipient
             }
             catch (Exception ex)
             {
-                await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, ex.Message);
+                await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "合併時エラー：\n" + ex.Message);
+                Log.Information("スタックトレース：\n" + ex.StackTrace);
             }
             finally
             {
@@ -948,7 +997,7 @@ public class MainPageViewModel : ObservableRecipient
             if (_mergeInfo.NumProgressLines % Cfm2Constants.PROGRESS_INTERVAL == 0)
             {
                 SetProgressValue(MergeStep.ParseFile, (Double)_mergeInfo.NumProgressLines / _mergeInfo.NumTotalLines);
-#if DEBUG
+#if DEBUGz
                 Thread.Sleep(20);
 #endif
             }

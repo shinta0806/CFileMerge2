@@ -19,6 +19,8 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Serilog.Events;
+using Serilog;
 
 namespace CFileMerge2.ViewModels;
 
@@ -68,9 +70,17 @@ public class AboutPageViewModel : ObservableRecipient
     /// <summary>
     /// イベントハンドラー：Escape キー押下
     /// </summary>
-    public void KeyboardAcceleratorEscapeInvoked(KeyboardAccelerator _1, KeyboardAcceleratorInvokedEventArgs _2)
+    public async void KeyboardAcceleratorEscapeInvoked(KeyboardAccelerator _1, KeyboardAcceleratorInvokedEventArgs _2)
     {
-        _window.Close();
+        try
+        {
+            _window.Close();
+        }
+        catch (Exception ex)
+        {
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "Escape キー押下時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
     }
 
     /// <summary>
