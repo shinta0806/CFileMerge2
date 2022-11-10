@@ -8,6 +8,8 @@
 //  
 // ----------------------------------------------------------------------------
 
+using System.Text;
+
 namespace CFileMerge2.Models.SharedMisc;
 
 internal class MergeInfo
@@ -105,6 +107,24 @@ internal class MergeInfo
         get;
         set;
     } = String.Empty;
+
+    /// <summary>
+    /// 文字コード
+    /// </summary>
+    public Encoding Encoding
+    {
+        get;
+        set;
+    } = Encoding.UTF8;
+
+    /// <summary>
+    /// 改行コード
+    /// </summary>
+    public String NewLine
+    {
+        get;
+        set;
+    } = "\r\n";
 
     /// <summary>
     /// 合併後の内容

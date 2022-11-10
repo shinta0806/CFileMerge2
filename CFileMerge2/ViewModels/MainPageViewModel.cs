@@ -19,7 +19,7 @@ using CFileMerge2.Views;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
+using Hnx8.ReadJEnc;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -696,6 +696,8 @@ public class MainPageViewModel : ObservableRecipient
         // 何らかの理由によりウィンドウサイズが大きくなった場合、なぜか前バージョン以下の数値だと効果を発揮しないので、前バージョンより 1 大きな値にする
         // ToDo: Window.SizeToContent が実装されればこのコードは不要
         App.MainWindow.Height = 201;
+
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
     }
 
     /// <summary>
@@ -738,7 +740,7 @@ public class MainPageViewModel : ObservableRecipient
                 // 出力
                 SetProgressValue(MergeStep.Output, 0.0);
                 Directory.CreateDirectory(Path.GetDirectoryName(_mergeInfo.OutFullPath) ?? String.Empty);
-                File.WriteAllLines(_mergeInfo.OutFullPath, _mergeInfo.Lines);
+                File.WriteAllText(_mergeInfo.OutFullPath, String.Join(_mergeInfo.NewLine, _mergeInfo.Lines), _mergeInfo.Encoding);
 
                 // アンカー出力
                 SetProgressValue(MergeStep.OutputAnchor, 0.0);
@@ -796,7 +798,7 @@ public class MainPageViewModel : ObservableRecipient
         _mergeInfo.OutFullPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) + "\\" + Path.GetFileNameWithoutExtension(_mergeInfo.MakeFullPath) + "Output" + Common.FILE_EXT_HTML;
 
         // メイクファイル読み込み（再帰）
-        ParseFile(_mergeInfo.MakeFullPath, _mergeInfo.Lines, null);
+        (_mergeInfo.Encoding, _mergeInfo.NewLine) = ParseFile(_mergeInfo.MakeFullPath, _mergeInfo.Lines, null);
     }
 
     /// <summary>
@@ -1068,7 +1070,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <param name="parentLines">親の行群</param>
     /// <param name="parentLine">読み込んだ内容を挿入する位置</param>
     /// <exception cref="Exception"></exception>
-    private void ParseFile(String path, LinkedList<String> parentLines, LinkedListNode<String>? parentLine)
+    private (Encoding encoding, String newLine) ParseFile(String path, LinkedList<String> parentLines, LinkedListNode<String>? parentLine)
     {
         if (String.IsNullOrEmpty(path))
         {
@@ -1086,8 +1088,36 @@ public class MainPageViewModel : ObservableRecipient
         // インクルード履歴プッシュ
         _mergeInfo.IncludeStack.Add(path);
 
+        // 文字コード自動判別
+        FileInfo fileInfo = new(path);
+        using FileReader reader = new(fileInfo);
+        Encoding? encoding = reader.Read(fileInfo).GetEncoding();
+        if (encoding == null)
+        {
+            throw new Exception("文字コードを判定できませんでした：\n" + path);
+        }
+
+        // 改行コード自動判定
+        String newLine;
+        if (reader.Text.Contains("\r\n"))
+        {
+            newLine = "\r\n";
+        }
+        else if (reader.Text.Contains("\r"))
+        {
+            newLine = "\r";
+        }
+        else if (reader.Text.Contains("\n"))
+        {
+            newLine = "\n";
+        }
+        else
+        {
+            newLine = "\r\n";
+        }
+
         // このファイルの階層以下の内容
-        String[] childLineStrings = File.ReadAllLines(path);
+        String[] childLineStrings = reader.Text.Split(new String[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
         if (childLineStrings.Length == 0)
         {
             throw new Exception("内容が空です：\n" + path);
@@ -1125,6 +1155,8 @@ public class MainPageViewModel : ObservableRecipient
         Debug.Assert(_mergeInfo.IncludeStack.Last() == path, "ParseFile() インクルード履歴破損");
         _mergeInfo.IncludeStack.RemoveAt(_mergeInfo.IncludeStack.Count - 1);
         Debug.WriteLine("ParseFile() end: " + _mergeInfo.NumProgressLines + " / " + _mergeInfo.NumTotalLines);
+
+        return (encoding, newLine);
     }
 
     /// <summary>
