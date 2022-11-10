@@ -71,10 +71,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\WindowIcon.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Documents\*.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

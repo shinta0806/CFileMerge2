@@ -74,7 +74,7 @@ public class AboutPageViewModel : ObservableRecipient
     /// <summary>
     /// ウィンドウ
     /// </summary>
-    private WindowEx _window;
+    private readonly WindowEx _window;
 
     /// <summary>
     /// 初期化済フラグ
@@ -95,7 +95,7 @@ public class AboutPageViewModel : ObservableRecipient
             return;
         }
 
-        Debug.WriteLine("InitializeIfNeeded()");
+        Debug.WriteLine("AboutPageViewModel.InitializeIfNeeded()");
 
         // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
         // Depend: 効くようになればこのコードは不要
