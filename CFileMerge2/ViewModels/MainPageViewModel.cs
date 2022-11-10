@@ -9,13 +9,14 @@
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
-
+using CFileMerge2.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -23,6 +24,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Input;
 using Serilog;
 using Serilog.Events;
@@ -30,6 +32,7 @@ using Shinta;
 using Windows.ApplicationModel.Background;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage.Pickers.Provider;
 using Windows.UI.Popups;
 
 namespace CFileMerge2.ViewModels;
@@ -118,6 +121,12 @@ public class MainPageViewModel : ObservableRecipient
         fileOpenPicker.FileTypeFilter.Add(Cfm2Constants.FILE_EXT_CFM2_MAKE);
         fileOpenPicker.FileTypeFilter.Add("*");
 
+#if DEBUG
+        Guid IInitializeWithWindowIID = new(0x3E68D4BD, 0x7135, 0x4D10, 0x80, 0x18, 0x9F, 0xB6, 0xD9, 0xF3, 0x3F, 0xA1);
+        var asObjRef = global::WinRT.MarshalInspectable<object>.CreateMarshaler2(fileOpenPicker, IInitializeWithWindowIID);
+        var ThisPtr = asObjRef.GetAbi();
+#endif
+
         StorageFile? file = await fileOpenPicker.PickSingleFileAsync();
         if (file == null)
         {
@@ -204,8 +213,30 @@ public class MainPageViewModel : ObservableRecipient
 
     private async void MenuFlyoutItemAboutClicked()
     {
-        await App.MainWindow.CreateMessageDialog(Cfm2Constants.APP_NAME_J + "\n" + Cfm2Constants.APP_VER + "  " + Cfm2Constants.APP_DISTRIB + "\n"
-                + Cfm2Constants.COPYRIGHT_J, Cfm2Constants.LABEL_INFORMATION).ShowAsync();
+        //Windows.UI.WindowManagement.AppWindow a =await Windows.UI.WindowManagement.AppWindow.TryCreateAsync();
+
+        AboutWindow aboutWindow = new();
+
+#if DEBUGz
+        Guid IInitializeWithWindowIID = new(0x3E68D4BD, 0x7135, 0x4D10, 0x80, 0x18, 0x9F, 0xB6, 0xD9, 0xF3, 0x3F, 0xA1);
+        var asObjRef = global::WinRT.MarshalInspectable<object>.CreateMarshaler2(aboutWindow, IInitializeWithWindowIID);
+        var ThisPtr = asObjRef.GetAbi();
+#endif
+
+#if false
+        var a = aboutWindow.GetWindowHandle();
+        var m = App.MainWindow.GetWindowHandle();
+        SetParent(a, m);
+#endif
+
+        //var a = aboutWindow.AppWindow;
+        //var b = App.MainWindow.AppWindow;
+        //IntPtr handle = App.MainWindow.GetWindowHandle();
+        //WinRT.Interop.InitializeWithWindow.Initialize(aboutWindow, handle);
+        //var c = WindowManager.Get(aboutWindow);
+        //WinRT.Interop.InitializeWithWindow.Initialize(c, handle);
+
+        aboutWindow.Activate();
     }
     #endregion
 
@@ -272,7 +303,6 @@ public class MainPageViewModel : ObservableRecipient
         InitializeIfNeeded();
         ApplySettings();
     }
-
 
     // ====================================================================
     // private 定数

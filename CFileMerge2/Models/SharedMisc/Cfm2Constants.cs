@@ -8,6 +8,8 @@
 // 
 // ----------------------------------------------------------------------------
 
+using Microsoft.UI.Xaml;
+
 namespace CFileMerge2.Models.SharedMisc;
 
 // ====================================================================
@@ -62,6 +64,16 @@ internal class Cfm2Constants
 #else
     public const String APP_DISTRIB = "zip 版";
 #endif
+    public const String DISTRIB_WEB = "https://shinta.coresv.com/software_dev/cfilemerge2-jpn/";
+    public const String SUPPORT_WEB = DISTRIB_WEB + "#Support";
+
+    // --------------------------------------------------------------------
+    // 作者情報
+    // --------------------------------------------------------------------
+
+    public const String AUTHOR_WEB = "https://shinta.coresv.com";
+    public const String AUTHOR_TWITTER = "https://twitter.com/shinta0806";
+    public const String AUTHOR_FANTIA = "https://fantia.jp/fanclubs/65509";
 
     // --------------------------------------------------------------------
     // フォルダー名
@@ -104,6 +116,11 @@ internal class Cfm2Constants
     public const String LABEL_NO = "いいえ";
     public const String LABEL_WARNING = "警告";
     public const String LABEL_YES = "はい";
+
+    /// <summary>
+    /// ハイパーリンクボタンの余白
+    /// </summary>
+    public static readonly Thickness HYPERLINK_BUTTON_PADDING = new(3.0);
 
     // --------------------------------------------------------------------
     // 設定

@@ -28,6 +28,10 @@
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Views\AboutPage.xaml" />
+    <None Remove="Views\AboutWindow.xaml" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\..\..\_Common\SerilogUtils.cs" Link="_Common\SerilogUtils.cs" />
     <Compile Include="..\..\..\_Common\ShintaCommon.cs" Link="_Common\ShintaCommon.cs" />
   </ItemGroup>
@@ -67,6 +71,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\WindowIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Documents\*.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -97,6 +105,12 @@
     <None Update="Documents\ThirdPartyDocuments\ReadJEnc\LICENSE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\AboutPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\AboutWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
