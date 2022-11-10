@@ -3,12 +3,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:msm="using:CFileMerge2.Models.SharedMisc"
     xmlns:windowex="using:WinUIEx"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     PersistenceId="MainWindow"
     IsMaximizable="False"
     IsResizable="False"
-    Title="ちょちょいとファイル合併 2"
+    Title="{x:Bind msm:Cfm2Constants.APP_NAME_J}"
     mc:Ignorable="d">
     <windowex:WindowEx.Backdrop>
         <windowex:MicaSystemBackdrop/>

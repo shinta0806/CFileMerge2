@@ -10,14 +10,6 @@
 // 集約イベントハンドラー、起動中はアンカーファイルの更新が反映されない？、バージョン情報
 // ----------------------------------------------------------------------------
 
-using System.Diagnostics;
-
-using CFileMerge2.Models.SharedMisc;
-
-using Microsoft.UI.Xaml;
-
-using Serilog;
-
 namespace CFileMerge2.Views;
 
 public sealed partial class MainWindow : WindowEx
