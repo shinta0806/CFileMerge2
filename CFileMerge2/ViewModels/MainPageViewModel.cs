@@ -30,7 +30,7 @@ using Serilog;
 using Serilog.Events;
 
 using Shinta;
-
+using Windows.Graphics;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Popups;
@@ -60,7 +60,7 @@ public class MainPageViewModel : ObservableRecipient
         ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
 
         // イベントハンドラー
-        App.MainWindow.AppWindow.Closing += AppWindow_Closing;
+        App.MainWindow.AppWindow.Closing += AppWindowClosing;
     }
 
     // ====================================================================
@@ -79,6 +79,16 @@ public class MainPageViewModel : ObservableRecipient
     {
         get => _makePath;
         set => SetProperty(ref _makePath, value);
+    }
+
+    /// <summary>
+    /// オーバーラップエリア表示
+    /// </summary>
+    private Visibility _overlapVisibility = Visibility.Collapsed;
+    public Visibility OverlapVisibility
+    {
+        get => _overlapVisibility;
+        set => SetProperty(ref _overlapVisibility, value);
     }
 
     /// <summary>
@@ -213,31 +223,8 @@ public class MainPageViewModel : ObservableRecipient
 
     private async void MenuFlyoutItemAboutClicked()
     {
-
-        //Windows.UI.WindowManagement.AppWindow a =await Windows.UI.WindowManagement.AppWindow.TryCreateAsync();
-
         AboutWindow aboutWindow = new();
-
-#if DEBUGz
-        Guid IInitializeWithWindowIID = new(0x3E68D4BD, 0x7135, 0x4D10, 0x80, 0x18, 0x9F, 0xB6, 0xD9, 0xF3, 0x3F, 0xA1);
-        var asObjRef = global::WinRT.MarshalInspectable<object>.CreateMarshaler2(aboutWindow, IInitializeWithWindowIID);
-        var ThisPtr = asObjRef.GetAbi();
-#endif
-
-#if false
-        var a = aboutWindow.GetWindowHandle();
-        var m = App.MainWindow.GetWindowHandle();
-        SetParent(a, m);
-#endif
-
-        //var a = aboutWindow.AppWindow;
-        //var b = App.MainWindow.AppWindow;
-        //IntPtr handle = App.MainWindow.GetWindowHandle();
-        //WinRT.Interop.InitializeWithWindow.Initialize(aboutWindow, handle);
-        //var c = WindowManager.Get(aboutWindow);
-        //WinRT.Interop.InitializeWithWindow.Initialize(c, handle);
-
-        aboutWindow.Activate();
+        await ShowDialogAsync(aboutWindow);
     }
     #endregion
 
@@ -268,14 +255,17 @@ public class MainPageViewModel : ObservableRecipient
     public void MainPanelGettingFocus(UIElement _, GettingFocusEventArgs args)
     {
         Debug.WriteLine("MainUiGettingFocus() " + Environment.TickCount);
-        if (ProgressVisibility == Visibility.Visible)
+        if (OverlapVisibility == Visibility.Collapsed)
         {
-            // プログレスエリアが表示されている場合はフォーカスを取得しない
-            // 終了確認後に Cancel を直接いじると落ちるので TryCancel() を使う
-            if (args.TryCancel())
-            {
-                args.Handled = true;
-            }
+            // オーバーラップエリアが非表示（なにも作業等をしていない状態）ならそのままフォーカスを取得する
+            return;
+        }
+
+        // オーバーラップエリアが表示されている場合はフォーカスを取得しない
+        // 終了確認後に Cancel を直接いじると落ちるので TryCancel() を使う
+        if (args.TryCancel())
+        {
+            args.Handled = true;
         }
     }
 
@@ -334,6 +324,16 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     private Boolean _initialized;
 
+    /// <summary>
+    /// 開いているダイアログウィンドウ
+    /// </summary>
+    private WindowEx? _openingDialog;
+
+    /// <summary>
+    /// ダイアログ制御用
+    /// </summary>
+    private AutoResetEvent _dialogEvent = new(false);
+
     // ====================================================================
     // private 関数
     // ====================================================================
@@ -341,7 +341,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// イベントハンドラー：ウィンドウが閉じられようとしている
     /// </summary>
-    private async void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
+    private async void AppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
     {
         // await を待つようにするため、いったんキャンセル
         args.Cancel = true;
@@ -367,6 +367,17 @@ public class MainPageViewModel : ObservableRecipient
 
         // 改めて閉じる
         App.MainWindow.Close();
+    }
+
+    /// <summary>
+    /// イベントハンドラー：ダイアログが閉じられた
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    private void DialogClosed(object sender, WindowEventArgs args)
+    {
+        Debug.WriteLine("DialogClosed()");
+        _dialogEvent.Set();
     }
 
     /// <summary>
@@ -597,13 +608,25 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     /// <summary>
-    /// プログレスエリアを非表示
+    /// オーバーラップエリア非表示
+    /// </summary>
+    private void HideOverlapArea()
+    {
+        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        {
+            OverlapVisibility = Visibility.Collapsed;
+        });
+    }
+
+    /// <summary>
+    /// プログレスエリア非表示
     /// </summary>
     private void HideProgressArea()
     {
         App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
             ProgressVisibility = Visibility.Collapsed;
+            HideOverlapArea();
         });
     }
 
@@ -635,8 +658,23 @@ public class MainPageViewModel : ObservableRecipient
         // ToDo: Window.SizeToContent が実装されればこのコードは不要
         App.MainWindow.Height = 201;
 
+        App.MainWindow.Activated += MainWindowActivated;
+
         // 初期化完了
         _initialized = true;
+    }
+
+    /// <summary>
+    /// イベントハンドラー：メインウィンドウ Activated / Deactivated
+    /// </summary>
+    /// <param name="_"></param>
+    /// <param name="args"></param>
+    public void MainWindowActivated(Object _, WindowActivatedEventArgs args)
+    {
+        if ((args.WindowActivationState == WindowActivationState.PointerActivated || args.WindowActivationState == WindowActivationState.CodeActivated) && _openingDialog != null)
+        {
+            _openingDialog.Activate();
+        }
     }
 
     /// <summary>
@@ -924,7 +962,7 @@ public class MainPageViewModel : ObservableRecipient
             if (_mergeInfo.NumProgressLines % Cfm2Constants.PROGRESS_INTERVAL == 0)
             {
                 SetProgressValue(MergeStep.ParseFile, (Double)_mergeInfo.NumProgressLines / _mergeInfo.NumTotalLines);
-#if DEBUGz
+#if DEBUG
                 Thread.Sleep(20);
 #endif
             }
@@ -1222,12 +1260,51 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     /// <summary>
+    /// ウィンドウをモーダルで表示
+    /// </summary>
+    /// <param name="window"></param>
+    /// <returns></returns>
+    private Task ShowDialogAsync(WindowEx window)
+    {
+        if (_openingDialog != null)
+        {
+            throw new Exception("内部エラー：既にダイアログが開いています。");
+        }
+        _openingDialog = window;
+
+        // ディスプレイサイズが不明なのでカスケードしない（はみ出し防止）
+        ShowOverlapArea();
+        window.Closed += DialogClosed;
+        window.AppWindow.Move(new PointInt32(App.MainWindow.AppWindow.Position.X, App.MainWindow.AppWindow.Position.Y));
+        window.Activate();
+
+        return Task.Run(() =>
+        {
+            _dialogEvent.WaitOne();
+            _openingDialog = null;
+            HideOverlapArea();
+        });
+    }
+
+    /// <summary>
+    /// オーバーラップエリア表示
+    /// </summary>
+    private void ShowOverlapArea()
+    {
+        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        {
+            OverlapVisibility = Visibility.Visible;
+        });
+    }
+
+    /// <summary>
     /// プログレスエリアを表示
     /// </summary>
     private void ShowProgressArea()
     {
         App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
+            ShowOverlapArea();
             ProgressValue = 0.0;
             ProgressVisibility = Visibility.Visible;
         });

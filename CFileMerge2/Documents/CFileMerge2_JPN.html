@@ -136,6 +136,8 @@
   <br>
   HTML ヘルプの先頭に目次が挿入されています。あくまでも HTML ですので、目次の書式などは CSS で自由に変更することができます。<br>
   <br>
+  また、HelpParts フォルダー内にいくつかの HTML ファイルが作成されていますが、これらはアンカーファイルと呼ばれます。アンカーファイルを開くと直ちに HTML ヘルプに遷移しますが、HTML ヘルプの先頭ではなく、対応する見出しのところに遷移します。<br>
+  <br>
   以上でチュートリアルは終了です。<br>
   <br>
   より詳しい使い方は次章以降をご覧ください。<br clear="right">
@@ -268,7 +270,7 @@
 </table>
 
 <p>
-  GenerateAnchorFiles タグは原則としてメイクファイルのどこに記述しても構いません。GenerateAnchorFiles タグがあればアンカーファイルを作成し、なければアンカーファイルは作成しません。<br>
+  GenerateAnchorFiles タグは原則としてメイクファイルのどこに記述しても構いません。GenerateAnchorFiles タグがあればアンカーファイルを作成し、なければアンカーファイルは作成しません。アンカーファイルを作成したくない場合は、メイクファイルに GenerateAnchorFiles を記述しないようにします。<br>
   <br>
   アンカーメイクファイル名は、アンカーファイルの内容になるファイルを指定します。アンカーメイクファイル内に <a href="#CfmTagAnchorPath">AnchorPath タグ</a>を記述しておくことで、出力ファイルへの遷移をするようにします。アンカーメイクファイルのサンプルについては、サンプルフォルダー内にある SampleAnchorMakeFile.cfm2anchor を参考にしてください。<br>
   <br>
@@ -281,9 +283,9 @@
 
 <pre>
 &lt;!-- Cfm/GenerateAnchorFiles: C:\AnchorMake\SampleAnchorMakeFile.cfm2anchor --&gt;
-&lt;!-- Cfm/Include: SampleAnchorMakeFile.cfm2anchor --&gt;
-&lt;!-- Cfm/Include: ..\..\SampleAnchorMakeFile.cfm2anchor --&gt;
-&lt;!-- Cfm/Include: SampleAnchorMakeFile.cfm2anchor, HelpParts --&gt;
+&lt;!-- Cfm/GenerateAnchorFiles: SampleAnchorMakeFile.cfm2anchor --&gt;
+&lt;!-- Cfm/GenerateAnchorFiles: ..\..\SampleAnchorMakeFile.cfm2anchor --&gt;
+&lt;!-- Cfm/GenerateAnchorFiles: SampleAnchorMakeFile.cfm2anchor, HelpParts --&gt;
 </pre>
   
 <h2 id="CfmTagInclude">インクルード（Include）</h2>
