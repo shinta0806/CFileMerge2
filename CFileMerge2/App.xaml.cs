@@ -13,6 +13,7 @@
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
+
 using CFileMerge2.Activation;
 using CFileMerge2.Contracts.Services;
 using CFileMerge2.Core.Contracts.Services;

@@ -740,7 +740,7 @@ public class MainPageViewModel : ObservableRecipient
                 // 出力
                 SetProgressValue(MergeStep.Output, 0.0);
                 Directory.CreateDirectory(Path.GetDirectoryName(_mergeInfo.OutFullPath) ?? String.Empty);
-                File.WriteAllText(_mergeInfo.OutFullPath, String.Join(_mergeInfo.NewLine, _mergeInfo.Lines), _mergeInfo.Encoding);
+                Write(_mergeInfo.OutFullPath, _mergeInfo.Lines);
 
                 // アンカー出力
                 SetProgressValue(MergeStep.OutputAnchor, 0.0);
@@ -845,7 +845,7 @@ public class MainPageViewModel : ObservableRecipient
                 anchorFileContents[anchorPositionIndexes[j].Key] = anchorFileContents[anchorPositionIndexes[j].Key].Insert(anchorPositionIndexes[j].Value, relativePath + "#" + hxTagInfos[i].Id);
             }
 
-            File.WriteAllLines(_mergeInfo.AnchorOutFullFolder + Path.GetFileNameWithoutExtension(_mergeInfo.OutFullPath) + "_" + hxTagInfos[i].Id + Common.FILE_EXT_HTML, anchorFileContents);
+            Write(_mergeInfo.AnchorOutFullFolder + Path.GetFileNameWithoutExtension(_mergeInfo.OutFullPath) + "_" + hxTagInfos[i].Id + Common.FILE_EXT_HTML, anchorFileContents);
 
             if (i % Cfm2Constants.PROGRESS_INTERVAL == 0)
             {
@@ -1375,5 +1375,13 @@ public class MainPageViewModel : ObservableRecipient
             ProgressValue = 0.0;
             ProgressVisibility = Visibility.Visible;
         });
+    }
+
+    /// <summary>
+    /// ファイル出力
+    /// </summary>
+    private void Write(String path, IEnumerable<String> lines)
+    {
+        File.WriteAllText(path, String.Join(_mergeInfo.NewLine, lines), _mergeInfo.Encoding);
     }
 }
