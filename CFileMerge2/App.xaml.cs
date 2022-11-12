@@ -158,5 +158,6 @@ public partial class App : Application
         Debug.WriteLine("App_UnhandledException() " + args.Exception.Message);
         await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Fatal, "不明なエラーが発生しました。アプリケーションを終了します。\n"
                 + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace);
+        Environment.Exit(1);
     }
 }
