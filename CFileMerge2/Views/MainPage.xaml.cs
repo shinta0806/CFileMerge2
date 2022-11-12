@@ -42,5 +42,4 @@ public sealed partial class MainPage : Page
     {
         get;
     }
-
 }

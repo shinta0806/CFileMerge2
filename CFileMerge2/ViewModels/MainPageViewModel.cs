@@ -56,6 +56,7 @@ public class MainPageViewModel : ObservableRecipient
         Debug.Assert(Cfm2Constants.MERGE_STEP_AMOUNT.Length == (Int32)MergeStep.__End__, "MainPageViewModel() MERGE_STEP_AMOUNT が変");
 
         // コマンド
+        MenuFlyoutItemRecentMakeClickedCommand = new RelayCommand<String>(MenuFlyoutItemRecentMakeClicked);
         ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClicked);
         ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
         MenuFlyoutItemSampleFolderClickedCommand = new RelayCommand(MenuFlyoutItemSampleFolderClicked);
@@ -122,6 +123,32 @@ public class MainPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // コマンド
     // --------------------------------------------------------------------
+
+    #region 最近使用したメイクファイルフライアウトの制御
+    public ICommand MenuFlyoutItemRecentMakeClickedCommand
+    {
+        get;
+    }
+
+    private async void MenuFlyoutItemRecentMakeClicked(String? path)
+    {
+        try
+        {
+            if (String.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
+            MakePath = path;
+            AddRecent(path);
+        }
+        catch (Exception ex)
+        {
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "最近使用したメイクファイル適用時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
+    }
+    #endregion
 
     #region 参照ボタンの制御
     public ICommand ButtonBrowseMakeClickedCommand
@@ -267,14 +294,6 @@ public class MainPageViewModel : ObservableRecipient
     // ====================================================================
 
     /// <summary>
-    /// 環境設定を適用
-    /// </summary>
-    private void ApplySettings()
-    {
-        MakePath = Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath;
-    }
-
-    /// <summary>
     /// イベントハンドラー：メインパネルのフォーカスを取得しようとしている
     /// </summary>
     public void MainPanelGettingFocus(UIElement _, GettingFocusEventArgs args)
@@ -318,6 +337,35 @@ public class MainPageViewModel : ObservableRecipient
         {
             // ユーザー起因では発生しないイベントなのでログのみ
             Log.Error("メインページメインパネルサイズ変更時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
+    }
+
+    /// <summary>
+    /// イベントハンドラー：最近使用したメイクファイルメニューが開く前
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public async void MenuFlyoutRecentMakeOpening(Object sender, Object _)
+    {
+        try
+        {
+            MenuFlyout menuFlyout = (MenuFlyout)sender;
+            menuFlyout.Items.Clear();
+            foreach (String path in Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes)
+            {
+                MenuFlyoutItem menuFlyoutItem = new()
+                {
+                    Text = Path.GetFileName(path),
+                    Command = MenuFlyoutItemRecentMakeClickedCommand,
+                    CommandParameter = path,
+                };
+                menuFlyout.Items.Add(menuFlyoutItem);
+            }
+        }
+        catch (Exception ex)
+        {
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "最近使用したメイクファイル時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
@@ -410,11 +458,41 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// ダイアログ制御用
     /// </summary>
-    private AutoResetEvent _dialogEvent = new(false);
+    private readonly AutoResetEvent _dialogEvent = new(false);
 
     // ====================================================================
     // private 関数
     // ====================================================================
+
+    /// <summary>
+    /// 最近使用したメイクファイルを追加
+    /// </summary>
+    private void AddRecent(String path)
+    {
+        if (Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Contains(path))
+        {
+            // 既に追加されている場合はいったん削除
+            Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Remove(path);
+        }
+
+        // 先頭に追加
+        Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Insert(0, path);
+
+        // 溢れた分は削除
+        if (Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Count > Cfm2Constants.RECENT_MAKE_PATHES_MAX)
+        {
+            Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.RemoveRange(Cfm2Constants.RECENT_MAKE_PATHES_MAX,
+                    Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Count - Cfm2Constants.RECENT_MAKE_PATHES_MAX);
+        }
+    }
+
+    /// <summary>
+    /// 環境設定を適用
+    /// </summary>
+    private void ApplySettings()
+    {
+        MakePath = Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath;
+    }
 
     /// <summary>
     /// イベントハンドラー：ウィンドウが閉じられようとしている
@@ -780,6 +858,9 @@ public class MainPageViewModel : ObservableRecipient
 #if DEBUGz
                 Thread.Sleep(5 * 1000);
 #endif
+
+                // 最近使用したメイクファイル追加
+                AddRecent(_mergeInfo.MakeFullPath);
 
                 // 報告
                 if (_mergeInfo.Warnings.Any())

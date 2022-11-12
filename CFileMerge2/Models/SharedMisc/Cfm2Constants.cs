@@ -201,4 +201,14 @@ internal class Cfm2Constants
     /// 何行ごとに進捗表示するか
     /// </summary>
     public const Int32 PROGRESS_INTERVAL = 10;
+
+    // --------------------------------------------------------------------
+    // その他
+    // --------------------------------------------------------------------
+
+    /// <summary>
+    /// 最近使用したメイクファイルの最大数
+    /// </summary>
+    public const Int32 RECENT_MAKE_PATHES_MAX = 3;
+
 }
