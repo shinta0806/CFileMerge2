@@ -41,9 +41,7 @@ public sealed partial class MainWindow : WindowEx
 
         // Height は後で MainPageViewModel により指定されるはずなので、ここでは仮指定
         // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
-        // 何らかの理由によりウィンドウサイズが大きくなった場合、なぜか前バージョン以下の数値だと効果を発揮しないので、前バージョンより 1 大きな値にする
         // ToDo: Window.SizeToContent が実装されればこのコードは不要
-        Height = 201;
-
+        Height = 200;
     }
 }

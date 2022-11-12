@@ -302,25 +302,14 @@ public class MainPageViewModel : ObservableRecipient
 
     /// <summary>
     /// イベントハンドラー：メインパネルのサイズが変更された
-    /// なぜか他のウィンドウと同じように VerticalAlignment="Top" を指定するとうまくいかない
     /// ToDo: Window.SizeToContent が実装されればこのコードは不要
     /// </summary>
     public void MainPanelSizeChanged(Object sender, SizeChangedEventArgs _)
     {
         try
         {
-            Double mainUiHeight = ((StackPanel)sender).ActualHeight;
-            Log.Debug("MainUiSizeChanged() mainUiHeight: " + mainUiHeight);
-#if false
-            if (mainUiHeight < _prevMainUiHeight)
-            {
-                return;
-            }
-
-            Log.Debug("MainUiSizeChanged() resize");
-            App.MainWindow.AppWindow.ResizeClient(new SizeInt32(App.MainWindow.AppWindow.ClientSize.Width, (Int32)mainUiHeight));
-#endif
-            _prevMainUiHeight = mainUiHeight;
+            _mainPanelHeight = ((StackPanel)sender).ActualHeight;
+            Log.Debug("MainUiSizeChanged() _mainPanelHeight: " + _mainPanelHeight);
         }
         catch (Exception ex)
         {
@@ -368,9 +357,9 @@ public class MainPageViewModel : ObservableRecipient
     private MergeInfo _mergeInfo = new();
 
     /// <summary>
-    /// 前回のメイン UI の高さ
+    /// メインパネルの高さ
     /// </summary>
-    private Double _prevMainUiHeight;
+    private Double _mainPanelHeight;
 
     /// <summary>
     /// 開いているダイアログウィンドウ
@@ -683,7 +672,6 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     private void Initialize()
     {
-        Debug.WriteLine("Initialize()");
 #if DEBUG
         App.MainWindow.Title = "［デバッグ］" + App.MainWindow.Title;
 #endif
@@ -691,9 +679,11 @@ public class MainPageViewModel : ObservableRecipient
         Title = "［テスト］" + Title;
 #endif
 
-        ReresizeClient();
-
+        // 文字コード準備
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+        // SizeToContent
+        ReresizeClient();
     }
 
     /// <summary>
@@ -775,7 +765,6 @@ public class MainPageViewModel : ObservableRecipient
             finally
             {
                 HideProgressArea();
-                ReresizeClient();
             }
         });
     }
@@ -1275,14 +1264,13 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     /// <summary>
-    /// 前回調整時のウィンドウサイズに再度設定
-    /// MainUiSizeChanged() イベントハンドラー内だと効かないことがあるのでその対策
+    /// メインパネルの高さに合わせてウィンドウサイズを設定
     /// ToDo: Window.SizeToContent が実装されればこのコードは不要
     /// </summary>
     private void ReresizeClient()
     {
-        Log.Debug("ReresizeClient() " + _prevMainUiHeight);
-        App.MainWindow.AppWindow.ResizeClient(new SizeInt32(App.MainWindow.AppWindow.ClientSize.Width, (Int32)(_prevMainUiHeight + Cfm2Constants.MARGIN_DEFAULT * 2)));
+        Log.Debug("ReresizeClient() " + _mainPanelHeight);
+        App.MainWindow.AppWindow.ResizeClient(new SizeInt32(App.MainWindow.AppWindow.ClientSize.Width, (Int32)(_mainPanelHeight + Cfm2Constants.MARGIN_DEFAULT * 2)));
     }
 
     /// <summary>
