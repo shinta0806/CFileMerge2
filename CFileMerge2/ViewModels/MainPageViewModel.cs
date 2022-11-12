@@ -19,7 +19,9 @@ using CFileMerge2.Views;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 using Hnx8.ReadJEnc;
+
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -30,6 +32,7 @@ using Serilog;
 using Serilog.Events;
 
 using Shinta;
+
 using Windows.Graphics;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -314,7 +317,7 @@ public class MainPageViewModel : ObservableRecipient
         catch (Exception ex)
         {
             // ユーザー起因では発生しないイベントなのでログのみ
-            Log.Error("メインパネルサイズ変更時エラー：\n" + ex.Message);
+            Log.Error("メインページメインパネルサイズ変更時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }

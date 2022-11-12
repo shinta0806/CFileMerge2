@@ -1,6 +1,6 @@
 ﻿// ============================================================================
 // 
-// バージョン情報ビューの ViewModel
+// バージョン情報ページの ViewModel
 // 
 // ============================================================================
 
@@ -22,6 +22,8 @@ using Microsoft.UI.Xaml.Input;
 
 using Serilog.Events;
 using Serilog;
+
+using Windows.Graphics;
 
 namespace CFileMerge2.ViewModels;
 
@@ -92,20 +94,13 @@ public class AboutPageViewModel : ObservableRecipient
     {
         try
         {
-            Double mainUiHeight = ((FrameworkElement)sender).ActualHeight + Cfm2Constants.MARGIN_DEFAULT * 2;
-            Debug.WriteLine("AboutPageViewModel.MainPanelSizeChanged() mainUiHeight: " + mainUiHeight);
-            if (mainUiHeight < _prevMainUiHeight)
-            {
-                return;
-            }
-
-            _window.AppWindow.ResizeClient(new Windows.Graphics.SizeInt32(_window.AppWindow.ClientSize.Width, (Int32)mainUiHeight));
-            _prevMainUiHeight = mainUiHeight;
+            _mainPanelHeight = ((StackPanel)sender).ActualHeight;
+            Log.Debug("AboutPageViewModel.MainPanelSizeChanged() _mainPanelHeight: " + _mainPanelHeight);
         }
         catch (Exception ex)
         {
             // ユーザー起因では発生しないイベントなのでログのみ
-            Log.Error("メインパネルサイズ変更時エラー：\n" + ex.Message);
+            Log.Error("バージョン情報ページメインパネルサイズ変更時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
@@ -142,9 +137,9 @@ public class AboutPageViewModel : ObservableRecipient
     private readonly WindowEx _window;
 
     /// <summary>
-    /// 前回のメイン UI の高さ
+    /// メインパネルの高さ
     /// </summary>
-    private Double _prevMainUiHeight;
+    private Double _mainPanelHeight;
 
     // ====================================================================
     // private 関数
@@ -155,16 +150,20 @@ public class AboutPageViewModel : ObservableRecipient
     /// </summary>
     private void Initialize()
     {
-        Debug.WriteLine("AboutPageViewModel.Initialize()");
+        Log.Debug("AboutPageViewModel.Initialize()");
         _window.Title = Cfm2Constants.APP_NAME_J + "のバージョン情報";
 
-        // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
-        // Depend: 効くようになればこのコードは不要
-        _window.Width = 600;
+        // SizeToContent
+        ReresizeClient();
+    }
 
-        // Height は後で MainPageViewModel により指定されるはずなので、ここでは仮指定
-        // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
-        // Depend: Window.SizeToContent が実装されればこのコードは不要
-        _window.Height = 600;
+    /// <summary>
+    /// メインパネルの高さに合わせてウィンドウサイズを設定
+    /// ToDo: Window.SizeToContent が実装されればこのコードは不要
+    /// </summary>
+    private void ReresizeClient()
+    {
+        Log.Debug("AboutPageViewModel.ReresizeClient() " + _mainPanelHeight);
+        _window.AppWindow.ResizeClient(new SizeInt32(_window.AppWindow.ClientSize.Width, (Int32)(_mainPanelHeight + Cfm2Constants.MARGIN_DEFAULT * 2)));
     }
 }
