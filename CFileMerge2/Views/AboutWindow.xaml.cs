@@ -9,7 +9,6 @@
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.Models.SharedMisc;
-using Microsoft.UI.Xaml;
 
 namespace CFileMerge2.Views;
 

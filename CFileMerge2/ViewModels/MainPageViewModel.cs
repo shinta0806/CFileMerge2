@@ -86,6 +86,13 @@ public class MainPageViewModel : ObservableRecipient
         set => SetProperty(ref _makePath, value);
     }
 
+    private Boolean _isRecentMakeEnabled;
+    public Boolean IsRecentMakeEnabled
+    {
+        get => _isRecentMakeEnabled;
+        set => SetProperty(ref _isRecentMakeEnabled, value);
+    }
+
     /// <summary>
     /// オーバーラップエリア表示
     /// </summary>
@@ -477,6 +484,10 @@ public class MainPageViewModel : ObservableRecipient
 
         // 先頭に追加
         Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Insert(0, path);
+        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        {
+            IsRecentMakeEnabled = true;
+        });
 
         // 溢れた分は削除
         if (Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Count > Cfm2Constants.RECENT_MAKE_PATHES_MAX)
@@ -803,6 +814,9 @@ public class MainPageViewModel : ObservableRecipient
 
         // SizeToContent
         ReresizeClient();
+
+        // その他
+        IsRecentMakeEnabled = Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Any();
     }
 
     /// <summary>
