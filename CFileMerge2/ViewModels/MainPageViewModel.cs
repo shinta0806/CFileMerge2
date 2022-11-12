@@ -310,13 +310,16 @@ public class MainPageViewModel : ObservableRecipient
         try
         {
             Double mainUiHeight = ((StackPanel)sender).ActualHeight;
-            Debug.WriteLine("MainUiSizeChanged() mainUiHeight: " + mainUiHeight);
+            Log.Debug("MainUiSizeChanged() mainUiHeight: " + mainUiHeight);
+#if false
             if (mainUiHeight < _prevMainUiHeight)
             {
                 return;
             }
 
+            Log.Debug("MainUiSizeChanged() resize");
             App.MainWindow.AppWindow.ResizeClient(new SizeInt32(App.MainWindow.AppWindow.ClientSize.Width, (Int32)mainUiHeight));
+#endif
             _prevMainUiHeight = mainUiHeight;
         }
         catch (Exception ex)
@@ -334,6 +337,7 @@ public class MainPageViewModel : ObservableRecipient
     {
         try
         {
+            Log.Debug("PageLoaded()");
             Initialize();
             ApplySettings();
         }
@@ -687,15 +691,7 @@ public class MainPageViewModel : ObservableRecipient
         Title = "［テスト］" + Title;
 #endif
 
-        // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
-        // ToDo: 効くようになればこのコードは不要
-        App.MainWindow.Width = 800;
-
-        // Height は後で MainPageViewModel により指定されるはずなので、ここでは仮指定
-        // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
-        // 何らかの理由によりウィンドウサイズが大きくなった場合、なぜか前バージョン以下の数値だと効果を発揮しないので、前バージョンより 1 大きな値にする
-        // ToDo: Window.SizeToContent が実装されればこのコードは不要
-        App.MainWindow.Height = 201;
+        ReresizeClient();
 
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
     }
@@ -1285,7 +1281,8 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     private void ReresizeClient()
     {
-        App.MainWindow.AppWindow.ResizeClient(new Windows.Graphics.SizeInt32(App.MainWindow.AppWindow.ClientSize.Width, (Int32)_prevMainUiHeight));
+        Log.Debug("ReresizeClient() " + _prevMainUiHeight);
+        App.MainWindow.AppWindow.ResizeClient(new SizeInt32(App.MainWindow.AppWindow.ClientSize.Width, (Int32)(_prevMainUiHeight + Cfm2Constants.MARGIN_DEFAULT * 2)));
     }
 
     /// <summary>

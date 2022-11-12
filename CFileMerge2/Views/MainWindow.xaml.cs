@@ -34,5 +34,16 @@ public sealed partial class MainWindow : WindowEx
         // 初期化
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
         Content = null;
+
+        // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
+        // ToDo: 効くようになればこのコードは不要
+        Width = 800;
+
+        // Height は後で MainPageViewModel により指定されるはずなので、ここでは仮指定
+        // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
+        // 何らかの理由によりウィンドウサイズが大きくなった場合、なぜか前バージョン以下の数値だと効果を発揮しないので、前バージョンより 1 大きな値にする
+        // ToDo: Window.SizeToContent が実装されればこのコードは不要
+        Height = 201;
+
     }
 }
