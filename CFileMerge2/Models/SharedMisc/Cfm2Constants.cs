@@ -17,6 +17,16 @@ namespace CFileMerge2.Models.SharedMisc;
 // ====================================================================
 
 /// <summary>
+/// 環境設定ウィンドウのナビゲーション
+/// </summary>
+public enum Cfm2SettingsNavigationViewItems
+{
+    Settings,
+    Maintenance,
+    __End__,
+}
+
+/// <summary>
 /// 合併作業のステップ
 /// </summary>
 public enum MergeStep

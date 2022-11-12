@@ -16,7 +16,7 @@ using System.Windows.Input;
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.Views;
-
+using CFileMerge2.Views.Cfm2SettingsWindows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -58,9 +58,10 @@ public class MainPageViewModel : ObservableRecipient
         // コマンド
         MenuFlyoutItemRecentMakeClickedCommand = new RelayCommand<String>(MenuFlyoutItemRecentMakeClicked);
         ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClicked);
-        ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
+        ButtonCfm2SettingsClickedCommand = new RelayCommand(ButtonCfm2SettingsClicked);
         MenuFlyoutItemSampleFolderClickedCommand = new RelayCommand(MenuFlyoutItemSampleFolderClicked);
         MenuFlyoutItemAboutClickedCommand = new RelayCommand(MenuFlyoutItemAboutClicked);
+        ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
         ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
 
         // イベントハンドラー
@@ -187,54 +188,23 @@ public class MainPageViewModel : ObservableRecipient
     }
     #endregion
 
-    #region 出力ファイルを開くボタンの制御
-    public ICommand ButtonOpenOutFileClickedCommand
+    #region 環境設定ボタンの制御
+    public ICommand ButtonCfm2SettingsClickedCommand
     {
         get;
     }
 
-    private async void ButtonOpenOutFileClicked()
+    private async void ButtonCfm2SettingsClicked()
     {
         try
         {
-            Boolean open = true;
-
-            if (String.IsNullOrEmpty(_mergeInfo.OutFullPath))
-            {
-                open = await Task.Run<Boolean>(async () =>
-                {
-                    try
-                    {
-                        Debug.Assert(ProgressVisibility == Visibility.Collapsed, "ButtonOpenOutFileClicked() 既に実行中");
-                        ShowProgressArea();
-                        MergeCore();
-#if DEBUGz
-                        Thread.Sleep(3 * 1000);
-#endif
-                        return true;
-                    }
-                    catch (Exception ex)
-                    {
-                        await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く処理時エラー：\n" + ex.Message);
-                        Log.Information("スタックトレース：\n" + ex.StackTrace);
-                        return false;
-                    }
-                });
-            }
-
-            if (open)
-            {
-                Common.ShellExecute(_mergeInfo.OutFullPath);
-            }
+            Cfm2SettingsWindow settingsWindow = new();
+            await ShowDialogAsync(settingsWindow);
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く時エラー：\n" + ex.Message);
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "環境設定表示時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
-        }
-        finally
-        {
-            HideProgressArea();
         }
     }
     #endregion
@@ -283,6 +253,58 @@ public class MainPageViewModel : ObservableRecipient
         {
             await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "バージョン情報表示時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
+    }
+    #endregion
+
+    #region 出力ファイルを開くボタンの制御
+    public ICommand ButtonOpenOutFileClickedCommand
+    {
+        get;
+    }
+
+    private async void ButtonOpenOutFileClicked()
+    {
+        try
+        {
+            Boolean open = true;
+
+            if (String.IsNullOrEmpty(_mergeInfo.OutFullPath))
+            {
+                open = await Task.Run<Boolean>(async () =>
+                {
+                    try
+                    {
+                        Debug.Assert(ProgressVisibility == Visibility.Collapsed, "ButtonOpenOutFileClicked() 既に実行中");
+                        ShowProgressArea();
+                        MergeCore();
+#if DEBUGz
+                        Thread.Sleep(3 * 1000);
+#endif
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く処理時エラー：\n" + ex.Message);
+                        Log.Information("スタックトレース：\n" + ex.StackTrace);
+                        return false;
+                    }
+                });
+            }
+
+            if (open)
+            {
+                Common.ShellExecute(_mergeInfo.OutFullPath);
+            }
+        }
+        catch (Exception ex)
+        {
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
+        finally
+        {
+            HideProgressArea();
         }
     }
     #endregion

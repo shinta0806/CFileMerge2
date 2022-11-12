@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="CFileMerge2.Views.Cfm2SettingsWindows.Cfm2SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CFileMerge2.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:msm="using:CFileMerge2.Models.SharedMisc"
+    Loaded="{x:Bind ViewModel.PageLoaded}" 
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel VerticalAlignment="Top" >
+        <NavigationView PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" Height="200" SelectionChanged="{x:Bind ViewModel.NavigationView_SelectionChanged}" >
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="設定" Tag="{x:Bind msm:Cfm2SettingsNavigationViewItems.Settings}" IsSelected="True" >
+                    <NavigationViewItem.Icon >
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE713;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="メンテナンス" Tag="{x:Bind msm:Cfm2SettingsNavigationViewItems.Maintenance}" >
+                    <NavigationViewItem.Icon >
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE90F;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <Frame Content="{x:Bind ViewModel.NavigationViewContent, Mode=OneWay}">
+            </Frame>
+        </NavigationView>
+        <RelativePanel Margin="20" >
+            <Button Content="OK" Width="100" Style="{StaticResource AccentButtonStyle}" RelativePanel.LeftOf="ButtonCancel" Margin="0,0,20,0" />
+            <Button Name="ButtonCancel" Content="キャンセル" Width="100" RelativePanel.AlignRightWithPanel="True" />
+        </RelativePanel>
+    </StackPanel>
+</Page>
