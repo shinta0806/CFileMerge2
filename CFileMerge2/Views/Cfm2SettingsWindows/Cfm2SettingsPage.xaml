@@ -15,12 +15,12 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="設定" Tag="{x:Bind msm:Cfm2SettingsNavigationViewItems.Settings}" IsSelected="True" >
                     <NavigationViewItem.Icon >
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE713;"/>
+                        <FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xF5ED;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem Content="メンテナンス" Tag="{x:Bind msm:Cfm2SettingsNavigationViewItems.Maintenance}" >
                     <NavigationViewItem.Icon >
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE90F;"/>
+                        <FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE90F;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

@@ -156,6 +156,12 @@ internal class Cfm2Constants
     /// </summary>
     public const String ELEMENT_NAME_BUTTON_OK = "ButtonOk";
 
+    /// <summary>
+    /// アイコンに使うフォント
+    /// Segoe Fluent Icons は Windows 10 にはデフォルトでは入っていないとのことなので、MDL2 を使う
+    /// </summary>
+    public const String ICON_FONT = "Segoe MDL2 Assets";
+
     // --------------------------------------------------------------------
     // 設定
     // --------------------------------------------------------------------
