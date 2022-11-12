@@ -32,7 +32,7 @@ using Serilog;
 using Serilog.Events;
 
 using Shinta;
-
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Graphics;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -338,6 +338,44 @@ public class MainPageViewModel : ObservableRecipient
             // ユーザー起因では発生しないイベントなのでログのみ
             Log.Error("ページロード時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
+    }
+
+    /// <summary>
+    /// イベントハンドラー：TextBoxMake にドラッグされている
+    /// </summary>
+    /// <param name="_"></param>
+    /// <param name="args"></param>
+    public void TextBlockMakeDragOver(Object _, DragEventArgs args)
+    {
+        if (!args.DataView.Contains(StandardDataFormats.StorageItems))
+        {
+            return;
+        }
+
+        args.AcceptedOperation = DataPackageOperation.Copy;
+    }
+
+    /// <summary>
+    /// イベントハンドラー：TextBoxMake にドロップされた
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public async void TextBoxMakeDrop(Object sender, DragEventArgs args)
+    {
+        if (!args.DataView.Contains(StandardDataFormats.StorageItems))
+        {
+            return;
+        }
+
+        IReadOnlyList<IStorageItem> storageItems = await args.DataView.GetStorageItemsAsync();
+        foreach (IStorageItem storageItem in storageItems)
+        {
+            if (File.Exists(storageItem.Path))
+            {
+                // ファイルなら受け入れる（フォルダーは受け入れない）
+                MakePath = storageItem.Path;
+            }
         }
     }
 
