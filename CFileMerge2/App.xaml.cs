@@ -149,15 +149,14 @@ public partial class App : Application
 
     /// <summary>
     /// 集約エラーハンドラー
-    /// MSIX パッケージ時も非 MSIX パッケージ時も、ここには到達しないようだ
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
-    private async void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
+    private async void App_UnhandledException(Object _, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
     {
         Debug.WriteLine("App_UnhandledException() " + args.Exception.Message);
         await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Fatal, "不明なエラーが発生しました。アプリケーションを終了します。\n"
-                + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace);
+                + args.Message + "\n" + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace);
         Environment.Exit(1);
     }
 }
