@@ -553,6 +553,8 @@ public class MainPageViewModel : ObservableRecipient
 
         // 終了処理
         Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath = MakePath;
+        Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchVer = Cfm2Constants.APP_VER;
+        Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchPath = Cfm2Model.Instance.EnvModel.ExeFullPath;
         await Cfm2Model.Instance.EnvModel.SaveCfm2Settings();
         Log.Information("終了しました：" + Cfm2Constants.APP_NAME_J + " " + Cfm2Constants.APP_VER + " --------------------");
 
