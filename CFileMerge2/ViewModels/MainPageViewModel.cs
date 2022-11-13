@@ -551,6 +551,9 @@ public class MainPageViewModel : ObservableRecipient
             }
         }
 
+        // 開いているダイアログがある場合は閉じる（タスクバーから閉じられた場合などは可能性がある）
+        _openingDialog?.Close();
+
         // 終了処理
         Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath = MakePath;
         Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchVer = Cfm2Constants.APP_VER;
