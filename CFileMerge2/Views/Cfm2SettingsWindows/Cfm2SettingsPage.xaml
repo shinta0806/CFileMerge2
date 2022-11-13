@@ -10,8 +10,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel VerticalAlignment="Top" >
-        <NavigationView PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" Height="200" SelectionChanged="{x:Bind ViewModel.NavigationView_SelectionChanged}" >
+    <StackPanel VerticalAlignment="Top" SizeChanged="{x:Bind ViewModel.MainPanelSizeChanged}" >
+        <NavigationView PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" Height="400" SelectionChanged="{x:Bind ViewModel.NavigationView_SelectionChanged}" >
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="設定" Tag="{x:Bind msm:Cfm2SettingsNavigationViewItems.Settings}" IsSelected="True" >
                     <NavigationViewItem.Icon >
@@ -28,8 +28,8 @@
             </Frame>
         </NavigationView>
         <RelativePanel Margin="20" >
-            <Button Content="OK" Width="100" Style="{StaticResource AccentButtonStyle}" RelativePanel.LeftOf="ButtonCancel" Margin="0,0,20,0" />
-            <Button Name="ButtonCancel" Content="キャンセル" Width="100" RelativePanel.AlignRightWithPanel="True" />
+            <Button Content="OK" Width="100" Style="{StaticResource AccentButtonStyle}" RelativePanel.LeftOf="ButtonCancel" Margin="0,0,20,0" Command="{x:Bind ViewModel.ButtonOkClickedCommand}" />
+            <Button Name="ButtonCancel" Content="キャンセル" Width="100" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonCancelClickedCommand}" />
         </RelativePanel>
     </StackPanel>
 </Page>

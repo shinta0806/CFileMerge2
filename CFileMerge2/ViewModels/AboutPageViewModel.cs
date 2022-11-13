@@ -59,10 +59,17 @@ public class AboutPageViewModel : ObservableRecipient
         get;
     }
 
-    private void ButtonOkClicked()
+    private async void ButtonOkClicked()
     {
-        Debug.WriteLine("ButtonOkClicked()");
-        _window.Close();
+        try
+        {
+            _window.Close();
+        }
+        catch (Exception ex)
+        {
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "OK ボタンクリック時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
     }
     #endregion
 

@@ -74,6 +74,17 @@
     {
       margin: 0;
     }
+    div.TocItemH3::before, div.TocItemH4::before, div.TocItemH5::before, div.TocItemH6::before
+    {
+      margin-left: 40px;
+      margin-right: 5px;
+      content: "・";
+      color: #CCCC99;
+    }
+    div.TocItemH3, div.TocItemH4, div.TocItemH5, div.TocItemH6
+    {
+      margin: 0;
+    }
   </style>
 </head>
 <body>
@@ -96,11 +107,27 @@
   などができます。<br>
 </div>
 
-<h1 id="Aiueo">あいうえお</h1>
+<h1 id="Variables">変数表示</h1>
 
 <div>
   変数表示サンプル：<!-- Cfm/Var: Food --><br>
-  <br>
+</div>
+
+<h1 id="HxLevel">見出しレベル</h1>
+
+<h2 id="H2">h2</h2>
+
+<h3 id="H3">h3</h3>
+
+<h4 id="H4">h4</h4>
+
+<h5 id="H5">h5</h5>
+
+<h6 id="H6">h6</h6>
+
+<h1 id="Aiueo">あいうえお</h1>
+
+<div>
   あ<br>
   <br>
   い<br>

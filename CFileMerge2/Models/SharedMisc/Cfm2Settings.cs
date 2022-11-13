@@ -33,6 +33,7 @@ internal class Cfm2Settings
 
     /// <summary>
     /// h1～h6 に対して目次を作成するかどうか
+    /// h1 = [1]
     /// </summary>
     public Boolean[] TocTargets
     {
@@ -42,6 +43,7 @@ internal class Cfm2Settings
 
     /// <summary>
     /// h1～h6 に対してアンカーファイルを作成するかどうか
+    /// h1 = [1]
     /// </summary>
     public Boolean[] AnchorTargets
     {

@@ -9,6 +9,8 @@
 // ----------------------------------------------------------------------------
 
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
+using Windows.UI;
 
 namespace CFileMerge2.Models.SharedMisc;
 
@@ -150,6 +152,16 @@ internal class Cfm2Constants
     /// マージンのデフォルト
     /// </summary>
     public static readonly Thickness MARGIN_DEFAULT_THICKNESS = new(MARGIN_DEFAULT);
+
+    /// <summary>
+    /// Border をセパレーターとして使う際の厚み
+    /// </summary>
+    public static readonly Thickness SEPARATOR_THICKNESS = new(1);
+
+    /// <summary>
+    /// Border をセパレーターとして使う際の色
+    /// </summary>
+    public static readonly SolidColorBrush SEPARATOR_BRUSH = new(Color.FromArgb(0xFF, 0xCC, 0xCC, 0xCC));
 
     /// <summary>
     /// 要素名
