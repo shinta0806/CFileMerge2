@@ -17,6 +17,7 @@ using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.Views;
 using CFileMerge2.Views.Cfm2SettingsWindows;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -32,6 +33,7 @@ using Serilog;
 using Serilog.Events;
 
 using Shinta;
+
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Graphics;
 using Windows.Storage;

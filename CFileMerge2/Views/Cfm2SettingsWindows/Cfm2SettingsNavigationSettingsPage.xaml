@@ -17,7 +17,7 @@
             <StackPanel >
                 <RelativePanel Width="220">
                     <Border Name="SeparatorTocLeft" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" Width="20" RelativePanel.AlignVerticalCenterWithPanel="True" />
-                    <TextBlock Name="TextBlockToc" Text="Toc タグの目次対象" Margin="10,0,10,0" RelativePanel.RightOf="SeparatorTocLeft" />
+                    <TextBlock Name="TextBlockToc" Text="目次対象（Toc タグ）" ToolTipService.ToolTip="Toc タグが指定された際、どの見出しに対する目次を作成するか、を設定します。" Margin="10,0,10,0" RelativePanel.RightOf="SeparatorTocLeft" />
                     <Border Name="SeparatorTocRight" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="TextBlockToc" RelativePanel.AlignRightWithPanel="True" />
                 </RelativePanel>
                 <StackPanel Margin="20,10,0,0" >
@@ -27,7 +27,23 @@
                     <CheckBox Content="h4" IsChecked="{x:Bind ViewModel.TocTargets[4], Mode=TwoWay}" />
                     <CheckBox Content="h5" IsChecked="{x:Bind ViewModel.TocTargets[5], Mode=TwoWay}" />
                     <CheckBox Content="h6" IsChecked="{x:Bind ViewModel.TocTargets[6], Mode=TwoWay}" />
+                </StackPanel>
+            </StackPanel>
 
+            <!-- GenerateAnchorFiles タグのアンカー対象 -->
+            <StackPanel Margin="20,0,0,0" >
+                <RelativePanel Width="220">
+                    <Border Name="SeparatorAnchorLeft" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" Width="20" RelativePanel.AlignVerticalCenterWithPanel="True" />
+                    <TextBlock Name="TextBlockAnchor" Text="アンカーファイル作成対象" ToolTipService.ToolTip="GenerateAnchorFiles タグが指定された際、どの見出しに対するアンカーファイルを作成するか、を設定します。" Margin="10,0,10,0" RelativePanel.RightOf="SeparatorAnchorLeft" />
+                    <Border Name="SeparatorAnchorRight" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="TextBlockAnchor" RelativePanel.AlignRightWithPanel="True" />
+                </RelativePanel>
+                <StackPanel Margin="20,10,0,0" >
+                    <CheckBox Content="h1" IsChecked="{x:Bind ViewModel.AnchorTargets[1], Mode=TwoWay}" />
+                    <CheckBox Content="h2" IsChecked="{x:Bind ViewModel.AnchorTargets[2], Mode=TwoWay}" />
+                    <CheckBox Content="h3" IsChecked="{x:Bind ViewModel.AnchorTargets[3], Mode=TwoWay}" />
+                    <CheckBox Content="h4" IsChecked="{x:Bind ViewModel.AnchorTargets[4], Mode=TwoWay}" />
+                    <CheckBox Content="h5" IsChecked="{x:Bind ViewModel.AnchorTargets[5], Mode=TwoWay}" />
+                    <CheckBox Content="h6" IsChecked="{x:Bind ViewModel.AnchorTargets[6], Mode=TwoWay}" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>

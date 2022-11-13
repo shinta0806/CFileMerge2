@@ -125,6 +125,8 @@
 
 <h6 id="H6">h6</h6>
 
+<!-- Cfm/Include: SampleIncludeFile -->
+
 <h1 id="Aiueo">あいうえお</h1>
 
 <div>
@@ -170,8 +172,6 @@
 <div>
   こ<br>
 </div>
-
-<!-- Cfm/Include: SampleIncludeFile -->
 
 <h1 id="SaShiSuSeSo">さしすせそ</h1>
 

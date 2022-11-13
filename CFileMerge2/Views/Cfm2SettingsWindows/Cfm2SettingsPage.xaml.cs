@@ -40,5 +40,4 @@ public sealed partial class Cfm2SettingsPage : Page
     {
         get;
     }
-
 }

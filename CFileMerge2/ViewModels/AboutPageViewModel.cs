@@ -8,7 +8,6 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System.Diagnostics;
 using System.Windows.Input;
 
 using CFileMerge2.Models.SharedMisc;
@@ -20,8 +19,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 
-using Serilog.Events;
 using Serilog;
+using Serilog.Events;
 
 using Windows.Graphics;
 

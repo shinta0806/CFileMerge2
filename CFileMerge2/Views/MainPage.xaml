@@ -10,6 +10,7 @@
     mc:Ignorable="d">
 
     <Grid >
+        
         <!-- メイン UI -->
         <StackPanel Margin="{x:Bind msm:Cfm2Constants.MARGIN_DEFAULT_THICKNESS}" VerticalAlignment="Top" Canvas.ZIndex="0" GettingFocus="{x:Bind ViewModel.MainPanelGettingFocus}" SizeChanged="{x:Bind ViewModel.MainPanelSizeChanged}" >
             <RelativePanel >
@@ -82,5 +83,6 @@
             </Border>
 
         </RelativePanel>
+        
     </Grid>
 </Page>

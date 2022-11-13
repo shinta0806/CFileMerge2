@@ -37,6 +37,5 @@ public sealed partial class Cfm2SettingsWindow : WindowEx
         // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
         // ToDo: SizeToContent が実装されればこのコードは不要
         Height = 600;
-
     }
 }
