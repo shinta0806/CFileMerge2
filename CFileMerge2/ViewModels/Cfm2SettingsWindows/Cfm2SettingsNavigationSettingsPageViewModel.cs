@@ -58,7 +58,15 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : ObservableRecipient
         get;
     }
 
-
+    /// <summary>
+    /// アンカーファイルが既に存在する場合に上書きするかどうか
+    /// </summary>
+    private Boolean _overwriteAnchorFiles;
+    public Boolean OverwriteAnchorFiles
+    {
+        get => _overwriteAnchorFiles;
+        set => SetProperty(ref _overwriteAnchorFiles, value);
+    }
 
     // ====================================================================
     // public 関数
@@ -70,11 +78,11 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : ObservableRecipient
     /// </summary>
     public void CheckProperties()
     {
-        if(!TocTargets.Contains(true))
+        if (!TocTargets.Contains(true))
         {
             throw new Exception("目次対象を 1 つ以上選択してください。\n※目次を挿入したくない場合は、Toc タグを使わなければ挿入されません。");
         }
-        if(!AnchorTargets.Contains(true))
+        if (!AnchorTargets.Contains(true))
         {
             throw new Exception("アンカーファイル作成対象を 1 つ以上選択してください。\n※アンカーファイルを作成したくない場合は、GenerateAnchorFiles タグを使わなければ作成されません。");
         }
@@ -93,6 +101,7 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : ObservableRecipient
         {
             Cfm2Model.Instance.EnvModel.Cfm2Settings.AnchorTargets[i] = AnchorTargets[i];
         }
+        Cfm2Model.Instance.EnvModel.Cfm2Settings.OverwriteAnchorFiles = OverwriteAnchorFiles;
     }
 
     /// <summary>
@@ -108,6 +117,7 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : ObservableRecipient
         {
             AnchorTargets[i] = Cfm2Model.Instance.EnvModel.Cfm2Settings.AnchorTargets[i];
         }
+        OverwriteAnchorFiles = Cfm2Model.Instance.EnvModel.Cfm2Settings.OverwriteAnchorFiles;
     }
 
 }

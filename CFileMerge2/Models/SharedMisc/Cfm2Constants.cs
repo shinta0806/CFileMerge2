@@ -140,6 +140,11 @@ internal class Cfm2Constants
     public const String LABEL_YES = "はい";
 
     /// <summary>
+    /// ボタン幅のデフォルト
+    /// </summary>
+    public const Double BUTTON_WIDTH_DEFAULT = 120.0;
+
+    /// <summary>
     /// ハイパーリンクボタンの余白
     /// </summary>
     public static readonly Thickness HYPERLINK_BUTTON_PADDING_THICKNESS = new(3.0);

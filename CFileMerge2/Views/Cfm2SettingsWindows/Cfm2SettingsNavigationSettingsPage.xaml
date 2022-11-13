@@ -15,7 +15,7 @@
 
             <!-- Toc タグの目次対象 -->
             <StackPanel >
-                <RelativePanel Width="220">
+                <RelativePanel Width="230">
                     <Border Name="SeparatorTocLeft" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" Width="20" RelativePanel.AlignVerticalCenterWithPanel="True" />
                     <TextBlock Name="TextBlockToc" Text="目次対象（Toc タグ）" ToolTipService.ToolTip="Toc タグが指定された際、どの見出しに対する目次を作成するか、を設定します。" Margin="10,0,10,0" RelativePanel.RightOf="SeparatorTocLeft" />
                     <Border Name="SeparatorTocRight" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="TextBlockToc" RelativePanel.AlignRightWithPanel="True" />
@@ -32,7 +32,7 @@
 
             <!-- GenerateAnchorFiles タグのアンカー対象 -->
             <StackPanel Margin="20,0,0,0" >
-                <RelativePanel Width="220">
+                <RelativePanel Width="230">
                     <Border Name="SeparatorAnchorLeft" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" Width="20" RelativePanel.AlignVerticalCenterWithPanel="True" />
                     <TextBlock Name="TextBlockAnchor" Text="アンカーファイル作成対象" ToolTipService.ToolTip="GenerateAnchorFiles タグが指定された際、どの見出しに対するアンカーファイルを作成するか、を設定します。" Margin="10,0,10,0" RelativePanel.RightOf="SeparatorAnchorLeft" />
                     <Border Name="SeparatorAnchorRight" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="TextBlockAnchor" RelativePanel.AlignRightWithPanel="True" />
@@ -45,6 +45,7 @@
                     <CheckBox Content="h5" IsChecked="{x:Bind ViewModel.AnchorTargets[5], Mode=TwoWay}" />
                     <CheckBox Content="h6" IsChecked="{x:Bind ViewModel.AnchorTargets[6], Mode=TwoWay}" />
                 </StackPanel>
+                <CheckBox Content="既存のアンカーファイルを上書きする" IsChecked="{x:Bind ViewModel.OverwriteAnchorFiles, Mode=TwoWay}" Margin="0,20,0,0" />
             </StackPanel>
         </StackPanel>
 

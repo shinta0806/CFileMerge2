@@ -51,6 +51,15 @@ internal class Cfm2Settings
         set;
     } = new Boolean[Cfm2Constants.HX_TAG_RANK_MAX + 1];
 
+    /// <summary>
+    /// アンカーファイルが既に存在する場合に上書きするかどうか
+    /// </summary>
+    public Boolean OverwriteAnchorFiles
+    {
+        get;
+        set;
+    } = true;
+
     // --------------------------------------------------------------------
     // 終了時の状態（ちょちょいとファイル合併 2 専用）
     // --------------------------------------------------------------------

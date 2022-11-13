@@ -984,15 +984,23 @@ public class MainPageViewModel : ObservableRecipient
         // アンカーファイル出力
         for (Int32 i = 0; i < hxTagInfos.Count; i++)
         {
-            List<String> anchorFileContents = new(lines);
-
-            // アンカー置換
-            for (Int32 j = 0; j < anchorPositionIndexes.Count; j++)
+            String anchorPath = _mergeInfo.AnchorOutFullFolder + Path.GetFileNameWithoutExtension(_mergeInfo.OutFullPath) + "_" + hxTagInfos[i].Id + Common.FILE_EXT_HTML;
+            if (!Cfm2Model.Instance.EnvModel.Cfm2Settings.OverwriteAnchorFiles && File.Exists(anchorPath))
             {
-                anchorFileContents[anchorPositionIndexes[j].Key] = anchorFileContents[anchorPositionIndexes[j].Key].Insert(anchorPositionIndexes[j].Value, relativePath + "#" + hxTagInfos[i].Id);
+                // 既にアンカーファイルが存在していて上書きしない場合は何もしない
             }
+            else
+            {
+                List<String> anchorFileContents = new(lines);
 
-            Write(_mergeInfo.AnchorOutFullFolder + Path.GetFileNameWithoutExtension(_mergeInfo.OutFullPath) + "_" + hxTagInfos[i].Id + Common.FILE_EXT_HTML, anchorFileContents);
+                // アンカー置換
+                for (Int32 j = 0; j < anchorPositionIndexes.Count; j++)
+                {
+                    anchorFileContents[anchorPositionIndexes[j].Key] = anchorFileContents[anchorPositionIndexes[j].Key].Insert(anchorPositionIndexes[j].Value, relativePath + "#" + hxTagInfos[i].Id);
+                }
+
+                Write(anchorPath, anchorFileContents);
+            }
 
             if (i % Cfm2Constants.PROGRESS_INTERVAL == 0)
             {
