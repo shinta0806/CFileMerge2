@@ -70,6 +70,14 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : ObservableRecipient
     /// </summary>
     public void CheckProperties()
     {
+        if(!TocTargets.Contains(true))
+        {
+            throw new Exception("目次対象を 1 つ以上選択してください。\n※目次を挿入したくない場合は、Toc タグを使わなければ挿入されません。");
+        }
+        if(!AnchorTargets.Contains(true))
+        {
+            throw new Exception("アンカーファイル作成対象を 1 つ以上選択してください。\n※アンカーファイルを作成したくない場合は、GenerateAnchorFiles タグを使わなければ作成されません。");
+        }
     }
 
     /// <summary>
