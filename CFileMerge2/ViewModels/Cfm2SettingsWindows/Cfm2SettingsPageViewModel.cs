@@ -231,7 +231,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         ((Cfm2SettingsNavigationMaintenancePage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Maintenance]).ViewModel.SettingsToProperties();
 
         // SizeToContent
-        //ReresizeClient();
+        ReresizeClient();
     }
 
     /// <summary>

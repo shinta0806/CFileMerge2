@@ -21,6 +21,11 @@ using Microsoft.UI.Xaml;
 using Serilog;
 using System.Diagnostics;
 using CFileMerge2.Models.Cfm2Models;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using CFileMerge2.Views.Cfm2SettingsWindows;
+using Serilog.Events;
+using Windows.UI.Popups;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
@@ -35,11 +40,17 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : ObservableRecipien
     /// </summary>
     public Cfm2SettingsNavigationMaintenancePageViewModel()
     {
+        // コマンド
+        ButtonCheckRssClickedCommand = new RelayCommand(ButtonCheckRssClicked);
     }
 
     // ====================================================================
     // public プロパティー
     // ====================================================================
+
+    // --------------------------------------------------------------------
+    // View 通信用のプロパティー
+    // --------------------------------------------------------------------
 
     /// <summary>
     /// 最新情報を自動的に確認する
@@ -48,8 +59,81 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : ObservableRecipien
     public Boolean CheckRss
     {
         get => _checkRss;
-        set => SetProperty(ref _checkRss, value);
+        set
+        {
+#if false
+            _ = Task.Run(async () =>
+            {
+                if (_checkRss && !value)
+                {
+                    MessageDialog messageDialog = App.MainWindow.CreateMessageDialog("最新情報の確認を無効にすると、" + Cfm2Constants.APP_NAME_J
+                            + "の新版がリリースされた際の更新内容などが表示されません。\n\n本当に無効にしてもよろしいですか？", Cfm2Constants.LABEL_WARNING);
+                    messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_YES));
+                    messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_NO));
+                    IUICommand cmd = await messageDialog.ShowAsync();
+                    if (cmd.Label != Cfm2Constants.LABEL_YES)
+                    {
+                        return;
+                    }
+                }
+
+                SetProperty(ref _checkRss, value);
+            });
+#endif
+            SetProperty(ref _checkRss, value);
+        }
     }
+
+    /// <summary>
+    /// 最新情報確認中
+    /// </summary>
+    private Boolean _isProgressRingActive;
+    public Boolean IsProgressRingActive
+    {
+        get => _isProgressRingActive;
+        set => SetProperty(ref _isProgressRingActive, value);
+    }
+
+    /// <summary>
+    /// 今すぐ最新情報を確認ボタンの有効性
+    /// </summary>
+    private Boolean _isButtonCheckRssEnabled = true;
+    public Boolean IsButtonCheckRssEnabled
+    {
+        get => _isButtonCheckRssEnabled;
+        set => SetProperty(ref _isButtonCheckRssEnabled, value);
+    }
+
+    // --------------------------------------------------------------------
+    // コマンド
+    // --------------------------------------------------------------------
+
+    #region 今すぐ最新情報を確認ボタンの制御
+    public ICommand ButtonCheckRssClickedCommand
+    {
+        get;
+    }
+
+    private async void ButtonCheckRssClicked()
+    {
+        try
+        {
+            IsButtonCheckRssEnabled = false;
+            IsProgressRingActive = true;
+            await Cfm2Common.CheckLatestInfoAsync(true);
+        }
+        catch (Exception ex)
+        {
+            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "今すぐ最新情報を確認時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
+        finally
+        {
+            IsProgressRingActive = false;
+            IsButtonCheckRssEnabled = true;
+        }
+    }
+    #endregion
 
     // ====================================================================
     // public 関数

@@ -4,7 +4,7 @@
 <!-- Cfm/IncludeFolder: ../../../../_Common/HelpIncludes -->
 <!-- Cfm/IncludeDefaultExt: html -->
 <!-- Cfm/Set: AppName = ちょちょいとファイル合併 2&nbsp; -->
-<!-- Cfm/Set: AppMajVer = Ver 1.0 -->
+<!-- Cfm/Set: AppMajVer = Ver 1.8 -->
 <!-- Cfm/Include: ヘッダー -->
 <body>
 
@@ -549,6 +549,18 @@
 </p>
 <ul>
   <li><a href="CFileMerge2_History_JPN.txt" target="_blank">CFileMerge2_History_JPN.txt</a></li>
+</ul>
+
+<h2 id="Katsuyoujirei">活用事例</h2>
+
+<p>
+  <!-- Cfm/Var: AppName -->を活用してヘルプを作成しているアプリとしては、例えば以下のようなものがあります。<br>
+</p>
+
+<ul>
+  <li><a href="https://shinta.coresv.com/software/easykeychanger_jpn/" target="_blank">簡易キーチェンジャー</a>　（<a href="https://github.com/shinta0806/EasyKeyChanger/blob/master/Documents/EasyKeyChanger_JPN.cfm2" target="_blank">メイクファイル</a>）</li>
+  <li><a href="https://shinta.coresv.com/software_dev/cfilemerge2-jpn/" target="_blank"><!-- Cfm/Var: AppName --></a>　（<a href="https://github.com/shinta0806/CFileMerge2/blob/master/CFileMerge2/Documents/CFileMerge2_JPN.cfm2" target="_blank">メイクファイル</a>）</li>
+  <li><a href="https://shinta.coresv.com/software/yukalister-nebula-jpn/" target="_blank">ゆかりすたー 4 NEBULA</a>　（<a href="https://github.com/shinta0806/YukaListerNebula/blob/master/Documents/YukaListerNebula_JPN.cfm2" target="_blank">メイクファイル</a>）</li>
 </ul>
 
 <h2 id="Shaji">謝辞</h2>
