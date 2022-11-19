@@ -94,6 +94,16 @@ internal class EnvironmentModel
         }
     }
 
+    /// <summary>
+    /// アプリケーション終了時タスク安全中断用
+    /// </summary>
+    public CancellationTokenSource AppCancellationTokenSource
+    {
+        get;
+    } = new();
+
+
+
     // --------------------------------------------------------------------
     // コマンド
     // --------------------------------------------------------------------
@@ -126,7 +136,7 @@ internal class EnvironmentModel
     /// 環境設定を読み込み
     /// </summary>
     /// <returns></returns>
-    public async Task LoadCfm2Settings()
+    public async Task LoadCfm2SettingsAsync()
     {
         try
         {
@@ -142,14 +152,15 @@ internal class EnvironmentModel
     /// 環境設定を保存
     /// </summary>
     /// <returns></returns>
-    public async Task SaveCfm2Settings()
+    public Task SaveCfm2SettingsAsync()
     {
         try
         {
-            await App.GetService<ILocalSettingsService>().SaveSettingAsync(Cfm2Constants.SETTINGS_KEY_CFM2_SETTINGS, Cfm2Settings);
+            return App.GetService<ILocalSettingsService>().SaveSettingAsync(Cfm2Constants.SETTINGS_KEY_CFM2_SETTINGS, Cfm2Settings);
         }
         catch (Exception)
         {
+            return Task.CompletedTask;
         }
     }
 

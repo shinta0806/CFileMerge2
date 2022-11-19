@@ -93,7 +93,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
             ((Cfm2SettingsNavigationSettingsPage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Settings]).ViewModel.PropertiesToSettings();
 
             // 保存
-            await Cfm2Model.Instance.EnvModel.SaveCfm2Settings();
+            await Cfm2Model.Instance.EnvModel.SaveCfm2SettingsAsync();
 
             _window.Close();
         }

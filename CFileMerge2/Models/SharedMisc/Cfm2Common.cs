@@ -8,6 +8,7 @@
 //
 // ----------------------------------------------------------------------------
 
+using System;
 using CFileMerge2.Helpers;
 using CFileMerge2.Models.Cfm2Models;
 
@@ -15,6 +16,9 @@ using Serilog;
 using Serilog.Events;
 
 using Shinta;
+using Shinta.WinUi3;
+using Windows.Foundation;
+using Windows.UI.Popups;
 
 namespace CFileMerge2.Models.SharedMisc;
 
@@ -23,6 +27,30 @@ internal class Cfm2Common
     // ====================================================================
     // public 関数
     // ====================================================================
+
+    /// <summary>
+    /// 最新情報の確認
+    /// </summary>
+    /// <param name="forceShow"></param>
+    /// <returns></returns>
+    public static async Task CheckLatestInfoAsync(Boolean forceShow)
+    {
+        LatestInfoManager latestInfoManager = Cfm2Common.CreateLatestInfoManager(forceShow);
+        if (await latestInfoManager.CheckAsync())
+        {
+            Cfm2Model.Instance.EnvModel.Cfm2Settings.RssCheckDate = DateTime.Now.Date;
+            await Cfm2Model.Instance.EnvModel.SaveCfm2SettingsAsync();
+        }
+    }
+
+    // --------------------------------------------------------------------
+    // 最新情報管理者を作成
+    // --------------------------------------------------------------------
+    public static LatestInfoManager CreateLatestInfoManager(Boolean forceShow)
+    {
+        return new LatestInfoManager("http://shinta.coresv.com/soft/CFileMerge2_JPN.xml", forceShow, 3, Cfm2Constants.APP_VER,
+                Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Token, App.MainWindow);
+    }
 
     /// <summary>
     /// ヘルプの表示
@@ -68,10 +96,9 @@ internal class Cfm2Common
     /// <param name="logEventLevel"></param>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static async Task ShowLogMessageDialogAsync(Serilog.Events.LogEventLevel logEventLevel, String message)
+    public static IAsyncOperation<IUICommand> ShowLogMessageDialogAsync(LogEventLevel logEventLevel, String message)
     {
-        Log.Write(logEventLevel, message);
-        await App.MainWindow.CreateMessageDialog(message, logEventLevel.ToString().GetLocalized()).ShowAsync();
+        return WinUi3Common.ShowLogMessageDialogAsync(App.MainWindow, logEventLevel, message);
     }
 
     // ====================================================================

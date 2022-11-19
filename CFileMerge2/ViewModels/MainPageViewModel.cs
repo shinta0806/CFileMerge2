@@ -404,13 +404,16 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// イベントハンドラー：ページがロードされた
     /// </summary>
-    public void PageLoaded(Object _1, RoutedEventArgs _2)
+    public async void PageLoaded(Object _1, RoutedEventArgs _2)
     {
         try
         {
             Log.Debug("PageLoaded()");
             Initialize();
             ApplySettings();
+
+            // 最新情報確認
+            await CheckRssIfNeededAsync();
         }
         catch (Exception ex)
         {
@@ -555,14 +558,28 @@ public class MainPageViewModel : ObservableRecipient
         _openingDialog?.Close();
 
         // 終了処理
+        Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Cancel();
         Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath = MakePath;
         Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchVer = Cfm2Constants.APP_VER;
         Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchPath = Cfm2Model.Instance.EnvModel.ExeFullPath;
-        await Cfm2Model.Instance.EnvModel.SaveCfm2Settings();
+        await Cfm2Model.Instance.EnvModel.SaveCfm2SettingsAsync();
         Log.Information("終了しました：" + Cfm2Constants.APP_NAME_J + " " + Cfm2Constants.APP_VER + " --------------------");
 
         // 改めて閉じる
         App.MainWindow.Close();
+    }
+
+    /// <summary>
+    /// 最新情報確認
+    /// </summary>
+    /// <returns></returns>
+    private static Task CheckRssIfNeededAsync()
+    {
+        if (!Cfm2Model.Instance.EnvModel.Cfm2Settings.IsCheckRssNeeded())
+        {
+            return Task.CompletedTask;
+        }
+        return Cfm2Common.CheckLatestInfoAsync(false);
     }
 
     /// <summary>

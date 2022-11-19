@@ -42,8 +42,14 @@
     <None Remove="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationSettingsPage.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\_Common\Downloader.cs" Link="_Common\Downloader.cs" />
+    <Compile Include="..\..\..\_Common\ResourceLoaderExtensions.cs" Link="_Common\ResourceLoaderExtensions.cs" />
     <Compile Include="..\..\..\_Common\SerilogUtils.cs" Link="_Common\SerilogUtils.cs" />
     <Compile Include="..\..\..\_Common\ShintaCommon.cs" Link="_Common\ShintaCommon.cs" />
+    <Compile Include="..\..\..\_Common\WinUi3\LatestInfoManager.cs" Link="_Common\WinUi3\LatestInfoManager.cs" />
+    <Compile Include="..\..\..\_Common\WinUi3\RssManager.cs" Link="_Common\WinUi3\RssManager.cs" />
+    <Compile Include="..\..\..\_Common\WinUi3\SerializableSettings.cs" Link="_Common\WinUi3\SerializableSettings.cs" />
+    <Compile Include="..\..\..\_Common\WinUi3\WinUi3Common.cs" Link="_Common\WinUi3\WinUi3Common.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,7 +84,6 @@
 
   <ItemGroup>
     <Folder Include="Strings\ja-jp\" />
-    <Folder Include="_Common\" />
   </ItemGroup>
 
   <ItemGroup>

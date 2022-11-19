@@ -61,6 +61,19 @@ internal class Cfm2Settings
     } = true;
 
     // --------------------------------------------------------------------
+    // メンテナンス
+    // --------------------------------------------------------------------
+
+    /// <summary>
+    /// 最新情報を自動的に確認する
+    /// </summary>
+    public Boolean CheckRss
+    {
+        get;
+        set;
+    } = true;
+
+    // --------------------------------------------------------------------
     // 終了時の状態（ちょちょいとファイル合併 2 専用）
     // --------------------------------------------------------------------
 
@@ -136,5 +149,23 @@ internal class Cfm2Settings
             AnchorTargets[1] = true;
             AnchorTargets[2] = true;
         }
+    }
+
+    /// <summary>
+    /// RSS の確認が必要かどうか
+    /// </summary>
+    /// <returns></returns>
+    public Boolean IsCheckRssNeeded()
+    {
+#if DEBUGz
+        return true;
+#endif
+        if (!CheckRss)
+        {
+            return false;
+        }
+        DateTime emptyDate = new();
+        TimeSpan day3 = new(3, 0, 0, 0);
+        return RssCheckDate == emptyDate || DateTime.Now.Date - RssCheckDate >= day3;
     }
 }
