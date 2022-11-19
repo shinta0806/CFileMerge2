@@ -9,9 +9,10 @@
 // ----------------------------------------------------------------------------
 
 using System;
+using CFileMerge2.Contracts.Services;
 using CFileMerge2.Helpers;
 using CFileMerge2.Models.Cfm2Models;
-
+using CFileMerge2.Services;
 using Serilog;
 using Serilog.Events;
 
@@ -49,7 +50,8 @@ internal class Cfm2Common
     public static LatestInfoManager CreateLatestInfoManager(Boolean forceShow)
     {
         return new LatestInfoManager("http://shinta.coresv.com/soft/CFileMerge2_JPN.xml", forceShow, 3, Cfm2Constants.APP_VER,
-                Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Token, App.MainWindow);
+                Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Token, App.MainWindow,
+                ((LocalSettingsService)App.GetService<ILocalSettingsService>()).Folder() + "LatestInfo" + Common.FILE_EXT_CONFIG);
     }
 
     /// <summary>
