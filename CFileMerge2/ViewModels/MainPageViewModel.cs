@@ -724,10 +724,11 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// Toc タグを実行
     /// </summary>
-    private void ExecuteCfmTagToc()
+    private void ExecuteCfmTagToc(CfmTagInfo tagInfo)
     {
         // 実際に目次を作成するのは、メイクファイルをすべて読み込んだ後なので、ここでは必要性の記録に留める
         _mergeInfo.TocNeeded = true;
+        _mergeInfo.TocTargets = GetTargetRanks(tagInfo.Value, _mergeInfo.TocTargets);
     }
 
     /// <summary>
@@ -801,6 +802,36 @@ public class MainPageViewModel : ObservableRecipient
     private String GetPathByMakeFullPath(CfmTagInfo tagInfo)
     {
         return GetPathByMakeFullPath(tagInfo.Value, Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key] + " タグ");
+    }
+
+    /// <summary>
+    /// Hx タグの対象ランクを取得
+    /// </summary>
+    /// <param name="rankString">対象ランクを列挙した文字列（例："13" なら h1 と h3 が対象）</param>
+    /// <param name="defaultTargetRanks">取得不可の場合に返すデフォルト対象ランク</param>
+    /// <returns></returns>
+    private Boolean[] GetTargetRanks(String rankString, Boolean[] defaultTargetRanks)
+    {
+        if (String.IsNullOrEmpty(rankString))
+        {
+            return defaultTargetRanks;
+        }
+
+        Boolean[] targetRanks = new Boolean[Cfm2Constants.HX_TAG_RANK_MAX + 1];
+        for (Int32 i = 0; i < rankString.Length; i++)
+        {
+            if (Int32.TryParse(rankString[i..(i + 1)], out Int32 rank) && 0 < rank && rank <= Cfm2Constants.HX_TAG_RANK_MAX)
+            {
+                targetRanks[rank] = true;
+            }
+        }
+
+        if (!targetRanks.Contains(true))
+        {
+            return defaultTargetRanks;
+        }
+
+        return targetRanks;
     }
 
     /// <summary>
@@ -946,6 +977,10 @@ public class MainPageViewModel : ObservableRecipient
         _mergeInfo.MakeFullPath = Path.GetFullPath(MakePath, Cfm2Model.Instance.EnvModel.ExeFullFolder);
         _mergeInfo.IncludeFullFolder = Path.GetDirectoryName(_mergeInfo.MakeFullPath) ?? String.Empty;
         _mergeInfo.OutFullPath = Path.GetDirectoryName(_mergeInfo.MakeFullPath) + "\\" + Path.GetFileNameWithoutExtension(_mergeInfo.MakeFullPath) + "Output" + Common.FILE_EXT_HTML;
+        for (Int32 i = 0; i < _mergeInfo.TocTargets.Length; i++)
+        {
+            _mergeInfo.TocTargets[i] = Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets[i];
+        }
 
         // メイクファイル読み込み（再帰）
         (_mergeInfo.Encoding, _mergeInfo.NewLine) = ParseFile(_mergeInfo.MakeFullPath, _mergeInfo.Lines, null);
@@ -1129,7 +1164,7 @@ public class MainPageViewModel : ObservableRecipient
                             ExecuteCfmTagVar(tagInfo, line, column + addColumn);
                             break;
                         case TagKey.Toc:
-                            ExecuteCfmTagToc();
+                            ExecuteCfmTagToc(tagInfo);
                             break;
                         case TagKey.GenerateAnchorFiles:
                             ExecuteCfmTagGenerateAnchorFiles(tagInfo);
@@ -1192,7 +1227,7 @@ public class MainPageViewModel : ObservableRecipient
                     {
                         StringBuilder stringBuilder = new();
                         stringBuilder.Append("<div class=\"" + Cfm2Constants.TOC_AREA_CLASS_NAME + "\">\n");
-                        List<HxTagInfo> hxTagInfos = ParseHxTags(Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets);
+                        List<HxTagInfo> hxTagInfos = ParseHxTags(_mergeInfo.TocTargets);
                         for (Int32 i = 0; i < hxTagInfos.Count; i++)
                         {
                             stringBuilder.Append("  <div class=\"" + Cfm2Constants.TOC_ITEM_CLASS_NAME_PREFIX + hxTagInfos[i].Rank + "\"><a href=\"#" +

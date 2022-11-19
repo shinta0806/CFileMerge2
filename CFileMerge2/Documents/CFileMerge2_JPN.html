@@ -224,7 +224,7 @@
 </p>
 
 <pre>
-&lt;!-- Cfm/AnchorPath: --&gt;
+&lt;a href="&lt;!-- Cfm/AnchorPath: --&gt;"&gt;クリック&lt;/a&gt;
 </pre>
 
 <h2 id="CfmTagGenerateAnchorFiles">アンカーファイル作成（GenerateAnchorFiles）</h2>
@@ -425,27 +425,30 @@
 <h2 id="CfmTagToc">目次挿入（Toc）</h2>
 
 <p>
-  文書全体の &lt;h1&gt; タグ、&lt;h2&gt; タグを見出しとした目次を挿入します。<br>
+  文書全体の &lt;hx&gt; タグを見出しとした目次を挿入します。<br>
 </p>
 
 <table>
-  <tr><th>書式</th><td>&lt;!-- Cfm/Toc: --&gt;</td></tr>
+  <tr><th>書式</th><td>&lt;!-- Cfm/Toc: 目次対象ランク --&gt;</td></tr>
 </table>
 
 <p>
-  Toc の後ろのコロンを忘れずに記載してください。<br>
+  目次対象ランクは目次作成対象となる &lt;hx&gt; タグのランクを列挙します。例えば「23」とすると、&lt;h2&gt; タグおよび &lt;h3&gt; タグが目次作成対象となります。<br>
+  <br>
+  目次対象ランクは省略可能です。省略した場合、環境設定で設定した内容が適用されます。<br>
+  <br>
+  目次対象ランクを省略した場合でも Toc の後ろのコロンを忘れずに記載してください。<br>
   <br>
   例）<br>
 </p>
 
 <pre>
 &lt;!-- Cfm/Toc: --&gt;
+&lt;!-- Cfm/Toc: 246 --&gt;
 </pre>
 
 <p>
-  目次の対象となるのは &lt;h1&gt; タグと &lt;h2&gt; タグです。<br>
-  <br>
-  それぞれの &lt;h1&gt; &lt;h2&gt; タグには id 属性が記載されている必要があります。<br>
+  それぞれの &lt;hx&gt; タグには id 属性が記載されている必要があります。<br>
   <br>
   例）<br>
 </p>

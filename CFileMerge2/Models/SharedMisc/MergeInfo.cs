@@ -83,6 +83,16 @@ internal class MergeInfo
     }
 
     /// <summary>
+    /// h1～h6 に対して目次を作成するかどうか
+    /// h1 = [1]
+    /// </summary>
+    public Boolean[] TocTargets
+    {
+        get;
+        set;
+    } = new Boolean[Cfm2Constants.HX_TAG_RANK_MAX + 1];
+
+    /// <summary>
     /// アンカーメイクファイルのフルパス
     /// </summary>
     public String AnchorMakeFullPath
