@@ -1,6 +1,6 @@
 ﻿// ============================================================================
 // 
-// 環境設定ページの ViewModel
+// 設定ページの ViewModel
 // 
 // ============================================================================
 
@@ -8,21 +8,14 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CFileMerge2.Models.SharedMisc;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml;
-using Serilog;
-using System.Diagnostics;
+
 using CFileMerge2.Models.Cfm2Models;
 
+using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
+
 public class Cfm2SettingsNavigationSettingsPageViewModel : ObservableRecipient
 {
     // ====================================================================

@@ -5,11 +5,15 @@
     xmlns:local="using:CFileMerge2.Views.Cfm2SettingsWindows"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:msm="using:CFileMerge2.Models.SharedMisc"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel>
-        <TextBlock Text="Maintenance" />
+    <StackPanel Margin="20,15,20,0" >
+        <CheckBox Content="{x:Bind msm:Cfm2Constants.LABEL_CHECK_RSS}" AccessKey="L" IsChecked="{x:Bind ViewModel.CheckRss, Mode=TwoWay}" />
+        <RelativePanel >
+            
+        </RelativePanel>
 
     </StackPanel>
 </Page>

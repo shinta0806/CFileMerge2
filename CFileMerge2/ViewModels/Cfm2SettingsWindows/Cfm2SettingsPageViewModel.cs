@@ -88,9 +88,11 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         {
             // 配下のナビゲーションの妥当性確認
             ((Cfm2SettingsNavigationSettingsPage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Settings]).ViewModel.CheckProperties();
+            ((Cfm2SettingsNavigationMaintenancePage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Maintenance]).ViewModel.CheckProperties();
 
             // 配下のナビゲーションのプロパティーから設定に反映
             ((Cfm2SettingsNavigationSettingsPage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Settings]).ViewModel.PropertiesToSettings();
+            ((Cfm2SettingsNavigationMaintenancePage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Maintenance]).ViewModel.PropertiesToSettings();
 
             // 保存
             await Cfm2Model.Instance.EnvModel.SaveCfm2SettingsAsync();
@@ -226,6 +228,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
 
         // 配下のナビゲーションの設定をプロパティーに反映
         ((Cfm2SettingsNavigationSettingsPage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Settings]).ViewModel.SettingsToProperties();
+        ((Cfm2SettingsNavigationMaintenancePage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Maintenance]).ViewModel.SettingsToProperties();
 
         // SizeToContent
         //ReresizeClient();

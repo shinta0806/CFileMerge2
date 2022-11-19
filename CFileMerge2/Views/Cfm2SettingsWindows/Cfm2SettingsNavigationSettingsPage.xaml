@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Margin="0,10,0,0" VerticalAlignment="Top" >
+    <StackPanel Margin="0,15,0,0" VerticalAlignment="Top" >
 
         <StackPanel Orientation="Horizontal" >
 
@@ -20,7 +20,7 @@
                     <TextBlock Name="TextBlockToc" Text="目次対象（Toc タグ）" ToolTipService.ToolTip="Toc タグが指定された際、どの見出しに対する目次を作成するか、を設定します。" Margin="10,0,10,0" RelativePanel.RightOf="SeparatorTocLeft" />
                     <Border Name="SeparatorTocRight" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="TextBlockToc" RelativePanel.AlignRightWithPanel="True" />
                 </RelativePanel>
-                <TextBlock Text="※タグでの指定が優先されます。" Margin="20,10,0,0" />
+                <TextBlock Text="※タグでの指定が優先されます。" Foreground="{x:Bind msm:Cfm2Constants.NOTE_BRUSH}" Margin="20,10,0,0" />
                 <StackPanel Margin="20,10,0,0" >
                     <CheckBox Content="h1" IsChecked="{x:Bind ViewModel.TocTargets[1], Mode=TwoWay}" />
                     <CheckBox Content="h2" IsChecked="{x:Bind ViewModel.TocTargets[2], Mode=TwoWay}" />
@@ -38,7 +38,7 @@
                     <TextBlock Name="TextBlockAnchor" Text="アンカーファイル作成対象" ToolTipService.ToolTip="GenerateAnchorFiles タグが指定された際、どの見出しに対するアンカーファイルを作成するか、を設定します。" Margin="10,0,10,0" RelativePanel.RightOf="SeparatorAnchorLeft" />
                     <Border Name="SeparatorAnchorRight" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="TextBlockAnchor" RelativePanel.AlignRightWithPanel="True" />
                 </RelativePanel>
-                <TextBlock Text="※タグでの指定が優先されます。" Margin="20,10,0,0" />
+                <TextBlock Text="※タグでの指定が優先されます。" Foreground="{x:Bind msm:Cfm2Constants.NOTE_BRUSH}" Margin="20,10,0,0" />
                 <StackPanel Margin="20,10,0,0" >
                     <CheckBox Content="h1" IsChecked="{x:Bind ViewModel.AnchorTargets[1], Mode=TwoWay}" />
                     <CheckBox Content="h2" IsChecked="{x:Bind ViewModel.AnchorTargets[2], Mode=TwoWay}" />

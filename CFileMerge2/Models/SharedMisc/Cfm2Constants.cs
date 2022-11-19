@@ -140,6 +140,11 @@ internal class Cfm2Constants
     public const String LABEL_YES = "はい";
 
     /// <summary>
+    /// その他のラベル
+    /// </summary>
+    public const String LABEL_CHECK_RSS = APP_NAME_J + "の最新情報を自動的に確認する (L)";
+
+    /// <summary>
     /// ボタン幅のデフォルト
     /// </summary>
     public const Double BUTTON_WIDTH_DEFAULT = 120.0;
@@ -168,6 +173,11 @@ internal class Cfm2Constants
     /// Border をセパレーターとして使う際の色
     /// </summary>
     public static readonly SolidColorBrush SEPARATOR_BRUSH = new(Color.FromArgb(0xFF, 0xCC, 0xCC, 0xCC));
+
+    /// <summary>
+    /// 注釈の文字色
+    /// </summary>
+    public static readonly SolidColorBrush NOTE_BRUSH = new(Color.FromArgb(0xFF, 0x80, 0x80, 0x80));
 
     /// <summary>
     /// 要素名
