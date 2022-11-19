@@ -119,6 +119,16 @@ internal class MergeInfo
     } = String.Empty;
 
     /// <summary>
+    /// h1～h6 に対してアンカーファイルを作成するかどうか
+    /// h1 = [1]
+    /// </summary>
+    public Boolean[] AnchorTargets
+    {
+        get;
+        set;
+    } = new Boolean[Cfm2Constants.HX_TAG_RANK_MAX + 1];
+
+    /// <summary>
     /// 文字コード
     /// </summary>
     public Encoding Encoding

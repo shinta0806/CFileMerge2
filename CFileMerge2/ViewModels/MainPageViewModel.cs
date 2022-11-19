@@ -608,10 +608,24 @@ public class MainPageViewModel : ObservableRecipient
         }
         else
         {
-            // タグ値
-            outSrc = tagValues[1];
+            if (String.IsNullOrEmpty(tagValues[1]))
+            {
+                // デフォルトの出力先
+                outSrc = ANCHOR_OUT_DEFAULT;
+            }
+            else
+            {
+                // タグ値
+                outSrc = tagValues[1];
+            }
         }
         _mergeInfo.AnchorOutFullFolder = GetPath(outSrc, Path.GetDirectoryName(_mergeInfo.OutFullPath) ?? String.Empty, "アンカー出力先フォルダー") + "\\";
+
+        // アンカーファイル作成対象
+        if (tagValues.Length >= 3)
+        {
+            _mergeInfo.AnchorTargets = GetTargetRanks(tagValues[2], _mergeInfo.AnchorTargets);
+        }
     }
 
     /// <summary>
@@ -980,6 +994,7 @@ public class MainPageViewModel : ObservableRecipient
         for (Int32 i = 0; i < _mergeInfo.TocTargets.Length; i++)
         {
             _mergeInfo.TocTargets[i] = Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets[i];
+            _mergeInfo.AnchorTargets[i] = Cfm2Model.Instance.EnvModel.Cfm2Settings.AnchorTargets[i];
         }
 
         // メイクファイル読み込み（再帰）
@@ -995,7 +1010,7 @@ public class MainPageViewModel : ObservableRecipient
         Directory.CreateDirectory(_mergeInfo.AnchorOutFullFolder);
 
         // アンカーファイル作成対象の Hx タグを検索
-        List<HxTagInfo> hxTagInfos = ParseHxTags(Cfm2Model.Instance.EnvModel.Cfm2Settings.AnchorTargets);
+        List<HxTagInfo> hxTagInfos = ParseHxTags(_mergeInfo.AnchorTargets);
 
         // アンカーメイクファイル読み込み（再帰）
         _mergeInfo.AnchorPositions.Clear();

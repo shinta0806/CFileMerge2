@@ -270,7 +270,7 @@
 </p>
 
 <table>
-  <tr><th>書式</th><td>&lt;!-- Cfm/GenerateAnchorFiles: アンカーメイクファイル名, アンカーファイルを作成するフォルダー名 --&gt;</td></tr>
+  <tr><th>書式</th><td>&lt;!-- Cfm/GenerateAnchorFiles: アンカーメイクファイル名, アンカーファイルを作成するフォルダー名, アンカーファイル作成対象ランク --&gt;</td></tr>
 </table>
 
 <p>
@@ -282,6 +282,9 @@
   <br>
   アンカーファイルを作成するフォルダー名は省略可能です。省略した場合、「HelpParts」が指定されます。<br>
   <br>
+  アンカーファイル作成対象ランクはアンカーファイル作成対象となる &lt;hx&gt; タグのランクを列挙します。例えば「23」とすると、&lt;h2&gt; タグおよび &lt;h3&gt; タグが目次作成対象となります。<br>
+  <br>
+  アンカーファイル作成対象ランクは省略可能です。省略した場合、環境設定で設定した内容が適用されます。<br>
   例）<br>
 </p>
 
@@ -290,6 +293,8 @@
 &lt;!-- Cfm/GenerateAnchorFiles: SampleAnchorMakeFile.cfm2anchor --&gt;
 &lt;!-- Cfm/GenerateAnchorFiles: ..\..\SampleAnchorMakeFile.cfm2anchor --&gt;
 &lt;!-- Cfm/GenerateAnchorFiles: SampleAnchorMakeFile.cfm2anchor, HelpParts --&gt;
+&lt;!-- Cfm/GenerateAnchorFiles: SampleAnchorMakeFile.cfm2anchor, HelpParts, 123 --&gt;
+&lt;!-- Cfm/GenerateAnchorFiles: SampleAnchorMakeFile.cfm2anchor, , 123 --&gt;
 </pre>
   
 <h2 id="CfmTagInclude">インクルード（Include）</h2>
@@ -438,6 +443,8 @@
   目次対象ランクは省略可能です。省略した場合、環境設定で設定した内容が適用されます。<br>
   <br>
   目次対象ランクを省略した場合でも Toc の後ろのコロンを忘れずに記載してください。<br>
+  <br>
+  なお、複数の Toc タグで目次対象ランクを指定した場合、最後に指定したランクが有効になります。<br>
   <br>
   例）<br>
 </p>

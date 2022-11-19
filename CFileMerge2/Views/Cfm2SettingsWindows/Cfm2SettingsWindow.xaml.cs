@@ -36,6 +36,6 @@ public sealed partial class Cfm2SettingsWindow : WindowEx
         // Height は後で Cfm2SettingsPageViewModel により指定されるはずなので、ここでは仮指定
         // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
         // ToDo: SizeToContent が実装されればこのコードは不要
-        Height = 470;
+        Height = 490;
     }
 }
