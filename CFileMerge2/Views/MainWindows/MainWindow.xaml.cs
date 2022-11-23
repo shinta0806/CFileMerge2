@@ -14,7 +14,7 @@
 
 using CFileMerge2.Models.SharedMisc;
 
-namespace CFileMerge2.Views;
+namespace CFileMerge2.Views.MainWindows;
 
 public sealed partial class MainWindow : WindowEx
 {

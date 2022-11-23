@@ -21,9 +21,9 @@ using CFileMerge2.Core.Services;
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.Services;
-using CFileMerge2.ViewModels;
+using CFileMerge2.ViewModels.MainWindows;
 using CFileMerge2.Views;
-
+using CFileMerge2.Views.MainWindows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;

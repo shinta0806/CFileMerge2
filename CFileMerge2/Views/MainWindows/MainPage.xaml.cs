@@ -8,11 +8,10 @@
 //  
 // ----------------------------------------------------------------------------
 
-using CFileMerge2.ViewModels;
-
+using CFileMerge2.ViewModels.MainWindows;
 using Microsoft.UI.Xaml.Controls;
 
-namespace CFileMerge2.Views;
+namespace CFileMerge2.Views.MainWindows;
 
 public sealed partial class MainPage : Page
 {

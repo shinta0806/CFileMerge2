@@ -1,7 +1,7 @@
 ﻿using CFileMerge2.Contracts.Services;
-using CFileMerge2.ViewModels;
+using CFileMerge2.ViewModels.MainWindows;
 using CFileMerge2.Views;
-
+using CFileMerge2.Views.MainWindows;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 using Microsoft.UI.Xaml.Controls;

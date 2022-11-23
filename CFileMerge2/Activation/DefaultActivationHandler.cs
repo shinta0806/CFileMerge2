@@ -1,6 +1,5 @@
 ﻿using CFileMerge2.Contracts.Services;
-using CFileMerge2.ViewModels;
-
+using CFileMerge2.ViewModels.MainWindows;
 using Microsoft.UI.Xaml;
 
 namespace CFileMerge2.Activation;
