@@ -13,7 +13,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace CFileMerge2.Views.MainWindows;
 
-public sealed partial class MainPage : Page
+public sealed partial class MainPage : PageEx2
 {
     // ====================================================================
     // コンストラクター

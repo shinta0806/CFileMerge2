@@ -1,9 +1,10 @@
-﻿<Page
+﻿<v:PageEx2
     x:Class="CFileMerge2.Views.AboutWindows.AboutPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:msm="using:CFileMerge2.Models.SharedMisc"
+    xmlns:v="using:CFileMerge2.Views"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     mc:Ignorable="d"
     Loaded="{x:Bind ViewModel.PageLoaded}" 
@@ -77,4 +78,4 @@
         </RelativePanel>
 
     </StackPanel>
-</Page>
+</v:PageEx2>

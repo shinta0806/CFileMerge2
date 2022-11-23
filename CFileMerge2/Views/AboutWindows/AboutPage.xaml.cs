@@ -15,7 +15,7 @@ using WinUIEx;
 
 namespace CFileMerge2.Views.AboutWindows;
 
-public sealed partial class AboutPage : Page
+public sealed partial class AboutPage : PageEx2
 {
     // ====================================================================
     // コンストラクター

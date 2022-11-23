@@ -1,4 +1,4 @@
-﻿<Page
+﻿<v:PageEx2
     x:Class="CFileMerge2.Views.Cfm2SettingsWindows.Cfm2SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:msm="using:CFileMerge2.Models.SharedMisc"
+    xmlns:v="using:CFileMerge2.Views"
     Loaded="{x:Bind ViewModel.PageLoaded}" 
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -36,4 +37,4 @@
             <Button Name="ButtonCancel" Content="キャンセル" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonCancelClickedCommand}" />
         </RelativePanel>
     </StackPanel>
-</Page>
+</v:PageEx2>

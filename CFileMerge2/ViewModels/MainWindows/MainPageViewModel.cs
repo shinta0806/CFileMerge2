@@ -918,6 +918,12 @@ public class MainPageViewModel : ObservableRecipient
     /// <param name="args"></param>
     public void MainWindowActivated(object _, WindowActivatedEventArgs args)
     {
+#if DEBUG
+        if (args.WindowActivationState == WindowActivationState.CodeActivated || args.WindowActivationState == WindowActivationState.PointerActivated)
+        {
+            Debug.WriteLine("MainWindowActivated() " + App.MainWindow.Content.ActualSize.Y);
+        }
+#endif
         if ((args.WindowActivationState == WindowActivationState.PointerActivated || args.WindowActivationState == WindowActivationState.CodeActivated) && _openingDialog != null)
         {
             _openingDialog.Activate();

@@ -12,8 +12,8 @@
 // ToDo: コマンドライン起動、関連付け、id 属性なし警告、状況依存ヘルプ実装、更新起動メッセージ、ダイアログからの MessageDialog の親設定
 // ----------------------------------------------------------------------------
 
+using System.Diagnostics;
 using CFileMerge2.Models.SharedMisc;
-using WinUIEx;
 
 namespace CFileMerge2.Views.MainWindows;
 
@@ -28,7 +28,9 @@ public sealed partial class MainWindow : WindowEx2
     /// </summary>
     public MainWindow()
     {
+        Debug.WriteLine("MainWindow() A");
         InitializeComponent();
+        Debug.WriteLine("MainWindow() B");
 
         // 初期化
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
@@ -41,6 +43,6 @@ public sealed partial class MainWindow : WindowEx2
         // Height は後で MainPageViewModel により指定されるはずなので、ここでは仮指定
         // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
         // ToDo: SizeToContent が実装されればこのコードは不要
-        Height = 200;
+        Height = 250;
     }
 }
