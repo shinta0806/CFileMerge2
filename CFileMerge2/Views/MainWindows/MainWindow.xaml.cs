@@ -17,7 +17,7 @@ using WinUIEx;
 
 namespace CFileMerge2.Views.MainWindows;
 
-public sealed partial class MainWindow : WindowEx
+public sealed partial class MainWindow : WindowEx2
 {
     // ====================================================================
     // コンストラクター

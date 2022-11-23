@@ -13,7 +13,7 @@ using WinUIEx;
 
 namespace CFileMerge2.Views.Cfm2SettingsWindows;
 
-public sealed partial class Cfm2SettingsWindow : WindowEx
+public sealed partial class Cfm2SettingsWindow : WindowEx2
 {
     // ====================================================================
     // コンストラクター
