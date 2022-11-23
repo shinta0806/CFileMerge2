@@ -355,25 +355,6 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     /// <summary>
-    /// イベントハンドラー：メインパネルのサイズが変更された
-    /// ToDo: Window.SizeToContent が実装されればこのコードは不要
-    /// </summary>
-    public void MainPanelSizeChanged(object sender, SizeChangedEventArgs _)
-    {
-        try
-        {
-            _mainPanelHeight = ((StackPanel)sender).ActualHeight;
-            Log.Debug("MainUiSizeChanged() _mainPanelHeight: " + _mainPanelHeight);
-        }
-        catch (Exception ex)
-        {
-            // ユーザー起因では発生しないイベントなのでログのみ
-            Log.Error("メインページメインパネルサイズ変更時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
-        }
-    }
-
-    /// <summary>
     /// イベントハンドラー：最近使用したメイクファイルメニューが開く前
     /// </summary>
     /// <param name="sender"></param>
@@ -479,11 +460,6 @@ public class MainPageViewModel : ObservableRecipient
     /// 合併作業用の情報
     /// </summary>
     private MergeInfo _mergeInfo = new();
-
-    /// <summary>
-    /// メインパネルの高さ
-    /// </summary>
-    private double _mainPanelHeight;
 
     /// <summary>
     /// 開いているダイアログウィンドウ
@@ -903,9 +879,6 @@ public class MainPageViewModel : ObservableRecipient
 
         // 文字コード準備
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-        // SizeToContent
-        ReresizeClient();
 
         // その他
         IsRecentMakeEnabled = Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Any();
@@ -1508,16 +1481,6 @@ public class MainPageViewModel : ObservableRecipient
             }
         }
         return hxTagInfos;
-    }
-
-    /// <summary>
-    /// メインパネルの高さに合わせてウィンドウサイズを設定
-    /// ToDo: Window.SizeToContent が実装されればこのコードは不要
-    /// </summary>
-    private void ReresizeClient()
-    {
-        Log.Debug("ReresizeClient() " + _mainPanelHeight);
-        App.MainWindow.AppWindow.ResizeClient(new SizeInt32(App.MainWindow.AppWindow.ClientSize.Width, (int)(_mainPanelHeight + Cfm2Constants.MARGIN_DEFAULT * 2)));
     }
 
     /// <summary>

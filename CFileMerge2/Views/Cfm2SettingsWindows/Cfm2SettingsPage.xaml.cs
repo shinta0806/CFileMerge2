@@ -24,7 +24,8 @@ public sealed partial class Cfm2SettingsPage : PageEx2
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsPage(WindowEx window)
+    public Cfm2SettingsPage(WindowEx2 window)
+            : base(window)
     {
         ViewModel = new Cfm2SettingsPageViewModel(window);
         InitializeComponent();

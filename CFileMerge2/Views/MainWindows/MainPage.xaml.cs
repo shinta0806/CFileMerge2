@@ -23,6 +23,7 @@ public sealed partial class MainPage : PageEx2
     /// メインコンストラクター
     /// </summary>
     public MainPage()
+            : base((WindowEx2)App.MainWindow)
     {
         ViewModel = App.GetService<MainPageViewModel>();
         InitializeComponent();

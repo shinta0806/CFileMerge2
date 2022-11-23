@@ -11,7 +11,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel VerticalAlignment="Top" SizeChanged="{x:Bind ViewModel.MainPanelSizeChanged}" >
+    <StackPanel VerticalAlignment="Top" >
         
         <!-- ナビゲーション -->
         <NavigationView PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" Height="370" SelectionChanged="{x:Bind ViewModel.NavigationView_SelectionChanged}" >

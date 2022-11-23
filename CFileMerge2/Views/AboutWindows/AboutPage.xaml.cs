@@ -24,7 +24,8 @@ public sealed partial class AboutPage : PageEx2
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public AboutPage(WindowEx window)
+    public AboutPage(WindowEx2 window)
+            : base(window)
     {
         ViewModel = new AboutPageViewModel(window);
         InitializeComponent();

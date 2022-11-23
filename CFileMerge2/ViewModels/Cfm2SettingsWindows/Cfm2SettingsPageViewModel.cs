@@ -133,30 +133,11 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     // ====================================================================
 
     /// <summary>
-    /// イベントハンドラー：メインパネルのサイズが変更された
-    /// Depend: Window.SizeToContent が実装されればこのコードは不要
-    /// </summary>
-    public void MainPanelSizeChanged(Object sender, SizeChangedEventArgs _)
-    {
-        try
-        {
-            _mainPanelHeight = ((StackPanel)sender).ActualHeight;
-            Log.Debug("Cfm2SettingsPageViewModel.MainPanelSizeChanged() _mainPanelHeight: " + _mainPanelHeight);
-        }
-        catch (Exception ex)
-        {
-            // ユーザー起因では発生しないイベントなのでログのみ
-            Log.Error("環境設定ページメインパネルサイズ変更時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
-        }
-    }
-
-    /// <summary>
     /// イベントハンドラー：ナビゲーション選択変更
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
-    public async void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+    public async void NavigationView_SelectionChanged(NavigationView _, NavigationViewSelectionChangedEventArgs args)
     {
         try
         {
@@ -211,11 +192,6 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     /// </summary>
     private readonly Page[] _pages;
 
-    /// <summary>
-    /// メインパネルの高さ
-    /// </summary>
-    private Double _mainPanelHeight;
-
     // ====================================================================
     // private 関数
     // ====================================================================
@@ -230,19 +206,5 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         // 配下のナビゲーションの設定をプロパティーに反映
         ((Cfm2SettingsNavigationSettingsPage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Settings]).ViewModel.SettingsToProperties();
         ((Cfm2SettingsNavigationMaintenancePage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Maintenance]).ViewModel.SettingsToProperties();
-
-        // SizeToContent
-        ReresizeClient();
     }
-
-    /// <summary>
-    /// メインパネルの高さに合わせてウィンドウサイズを設定
-    /// ToDo: Window.SizeToContent が実装されればこのコードは不要
-    /// </summary>
-    private void ReresizeClient()
-    {
-        Log.Debug("Cfm2SettingsPageViewModel.ReresizeClient() " + _mainPanelHeight);
-        _window.AppWindow.ResizeClient(new SizeInt32(_window.AppWindow.ClientSize.Width, (Int32)(_mainPanelHeight)));
-    }
-
 }

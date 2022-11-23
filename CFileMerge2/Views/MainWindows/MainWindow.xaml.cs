@@ -13,6 +13,7 @@
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
+
 using CFileMerge2.Models.SharedMisc;
 
 namespace CFileMerge2.Views.MainWindows;
@@ -33,6 +34,7 @@ public sealed partial class MainWindow : WindowEx2
         Debug.WriteLine("MainWindow() B");
 
         // 初期化
+        SizeToContent = SizeToContent.Height;
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
         Content = null;
 
@@ -43,6 +45,6 @@ public sealed partial class MainWindow : WindowEx2
         // Height は後で MainPageViewModel により指定されるはずなので、ここでは仮指定
         // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
         // ToDo: SizeToContent が実装されればこのコードは不要
-        Height = 250;
+        Height = 230;
     }
 }

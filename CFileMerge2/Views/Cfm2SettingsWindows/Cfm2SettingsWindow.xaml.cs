@@ -9,7 +9,6 @@
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.Models.SharedMisc;
-using WinUIEx;
 
 namespace CFileMerge2.Views.Cfm2SettingsWindows;
 
@@ -27,16 +26,8 @@ public sealed partial class Cfm2SettingsWindow : WindowEx2
         InitializeComponent();
 
         // 初期化
+        SizeToContent = SizeToContent.Height;
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
         Content = new Cfm2SettingsPage(this);
-
-        // なぜか Cfm2SettingsWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
-        // ToDo: 効くようになればこのコードは不要
-        Width = 600;
-
-        // Height は後で Cfm2SettingsPageViewModel により指定されるはずなので、ここでは仮指定
-        // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
-        // ToDo: SizeToContent が実装されればこのコードは不要
-        Height = 500;
     }
 }

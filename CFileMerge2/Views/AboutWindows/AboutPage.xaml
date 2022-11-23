@@ -10,7 +10,7 @@
     Loaded="{x:Bind ViewModel.PageLoaded}" 
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Margin="20" VerticalAlignment="Top" SizeChanged="{x:Bind ViewModel.MainPanelSizeChanged}" >
+    <StackPanel Margin="20" VerticalAlignment="Top" >
 
         <!-- バージョン情報 -->
         <RelativePanel >

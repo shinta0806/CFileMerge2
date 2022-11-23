@@ -94,25 +94,6 @@ public class AboutPageViewModel : ObservableRecipient
     }
 
     /// <summary>
-    /// イベントハンドラー：メインパネルのサイズが変更された
-    /// Depend: Window.SizeToContent が実装されればこのコードは不要
-    /// </summary>
-    public void MainPanelSizeChanged(Object sender, SizeChangedEventArgs _)
-    {
-        try
-        {
-            _mainPanelHeight = ((StackPanel)sender).ActualHeight;
-            Log.Debug("AboutPageViewModel.MainPanelSizeChanged() _mainPanelHeight: " + _mainPanelHeight);
-        }
-        catch (Exception ex)
-        {
-            // ユーザー起因では発生しないイベントなのでログのみ
-            Log.Error("バージョン情報ページメインパネルサイズ変更時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
-        }
-    }
-
-    /// <summary>
     /// イベントハンドラー：ページがロードされた
     /// </summary>
     public void PageLoaded(Object _1, RoutedEventArgs _2)
@@ -143,11 +124,6 @@ public class AboutPageViewModel : ObservableRecipient
     /// </summary>
     private readonly WindowEx _window;
 
-    /// <summary>
-    /// メインパネルの高さ
-    /// </summary>
-    private Double _mainPanelHeight;
-
     // ====================================================================
     // private 関数
     // ====================================================================
@@ -157,20 +133,6 @@ public class AboutPageViewModel : ObservableRecipient
     /// </summary>
     private void Initialize()
     {
-        Log.Debug("AboutPageViewModel.Initialize()");
         _window.Title = Cfm2Constants.APP_NAME_J + "のバージョン情報";
-
-        // SizeToContent
-        ReresizeClient();
-    }
-
-    /// <summary>
-    /// メインパネルの高さに合わせてウィンドウサイズを設定
-    /// ToDo: Window.SizeToContent が実装されればこのコードは不要
-    /// </summary>
-    private void ReresizeClient()
-    {
-        Log.Debug("AboutPageViewModel.ReresizeClient() " + _mainPanelHeight);
-        _window.AppWindow.ResizeClient(new SizeInt32(_window.AppWindow.ClientSize.Width, (Int32)(_mainPanelHeight + Cfm2Constants.MARGIN_DEFAULT * 2)));
     }
 }
