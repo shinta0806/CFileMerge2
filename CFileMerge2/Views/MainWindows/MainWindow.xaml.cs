@@ -13,6 +13,7 @@
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.Models.SharedMisc;
+using WinUIEx;
 
 namespace CFileMerge2.Views.MainWindows;
 

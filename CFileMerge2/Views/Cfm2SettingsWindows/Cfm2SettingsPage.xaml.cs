@@ -11,6 +11,7 @@
 using CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
 using Microsoft.UI.Xaml.Controls;
+using WinUIEx;
 
 namespace CFileMerge2.Views.Cfm2SettingsWindows;
 

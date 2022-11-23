@@ -39,6 +39,7 @@ using Windows.Graphics;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Popups;
+using WinUIEx;
 
 namespace CFileMerge2.ViewModels.MainWindows;
 

@@ -29,6 +29,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 
 using Serilog.Events;
+using WinUIEx;
 
 namespace CFileMerge2;
 

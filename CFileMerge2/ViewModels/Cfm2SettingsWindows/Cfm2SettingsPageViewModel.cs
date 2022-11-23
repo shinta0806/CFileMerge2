@@ -22,6 +22,7 @@ using Microsoft.UI.Xaml.Controls;
 using Serilog;
 using Serilog.Events;
 using Windows.Graphics;
+using WinUIEx;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 

@@ -180,10 +180,10 @@ internal class EnvironmentModel
     /// <summary>
     /// ログ設定
     /// </summary>
-    private void SetLog()
+    private static void SetLog()
     {
         // ロガー生成
-        SerilogUtils.CreateLogger(5 * 1024 * 1024, 5, ((LocalSettingsService)App.GetService<ILocalSettingsService>()).Folder() + "Log" + Common.FILE_EXT_TXT);
+        SerilogUtils.CreateLogger(5 * 1024 * 1024, 5, ((LocalSettingsService)App.GetService<ILocalSettingsService>()).Folder() + FILE_NAME_LOG);
 
         // 起動ログ
         Log.Information("起動しました：" + Cfm2Constants.APP_NAME_J + " " + Cfm2Constants.APP_VER + " ====================");
