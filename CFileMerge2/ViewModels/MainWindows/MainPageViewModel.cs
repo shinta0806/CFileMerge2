@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
-using CFileMerge2.Views;
+using CFileMerge2.Views.AboutWindows;
 using CFileMerge2.Views.Cfm2SettingsWindows;
 
 using CommunityToolkit.Mvvm.ComponentModel;

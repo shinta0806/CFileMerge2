@@ -24,7 +24,7 @@ using Serilog.Events;
 
 using Windows.Graphics;
 
-namespace CFileMerge2.ViewModels;
+namespace CFileMerge2.ViewModels.AboutWindows;
 
 public class AboutPageViewModel : ObservableRecipient
 {

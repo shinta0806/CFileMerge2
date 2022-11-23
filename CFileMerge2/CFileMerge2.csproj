@@ -85,6 +85,7 @@
   <ItemGroup>
     <Folder Include="Strings\ja-jp\" />
     <Folder Include="Views\MainWindows\" />
+    <Folder Include="Views\AboutWindows\" />
   </ItemGroup>
 
   <ItemGroup>
