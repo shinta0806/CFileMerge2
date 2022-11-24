@@ -818,17 +818,6 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     /// <summary>
-    /// オーバーラップエリア非表示
-    /// </summary>
-    private void HideOverlapArea()
-    {
-        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
-        {
-            OverlapVisibility = Visibility.Collapsed;
-        });
-    }
-
-    /// <summary>
     /// プログレスエリア非表示
     /// </summary>
     private void HideProgressArea()
@@ -836,7 +825,7 @@ public class MainPageViewModel : ObservableRecipient
         App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
             ProgressVisibility = Visibility.Collapsed;
-            HideOverlapArea();
+            //HideOverlapArea();
         });
     }
 

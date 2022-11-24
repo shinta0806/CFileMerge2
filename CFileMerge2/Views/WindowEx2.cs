@@ -65,13 +65,15 @@ public class WindowEx2 : WindowEx
     /// <summary>
     /// ベール追加
     /// </summary>
-    private async Task AddVeilAsync()
+    public async Task AddVeilAsync()
     {
         if (_veiledElement != null)
         {
             throw new Exception("内部エラー：既にベールに覆われています。");
         }
-        _veiledElement = Content;
+        Frame frame = (Frame)Content;
+        Page page = (Page)frame.Content;
+        _veiledElement = page.Content;
 
         // ベール作成
         Uri pageUri = new("ms-appx:///Views/Dynamics/VeilGrid.xaml");
@@ -81,11 +83,29 @@ public class WindowEx2 : WindowEx
         Grid veilGrid = (Grid)XamlReader.Load(xaml);
 
         // いったん切り離し
-        Content = null;
+        page.Content = null;
 
         // 再構築
         veilGrid.Children.Add(_veiledElement);
-        Content = veilGrid;
+        page.Content = veilGrid;
+    }
+
+    /// <summary>
+    /// ベール除去
+    /// </summary>
+    public void RemoveVeil()
+    {
+        if (_veiledElement == null)
+        {
+            throw new Exception("内部エラー：ベールに覆われていません。");
+        }
+
+        Frame frame = (Frame)Content;
+        Page page = (Page)frame.Content;
+        Grid veilGrid = (Grid)page.Content;
+        veilGrid.Children.Clear();
+        page.Content = _veiledElement;
+        _veiledElement = null;
     }
 
     /// <summary>
@@ -110,9 +130,8 @@ public class WindowEx2 : WindowEx
         await Task.Run(() =>
         {
             _dialogEvent.WaitOne();
-            _openingDialog = null;
-            //HideOverlapArea();
         });
+        RemoveVeil();
     }
 
     // ====================================================================
@@ -155,6 +174,7 @@ public class WindowEx2 : WindowEx
     private void DialogClosed(object sender, WindowEventArgs args)
     {
         Debug.WriteLine("DialogClosed()");
+        _openingDialog = null;
         _dialogEvent.Set();
     }
 
