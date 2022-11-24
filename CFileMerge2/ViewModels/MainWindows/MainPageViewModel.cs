@@ -1478,24 +1478,13 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     /// <summary>
-    /// オーバーラップエリア表示
-    /// </summary>
-    private void ShowOverlapArea()
-    {
-        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
-        {
-            OverlapVisibility = Visibility.Visible;
-        });
-    }
-
-    /// <summary>
     /// プログレスエリアを表示
     /// </summary>
     private void ShowProgressArea()
     {
         App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
-            ShowOverlapArea();
+            //ShowOverlapArea();
             ProgressValue = 0.0;
             ProgressVisibility = Visibility.Visible;
         });

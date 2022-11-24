@@ -40,6 +40,7 @@
     <None Remove="Views\Cfm2SettingsWindow.xaml" />
     <None Remove="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationMaintenancePage.xaml" />
     <None Remove="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationSettingsPage.xaml" />
+    <None Remove="Views\Dynamics\VeilGrid.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\_Common\Downloader.cs" Link="_Common\Downloader.cs" />
@@ -119,6 +120,9 @@
     <None Update="Documents\ThirdPartyDocuments\ReadJEnc\LICENSE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\Overlays\VeilRelativePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationMaintenancePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,5 +165,13 @@
 
   <ItemGroup>
     <PRIResource Remove="Views\Cfm2SettingsWindow\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Views\Dynamics\VeilGrid.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\Dynamics\VeilGrid.xaml" />
   </ItemGroup>
 </Project>

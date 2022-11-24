@@ -13,8 +13,11 @@ using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Markup;
 using Serilog;
 using Windows.Graphics;
+using Windows.Storage;
 using Windows.UI.Popups;
 using WinUIEx;
 
@@ -60,11 +63,37 @@ public class WindowEx2 : WindowEx
     // ====================================================================
 
     /// <summary>
+    /// ベール追加
+    /// </summary>
+    private async Task AddVeilAsync()
+    {
+        if (_veiledElement != null)
+        {
+            throw new Exception("内部エラー：既にベールに覆われています。");
+        }
+        _veiledElement = Content;
+
+        // ベール作成
+        Uri pageUri = new("ms-appx:///Views/Dynamics/VeilGrid.xaml");
+        StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(pageUri);
+        using StreamReader streamReader = new StreamReader(await file.OpenStreamForReadAsync());
+        String xaml = await streamReader.ReadToEndAsync();
+        Grid veilGrid = (Grid)XamlReader.Load(xaml);
+
+        // いったん切り離し
+        Content = null;
+
+        // 再構築
+        veilGrid.Children.Add(_veiledElement);
+        Content = veilGrid;
+    }
+
+    /// <summary>
     /// ウィンドウをモーダルで表示
     /// </summary>
     /// <param name="window"></param>
     /// <returns></returns>
-    public Task ShowDialogAsync(WindowEx window)
+    public async Task ShowDialogAsync(WindowEx window)
     {
         if (_openingDialog != null)
         {
@@ -73,12 +102,12 @@ public class WindowEx2 : WindowEx
         _openingDialog = window;
 
         // ディスプレイサイズが不明なのでカスケードしない（はみ出し防止）
-        //ShowOverlapArea();
+        await AddVeilAsync();
         window.Closed += DialogClosed;
         window.AppWindow.Move(new PointInt32(App.MainWindow.AppWindow.Position.X, App.MainWindow.AppWindow.Position.Y));
         window.Activate();
 
-        return Task.Run(() =>
+        await Task.Run(() =>
         {
             _dialogEvent.WaitOne();
             _openingDialog = null;
@@ -99,6 +128,11 @@ public class WindowEx2 : WindowEx
     /// ダイアログ制御用
     /// </summary>
     private readonly AutoResetEvent _dialogEvent = new(false);
+
+    /// <summary>
+    /// ベールに覆われている UIElement
+    /// </summary>
+    private UIElement? _veiledElement;
 
     // ====================================================================
     // private 関数
