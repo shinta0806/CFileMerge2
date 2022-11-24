@@ -94,7 +94,7 @@ public partial class App : Application
     /// <summary>
     /// メインウィンドウ
     /// </summary>
-    public static WindowEx MainWindow
+    public static WindowEx2 MainWindow
     {
         get;
     } = new MainWindow();

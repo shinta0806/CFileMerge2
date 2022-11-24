@@ -9,7 +9,6 @@
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.ViewModels.MainWindows;
-using Microsoft.UI.Xaml.Controls;
 
 namespace CFileMerge2.Views.MainWindows;
 

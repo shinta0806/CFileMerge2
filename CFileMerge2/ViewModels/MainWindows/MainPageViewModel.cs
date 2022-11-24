@@ -69,7 +69,6 @@ public class MainPageViewModel : ObservableRecipient
 
         // イベントハンドラー
         App.MainWindow.AppWindow.Closing += AppWindowClosing;
-        App.MainWindow.Activated += MainWindowActivated;
     }
 
     // ====================================================================
@@ -202,7 +201,7 @@ public class MainPageViewModel : ObservableRecipient
         try
         {
             Cfm2SettingsWindow settingsWindow = new();
-            await ShowDialogAsync(settingsWindow);
+            await App.MainWindow.ShowDialogAsync(settingsWindow);
         }
         catch (Exception ex)
         {
@@ -250,7 +249,7 @@ public class MainPageViewModel : ObservableRecipient
         try
         {
             AboutWindow aboutWindow = new();
-            await ShowDialogAsync(aboutWindow);
+            await App.MainWindow.ShowDialogAsync(aboutWindow);
         }
         catch (Exception ex)
         {
@@ -461,16 +460,6 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     private MergeInfo _mergeInfo = new();
 
-    /// <summary>
-    /// 開いているダイアログウィンドウ
-    /// </summary>
-    private WindowEx? _openingDialog;
-
-    /// <summary>
-    /// ダイアログ制御用
-    /// </summary>
-    private readonly AutoResetEvent _dialogEvent = new(false);
-
     // ====================================================================
     // private 関数
     // ====================================================================
@@ -531,9 +520,6 @@ public class MainPageViewModel : ObservableRecipient
             }
         }
 
-        // 開いているダイアログがある場合は閉じる（タスクバーから閉じられた場合などは可能性がある）
-        _openingDialog?.Close();
-
         // 終了処理
         Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Cancel();
         Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath = MakePath;
@@ -557,17 +543,6 @@ public class MainPageViewModel : ObservableRecipient
             return Task.CompletedTask;
         }
         return Cfm2Common.CheckLatestInfoAsync(false);
-    }
-
-    /// <summary>
-    /// イベントハンドラー：ダイアログが閉じられた
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    private void DialogClosed(object sender, WindowEventArgs args)
-    {
-        Debug.WriteLine("DialogClosed()");
-        _dialogEvent.Set();
     }
 
     /// <summary>
@@ -882,25 +857,6 @@ public class MainPageViewModel : ObservableRecipient
 
         // その他
         IsRecentMakeEnabled = Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Any();
-    }
-
-    /// <summary>
-    /// イベントハンドラー：メインウィンドウ Activated / Deactivated
-    /// </summary>
-    /// <param name="_"></param>
-    /// <param name="args"></param>
-    public void MainWindowActivated(object _, WindowActivatedEventArgs args)
-    {
-#if DEBUG
-        if (args.WindowActivationState == WindowActivationState.CodeActivated || args.WindowActivationState == WindowActivationState.PointerActivated)
-        {
-            Debug.WriteLine("MainWindowActivated() " + App.MainWindow.Content.ActualSize.Y);
-        }
-#endif
-        if ((args.WindowActivationState == WindowActivationState.PointerActivated || args.WindowActivationState == WindowActivationState.CodeActivated) && _openingDialog != null)
-        {
-            _openingDialog.Activate();
-        }
     }
 
     /// <summary>
@@ -1518,33 +1474,6 @@ public class MainPageViewModel : ObservableRecipient
             {
                 ProgressValue = progress;
             }
-        });
-    }
-
-    /// <summary>
-    /// ウィンドウをモーダルで表示
-    /// </summary>
-    /// <param name="window"></param>
-    /// <returns></returns>
-    private Task ShowDialogAsync(WindowEx window)
-    {
-        if (_openingDialog != null)
-        {
-            throw new Exception("内部エラー：既にダイアログが開いています。");
-        }
-        _openingDialog = window;
-
-        // ディスプレイサイズが不明なのでカスケードしない（はみ出し防止）
-        ShowOverlapArea();
-        window.Closed += DialogClosed;
-        window.AppWindow.Move(new PointInt32(App.MainWindow.AppWindow.Position.X, App.MainWindow.AppWindow.Position.Y));
-        window.Activate();
-
-        return Task.Run(() =>
-        {
-            _dialogEvent.WaitOne();
-            _openingDialog = null;
-            HideOverlapArea();
         });
     }
 
