@@ -11,6 +11,7 @@
 using System.Windows.Input;
 
 using CFileMerge2.Models.SharedMisc;
+using CFileMerge2.Views;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -21,9 +22,6 @@ using Microsoft.UI.Xaml.Input;
 
 using Serilog;
 using Serilog.Events;
-
-using Windows.Graphics;
-using WinUIEx;
 
 namespace CFileMerge2.ViewModels.AboutWindows;
 
@@ -36,7 +34,7 @@ public class AboutPageViewModel : ObservableRecipient
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public AboutPageViewModel(WindowEx window)
+    public AboutPageViewModel(WindowEx2 window)
     {
         // 初期化
         _window = window;
@@ -122,7 +120,7 @@ public class AboutPageViewModel : ObservableRecipient
     /// <summary>
     /// ウィンドウ
     /// </summary>
-    private readonly WindowEx _window;
+    private readonly WindowEx2 _window;
 
     // ====================================================================
     // private 関数

@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
+using CFileMerge2.Views;
 using CFileMerge2.Views.Cfm2SettingsWindows;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -35,7 +36,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsPageViewModel(WindowEx window)
+    public Cfm2SettingsPageViewModel(WindowEx2 window)
     {
         // 初期化
         _window = window;
@@ -185,7 +186,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     /// <summary>
     /// ウィンドウ
     /// </summary>
-    private readonly WindowEx _window;
+    private readonly WindowEx2 _window;
 
     /// <summary>
     /// ページ
