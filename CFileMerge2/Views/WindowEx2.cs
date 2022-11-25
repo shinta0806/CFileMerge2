@@ -14,6 +14,7 @@ using CFileMerge2.Models.SharedMisc;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Markup;
 using Serilog;
 using Shinta;
@@ -73,8 +74,7 @@ public class WindowEx2 : WindowEx
         {
             throw new Exception("内部エラー：既にベールに覆われています。");
         }
-        Frame frame = (Frame)Content;
-        Page page = (Page)frame.Content;
+        Page page = MainPage();
         _veiledElement = page.Content;
 
         // いったん切り離し
@@ -102,8 +102,7 @@ public class WindowEx2 : WindowEx
             throw new Exception("内部エラー：ベールに覆われていません。");
         }
 
-        Frame frame = (Frame)Content;
-        Page page = (Page)frame.Content;
+        Page page = MainPage();
         Grid veilGrid = (Grid)page.Content;
         veilGrid.Children.Clear();
         page.Content = _veiledElement;
@@ -155,6 +154,11 @@ public class WindowEx2 : WindowEx
     /// </summary>
     private UIElement? _veiledElement;
 
+    /// <summary>
+    /// 初期化済
+    /// </summary>
+    private Boolean _initialized;
+
     // ====================================================================
     // private 関数
     // ====================================================================
@@ -181,6 +185,16 @@ public class WindowEx2 : WindowEx
     }
 
     /// <summary>
+    /// 初期化
+    /// </summary>
+    private void Initialize()
+    {
+        Page page = MainPage();
+        page.GettingFocus += MainPageGettingFocus;
+        _initialized = true;
+    }
+
+    /// <summary>
     /// 実行バイナリ内の XAML を読み込んでコントロールを作成
     /// </summary>
     /// <returns></returns>
@@ -194,19 +208,73 @@ public class WindowEx2 : WindowEx
     }
 
     /// <summary>
+    /// メインページ（ウィンドウ内のページ）
+    /// </summary>
+    /// <returns></returns>
+    private Page MainPage()
+    {
+        Frame frame = (Frame)Content;
+        return (Page)frame.Content;
+    }
+
+    /// <summary>
+    /// イベントハンドラー：メインページのフォーカスを取得しようとしている
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    private void MainPageGettingFocus(UIElement sender, GettingFocusEventArgs args)
+    {
+        try
+        {
+            Debug.WriteLine("MainPageGettingFocus() " + Environment.TickCount);
+            if (_veiledElement == null)
+            {
+                // ベールに覆われていない（なにも作業等をしていない状態）ならそのままフォーカスを取得する
+                return;
+            }
+
+            // ベールに覆われている場合はフォーカスを取得しない
+            // 終了確認後に Cancel を直接いじると落ちるので TryCancel() を使う
+            if (args.TryCancel())
+            {
+                args.Handled = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            // 終了確認後の可能性もあるので表示せずにログのみ
+            Log.Error(GetType().Name + " メインページフォーカス時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
+    }
+
+    /// <summary>
     /// イベントハンドラー：メインウィンドウ Activated / Deactivated
     /// </summary>
     /// <param name="_"></param>
     /// <param name="args"></param>
     private void WindowActivated(Object _, WindowActivatedEventArgs args)
     {
+        if (args.WindowActivationState == WindowActivationState.Deactivated)
+        {
+            return;
+        }
+
 #if DEBUG
         if (args.WindowActivationState == WindowActivationState.CodeActivated || args.WindowActivationState == WindowActivationState.PointerActivated)
         {
             Debug.WriteLine("WindowActivated() " + App.MainWindow.Content.ActualSize.Y);
         }
 #endif
-        if ((args.WindowActivationState == WindowActivationState.PointerActivated || args.WindowActivationState == WindowActivationState.CodeActivated) && _openingDialog != null)
+
+        // 初期化
+        if (!_initialized)
+        {
+            Initialize();
+        }
+
+        // 開いているダイアログがある場合はダイアログをアクティブにする
+        if (_openingDialog != null)
         {
             _openingDialog.Activate();
         }

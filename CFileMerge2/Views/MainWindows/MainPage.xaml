@@ -11,7 +11,7 @@
     Loaded="{x:Bind ViewModel.PageLoaded}" 
     mc:Ignorable="d">
 
-    <StackPanel Margin="{x:Bind msm:Cfm2Constants.MARGIN_DEFAULT_THICKNESS}" VerticalAlignment="Top" Canvas.ZIndex="0" GettingFocus="{x:Bind ViewModel.MainPanelGettingFocus}" >
+    <StackPanel Margin="{x:Bind msm:Cfm2Constants.MARGIN_DEFAULT_THICKNESS}" VerticalAlignment="Top" Canvas.ZIndex="0" >
         <RelativePanel >
             <TextBlock Name="TextBlockMake" Text="メイクファイル (M)：" RelativePanel.AlignVerticalCenterWithPanel="True" />
             <TextBox Name="TextBoxMake" Text="{x:Bind ViewModel.MakePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AccessKey="M" FontFamily="Yu Gothic UI" RelativePanel.RightOf="TextBlockMake" RelativePanel.LeftOf="ButtonRecentMake" AllowDrop="True" DragOver="{x:Bind ViewModel.TextBlockMakeDragOver}" Drop="{x:Bind ViewModel.TextBoxMakeDrop}" />

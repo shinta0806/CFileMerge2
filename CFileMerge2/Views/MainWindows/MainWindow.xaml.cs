@@ -9,8 +9,7 @@
 // ----------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------
-// ToDo: 子ウィンドウ表示を WindowEx2 へ、合併進捗表示をどうするか？
-// コマンドライン起動、関連付け、id 属性なし警告、状況依存ヘルプ実装、更新起動メッセージ、ダイアログからの MessageDialog の親設定
+// ToDo: コマンドライン起動、関連付け、id 属性なし警告、状況依存ヘルプ実装、更新起動メッセージ、ダイアログからの MessageDialog の親設定、FilePicker やめる
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
@@ -30,9 +29,7 @@ public sealed partial class MainWindow : WindowEx2
     /// </summary>
     public MainWindow()
     {
-        Debug.WriteLine("MainWindow() A");
         InitializeComponent();
-        Debug.WriteLine("MainWindow() B");
 
         // 初期化
         SizeToContent = SizeToContent.Height;
