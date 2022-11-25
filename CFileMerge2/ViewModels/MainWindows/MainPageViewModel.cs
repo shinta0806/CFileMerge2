@@ -825,7 +825,7 @@ public class MainPageViewModel : ObservableRecipient
         App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
             ProgressVisibility = Visibility.Collapsed;
-            //HideOverlapArea();
+            App.MainWindow.RemoveVeil();
         });
     }
 
@@ -1149,8 +1149,8 @@ public class MainPageViewModel : ObservableRecipient
             if (_mergeInfo.NumProgressLines % Cfm2Constants.PROGRESS_INTERVAL == 0)
             {
                 SetProgressValue(MergeStep.ParseFile, (double)_mergeInfo.NumProgressLines / _mergeInfo.NumTotalLines);
-#if DEBUGz
-                Thread.Sleep(20);
+#if DEBUG
+                Thread.Sleep(100);
 #endif
             }
             if (line == null)
@@ -1471,9 +1471,9 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     private void ShowProgressArea()
     {
-        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, async () =>
         {
-            //ShowOverlapArea();
+            await App.MainWindow.AddVeilAsync("ProgressGrid", this);
             ProgressValue = 0.0;
             ProgressVisibility = Visibility.Visible;
         });

@@ -16,6 +16,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
 using Serilog;
+using Shinta;
 using Windows.Graphics;
 using Windows.Storage;
 using Windows.UI.Popups;
@@ -65,8 +66,9 @@ public class WindowEx2 : WindowEx
     /// <summary>
     /// ベール追加
     /// </summary>
-    public async Task AddVeilAsync()
+    public async Task AddVeilAsync(String? childName = null, Object? dataContext = null)
     {
+        Debug.WriteLine("AddVeilAsync()");
         if (_veiledElement != null)
         {
             throw new Exception("内部エラー：既にベールに覆われています。");
@@ -75,18 +77,18 @@ public class WindowEx2 : WindowEx
         Page page = (Page)frame.Content;
         _veiledElement = page.Content;
 
-        // ベール作成
-        Uri pageUri = new("ms-appx:///Views/Dynamics/VeilGrid.xaml");
-        StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(pageUri);
-        using StreamReader streamReader = new StreamReader(await file.OpenStreamForReadAsync());
-        String xaml = await streamReader.ReadToEndAsync();
-        Grid veilGrid = (Grid)XamlReader.Load(xaml);
-
         // いったん切り離し
         page.Content = null;
 
         // 再構築
+        Grid veilGrid = (Grid)await LoadDynamicXamlAsync("VeilGrid");
         veilGrid.Children.Add(_veiledElement);
+        if (!String.IsNullOrEmpty(childName))
+        {
+            FrameworkElement element = (FrameworkElement)await LoadDynamicXamlAsync(childName);
+            element.DataContext = dataContext;
+            veilGrid.Children.Add(element);
+        }
         page.Content = veilGrid;
     }
 
@@ -179,11 +181,24 @@ public class WindowEx2 : WindowEx
     }
 
     /// <summary>
+    /// 実行バイナリ内の XAML を読み込んでコントロールを作成
+    /// </summary>
+    /// <returns></returns>
+    private async Task<Object> LoadDynamicXamlAsync(String name)
+    {
+        Uri uri = new("ms-appx:///Views/Dynamics/" + name + Common.FILE_EXT_XAML);
+        StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
+        using StreamReader streamReader = new StreamReader(await file.OpenStreamForReadAsync());
+        String xaml = await streamReader.ReadToEndAsync();
+        return XamlReader.Load(xaml);
+    }
+
+    /// <summary>
     /// イベントハンドラー：メインウィンドウ Activated / Deactivated
     /// </summary>
     /// <param name="_"></param>
     /// <param name="args"></param>
-    public void WindowActivated(Object _, WindowActivatedEventArgs args)
+    private void WindowActivated(Object _, WindowActivatedEventArgs args)
     {
 #if DEBUG
         if (args.WindowActivationState == WindowActivationState.CodeActivated || args.WindowActivationState == WindowActivationState.PointerActivated)

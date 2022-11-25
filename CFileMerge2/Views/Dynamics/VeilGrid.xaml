@@ -1,13 +1,14 @@
 <Grid
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CFileMerge2.Views.Overlays"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <!-- “®“I¶¬‚·‚é‚½‚ßAƒrƒ‹ƒhƒAƒNƒVƒ‡ƒ“‚ðuƒRƒ“ƒeƒ“ƒcv‚É‚µA•t‘®‚Ì xaml.cs ‚Ííœ‚µAŽ©“®¶¬‚Ì 1 s–Ú‚Ì x:Class ‚Ííœ -->
+    <!-- å‹•çš„ç”Ÿæˆã™ã‚‹ãŸã‚ã€ãƒ“ãƒ«ãƒ‰ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’ã€Œã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã€ã«ã—ã€ä»˜å±žã® xaml.cs ã¯å‰Šé™¤ã—ã€è‡ªå‹•ç”Ÿæˆã® 1 è¡Œç›®ã® x:Class ã¯å‰Šé™¤ -->
 
     <Grid Background="#4D000000" Canvas.ZIndex="100" />
+
+    <!-- ã“ã“ã«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å†…ã®å…ƒã€…ã®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãŒè¿½åŠ ã•ã‚Œã‚‹ã“ã¨ã«ãªã‚‹ -->
 
 </Grid>

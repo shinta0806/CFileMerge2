@@ -40,6 +40,7 @@
     <None Remove="Views\Cfm2SettingsWindow.xaml" />
     <None Remove="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationMaintenancePage.xaml" />
     <None Remove="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationSettingsPage.xaml" />
+    <None Remove="Views\Dynamics\ProgressGrid.xaml" />
     <None Remove="Views\Dynamics\VeilGrid.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -168,10 +169,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="Views\Dynamics\ProgressGrid.xaml" />
     <Page Remove="Views\Dynamics\VeilGrid.xaml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Views\Dynamics\ProgressGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Content>
     <Content Include="Views\Dynamics\VeilGrid.xaml" />
   </ItemGroup>
 </Project>
