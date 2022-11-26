@@ -8,8 +8,8 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System.Diagnostics;
 using System.Windows.Input;
+
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.Views;
@@ -17,13 +17,12 @@ using CFileMerge2.Views.Cfm2SettingsWindows;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 using Serilog;
 using Serilog.Events;
-using Windows.Graphics;
-using WinUIEx;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
@@ -40,12 +39,19 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     {
         // 初期化
         _window = window;
+        Cfm2SettingsNavigationSettingsPage settingsPage = new();
+        Cfm2SettingsNavigationMaintenancePage maintenancePage = new();
         _pages = new Page[]
         {
-            new Cfm2SettingsNavigationSettingsPage(),
-            new Cfm2SettingsNavigationMaintenancePage(),
+            settingsPage,
+            maintenancePage,
         };
-        _navigationViewContent = _pages[0];
+        _navigationViewContent = settingsPage;
+        _pageViewModels = new NavigationPageViewModel[]
+        {
+            settingsPage.ViewModel,
+            maintenancePage.ViewModel,
+        };
 
         // コマンド
         ButtonOkClickedCommand = new RelayCommand(ButtonOkClicked);
@@ -89,12 +95,16 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         try
         {
             // 配下のナビゲーションの妥当性確認
-            ((Cfm2SettingsNavigationSettingsPage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Settings]).ViewModel.CheckProperties();
-            ((Cfm2SettingsNavigationMaintenancePage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Maintenance]).ViewModel.CheckProperties();
+            for (Int32 i = 0; i < _pageViewModels.Length; i++)
+            {
+                _pageViewModels[i].CheckProperties();
+            }
 
             // 配下のナビゲーションのプロパティーから設定に反映
-            ((Cfm2SettingsNavigationSettingsPage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Settings]).ViewModel.PropertiesToSettings();
-            ((Cfm2SettingsNavigationMaintenancePage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Maintenance]).ViewModel.PropertiesToSettings();
+            for (Int32 i = 0; i < _pageViewModels.Length; i++)
+            {
+                _pageViewModels[i].PropertiesToSettings();
+            }
 
             // 保存
             await Cfm2Model.Instance.EnvModel.SaveCfm2SettingsAsync();
@@ -193,6 +203,11 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     /// </summary>
     private readonly Page[] _pages;
 
+    /// <summary>
+    /// ページのビューモデル
+    /// </summary>
+    private readonly NavigationPageViewModel[] _pageViewModels;
+
     // ====================================================================
     // private 関数
     // ====================================================================
@@ -205,7 +220,9 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         _window.Title = "環境設定";
 
         // 配下のナビゲーションの設定をプロパティーに反映
-        ((Cfm2SettingsNavigationSettingsPage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Settings]).ViewModel.SettingsToProperties();
-        ((Cfm2SettingsNavigationMaintenancePage)_pages[(Int32)Cfm2SettingsNavigationViewItems.Maintenance]).ViewModel.SettingsToProperties();
+        for (Int32 i = 0; i < _pageViewModels.Length; i++)
+        {
+            _pageViewModels[i].SettingsToProperties();
+        }
     }
 }

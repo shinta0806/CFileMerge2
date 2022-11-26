@@ -29,7 +29,7 @@ using Windows.UI.Popups;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
-public class Cfm2SettingsNavigationMaintenancePageViewModel : ObservableRecipient
+public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageViewModel
 {
     // ====================================================================
     // コンストラクター
@@ -140,17 +140,9 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : ObservableRecipien
     // ====================================================================
 
     /// <summary>
-    /// 入力されているプロパティーの妥当性を確認
-    /// ＜例外＞ Exception
-    /// </summary>
-    public void CheckProperties()
-    {
-    }
-
-    /// <summary>
     /// プロパティーから設定に反映
     /// </summary>
-    public void PropertiesToSettings()
+    public override void PropertiesToSettings()
     {
         Cfm2Model.Instance.EnvModel.Cfm2Settings.CheckRss = CheckRss;
     }
@@ -158,9 +150,8 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : ObservableRecipien
     /// <summary>
     /// 設定をプロパティーに反映
     /// </summary>
-    public void SettingsToProperties()
+    public override void SettingsToProperties()
     {
         CheckRss = Cfm2Model.Instance.EnvModel.Cfm2Settings.CheckRss;
     }
-
 }

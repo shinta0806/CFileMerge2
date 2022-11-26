@@ -213,8 +213,18 @@ public class WindowEx2 : WindowEx
     /// <returns></returns>
     private Page MainPage()
     {
-        Frame frame = (Frame)Content;
-        return (Page)frame.Content;
+        if (Content is Frame frame)
+        {
+            return (Page)frame.Content;
+        }
+        else if (Content is Page page)
+        {
+            return page;
+        }
+        else
+        {
+            throw new Exception("内部エラー：予期しないコンテンツクラスです。");
+        }
     }
 
     /// <summary>

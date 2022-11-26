@@ -16,7 +16,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
-public class Cfm2SettingsNavigationSettingsPageViewModel : ObservableRecipient
+public class Cfm2SettingsNavigationSettingsPageViewModel : NavigationPageViewModel
 {
     // ====================================================================
     // コンストラクター
@@ -69,7 +69,7 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : ObservableRecipient
     /// 入力されているプロパティーの妥当性を確認
     /// ＜例外＞ Exception
     /// </summary>
-    public void CheckProperties()
+    public override void CheckProperties()
     {
         if (!TocTargets.Contains(true))
         {
@@ -84,7 +84,7 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : ObservableRecipient
     /// <summary>
     /// プロパティーから設定に反映
     /// </summary>
-    public void PropertiesToSettings()
+    public override void PropertiesToSettings()
     {
         for (Int32 i = 0; i < Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets.Length; i++)
         {
@@ -100,7 +100,7 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : ObservableRecipient
     /// <summary>
     /// 設定をプロパティーに反映
     /// </summary>
-    public void SettingsToProperties()
+    public override void SettingsToProperties()
     {
         for (Int32 i = 0; i < Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets.Length; i++)
         {
