@@ -24,11 +24,16 @@ using CFileMerge2.Services;
 using CFileMerge2.ViewModels.MainWindows;
 using CFileMerge2.Views;
 using CFileMerge2.Views.MainWindows;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 
+using Serilog;
 using Serilog.Events;
+
+using Shinta;
+
 using WinUIEx;
 
 namespace CFileMerge2;
@@ -155,8 +160,21 @@ public partial class App : Application
     private async void App_UnhandledException(Object _, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
     {
         Debug.WriteLine("App_UnhandledException() " + args.Exception.Message);
-        await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Fatal, "不明なエラーが発生しました。アプリケーションを終了します。\n"
-                + args.Message + "\n" + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace);
+
+        // メインウィンドウのコントロールが未初期化の可能性があるため、まずはログのみ
+        String message = "不明なエラーが発生しました。アプリケーションを終了します。\n"
+                + args.Message + "\n" + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace;
+        Log.Fatal(message);
+
+        // 表示
+        try
+        {
+            await App.MainWindow.CreateMessageDialog(message, LogEventLevel.Fatal.ToString().ToLocalized()).ShowAsync();
+        }
+        catch (Exception)
+        {
+        }
+
         Environment.Exit(1);
     }
 }
