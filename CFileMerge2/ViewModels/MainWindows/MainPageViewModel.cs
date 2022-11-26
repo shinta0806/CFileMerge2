@@ -511,7 +511,7 @@ public class MainPageViewModel : ObservableRecipient
         {
             return Task.CompletedTask;
         }
-        return Cfm2Common.CheckLatestInfoAsync(false);
+        return Cfm2Common.CheckLatestInfoAsync(false, App.MainWindow);
     }
 
     /// <summary>

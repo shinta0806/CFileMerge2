@@ -20,6 +20,7 @@ using Shinta;
 using Shinta.WinUi3;
 using Windows.Foundation;
 using Windows.UI.Popups;
+using WinUIEx;
 
 namespace CFileMerge2.Models.SharedMisc;
 
@@ -34,9 +35,9 @@ internal class Cfm2Common
     /// </summary>
     /// <param name="forceShow"></param>
     /// <returns></returns>
-    public static async Task CheckLatestInfoAsync(Boolean forceShow)
+    public static async Task CheckLatestInfoAsync(Boolean forceShow, WindowEx window)
     {
-        LatestInfoManager latestInfoManager = Cfm2Common.CreateLatestInfoManager(forceShow);
+        LatestInfoManager latestInfoManager = Cfm2Common.CreateLatestInfoManager(forceShow, window);
         if (await latestInfoManager.CheckAsync())
         {
             Cfm2Model.Instance.EnvModel.Cfm2Settings.RssCheckDate = DateTime.Now.Date;
@@ -47,10 +48,10 @@ internal class Cfm2Common
     // --------------------------------------------------------------------
     // 最新情報管理者を作成
     // --------------------------------------------------------------------
-    public static LatestInfoManager CreateLatestInfoManager(Boolean forceShow)
+    public static LatestInfoManager CreateLatestInfoManager(Boolean forceShow, WindowEx window)
     {
         return new LatestInfoManager("http://shinta.coresv.com/soft/CFileMerge2_JPN.xml", forceShow, 3, Cfm2Constants.APP_VER,
-                Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Token, App.MainWindow,
+                Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Token, window,
                 ((LocalSettingsService)App.GetService<ILocalSettingsService>()).Folder() + "LatestInfo" + Common.FILE_EXT_CONFIG);
     }
 

@@ -125,7 +125,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
         {
             IsButtonCheckRssEnabled = false;
             IsProgressRingActive = true;
-            await Cfm2Common.CheckLatestInfoAsync(true);
+            await Cfm2Common.CheckLatestInfoAsync(true, _window);
         }
         catch (Exception ex)
         {
