@@ -258,6 +258,7 @@ public class MainPageViewModel : ObservableRecipient
                     try
                     {
                         Debug.Assert(!_progress, "ButtonOpenOutFileClicked() 既に実行中");
+                        Log.Information("出力ファイルを開きます：" + MakePath);
                         ShowProgressArea();
                         MergeCore();
 #if DEBUGz
@@ -265,11 +266,20 @@ public class MainPageViewModel : ObservableRecipient
 #endif
                         return true;
                     }
+                    catch (OperationCanceledException)
+                    {
+                        Log.Information("出力ファイルを開くのを中止しました。");
+                        return false;
+                    }
                     catch (Exception ex)
                     {
                         await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く処理時エラー：\n" + ex.Message);
                         Log.Information("スタックトレース：\n" + ex.StackTrace);
                         return false;
+                    }
+                    finally
+                    {
+                        HideProgressArea();
                     }
                 });
             }
@@ -283,10 +293,6 @@ public class MainPageViewModel : ObservableRecipient
         {
             await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
-        }
-        finally
-        {
-            HideProgressArea();
         }
     }
     #endregion
@@ -482,6 +488,13 @@ public class MainPageViewModel : ObservableRecipient
         Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchVer = Cfm2Constants.APP_VER;
         Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchPath = Cfm2Model.Instance.EnvModel.ExeFullPath;
         await Cfm2Model.Instance.EnvModel.SaveCfm2SettingsAsync();
+
+        while (_progress)
+        {
+            // 合併中の場合は終了を待つ
+            await Task.Delay(Common.GENERAL_SLEEP_TIME);
+        }
+
         Log.Information("終了しました：" + Cfm2Constants.APP_NAME_J + " " + Cfm2Constants.APP_VER + " --------------------");
 
         // 改めて閉じる
@@ -782,6 +795,7 @@ public class MainPageViewModel : ObservableRecipient
         {
             _progress = false;
             App.MainWindow.RemoveVeil();
+            Debug.WriteLine("HideProgressArea() " + _progress);
         });
     }
 
@@ -817,6 +831,7 @@ public class MainPageViewModel : ObservableRecipient
             try
             {
                 Debug.Assert(!_progress, "MergeAsync() 既に実行中");
+                Log.Information("合併を開始します：" + MakePath);
                 ShowProgressArea();
                 Int32 startTick = Environment.TickCount;
                 MergeCore();
@@ -864,6 +879,10 @@ public class MainPageViewModel : ObservableRecipient
                     // 完了
                     await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Information, "完了しました。\n経過時間：" + (Environment.TickCount - startTick).ToString("#,0") + " ミリ秒");
                 }
+            }
+            catch (OperationCanceledException)
+            {
+                Log.Information("合併を中止しました。");
             }
             catch (Exception ex)
             {
@@ -1113,6 +1132,7 @@ public class MainPageViewModel : ObservableRecipient
             {
                 break;
             }
+            Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Token.ThrowIfCancellationRequested();
         }
     }
 
@@ -1432,6 +1452,7 @@ public class MainPageViewModel : ObservableRecipient
             ProgressValue = 0.0;
             _progress = true;
             App.MainWindow.AddVeil("ProgressGrid", this);
+            Debug.WriteLine("ShowProgressArea() " + _progress);
         });
     }
 
