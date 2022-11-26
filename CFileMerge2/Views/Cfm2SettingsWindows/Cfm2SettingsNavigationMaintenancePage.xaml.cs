@@ -36,9 +36,9 @@ public sealed partial class Cfm2SettingsNavigationMaintenancePage : Page
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsNavigationMaintenancePage()
+    public Cfm2SettingsNavigationMaintenancePage(WindowEx2 window)
     {
-        ViewModel = new Cfm2SettingsNavigationMaintenancePageViewModel();
+        ViewModel = new Cfm2SettingsNavigationMaintenancePageViewModel(window);
         InitializeComponent();
     }
 

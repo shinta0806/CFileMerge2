@@ -39,8 +39,8 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     {
         // 初期化
         _window = window;
-        Cfm2SettingsNavigationSettingsPage settingsPage = new();
-        Cfm2SettingsNavigationMaintenancePage maintenancePage = new();
+        Cfm2SettingsNavigationSettingsPage settingsPage = new(window);
+        Cfm2SettingsNavigationMaintenancePage maintenancePage = new(window);
         _pages = new Page[]
         {
             settingsPage,
@@ -113,7 +113,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "OK ボタンクリック時エラー：\n" + ex.Message);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "OK ボタンクリック時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
@@ -133,7 +133,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "キャンセルボタンクリック時エラー：\n" + ex.Message);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "キャンセルボタンクリック時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
@@ -148,7 +148,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
-    public async void NavigationView_SelectionChanged(NavigationView _, NavigationViewSelectionChangedEventArgs args)
+    public async void NavigationViewSelectionChanged(NavigationView _, NavigationViewSelectionChangedEventArgs args)
     {
         try
         {
@@ -167,7 +167,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "ナビゲーション選択時エラー：\n" + ex.Message);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "ナビゲーション選択時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }

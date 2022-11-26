@@ -17,7 +17,10 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Markup;
 using Serilog;
+using Serilog.Events;
 using Shinta;
+using Shinta.WinUi3;
+using Windows.Foundation;
 using Windows.Graphics;
 using Windows.Storage;
 using Windows.UI.Popups;
@@ -67,12 +70,14 @@ public class WindowEx2 : WindowEx
     /// <summary>
     /// ベール追加
     /// </summary>
-    public async Task AddVeilAsync(String? childName = null, Object? dataContext = null)
+    /// <param name="childName"></param>
+    /// <param name="childDataContext"></param>
+    /// <returns>追加したかどうか（既に追加されている場合は false）</returns>
+    public async Task<Boolean> AddVeilAsync(String? childName = null, Object? childDataContext = null)
     {
-        Debug.WriteLine("AddVeilAsync()");
         if (_veiledElement != null)
         {
-            throw new Exception("内部エラー：既にベールに覆われています。");
+            return false;
         }
         Page page = MainPage();
         _veiledElement = page.Content;
@@ -86,20 +91,22 @@ public class WindowEx2 : WindowEx
         if (!String.IsNullOrEmpty(childName))
         {
             FrameworkElement element = (FrameworkElement)await LoadDynamicXamlAsync(childName);
-            element.DataContext = dataContext;
+            element.DataContext = childDataContext;
             veilGrid.Children.Add(element);
         }
         page.Content = veilGrid;
+        return true;
     }
 
     /// <summary>
     /// ベール除去
     /// </summary>
-    public void RemoveVeil()
+    /// <returns>除去したかどうか（既に除去されている場合は false）</returns>
+    public Boolean RemoveVeil()
     {
         if (_veiledElement == null)
         {
-            throw new Exception("内部エラー：ベールに覆われていません。");
+            return false;
         }
 
         Page page = MainPage();
@@ -107,6 +114,7 @@ public class WindowEx2 : WindowEx
         veilGrid.Children.Clear();
         page.Content = _veiledElement;
         _veiledElement = null;
+        return true;
     }
 
     /// <summary>
@@ -133,6 +141,23 @@ public class WindowEx2 : WindowEx
             _dialogEvent.WaitOne();
         });
         RemoveVeil();
+    }
+
+    /// <summary>
+    /// ログの記録と表示
+    /// </summary>
+    /// <param name="logEventLevel"></param>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    public async Task<IUICommand> ShowLogMessageDialogAsync(LogEventLevel logEventLevel, String message)
+    {
+        Boolean added = await AddVeilAsync();
+        IUICommand command = await WinUi3Common.ShowLogMessageDialogAsync(this, logEventLevel, message);
+        if (added)
+        {
+            RemoveVeil();
+        }
+        return command;
     }
 
     // ====================================================================

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CFileMerge2.Models.Cfm2Models;
+using CFileMerge2.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CFileMerge2.ViewModels;
@@ -26,8 +27,9 @@ public class NavigationPageViewModel : ObservableRecipient
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public NavigationPageViewModel()
+    public NavigationPageViewModel(WindowEx2 window)
     {
+        _window = window;
     }
 
     // ====================================================================
@@ -55,4 +57,14 @@ public class NavigationPageViewModel : ObservableRecipient
     public virtual void SettingsToProperties()
     {
     }
+
+    // ====================================================================
+    // protected 変数
+    // ====================================================================
+
+    /// <summary>
+    /// ウィンドウ
+    /// </summary>
+    protected readonly WindowEx2 _window;
+
 }

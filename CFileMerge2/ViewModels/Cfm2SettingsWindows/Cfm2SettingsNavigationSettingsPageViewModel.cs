@@ -11,7 +11,7 @@
 using System.Collections.ObjectModel;
 
 using CFileMerge2.Models.Cfm2Models;
-
+using CFileMerge2.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
@@ -25,7 +25,8 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : NavigationPageViewMod
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsNavigationSettingsPageViewModel()
+    public Cfm2SettingsNavigationSettingsPageViewModel(WindowEx2 window)
+            : base(window)
     {
         TocTargets = new(Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets);
         AnchorTargets = new(Cfm2Model.Instance.EnvModel.Cfm2Settings.AnchorTargets);

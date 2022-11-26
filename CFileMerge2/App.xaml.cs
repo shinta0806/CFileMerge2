@@ -155,7 +155,7 @@ public partial class App : Application
     private async void App_UnhandledException(Object _, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
     {
         Debug.WriteLine("App_UnhandledException() " + args.Exception.Message);
-        await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Fatal, "不明なエラーが発生しました。アプリケーションを終了します。\n"
+        await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Fatal, "不明なエラーが発生しました。アプリケーションを終了します。\n"
                 + args.Message + "\n" + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace);
         Environment.Exit(1);
     }

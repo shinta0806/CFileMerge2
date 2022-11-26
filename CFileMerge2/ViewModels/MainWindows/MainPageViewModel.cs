@@ -134,7 +134,7 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "最近使用したメイクファイル適用時エラー：\n" + ex.Message);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "最近使用したメイクファイル適用時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
@@ -164,7 +164,7 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "参照時エラー：\n" + ex.Message);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "参照時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
@@ -185,7 +185,7 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "環境設定表示時エラー：\n" + ex.Message);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "環境設定表示時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
@@ -212,7 +212,7 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "サンプルフォルダー表示時エラー：\n" + ex.Message);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "サンプルフォルダー表示時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
@@ -233,7 +233,7 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "バージョン情報表示時エラー：\n" + ex.Message);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "バージョン情報表示時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
@@ -267,7 +267,7 @@ public class MainPageViewModel : ObservableRecipient
                     }
                     catch (Exception ex)
                     {
-                        await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く処理時エラー：\n" + ex.Message);
+                        await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く処理時エラー：\n" + ex.Message);
                         Log.Information("スタックトレース：\n" + ex.StackTrace);
                         return false;
                     }
@@ -281,7 +281,7 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く時エラー：\n" + ex.Message);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
         finally
@@ -328,7 +328,7 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "最近使用したメイクファイル時エラー：\n" + ex.Message);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "最近使用したメイクファイル時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
@@ -857,17 +857,17 @@ public class MainPageViewModel : ObservableRecipient
                     {
                         message += _mergeInfo.Warnings[i] + "\n";
                     }
-                    await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Warning, message);
+                    await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Warning, message);
                 }
                 else
                 {
                     // 完了
-                    await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Information, "完了しました。\n経過時間：" + (Environment.TickCount - startTick).ToString("#,0") + " ミリ秒");
+                    await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Information, "完了しました。\n経過時間：" + (Environment.TickCount - startTick).ToString("#,0") + " ミリ秒");
                 }
             }
             catch (Exception ex)
             {
-                await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "合併時エラー：\n" + ex.Message);
+                await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "合併時エラー：\n" + ex.Message);
                 Log.Information("スタックトレース：\n" + ex.StackTrace);
             }
             finally

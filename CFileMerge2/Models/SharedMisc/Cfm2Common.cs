@@ -77,7 +77,7 @@ internal class Cfm2Common
                 }
                 catch (Exception ex)
                 {
-                    await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "状況に応じたヘルプを表示できませんでした：\n" + ex.Message + "\n" + helpPath
+                    await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "状況に応じたヘルプを表示できませんでした：\n" + ex.Message + "\n" + helpPath
                             + "\n通常のヘルプを表示します。");
                 }
             }
@@ -88,19 +88,8 @@ internal class Cfm2Common
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "ヘルプを表示できませんでした。\n" + ex.Message + "\n" + helpPath);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "ヘルプを表示できませんでした。\n" + ex.Message + "\n" + helpPath);
         }
-    }
-
-    /// <summary>
-    /// ログの記録と表示
-    /// </summary>
-    /// <param name="logEventLevel"></param>
-    /// <param name="message"></param>
-    /// <returns></returns>
-    public static IAsyncOperation<IUICommand> ShowLogMessageDialogAsync(LogEventLevel logEventLevel, String message)
-    {
-        return WinUi3Common.ShowLogMessageDialogAsync(App.MainWindow, logEventLevel, message);
     }
 
     // ====================================================================

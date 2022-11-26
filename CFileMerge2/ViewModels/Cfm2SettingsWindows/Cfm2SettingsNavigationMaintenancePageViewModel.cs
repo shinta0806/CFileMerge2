@@ -26,6 +26,7 @@ using CommunityToolkit.Mvvm.Input;
 using CFileMerge2.Views.Cfm2SettingsWindows;
 using Serilog.Events;
 using Windows.UI.Popups;
+using CFileMerge2.Views;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
@@ -38,7 +39,8 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsNavigationMaintenancePageViewModel()
+    public Cfm2SettingsNavigationMaintenancePageViewModel(WindowEx2 window)
+            : base(window)
     {
         // コマンド
         ButtonCheckRssClickedCommand = new RelayCommand(ButtonCheckRssClicked);
@@ -124,7 +126,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "今すぐ最新情報を確認時エラー：\n" + ex.Message);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "今すぐ最新情報を確認時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
         finally

@@ -23,9 +23,9 @@ public sealed partial class Cfm2SettingsNavigationSettingsPage : Page
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsNavigationSettingsPage()
+    public Cfm2SettingsNavigationSettingsPage(WindowEx2 window)
     {
-        ViewModel = new Cfm2SettingsNavigationSettingsPageViewModel();
+        ViewModel = new Cfm2SettingsNavigationSettingsPageViewModel(window);
         InitializeComponent();
     }
 

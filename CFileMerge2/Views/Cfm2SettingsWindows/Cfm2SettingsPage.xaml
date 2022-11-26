@@ -14,7 +14,7 @@
     <StackPanel VerticalAlignment="Top" >
         
         <!-- ナビゲーション -->
-        <NavigationView PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" Height="370" SelectionChanged="{x:Bind ViewModel.NavigationView_SelectionChanged}" >
+        <NavigationView PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" Height="370" SelectionChanged="{x:Bind ViewModel.NavigationViewSelectionChanged}" >
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="設定" Tag="{x:Bind msm:Cfm2SettingsNavigationViewItems.Settings}" IsSelected="True" >
                     <NavigationViewItem.Icon >

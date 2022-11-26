@@ -65,7 +65,7 @@ public class AboutPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "OK ボタンクリック時エラー：\n" + ex.Message);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "OK ボタンクリック時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
@@ -86,7 +86,7 @@ public class AboutPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await Cfm2Common.ShowLogMessageDialogAsync(LogEventLevel.Error, "Escape キー押下時エラー：\n" + ex.Message);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Escape キー押下時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
