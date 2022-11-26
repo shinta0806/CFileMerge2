@@ -1427,11 +1427,11 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     private void ShowProgressArea()
     {
-        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, async () =>
+        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
             ProgressValue = 0.0;
             _progress = true;
-            await App.MainWindow.AddVeilAsync("ProgressGrid", this);
+            App.MainWindow.AddVeil("ProgressGrid", this);
         });
     }
 

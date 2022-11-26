@@ -9,6 +9,8 @@
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
+using System.Reflection;
+using System.Text;
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using Microsoft.UI.Windowing;
@@ -73,7 +75,7 @@ public class WindowEx2 : WindowEx
     /// <param name="childName"></param>
     /// <param name="childDataContext"></param>
     /// <returns>追加したかどうか（既に追加されている場合は false）</returns>
-    public async Task<Boolean> AddVeilAsync(String? childName = null, Object? childDataContext = null)
+    public Boolean AddVeil(String? childName = null, Object? childDataContext = null)
     {
         if (_veiledElement != null)
         {
@@ -86,11 +88,11 @@ public class WindowEx2 : WindowEx
         page.Content = null;
 
         // 再構築
-        Grid veilGrid = (Grid)await LoadDynamicXamlAsync("VeilGrid");
+        Grid veilGrid = (Grid)LoadDynamicXaml("VeilGrid");
         veilGrid.Children.Add(_veiledElement);
         if (!String.IsNullOrEmpty(childName))
         {
-            FrameworkElement element = (FrameworkElement)await LoadDynamicXamlAsync(childName);
+            FrameworkElement element = (FrameworkElement)LoadDynamicXaml(childName);
             element.DataContext = childDataContext;
             veilGrid.Children.Add(element);
         }
@@ -124,6 +126,7 @@ public class WindowEx2 : WindowEx
     /// <returns></returns>
     public async Task ShowDialogAsync(WindowEx window)
     {
+        Log.Debug("ShowDialogAsync()");
         if (_openingDialog != null)
         {
             throw new Exception("内部エラー：既にダイアログが開いています。");
@@ -131,7 +134,7 @@ public class WindowEx2 : WindowEx
         _openingDialog = window;
 
         // ディスプレイサイズが不明なのでカスケードしない（はみ出し防止）
-        await AddVeilAsync();
+        AddVeil();
         window.Closed += DialogClosed;
         window.AppWindow.Move(new PointInt32(App.MainWindow.AppWindow.Position.X, App.MainWindow.AppWindow.Position.Y));
         window.Activate();
@@ -151,7 +154,7 @@ public class WindowEx2 : WindowEx
     /// <returns></returns>
     public async Task<IUICommand> ShowLogMessageDialogAsync(LogEventLevel logEventLevel, String message)
     {
-        Boolean added = await AddVeilAsync();
+        Boolean added = AddVeil();
         IUICommand command = await WinUi3Common.ShowLogMessageDialogAsync(this, logEventLevel, message);
         if (added)
         {
@@ -223,12 +226,24 @@ public class WindowEx2 : WindowEx
     /// 実行バイナリ内の XAML を読み込んでコントロールを作成
     /// </summary>
     /// <returns></returns>
-    private async Task<Object> LoadDynamicXamlAsync(String name)
+    private Object LoadDynamicXaml(String name)
     {
+#if false
+        // StorageFile を使う方が今時っぽいが、非パッケージ時にうまくうごかないため現時点では使用しない
         Uri uri = new("ms-appx:///Views/Dynamics/" + name + Common.FILE_EXT_XAML);
         StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
         using StreamReader streamReader = new StreamReader(await file.OpenStreamForReadAsync());
         String xaml = await streamReader.ReadToEndAsync();
+#endif
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        using Stream? stream = assembly.GetManifestResourceStream("CFileMerge2.Views.Dynamics." + name + Common.FILE_EXT_XAML);
+        if (stream == null)
+        {
+            throw new Exception("内部エラー：コントロールリソースが見つかりません。");
+        }
+        Byte[] data = new Byte[stream.Length];
+        stream.Read(data);
+        String xaml = Encoding.UTF8.GetString(data);
         return XamlReader.Load(xaml);
     }
 

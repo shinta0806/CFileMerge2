@@ -174,9 +174,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Views\Dynamics\ProgressGrid.xaml">
+    <EmbeddedResource Include="Views\Dynamics\ProgressGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Content>
-    <Content Include="Views\Dynamics\VeilGrid.xaml" />
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Dynamics\VeilGrid.xaml" />
   </ItemGroup>
 </Project>
