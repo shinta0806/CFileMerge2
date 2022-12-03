@@ -154,7 +154,7 @@ public class MainPageViewModel : ObservableRecipient
             fileOpenPicker.FileTypeFilter.Add(Cfm2Constants.FILE_EXT_CFM2_MAKE);
             fileOpenPicker.FileTypeFilter.Add("*");
 
-            StorageFile file = await fileOpenPicker.PickSingleFileAsync();
+            StorageFile? file = await fileOpenPicker.PickSingleFileAsync();
             if (file == null)
             {
                 return;

@@ -8,27 +8,30 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CFileMerge2.Models.SharedMisc;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml;
-using Serilog;
+using System.Buffers;
 using System.Diagnostics;
-using CFileMerge2.Models.Cfm2Models;
+using System.IO.Compression;
+using System.Reflection.Metadata;
+using System.Text;
 using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
-using CFileMerge2.Views.Cfm2SettingsWindows;
-using Serilog.Events;
-using Windows.UI.Popups;
+using CFileMerge2.Contracts.Services;
+using CFileMerge2.Core.Helpers;
+using CFileMerge2.Models.Cfm2Models;
+using CFileMerge2.Models.SharedMisc;
+using CFileMerge2.Services;
 using CFileMerge2.Views;
-using WinUIEx;
+
+using CommunityToolkit.Mvvm.Input;
+
 using Microsoft.UI.Dispatching;
+
+using Serilog;
+using Serilog.Events;
+using Shinta;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.UI.Popups;
+using WinUIEx;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
@@ -46,6 +49,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
     {
         // コマンド
         ButtonCheckRssClickedCommand = new RelayCommand(ButtonCheckRssClicked);
+        ButtonBackupClickedCommand = new RelayCommand(ButtonBackupClicked);
     }
 
     // ====================================================================
@@ -140,6 +144,39 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
     }
     #endregion
 
+    #region 設定のバックアップボタンの制御
+    public ICommand ButtonBackupClickedCommand
+    {
+        get;
+    }
+
+    private async void ButtonBackupClicked()
+    {
+        Debug.WriteLine("ButtonBackupClicked()");
+        try
+        {
+            FileSavePicker fileSavePicker = _window.CreateSaveFilePicker();
+            fileSavePicker.FileTypeChoices.Add("hoge", new List<String>() { Common.FILE_EXT_SETTINGS_ARCHIVE });
+
+            StorageFile? file = await fileSavePicker.PickSaveFileAsync();
+            if (file == null)
+            {
+                return;
+            }
+
+            File.Delete(file.Path);
+            Cfm2Common.LogEnvironmentInfo();
+            await CreateBackupAsync(file.Path, Cfm2Common.TempPath() + "\\");
+            Log.Information("設定のバックアップが完了しました。");
+        }
+        catch (Exception ex)
+        {
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "設定のバックアップボタンクリック時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
+    }
+    #endregion
+
     // ====================================================================
     // public 関数
     // ====================================================================
@@ -159,4 +196,20 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
     {
         CheckRss = Cfm2Model.Instance.EnvModel.Cfm2Settings.CheckRss;
     }
+
+    // ====================================================================
+    // public 関数
+    // ====================================================================
+
+    /// <summary>
+    /// バックアップ作成
+    /// </summary>
+    private async Task CreateBackupAsync(String destPath, String tempFolderPath)
+    {
+        Directory.CreateDirectory(tempFolderPath);
+        String settings = await Json.StringifyAsync(Cfm2Model.Instance.EnvModel.Cfm2Settings);
+        File.WriteAllText(tempFolderPath + "settings.txt", settings);
+        ZipFile.CreateFromDirectory(tempFolderPath, destPath, CompressionLevel.Optimal, true);
+    }
+
 }

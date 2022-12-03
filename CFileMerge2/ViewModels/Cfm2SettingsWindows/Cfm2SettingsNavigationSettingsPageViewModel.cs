@@ -12,7 +12,6 @@ using System.Collections.ObjectModel;
 
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
@@ -113,5 +112,4 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : NavigationPageViewMod
         }
         OverwriteAnchorFiles = Cfm2Model.Instance.EnvModel.Cfm2Settings.OverwriteAnchorFiles;
     }
-
 }

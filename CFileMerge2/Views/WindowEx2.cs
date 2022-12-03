@@ -11,21 +11,24 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
-using CFileMerge2.Models.Cfm2Models;
+
 using CFileMerge2.Models.SharedMisc;
+
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Markup;
+
 using Serilog;
 using Serilog.Events;
+
 using Shinta;
 using Shinta.WinUi3;
-using Windows.Foundation;
+
 using Windows.Graphics;
-using Windows.Storage;
 using Windows.UI.Popups;
+
 using WinUIEx;
 
 namespace CFileMerge2.Views;
@@ -329,6 +332,4 @@ public class WindowEx2 : WindowEx
             _openingDialog.Activate();
         }
     }
-
-
 }

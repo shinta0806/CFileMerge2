@@ -1,11 +1,10 @@
 ﻿<Page
     x:Class="CFileMerge2.Views.Cfm2SettingsWindows.Cfm2SettingsNavigationMaintenancePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CFileMerge2.Views.Cfm2SettingsWindows"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:msm="using:CFileMerge2.Models.SharedMisc"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -15,6 +14,10 @@
             <ProgressRing IsIndeterminate="True" IsActive="{x:Bind ViewModel.IsProgressRingActive, Mode=OneWay}" RelativePanel.LeftOf="ButtonCheckRss" Margin="0,0,20,0" />
             <Button Name="ButtonCheckRss" Content="今すぐ最新情報を確認 (A)" AccessKey="A" IsEnabled="{x:Bind ViewModel.IsButtonCheckRssEnabled, Mode=OneWay}" Width="200" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonCheckRssClickedCommand}" />
         </RelativePanel>
-
+        <TextBlock Text="設定のバックアップ（ファイルに保存）" Margin="0,20,0,0" />
+        <RelativePanel >
+            <Button Name="ButtonBackup" Content="設定のバックアップ (B)" Width="200" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonBackupClickedCommand}" />
+            <Button Content="設定の復元 (R)" Width="200" Margin="0,10,0,0" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="ButtonBackup" />
+        </RelativePanel>
     </StackPanel>
 </Page>

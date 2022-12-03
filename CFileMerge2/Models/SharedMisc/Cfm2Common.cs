@@ -45,14 +45,26 @@ internal class Cfm2Common
         }
     }
 
-    // --------------------------------------------------------------------
-    // 最新情報管理者を作成
-    // --------------------------------------------------------------------
+    /// <summary>
+    /// 最新情報管理者を作成
+    /// </summary>
+    /// <param name="forceShow"></param>
+    /// <param name="window"></param>
+    /// <returns></returns>
     public static LatestInfoManager CreateLatestInfoManager(Boolean forceShow, WindowEx window)
     {
         return new LatestInfoManager("http://shinta.coresv.com/soft/CFileMerge2_JPN.xml", forceShow, 3, Cfm2Constants.APP_VER,
                 Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Token, window,
                 ((LocalSettingsService)App.GetService<ILocalSettingsService>()).Folder() + "LatestInfo" + Common.FILE_EXT_CONFIG);
+    }
+
+    /// <summary>
+    /// 環境情報をログする
+    /// </summary>
+    public static void LogEnvironmentInfo()
+    {
+        SystemEnvironment se = new();
+        se.LogEnvironment();
     }
 
     /// <summary>
@@ -93,6 +105,17 @@ internal class Cfm2Common
         }
     }
 
+    /// <summary>
+    /// テンポラリフォルダー配下のファイル・フォルダー名として使えるパス（呼びだす度に異なる、拡張子なし）
+    /// </summary>
+    /// <returns></returns>
+    public static String TempPath()
+    {
+        // マルチスレッドでも安全にインクリメント
+        Int32 counter = Interlocked.Increment(ref _tempPathCounter);
+        return Common.TempFolderPath() + counter.ToString() + "_" + Environment.CurrentManagedThreadId.ToString();
+    }
+
     // ====================================================================
     // private 定数
     // ====================================================================
@@ -101,4 +124,12 @@ internal class Cfm2Common
     /// ヘルプファイル名
     /// </summary>
     private const String FILE_NAME_HELP_PREFIX = Cfm2Constants.APP_ID + "_JPN";
+
+    // ====================================================================
+    // private 変数
+    // ====================================================================
+
+    // TempPath() 用カウンター（同じスレッドでもファイル名が分かれるようにするため）
+    private static Int32 _tempPathCounter = 0;
+
 }
