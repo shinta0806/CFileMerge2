@@ -511,6 +511,7 @@ public class MainPageViewModel : ObservableRecipient
             await Task.Delay(Common.GENERAL_SLEEP_TIME);
         }
 
+        Common.DeleteTempFolder();
         Log.Information("終了しました：" + Cfm2Constants.APP_NAME_J + " " + Cfm2Constants.APP_VER + " --------------------");
 
         // 改めて閉じる

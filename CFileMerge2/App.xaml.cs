@@ -140,6 +140,12 @@ public partial class App : Application
         // モデル生成
         _ = Cfm2Model.Instance;
 
+        // テンポラリフォルダー準備
+        Common.InitializeTempFolder();
+
+        // ログ
+        Cfm2Common.LogEnvironmentInfo();
+
         // 環境設定読み込み
         // メインウィンドウで読み込むと await の関係でメインページと順番がちぐはぐになったりするので、ここで読み込む必要がある
         await Cfm2Model.Instance.EnvModel.LoadCfm2SettingsAsync();
