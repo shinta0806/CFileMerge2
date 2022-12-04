@@ -156,7 +156,8 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
         try
         {
             FileSavePicker fileSavePicker = _window.CreateSaveFilePicker();
-            fileSavePicker.FileTypeChoices.Add("hoge", new List<String>() { Common.FILE_EXT_SETTINGS_ARCHIVE });
+            fileSavePicker.FileTypeChoices.Add("設定ファイル", new List<String>() { Common.FILE_EXT_SETTINGS_ARCHIVE });
+            fileSavePicker.SuggestedFileName = Cfm2Constants.APP_ID + "Settings_" + DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
 
             StorageFile? file = await fileSavePicker.PickSaveFileAsync();
             if (file == null)
@@ -166,8 +167,8 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
 
             File.Delete(file.Path);
             Cfm2Common.LogEnvironmentInfo();
-            await CreateBackupAsync(file.Path, Cfm2Common.TempPath() + "\\");
-            Log.Information("設定のバックアップが完了しました。");
+            await CreateBackupAsync(file.Path, Cfm2Common.TempPath() + "\\" + Cfm2Constants.APP_ID + "\\");
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Information, "設定のバックアップが完了しました。");
         }
         catch (Exception ex)
         {
@@ -198,8 +199,31 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
     }
 
     // ====================================================================
-    // public 関数
+    // private 定数
     // ====================================================================
+
+    /// <summary>
+    /// 設定ファイル名
+    /// </summary>
+    private const String FILE_NAME_SETTINGS = "settings" + Common.FILE_EXT_JSON;
+
+    // ====================================================================
+    // private 関数
+    // ====================================================================
+
+    /// <summary>
+    /// 設定フォルダー内の指定拡張子のファイルをテンポラリフォルダーにコピー
+    /// </summary>
+    /// <param name="ext"></param>
+    /// <param name="tempFolderPath"></param>
+    private void CopyFiles(String ext, String tempFolderPath)
+    {
+        String[] files = Directory.GetFiles(((LocalSettingsService)App.GetService<ILocalSettingsService>()).Folder(), "*" + ext);
+        foreach (String file in files)
+        {
+            File.Copy(file, tempFolderPath + Path.GetFileName(file));
+        }
+    }
 
     /// <summary>
     /// バックアップ作成
@@ -207,8 +231,17 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
     private async Task CreateBackupAsync(String destPath, String tempFolderPath)
     {
         Directory.CreateDirectory(tempFolderPath);
+
+        // 設定をファイル化
         String settings = await Json.StringifyAsync(Cfm2Model.Instance.EnvModel.Cfm2Settings);
-        File.WriteAllText(tempFolderPath + "settings.txt", settings);
+        File.WriteAllText(tempFolderPath + FILE_NAME_SETTINGS, settings);
+
+        // 最新情報確認履歴
+        CopyFiles(Common.FILE_EXT_CONFIG, tempFolderPath);
+
+        // ログ
+        CopyFiles(Common.FILE_EXT_TXT, tempFolderPath);
+
         ZipFile.CreateFromDirectory(tempFolderPath, destPath, CompressionLevel.Optimal, true);
     }
 

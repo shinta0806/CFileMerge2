@@ -9,6 +9,7 @@
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -40,6 +41,8 @@ using Windows.Storage.Pickers;
 using Windows.UI.Popups;
 
 using WinUIEx;
+
+using DragEventArgs = Microsoft.UI.Xaml.DragEventArgs;
 
 namespace CFileMerge2.ViewModels.MainWindows;
 
@@ -150,6 +153,19 @@ public class MainPageViewModel : ObservableRecipient
     {
         try
         {
+#if false
+            OpenFileDialog openFileDialog = new()
+            {
+                Title = "my title",
+                Filter = "メイクファイル|*.cfm2|すべてのファイル|*.*",
+            };
+            if (openFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            MakePath = openFileDialog.FileName;
+#endif
             FileOpenPicker fileOpenPicker = App.MainWindow.CreateOpenFilePicker();
             fileOpenPicker.FileTypeFilter.Add(Cfm2Constants.FILE_EXT_CFM2_MAKE);
             fileOpenPicker.FileTypeFilter.Add("*");
@@ -168,9 +184,9 @@ public class MainPageViewModel : ObservableRecipient
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
-    #endregion
+#endregion
 
-    #region 環境設定ボタンの制御
+#region 環境設定ボタンの制御
     public ICommand ButtonCfm2SettingsClickedCommand
     {
         get;
@@ -189,16 +205,16 @@ public class MainPageViewModel : ObservableRecipient
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
-    #endregion
+#endregion
 
-    #region ヘルプフライアウトの制御
+#region ヘルプフライアウトの制御
     public ICommand MenuFlyoutItemHelpClickedCommand
     {
         get => Cfm2Model.Instance.EnvModel.HelpClickedCommand;
     }
-    #endregion
+#endregion
 
-    #region サンプルフォルダーフライアウトの制御
+#region サンプルフォルダーフライアウトの制御
     public ICommand MenuFlyoutItemSampleFolderClickedCommand
     {
         get;
@@ -216,9 +232,9 @@ public class MainPageViewModel : ObservableRecipient
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
-    #endregion
+#endregion
 
-    #region バージョン情報フライアウトの制御
+#region バージョン情報フライアウトの制御
     public ICommand MenuFlyoutItemAboutClickedCommand
     {
         get;
@@ -237,9 +253,9 @@ public class MainPageViewModel : ObservableRecipient
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
-    #endregion
+#endregion
 
-    #region 出力ファイルを開くボタンの制御
+#region 出力ファイルを開くボタンの制御
     public ICommand ButtonOpenOutFileClickedCommand
     {
         get;
@@ -295,16 +311,16 @@ public class MainPageViewModel : ObservableRecipient
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
-    #endregion
+#endregion
 
-    #region スタートボタンの制御
+#region スタートボタンの制御
     public ICommand ButtonGoClickedCommand
     {
         get;
     }
 
     private async void ButtonGoClicked() => await MergeAsync();
-    #endregion
+#endregion
 
     // ====================================================================
     // public 関数

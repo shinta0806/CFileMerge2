@@ -61,8 +61,8 @@ public class PageEx2 : Page
     {
         try
         {
-            Log.Information("PageEx2Loaded() this Y: " + ActualSize.Y);
-            Log.Information("PageEx2Loaded() Content Y: " + Content.ActualSize.Y);
+            Log.Debug("PageEx2Loaded() this Y: " + ActualSize.Y);
+            Log.Debug("PageEx2Loaded() Content Y: " + Content.ActualSize.Y);
 
             // WindowEx2.SizeToContent の処理
             // ToDo: Window.SizeToContent が実装されれば不要となるコード

@@ -26,12 +26,13 @@
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <PackageCertificateThumbprint>6A6B41543E57A99B0D1F78590CFB7348A7D5F9C3</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <UseWindowsForms>False</UseWindowsForms>
+    <UseWPF>False</UseWPF>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Views\Cfm2SettingsWindow\**" />
     <EmbeddedResource Remove="Views\Cfm2SettingsWindow\**" />
     <None Remove="Views\Cfm2SettingsWindow\**" />
-    <Page Remove="Views\Cfm2SettingsWindow\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\AboutPage.xaml" />
@@ -123,27 +124,27 @@
     <None Update="Documents\ThirdPartyDocuments\ReadJEnc\LICENSE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Page Update="Views\Overlays\VeilRelativePanel.xaml">
+    <None Update="Views\Overlays\VeilRelativePanel.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationMaintenancePage.xaml">
+    </None>
+    <None Update="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationMaintenancePage.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationSettingsPage.xaml">
+    </None>
+    <None Update="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationSettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Cfm2SettingsPage.xaml">
+    </None>
+    <None Update="Views\Cfm2SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Cfm2SettingsWindow.xaml">
+    </None>
+    <None Update="Views\Cfm2SettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\AboutPage.xaml">
+    </None>
+    <None Update="Views\AboutPage.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\AboutWindow.xaml">
+    </None>
+    <None Update="Views\AboutWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
+    </None>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
@@ -171,13 +172,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Remove="Views\Dynamics\ProgressGrid.xaml" />
-    <Page Remove="Views\Dynamics\VeilGrid.xaml" />
+    <None Remove="Views\Dynamics\ProgressGrid.xaml" />
+    <None Remove="Views\Dynamics\VeilGrid.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Views\Dynamics\ProgressGrid.xaml">
-      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Dynamics\VeilGrid.xaml" />
   </ItemGroup>
