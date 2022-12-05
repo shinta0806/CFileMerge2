@@ -294,10 +294,22 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
         // 解凍
         String unzipFolder = Cfm2Common.TempPath() + "\\";
         Directory.CreateDirectory(unzipFolder);
-        ZipFile.ExtractToDirectory(archivePath, unzipFolder);
+        try
+        {
+            ZipFile.ExtractToDirectory(archivePath, unzipFolder);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("設定ファイルを読み込めません。", ex);
+        }
 
         // 設定読み込み
-        String settings = File.ReadAllText(unzipFolder + Cfm2Constants.APP_ID + "\\" + FILE_NAME_SETTINGS);
+        String extractPath = unzipFolder + Cfm2Constants.APP_ID + "\\" + FILE_NAME_SETTINGS;
+        if (!File.Exists(extractPath))
+        {
+            throw new Exception("設定ファイル内の設定を読み込めません。");
+        }
+        String settings = File.ReadAllText(extractPath);
         Cfm2Settings cfm2Settings = await Json.ToObjectAsync<Cfm2Settings>(settings);
 
         // バージョンチェック
