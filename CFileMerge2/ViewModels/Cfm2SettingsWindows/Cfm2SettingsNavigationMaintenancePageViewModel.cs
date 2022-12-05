@@ -35,7 +35,7 @@ using WinUIEx;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
-public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageViewModel
+public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNavigationPageViewModel
 {
     // ====================================================================
     // コンストラクター
@@ -44,12 +44,13 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsNavigationMaintenancePageViewModel(WindowEx2 window)
-            : base(window)
+    public Cfm2SettingsNavigationMaintenancePageViewModel(WindowEx2 window, Cfm2SettingsPageViewModel cfm2SettingsPageViewModel)
+            : base(window, cfm2SettingsPageViewModel)
     {
         // コマンド
         ButtonCheckRssClickedCommand = new RelayCommand(ButtonCheckRssClicked);
         ButtonBackupClickedCommand = new RelayCommand(ButtonBackupClicked);
+        ButtonRestoreClickedCommand = new RelayCommand(ButtonRestoreClicked);
     }
 
     // ====================================================================
@@ -155,6 +156,8 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
         Debug.WriteLine("ButtonBackupClicked()");
         try
         {
+            _cfm2SettingsPageViewModel.CheckPropertiesAndPropertiesToSettings();
+
             FileSavePicker fileSavePicker = _window.CreateSaveFilePicker();
             fileSavePicker.FileTypeChoices.Add("設定ファイル", new List<String>() { Common.FILE_EXT_SETTINGS_ARCHIVE });
             fileSavePicker.SuggestedFileName = Cfm2Constants.APP_ID + "Settings_" + DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
@@ -173,6 +176,42 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
         catch (Exception ex)
         {
             await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "設定のバックアップボタンクリック時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
+    }
+    #endregion
+
+    #region 設定の復元ボタンの制御
+    public ICommand ButtonRestoreClickedCommand
+    {
+        get;
+    }
+
+    private async void ButtonRestoreClicked()
+    {
+        try
+        {
+            FileOpenPicker fileOpenPicker = _window.CreateOpenFilePicker();
+            fileOpenPicker.FileTypeFilter.Add(Common.FILE_EXT_SETTINGS_ARCHIVE);
+            fileOpenPicker.FileTypeFilter.Add("*");
+
+            StorageFile? file = await fileOpenPicker.PickSingleFileAsync();
+            if (file == null)
+            {
+                return;
+            }
+
+            await LoadSettingsArchiveAsync(file.Path);
+            _cfm2SettingsPageViewModel.SettingsToProperties();
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Information, "設定を復元しました。");
+        }
+        catch (OperationCanceledException)
+        {
+            Log.Information("設定の復元を中止しました。");
+        }
+        catch (Exception ex)
+        {
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "設定の復元ボタンクリック時エラー：\n" + ex.Message);
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
@@ -233,6 +272,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
         Directory.CreateDirectory(tempFolderPath);
 
         // 設定をファイル化
+        Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchVer = Cfm2Constants.APP_VER;
         String settings = await Json.StringifyAsync(Cfm2Model.Instance.EnvModel.Cfm2Settings);
         File.WriteAllText(tempFolderPath + FILE_NAME_SETTINGS, settings);
 
@@ -245,4 +285,36 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : NavigationPageView
         ZipFile.CreateFromDirectory(tempFolderPath, destPath, CompressionLevel.Optimal, true);
     }
 
+    /// <summary>
+    /// バックアップから設定を読み込む
+    /// </summary>
+    /// <param name=""></param>
+    private async Task LoadSettingsArchiveAsync(String archivePath)
+    {
+        // 解凍
+        String unzipFolder = Cfm2Common.TempPath() + "\\";
+        Directory.CreateDirectory(unzipFolder);
+        ZipFile.ExtractToDirectory(archivePath, unzipFolder);
+
+        // 設定読み込み
+        String settings = File.ReadAllText(unzipFolder + Cfm2Constants.APP_ID + "\\" + FILE_NAME_SETTINGS);
+        Cfm2Settings cfm2Settings = await Json.ToObjectAsync<Cfm2Settings>(settings);
+
+        // バージョンチェック
+        if (cfm2Settings.PrevLaunchVer != Cfm2Constants.APP_VER)
+        {
+            MessageDialog messageDialog = _window.CreateMessageDialog("異なるバージョンの設定を復元しようとしています。\n正常に復元できない可能性がありますが、復元しますか？",
+                    Cfm2Constants.LABEL_WARNING);
+            messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_YES));
+            messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_NO));
+            IUICommand cmd = await messageDialog.ShowAsync();
+            if (cmd.Label != Cfm2Constants.LABEL_YES)
+            {
+                throw new OperationCanceledException();
+            }
+        }
+
+        // 復元
+        Cfm2Model.Instance.EnvModel.Cfm2Settings = cfm2Settings;
+    }
 }

@@ -15,7 +15,7 @@ using CFileMerge2.Views;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
-public class Cfm2SettingsNavigationSettingsPageViewModel : NavigationPageViewModel
+public class Cfm2SettingsNavigationSettingsPageViewModel : Cfm2SettingsNavigationPageViewModel
 {
     // ====================================================================
     // コンストラクター
@@ -24,8 +24,8 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : NavigationPageViewMod
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsNavigationSettingsPageViewModel(WindowEx2 window)
-            : base(window)
+    public Cfm2SettingsNavigationSettingsPageViewModel(WindowEx2 window, Cfm2SettingsPageViewModel cfm2SettingsPageViewModel)
+            : base(window, cfm2SettingsPageViewModel)
     {
         TocTargets = new(Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets);
         AnchorTargets = new(Cfm2Model.Instance.EnvModel.Cfm2Settings.AnchorTargets);

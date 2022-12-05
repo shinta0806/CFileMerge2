@@ -8,16 +8,12 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Views;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CFileMerge2.ViewModels;
+
 public class NavigationPageViewModel : ObservableRecipient
 {
     // ====================================================================
@@ -66,5 +62,4 @@ public class NavigationPageViewModel : ObservableRecipient
     /// ウィンドウ
     /// </summary>
     protected readonly WindowEx2 _window;
-
 }

@@ -39,8 +39,8 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     {
         // 初期化
         _window = window;
-        Cfm2SettingsNavigationSettingsPage settingsPage = new(window);
-        Cfm2SettingsNavigationMaintenancePage maintenancePage = new(window);
+        Cfm2SettingsNavigationSettingsPage settingsPage = new(window, this);
+        Cfm2SettingsNavigationMaintenancePage maintenancePage = new(window, this);
         _pages = new Page[]
         {
             settingsPage,
@@ -94,17 +94,8 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     {
         try
         {
-            // 配下のナビゲーションの妥当性確認
-            for (Int32 i = 0; i < _pageViewModels.Length; i++)
-            {
-                _pageViewModels[i].CheckProperties();
-            }
-
-            // 配下のナビゲーションのプロパティーから設定に反映
-            for (Int32 i = 0; i < _pageViewModels.Length; i++)
-            {
-                _pageViewModels[i].PropertiesToSettings();
-            }
+            // 妥当性確認後にプロパティーから設定に反映
+            CheckPropertiesAndPropertiesToSettings();
 
             // 保存
             await Cfm2Model.Instance.EnvModel.SaveCfm2SettingsAsync();
@@ -142,6 +133,24 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     // ====================================================================
     // public 関数
     // ====================================================================
+
+    /// <summary>
+    /// 妥当性確認後にプロパティーから設定に反映
+    /// </summary>
+    public void CheckPropertiesAndPropertiesToSettings()
+    {
+        // 配下のナビゲーションの妥当性確認
+        for (Int32 i = 0; i < _pageViewModels.Length; i++)
+        {
+            _pageViewModels[i].CheckProperties();
+        }
+
+        // 配下のナビゲーションのプロパティーから設定に反映
+        for (Int32 i = 0; i < _pageViewModels.Length; i++)
+        {
+            _pageViewModels[i].PropertiesToSettings();
+        }
+    }
 
     /// <summary>
     /// イベントハンドラー：ナビゲーション選択変更
@@ -189,6 +198,18 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         }
     }
 
+    /// <summary>
+    /// 設定をプロパティーに反映
+    /// </summary>
+    public void SettingsToProperties()
+    {
+        // 配下のナビゲーションの設定をプロパティーに反映
+        for (Int32 i = 0; i < _pageViewModels.Length; i++)
+        {
+            _pageViewModels[i].SettingsToProperties();
+        }
+    }
+
     // ====================================================================
     // private 変数
     // ====================================================================
@@ -218,11 +239,6 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     private void Initialize()
     {
         _window.Title = "環境設定";
-
-        // 配下のナビゲーションの設定をプロパティーに反映
-        for (Int32 i = 0; i < _pageViewModels.Length; i++)
-        {
-            _pageViewModels[i].SettingsToProperties();
-        }
+        SettingsToProperties();
     }
 }

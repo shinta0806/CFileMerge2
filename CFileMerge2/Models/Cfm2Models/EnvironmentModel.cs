@@ -55,7 +55,7 @@ internal class EnvironmentModel
     /// <summary>
     /// 環境設定
     /// </summary>
-    public Cfm2Settings Cfm2Settings { get; private set; } = new();
+    public Cfm2Settings Cfm2Settings { get; set; } = new();
 
     /// <summary>
     /// EXE フルパス
