@@ -74,7 +74,7 @@ public sealed partial class Cfm2SettingsWindow : WindowEx3
                     {
                         try
                         {
-                            await Cfm2Common.ShowHelpAsync(this);
+                            await Cfm2Common.ShowHelpAsync(this, "Kankyousettei");
                         }
                         catch (Exception ex)
                         {

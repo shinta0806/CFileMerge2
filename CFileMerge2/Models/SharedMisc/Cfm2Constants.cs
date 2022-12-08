@@ -70,7 +70,7 @@ internal class Cfm2Constants
 
     public const String APP_ID = "CFileMerge2";
     public const String APP_NAME_J = "ちょちょいとファイル合併 2 ";
-    public const String APP_VER = "Ver 1.83";
+    public const String APP_VER = "Ver 2.70";
     public const String COPYRIGHT_J = "Copyright (C) 2022 by SHINTA";
 #if DISTRIB_STORE
     public const String APP_DISTRIB = "ストア版";
