@@ -284,7 +284,7 @@
   <br>
   アンカーファイル作成対象ランクはアンカーファイル作成対象となる &lt;hx&gt; タグのランクを列挙します。例えば「23」とすると、&lt;h2&gt; タグおよび &lt;h3&gt; タグが目次作成対象となります。<br>
   <br>
-  アンカーファイル作成対象ランクは省略可能です。省略した場合、環境設定で設定した内容が適用されます。<br>
+  アンカーファイル作成対象ランクは省略可能です。省略した場合、<a href="#AnchorfileSakuseitaisyou">環境設定</a>で設定した内容が適用されます。<br>
   <br>
   例）<br>
 </p>
@@ -441,7 +441,7 @@
 <p>
   目次対象ランクは目次作成対象となる &lt;hx&gt; タグのランクを列挙します。例えば「23」とすると、&lt;h2&gt; タグおよび &lt;h3&gt; タグが目次作成対象となります。<br>
   <br>
-  目次対象ランクは省略可能です。省略した場合、環境設定で設定した内容が適用されます。<br>
+  目次対象ランクは省略可能です。省略した場合、<a href="#Mokujitaisyou">環境設定</a>で設定した内容が適用されます。<br>
   <br>
   目次対象ランクを省略した場合でも Toc の後ろのコロンを忘れずに記載してください。<br>
   <br>
@@ -485,6 +485,66 @@
 &lt;!-- Cfm/Var: Name --&gt;
 &lt;!-- Cfm/Var: Space --&gt;
 </pre>
+
+<h1 id="Kankyousettei">環境設定</h1>
+
+<p>
+  <a href="HelpParts/CFileMerge2_Cfm2SettingsWindow.png" target="_blank"><img src="HelpParts/CFileMerge2_Cfm2SettingsWindow.png"
+    alt="" width="256" align="right" hspace="10" vspace="10"></a>
+  ちょちょいとファイル合併 2&nbsp;の全体的な動作に関する設定を行います。<br>
+  <br>
+  設定後、OK ボタンをクリックすると設定が確定します。<br clear="right">
+</p>
+
+<h2 id="Setteitab">設定タブ</h2>
+
+<h3 id="Mokujitaisyou">目次対象</h3>
+
+<p>
+  <a href="#CfmTagToc">Toc タグ</a>を記載した際、どの &lt;hx&gt; タグを目次として記載するかを指定します。<br>
+  <br>
+  Toc タグで目次対象ランクが指定されている場合は、Toc タグの指定が優先されます。<br>
+</p>
+
+<h3 id="AnchorfileSakuseitaisyou">アンカーファイル作成対象</h3>
+
+<p>
+  <a href="#CfmTagGenerateAnchorFiles">GenerateAnchorFiles タグ</a>を記載した際、どの &lt;hx&gt; タグのアンカーファイルを作成するかを指定します。<br>
+  <br>
+  GenerateAnchorFiles タグでアンカーファイル作成対象ランクが指定されている場合は、GenerateAnchorFiles タグの指定が優先されます。<br>
+</p>
+
+<h3 id="OverwriteAnchorfile">既存のアンカーファイルを上書きする</h3>
+
+<p>
+  このオプションを有効にすると、既にアンカーファイルが存在している場合でも、再度アンカーファイルを作成して上書きします。<br>
+  <br>
+  アンカーメイクファイルの内容を更新した場合などはこのオプションを有効にすると良いでしょう。<br>
+</p>
+
+<h2 id="Maintenancetab">メンテナンスタブ</h2>
+
+<h3 id="CheckLatest">ちょちょいとファイル合併 2&nbsp;の最新情報を自動的に確認する</h3>
+
+<p>
+  このオプションを有効にすると、起動時にホームページから関連の最新情報を取得し、最新情報が見つかった場合はブラウザで表示します。Ver 1.8 現在、最新情報の確認は 3 日ごとに行います。<br>
+  <br>
+  最新情報表示前には、表示するかどうかの確認が行われます。表示しないを選択した場合、当該情報については次回以降は表示されませんのでご注意下さい。<br>
+  <br>
+  「今すぐ最新情報を確認」ボタンをクリックすると、直ちに確認が行われます。<br>
+</p>
+
+<h3 id="SetteinoBackup">設定のバックアップ</h3>
+
+<p>
+  ちょちょいとファイル合併 2&nbsp;の設定を保存します。動作に問題が発生したときに開発者とやり取りする際、手助けになる場合があります。<br>
+</p>
+
+<h3 id="SetteinoFukugen">設定の復元</h3>
+
+<p>
+  バックアップしておいたちょちょいとファイル合併 2&nbsp;の設定を読み込みます。<br>
+</p>
 
 <h1 id="Komattatokiwa">困ったときは</h1>
 
@@ -630,6 +690,9 @@
   <div class="TocItemH2"><a href="#CfmTagSet">変数設定（Set）</a></div>
   <div class="TocItemH2"><a href="#CfmTagToc">目次挿入（Toc）</a></div>
   <div class="TocItemH2"><a href="#CfmTagVar">変数表示（Var）</a></div>
+  <div class="TocItemH1"><a href="#Kankyousettei">環境設定</a></div>
+  <div class="TocItemH2"><a href="#Setteitab">設定タブ</a></div>
+  <div class="TocItemH2"><a href="#Maintenancetab">メンテナンスタブ</a></div>
   <div class="TocItemH1"><a href="#Komattatokiwa">困ったときは</a></div>
   <div class="TocItemH1"><a href="#Onegai">お願い</a></div>
   <div class="TocItemH2"><a href="#NiconicoUser">ニコニコユーザー</a></div>

@@ -1141,7 +1141,7 @@ public class MainPageViewModel : ObservableRecipient
             if (_mergeInfo.NumProgressLines % Cfm2Constants.PROGRESS_INTERVAL == 0)
             {
                 SetProgressValue(MergeStep.ParseFile, (Double)_mergeInfo.NumProgressLines / _mergeInfo.NumTotalLines);
-#if DEBUG
+#if DEBUGz
                 Thread.Sleep(100);
 #endif
             }
