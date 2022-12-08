@@ -11,9 +11,13 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
+using System.Windows.Input;
 
 using CFileMerge2.Models.SharedMisc;
 
+using CommunityToolkit.Mvvm.Input;
+
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -44,6 +48,9 @@ public class WindowEx2 : WindowEx
     /// </summary>
     public WindowEx2()
     {
+        // コマンド
+        HelpClickedCommand = new RelayCommand<String>(HelpClicked);
+
         // イベントハンドラー
         Activated += WindowActivated;
         AppWindow.Closing += AppWindowClosing;
@@ -68,12 +75,37 @@ public class WindowEx2 : WindowEx
         set;
     }
 
+    // --------------------------------------------------------------------
+    // コマンド
+    // --------------------------------------------------------------------
+
+    #region ヘルプリンクの制御
+    public ICommand HelpClickedCommand
+    {
+        get;
+    }
+
+    private async void HelpClicked(String? parameter)
+    {
+        try
+        {
+            await Cfm2Common.ShowHelpAsync(this, parameter);
+        }
+        catch (Exception ex)
+        {
+            await ShowLogMessageDialogAsync(LogEventLevel.Error, "ヘルプ表示時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
+    }
+    #endregion
+
     // ====================================================================
     // public 関数
     // ====================================================================
 
     /// <summary>
     /// ベール追加
+    /// UI スレッドからのみ実行可能
     /// </summary>
     /// <param name="childName"></param>
     /// <param name="childDataContext"></param>
@@ -151,18 +183,30 @@ public class WindowEx2 : WindowEx
 
     /// <summary>
     /// ログの記録と表示
+    /// UI スレッド以外からも実行可能
     /// </summary>
     /// <param name="logEventLevel"></param>
     /// <param name="message"></param>
     /// <returns></returns>
     public async Task<IUICommand> ShowLogMessageDialogAsync(LogEventLevel logEventLevel, String message)
     {
-        Boolean added = AddVeil();
-        IUICommand command = await WinUi3Common.ShowLogMessageDialogAsync(this, logEventLevel, message);
-        if (added)
+        IUICommand? command = null;
+        Boolean done = false;
+        DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, async () =>
         {
-            RemoveVeil();
+            Boolean added = AddVeil();
+            command = await WinUi3Common.ShowLogMessageDialogAsync(this, logEventLevel, message);
+            if (added)
+            {
+                RemoveVeil();
+            }
+            done = true;
+        });
+        while (!done)
+        {
+            await Task.Delay(Common.GENERAL_SLEEP_TIME);
         }
+        Debug.Assert(command != null, "ShowLogMessageDialogAsync() command is null");
         return command;
     }
 

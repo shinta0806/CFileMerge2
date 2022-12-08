@@ -184,9 +184,9 @@ public class MainPageViewModel : ObservableRecipient
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
-#endregion
+    #endregion
 
-#region 環境設定ボタンの制御
+    #region 環境設定ボタンの制御
     public ICommand ButtonCfm2SettingsClickedCommand
     {
         get;
@@ -205,16 +205,16 @@ public class MainPageViewModel : ObservableRecipient
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
-#endregion
+    #endregion
 
-#region ヘルプフライアウトの制御
+    #region ヘルプフライアウトの制御
     public ICommand MenuFlyoutItemHelpClickedCommand
     {
-        get => Cfm2Model.Instance.EnvModel.HelpClickedCommand;
+        get => App.MainWindow.HelpClickedCommand;
     }
-#endregion
+    #endregion
 
-#region サンプルフォルダーフライアウトの制御
+    #region サンプルフォルダーフライアウトの制御
     public ICommand MenuFlyoutItemSampleFolderClickedCommand
     {
         get;
@@ -232,9 +232,9 @@ public class MainPageViewModel : ObservableRecipient
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
-#endregion
+    #endregion
 
-#region バージョン情報フライアウトの制御
+    #region バージョン情報フライアウトの制御
     public ICommand MenuFlyoutItemAboutClickedCommand
     {
         get;
@@ -253,9 +253,9 @@ public class MainPageViewModel : ObservableRecipient
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
-#endregion
+    #endregion
 
-#region 出力ファイルを開くボタンの制御
+    #region 出力ファイルを開くボタンの制御
     public ICommand ButtonOpenOutFileClickedCommand
     {
         get;
@@ -311,16 +311,16 @@ public class MainPageViewModel : ObservableRecipient
             Log.Information("スタックトレース：\n" + ex.StackTrace);
         }
     }
-#endregion
+    #endregion
 
-#region スタートボタンの制御
+    #region スタートボタンの制御
     public ICommand ButtonGoClickedCommand
     {
         get;
     }
 
     private async void ButtonGoClicked() => await MergeAsync();
-#endregion
+    #endregion
 
     // ====================================================================
     // public 関数

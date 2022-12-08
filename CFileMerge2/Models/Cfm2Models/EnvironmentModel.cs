@@ -38,9 +38,6 @@ internal class EnvironmentModel
         // 最初にログの設定をする
         SetLog();
 
-        // コマンド
-        HelpClickedCommand = new RelayCommand<String>(HelpClicked);
-
         // await できないため環境設定は読み込まない
     }
 
@@ -101,32 +98,6 @@ internal class EnvironmentModel
     {
         get;
     } = new();
-
-
-
-    // --------------------------------------------------------------------
-    // コマンド
-    // --------------------------------------------------------------------
-
-    #region ヘルプリンクの制御
-    public ICommand HelpClickedCommand
-    {
-        get;
-    }
-
-    private async void HelpClicked(String? parameter)
-    {
-        try
-        {
-            await Cfm2Common.ShowHelpAsync(parameter);
-        }
-        catch (Exception ex)
-        {
-            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "ヘルプ表示時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
-        }
-    }
-    #endregion
 
     // ====================================================================
     // public 関数

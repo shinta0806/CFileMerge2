@@ -8,18 +8,16 @@
 //
 // ----------------------------------------------------------------------------
 
-using System;
 using CFileMerge2.Contracts.Services;
-using CFileMerge2.Helpers;
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Services;
-using Serilog;
+using CFileMerge2.Views;
+using Microsoft.UI.Dispatching;
 using Serilog.Events;
 
 using Shinta;
 using Shinta.WinUi3;
-using Windows.Foundation;
-using Windows.UI.Popups;
+
 using WinUIEx;
 
 namespace CFileMerge2.Models.SharedMisc;
@@ -72,7 +70,7 @@ internal class Cfm2Common
     /// </summary>
     /// <param name="anchor"></param>
     /// <returns></returns>
-    public static async Task ShowHelpAsync(String? anchor = null)
+    public static async Task ShowHelpAsync(WindowEx2 window, String? anchor = null)
     {
         String? helpPath = null;
 
@@ -90,7 +88,7 @@ internal class Cfm2Common
                 }
                 catch (Exception ex)
                 {
-                    await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "状況に応じたヘルプを表示できませんでした：\n" + ex.Message + "\n" + helpPath
+                    await window.ShowLogMessageDialogAsync(LogEventLevel.Error, "状況に応じたヘルプを表示できませんでした：\n" + ex.Message + "\n" + helpPath
                             + "\n通常のヘルプを表示します。");
                 }
             }
@@ -101,7 +99,7 @@ internal class Cfm2Common
         }
         catch (Exception ex)
         {
-            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "ヘルプを表示できませんでした。\n" + ex.Message + "\n" + helpPath);
+            await window.ShowLogMessageDialogAsync(LogEventLevel.Error, "ヘルプを表示できませんでした。\n" + ex.Message + "\n" + helpPath);
         }
     }
 

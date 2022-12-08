@@ -13,7 +13,6 @@ using System.Diagnostics;
 using CFileMerge2.Models.SharedMisc;
 
 using Microsoft.UI.Windowing;
-
 using PInvoke;
 
 using Serilog;
@@ -21,6 +20,7 @@ using Serilog.Events;
 using Shinta;
 using Shinta.WinUi3;
 using WinRT.Interop;
+using WinUIEx;
 
 namespace CFileMerge2.Views.Cfm2SettingsWindows;
 
@@ -74,7 +74,7 @@ public sealed partial class Cfm2SettingsWindow : WindowEx2
                     {
                         try
                         {
-                            await Cfm2Common.ShowHelpAsync();
+                            await Cfm2Common.ShowHelpAsync(this);
                         }
                         catch (Exception ex)
                         {
