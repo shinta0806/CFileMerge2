@@ -473,7 +473,15 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     private void ApplySettings()
     {
-        MakePath = Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath;
+        String? makePathByCommandLine = MakePathByCommandLine();
+        if (String.IsNullOrEmpty(makePathByCommandLine))
+        {
+            MakePath = Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath;
+        }
+        else
+        {
+            MakePath = makePathByCommandLine;
+        }
     }
 
     /// <summary>
@@ -833,6 +841,27 @@ public class MainPageViewModel : ObservableRecipient
 
         // その他
         IsRecentMakeEnabled = Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Any();
+    }
+
+    /// <summary>
+    /// コマンドライン引数を解析してメイクファイルのパスを取得
+    /// </summary>
+    private String? MakePathByCommandLine()
+    {
+        String[] cmds = Environment.GetCommandLineArgs();
+
+        for (Int32 i = 1; i < cmds.Length; i++)
+        {
+            String cmd = cmds[i];
+
+            if (Path.GetExtension(cmd).ToLower() == Cfm2Constants.FILE_EXT_CFM2_MAKE)
+            {
+                // プロジェクトファイルが exe にドロップされた場合
+                return cmd;
+            }
+        }
+
+        return null;
     }
 
     /// <summary>

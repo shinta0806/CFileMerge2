@@ -13,7 +13,7 @@
   <Identity
     Name="22724SHINTA.ChochoitoFileMerge2"
     Publisher="CN=C3D46685-F0CB-48EC-96C4-8660C676A069"
-    Version="1.83.38.0" />
+    Version="1.83.40.0" />
 
   <Properties>
     <DisplayName>Chochoito File Merge 2</DisplayName>
@@ -59,6 +59,14 @@
               <uap:Protocol Name="cfilemerge2">
                   <uap:DisplayName>ちょちょいとファイル合併 2 プロトコル</uap:DisplayName>
               </uap:Protocol>
+          </uap:Extension>
+          <uap:Extension Category="windows.fileTypeAssociation">
+              <uap:FileTypeAssociation Name="cfm2">
+                  <uap:SupportedFileTypes>
+                      <uap:FileType ContentType="text/html">.cfm2</uap:FileType>
+                  </uap:SupportedFileTypes>
+                  <uap:DisplayName>ちょちょいとファイル合併 2 メイクファイル</uap:DisplayName>
+              </uap:FileTypeAssociation>
           </uap:Extension>
       </Extensions>
     </Application>
