@@ -191,7 +191,7 @@ public class WindowEx2 : WindowEx
     public async Task<IUICommand> ShowLogMessageDialogAsync(LogEventLevel logEventLevel, String message)
     {
         IUICommand? command = null;
-        Boolean done = false;
+        AutoResetEvent autoResetEvent = new(false);
         DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, async () =>
         {
             Boolean added = AddVeil();
@@ -200,13 +200,14 @@ public class WindowEx2 : WindowEx
             {
                 RemoveVeil();
             }
-            done = true;
+            autoResetEvent.Set();
         });
-        while (!done)
+        await Task.Run(() =>
         {
-            await Task.Delay(Common.GENERAL_SLEEP_TIME);
-        }
+            autoResetEvent.WaitOne();
+        });
         Debug.Assert(command != null, "ShowLogMessageDialogAsync() command is null");
+        Debug.WriteLine("ShowLogMessageDialogAsync() closed");
         return command;
     }
 
