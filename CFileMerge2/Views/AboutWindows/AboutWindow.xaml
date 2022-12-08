@@ -11,6 +11,7 @@
     IsMinimizable="False"
     IsMaximizable="False"
     IsResizable="False"
+    IsShownInSwitchers="False"
     mc:Ignorable="d">
     <windowex:WindowEx.Backdrop>
         <windowex:MicaSystemBackdrop/>
