@@ -1,4 +1,4 @@
-﻿<v:WindowEx2
+﻿<v:WindowEx3
     x:Class="CFileMerge2.Views.AboutWindows.AboutWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -15,4 +15,4 @@
     <windowex:WindowEx.Backdrop>
         <windowex:MicaSystemBackdrop/>
     </windowex:WindowEx.Backdrop>
-</v:WindowEx2>
+</v:WindowEx3>

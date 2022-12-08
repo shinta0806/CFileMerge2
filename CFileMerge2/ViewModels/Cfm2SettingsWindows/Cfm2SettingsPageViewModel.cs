@@ -35,7 +35,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsPageViewModel(WindowEx2 window)
+    public Cfm2SettingsPageViewModel(WindowEx3 window)
     {
         // 初期化
         _window = window;
@@ -217,7 +217,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     /// <summary>
     /// ウィンドウ
     /// </summary>
-    private readonly WindowEx2 _window;
+    private readonly WindowEx3 _window;
 
     /// <summary>
     /// ページ

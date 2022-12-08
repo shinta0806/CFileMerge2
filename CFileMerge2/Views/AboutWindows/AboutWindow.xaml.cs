@@ -10,9 +10,11 @@
 
 using CFileMerge2.Models.SharedMisc;
 
+using Shinta.WinUi3;
+
 namespace CFileMerge2.Views.AboutWindows;
 
-public sealed partial class AboutWindow : WindowEx2
+public sealed partial class AboutWindow : WindowEx3
 {
     // ====================================================================
     // コンストラクター

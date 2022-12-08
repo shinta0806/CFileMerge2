@@ -70,7 +70,7 @@ internal class Cfm2Common
     /// </summary>
     /// <param name="anchor"></param>
     /// <returns></returns>
-    public static async Task ShowHelpAsync(WindowEx2 window, String? anchor = null)
+    public static async Task ShowHelpAsync(WindowEx3 window, String? anchor = null)
     {
         String? helpPath = null;
 

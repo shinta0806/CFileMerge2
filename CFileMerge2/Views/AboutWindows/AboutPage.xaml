@@ -1,4 +1,4 @@
-﻿<v:PageEx2
+﻿<v:PageEx3
     x:Class="CFileMerge2.Views.AboutWindows.AboutPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -78,4 +78,4 @@
         </RelativePanel>
 
     </StackPanel>
-</v:PageEx2>
+</v:PageEx3>

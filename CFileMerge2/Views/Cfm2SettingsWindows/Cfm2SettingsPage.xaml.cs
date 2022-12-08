@@ -15,7 +15,7 @@ using WinUIEx;
 
 namespace CFileMerge2.Views.Cfm2SettingsWindows;
 
-public sealed partial class Cfm2SettingsPage : PageEx2
+public sealed partial class Cfm2SettingsPage : PageEx3
 {
     // ====================================================================
     // コンストラクター
@@ -24,7 +24,7 @@ public sealed partial class Cfm2SettingsPage : PageEx2
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsPage(WindowEx2 window)
+    public Cfm2SettingsPage(WindowEx3 window)
             : base(window)
     {
         ViewModel = new Cfm2SettingsPageViewModel(window);

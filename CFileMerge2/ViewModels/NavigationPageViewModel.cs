@@ -23,7 +23,7 @@ public class NavigationPageViewModel : ObservableRecipient
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public NavigationPageViewModel(WindowEx2 window)
+    public NavigationPageViewModel(WindowEx3 window)
     {
         _window = window;
     }
@@ -61,5 +61,5 @@ public class NavigationPageViewModel : ObservableRecipient
     /// <summary>
     /// ウィンドウ
     /// </summary>
-    protected readonly WindowEx2 _window;
+    protected readonly WindowEx3 _window;
 }

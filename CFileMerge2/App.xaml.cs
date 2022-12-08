@@ -99,7 +99,7 @@ public partial class App : Application
     /// <summary>
     /// メインウィンドウ
     /// </summary>
-    public static WindowEx2 MainWindow
+    public static WindowEx3 MainWindow
     {
         get;
     } = new MainWindow();

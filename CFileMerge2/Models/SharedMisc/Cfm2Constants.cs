@@ -42,17 +42,6 @@ public enum MergeStep
 }
 
 /// <summary>
-/// 内容に合わせてサイズ調整
-/// </summary>
-public enum SizeToContent
-{
-    Manual,
-    Width,
-    Height,
-    WidthAndHeight,
-}
-
-/// <summary>
 /// Cfm タグのキー
 /// </summary>
 public enum TagKey

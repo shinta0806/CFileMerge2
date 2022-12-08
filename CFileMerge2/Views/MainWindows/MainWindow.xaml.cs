@@ -16,9 +16,11 @@ using System.Diagnostics;
 
 using CFileMerge2.Models.SharedMisc;
 
+using Shinta.WinUi3;
+
 namespace CFileMerge2.Views.MainWindows;
 
-public sealed partial class MainWindow : WindowEx2
+public sealed partial class MainWindow : WindowEx3
 {
     // ====================================================================
     // コンストラクター

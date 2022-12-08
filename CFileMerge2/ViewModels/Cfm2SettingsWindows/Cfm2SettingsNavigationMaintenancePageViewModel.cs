@@ -44,7 +44,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsNavigationMaintenancePageViewModel(WindowEx2 window, Cfm2SettingsPageViewModel cfm2SettingsPageViewModel)
+    public Cfm2SettingsNavigationMaintenancePageViewModel(WindowEx3 window, Cfm2SettingsPageViewModel cfm2SettingsPageViewModel)
             : base(window, cfm2SettingsPageViewModel)
     {
         // コマンド

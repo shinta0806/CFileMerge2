@@ -34,7 +34,7 @@ public class AboutPageViewModel : ObservableRecipient
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public AboutPageViewModel(WindowEx2 window)
+    public AboutPageViewModel(WindowEx3 window)
     {
         // 初期化
         _window = window;
@@ -120,7 +120,7 @@ public class AboutPageViewModel : ObservableRecipient
     /// <summary>
     /// ウィンドウ
     /// </summary>
-    private readonly WindowEx2 _window;
+    private readonly WindowEx3 _window;
 
     // ====================================================================
     // private 関数

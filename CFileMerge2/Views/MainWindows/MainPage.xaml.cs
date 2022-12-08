@@ -12,7 +12,7 @@ using CFileMerge2.ViewModels.MainWindows;
 
 namespace CFileMerge2.Views.MainWindows;
 
-public sealed partial class MainPage : PageEx2
+public sealed partial class MainPage : PageEx3
 {
     // ====================================================================
     // コンストラクター
@@ -22,7 +22,7 @@ public sealed partial class MainPage : PageEx2
     /// メインコンストラクター
     /// </summary>
     public MainPage()
-            : base((WindowEx2)App.MainWindow)
+            : base((WindowEx3)App.MainWindow)
     {
         ViewModel = App.GetService<MainPageViewModel>();
         InitializeComponent();

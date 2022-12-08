@@ -21,7 +21,7 @@ public class Cfm2SettingsNavigationPageViewModel : NavigationPageViewModel
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsNavigationPageViewModel(WindowEx2 window, Cfm2SettingsPageViewModel cfm2SettingsPageViewModel)
+    public Cfm2SettingsNavigationPageViewModel(WindowEx3 window, Cfm2SettingsPageViewModel cfm2SettingsPageViewModel)
             : base(window)
     {
         _cfm2SettingsPageViewModel = cfm2SettingsPageViewModel;

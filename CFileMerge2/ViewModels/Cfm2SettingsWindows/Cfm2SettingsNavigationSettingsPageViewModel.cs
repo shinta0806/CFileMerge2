@@ -24,7 +24,7 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : Cfm2SettingsNavigatio
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public Cfm2SettingsNavigationSettingsPageViewModel(WindowEx2 window, Cfm2SettingsPageViewModel cfm2SettingsPageViewModel)
+    public Cfm2SettingsNavigationSettingsPageViewModel(WindowEx3 window, Cfm2SettingsPageViewModel cfm2SettingsPageViewModel)
             : base(window, cfm2SettingsPageViewModel)
     {
         TocTargets = new(Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets);

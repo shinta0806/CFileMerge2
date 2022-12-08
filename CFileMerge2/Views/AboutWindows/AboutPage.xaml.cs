@@ -15,7 +15,7 @@ using WinUIEx;
 
 namespace CFileMerge2.Views.AboutWindows;
 
-public sealed partial class AboutPage : PageEx2
+public sealed partial class AboutPage : PageEx3
 {
     // ====================================================================
     // コンストラクター
@@ -24,7 +24,7 @@ public sealed partial class AboutPage : PageEx2
     /// <summary>
     /// メインコンストラクター
     /// </summary>
-    public AboutPage(WindowEx2 window)
+    public AboutPage(WindowEx3 window)
             : base(window)
     {
         ViewModel = new AboutPageViewModel(window);

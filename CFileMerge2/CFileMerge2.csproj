@@ -54,6 +54,8 @@
     <Compile Include="..\..\..\_Common\WinUi3\RssManager.cs" Link="_Common\WinUi3\RssManager.cs" />
     <Compile Include="..\..\..\_Common\WinUi3\SerializableSettings.cs" Link="_Common\WinUi3\SerializableSettings.cs" />
     <Compile Include="..\..\..\_Common\WinUi3\SystemEnvironment.cs" Link="_Common\WinUi3\SystemEnvironment.cs" />
+    <Compile Include="..\..\..\_Common\WinUi3\Views\PageEx2.cs" Link="_Common\WinUi3\Views\PageEx2.cs" />
+    <Compile Include="..\..\..\_Common\WinUi3\Views\WindowEx2.cs" Link="_Common\WinUi3\Views\WindowEx2.cs" />
     <Compile Include="..\..\..\_Common\WinUi3\WinUi3Common.cs" Link="_Common\WinUi3\WinUi3Common.cs" />
   </ItemGroup>
 
@@ -93,6 +95,7 @@
     <Folder Include="Strings\ja-jp\" />
     <Folder Include="Views\MainWindows\" />
     <Folder Include="Views\AboutWindows\" />
+    <Folder Include="_Common\WinUi3\Views\" />
   </ItemGroup>
 
   <ItemGroup>
