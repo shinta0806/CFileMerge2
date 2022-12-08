@@ -47,7 +47,7 @@
                     <CheckBox Content="h5" IsChecked="{x:Bind ViewModel.AnchorTargets[5], Mode=TwoWay}" />
                     <CheckBox Content="h6" IsChecked="{x:Bind ViewModel.AnchorTargets[6], Mode=TwoWay}" />
                 </StackPanel>
-                <CheckBox Content="既存のアンカーファイルを上書きする" IsChecked="{x:Bind ViewModel.OverwriteAnchorFiles, Mode=TwoWay}" Margin="0,20,0,0" />
+                <CheckBox Content="既存のアンカーファイルを上書きする (V)" AccessKey="V" IsChecked="{x:Bind ViewModel.OverwriteAnchorFiles, Mode=TwoWay}" Margin="0,20,0,0" />
             </StackPanel>
         </StackPanel>
 

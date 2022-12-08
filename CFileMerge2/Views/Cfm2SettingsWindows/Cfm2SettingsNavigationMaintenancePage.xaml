@@ -16,8 +16,8 @@
         </RelativePanel>
         <TextBlock Text="設定のバックアップ（ファイルに保存）" Margin="0,20,0,0" />
         <RelativePanel >
-            <Button Name="ButtonBackup" Content="設定のバックアップ (B)" Width="200" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonBackupClickedCommand}" />
-            <Button Content="設定の復元 (R)" Width="200" Margin="0,10,0,0" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="ButtonBackup" Command="{x:Bind ViewModel.ButtonRestoreClickedCommand}" />
+            <Button Name="ButtonBackup" Content="設定のバックアップ (B)" AccessKey="B" Width="200" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonBackupClickedCommand}" />
+            <Button Content="設定の復元 (R)" AccessKey="R" Width="200" Margin="0,10,0,0" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="ButtonBackup" Command="{x:Bind ViewModel.ButtonRestoreClickedCommand}" />
         </RelativePanel>
     </StackPanel>
 </Page>

@@ -8,6 +8,8 @@
 // 
 // ----------------------------------------------------------------------------
 
+using System.Diagnostics;
+using System.Reflection.Metadata;
 using System.Windows.Input;
 
 using CFileMerge2.Models.SharedMisc;
@@ -22,6 +24,7 @@ using Microsoft.UI.Xaml.Input;
 
 using Serilog;
 using Serilog.Events;
+using Shinta;
 
 namespace CFileMerge2.ViewModels.AboutWindows;
 
@@ -40,6 +43,7 @@ public class AboutPageViewModel : ObservableRecipient
         _window = window;
 
         // コマンド
+        ButtonCheckUpdateClickedCommand = new RelayCommand(ButtonCheckUpdateClicked);
         ButtonOkClickedCommand = new RelayCommand(ButtonOkClicked);
     }
 
@@ -50,6 +54,17 @@ public class AboutPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // コマンド
     // --------------------------------------------------------------------
+
+    #region 更新プログラムの確認ボタンの制御
+    public ICommand ButtonCheckUpdateClickedCommand
+    {
+        get;
+    }
+
+    private void ButtonCheckUpdateClicked()
+    {
+    }
+    #endregion
 
     #region OK ボタンの制御
     public ICommand ButtonOkClickedCommand
@@ -78,17 +93,9 @@ public class AboutPageViewModel : ObservableRecipient
     /// <summary>
     /// イベントハンドラー：Escape キー押下
     /// </summary>
-    public async void KeyboardAcceleratorEscapeInvoked(KeyboardAccelerator _1, KeyboardAcceleratorInvokedEventArgs _2)
+    public void KeyboardAcceleratorEscapeInvoked(KeyboardAccelerator _1, KeyboardAcceleratorInvokedEventArgs _2)
     {
-        try
-        {
-            _window.Close();
-        }
-        catch (Exception ex)
-        {
-            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Escape キー押下時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
-        }
+        ButtonOkClicked();
     }
 
     /// <summary>

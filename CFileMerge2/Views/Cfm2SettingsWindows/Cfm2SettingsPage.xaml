@@ -33,8 +33,12 @@
         
         <!-- ボタン -->
         <RelativePanel Margin="20" >
-            <Button Content="OK" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" Style="{StaticResource AccentButtonStyle}" RelativePanel.LeftOf="ButtonCancel" Margin="0,0,20,0" Command="{x:Bind ViewModel.ButtonOkClickedCommand}" />
-            <Button Name="ButtonCancel" Content="キャンセル" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonCancelClickedCommand}" />
+            <Button Content="OK" AccessKey="O" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" Style="{StaticResource AccentButtonStyle}" RelativePanel.LeftOf="ButtonCancel" Margin="0,0,20,0" Command="{x:Bind ViewModel.ButtonOkClickedCommand}" />
+            <Button Name="ButtonCancel" Content="キャンセル" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonCancelClickedCommand}" >
+                <Button.KeyboardAccelerators >
+                    <KeyboardAccelerator Modifiers="None" Key="Escape" Invoked="{x:Bind ViewModel.KeyboardAcceleratorEscapeInvoked}" />
+                </Button.KeyboardAccelerators>
+            </Button>
         </RelativePanel>
     </StackPanel>
 </v:PageEx3>

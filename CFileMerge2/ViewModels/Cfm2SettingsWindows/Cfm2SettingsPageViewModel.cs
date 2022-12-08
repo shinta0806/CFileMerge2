@@ -20,7 +20,7 @@ using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-
+using Microsoft.UI.Xaml.Input;
 using Serilog;
 using Serilog.Events;
 
@@ -150,6 +150,14 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         {
             _pageViewModels[i].PropertiesToSettings();
         }
+    }
+
+    /// <summary>
+    /// イベントハンドラー：Escape キー押下
+    /// </summary>
+    public void KeyboardAcceleratorEscapeInvoked(KeyboardAccelerator _1, KeyboardAcceleratorInvokedEventArgs _2)
+    {
+        ButtonCancelClicked();
     }
 
     /// <summary>
