@@ -69,7 +69,7 @@
 
         <!-- ボタン -->
         <RelativePanel Margin="0,20,0,0" >
-            <Button Content="更新プログラムの確認 (U)" Command="{x:Bind ViewModel.ButtonOkClickedCommand}" />
+            <Button Content="更新プログラムの確認 (U)" AccessKey="U" Command="{x:Bind ViewModel.ButtonCheckUpdateClickedCommand}" />
             <Button Name="{x:Bind msm:Cfm2Constants.ELEMENT_NAME_BUTTON_OK}" Content="OK" AccessKey="O" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" Style="{StaticResource AccentButtonStyle}" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonOkClickedCommand}" >
                 <Button.KeyboardAccelerators >
                     <KeyboardAccelerator Modifiers="None" Key="Escape" Invoked="{x:Bind ViewModel.KeyboardAcceleratorEscapeInvoked}" />

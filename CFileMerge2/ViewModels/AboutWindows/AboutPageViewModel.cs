@@ -61,8 +61,17 @@ public class AboutPageViewModel : ObservableRecipient
         get;
     }
 
-    private void ButtonCheckUpdateClicked()
+    private async void ButtonCheckUpdateClicked()
     {
+        try
+        {
+            Common.OpenMicrosoftStore(Cfm2Constants.STORE_PRODUCT_ID);
+        }
+        catch (Exception ex)
+        {
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "更新プログラムの確認ボタンクリック時エラー：\n" + ex.Message);
+            Log.Information("スタックトレース：\n" + ex.StackTrace);
+        }
     }
     #endregion
 

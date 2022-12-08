@@ -251,6 +251,11 @@ internal class Cfm2Constants
     // --------------------------------------------------------------------
 
     /// <summary>
+    /// Microsoft Store での製品 ID
+    /// </summary>
+    public const String STORE_PRODUCT_ID = "9P71TMZL65WG";
+
+    /// <summary>
     /// 最近使用したメイクファイルの最大数
     /// </summary>
     public const Int32 RECENT_MAKE_PATHES_MAX = 3;
