@@ -117,15 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppDisplayName" xml:space="preserve">
+  <data name="0_AppDisplayName" xml:space="preserve">
     <value>ちょちょいとファイル合併 2</value>
   </data>
-  <data name="AppDescription" xml:space="preserve">
-    <value>CFileMerge2</value>
-  </data>
-  <data name="Main_Title.Text" xml:space="preserve">
-    <value>Main</value>
-    <comment>Page title for MainPage</comment>
+  <data name="0_AppDescription" xml:space="preserve">
+    <value>静的 HTML によるヘルプの作成をアシストする、開発者向けのツールです。</value>
   </data>
   <data name="Information" xml:space="preserve">
     <value>情報</value>
@@ -142,5 +138,41 @@
   <data name="Warning" xml:space="preserve">
     <value>警告</value>
     <comment>LogEventLevel</comment>
+  </data>
+  <data name="0_AssociationName" xml:space="preserve">
+    <value>ちょちょいとファイル合併 2 メイクファイル</value>
+  </data>
+  <data name="0_Language" xml:space="preserve">
+    <value>ja-jp</value>
+  </data>
+  <data name="MainPage_ButtonBrowseMake.Content" xml:space="preserve">
+    <value>参照 (B)</value>
+  </data>
+  <data name="MainPage_ButtonCfm2Settings_ToolTip.Content" xml:space="preserve">
+    <value>環境設定</value>
+  </data>
+  <data name="MainPage_ButtonHelp_ToolTip.Content" xml:space="preserve">
+    <value>ヘルプ</value>
+  </data>
+  <data name="MainPage_ButtonOpenOutFile.Content" xml:space="preserve">
+    <value>出力ファイルを開く (O)</value>
+  </data>
+  <data name="MainPage_ButtonRecentMake_ToolTip.Content" xml:space="preserve">
+    <value>最近使用したメイクファイル</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItemAbout.Text" xml:space="preserve">
+    <value>バージョン情報</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItemHelp.Text" xml:space="preserve">
+    <value>ヘルプ</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItemSampleFolder.Text" xml:space="preserve">
+    <value>サンプルフォルダー</value>
+  </data>
+  <data name="MainPage_TextBlockGo.Text" xml:space="preserve">
+    <value>スタート</value>
+  </data>
+  <data name="MainPage_TextBlockMake.Text" xml:space="preserve">
+    <value>メイクファイル (M)：</value>
   </data>
 </root>

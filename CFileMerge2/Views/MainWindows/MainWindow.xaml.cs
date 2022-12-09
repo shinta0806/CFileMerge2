@@ -16,6 +16,7 @@ using System.Diagnostics;
 
 using CFileMerge2.Models.SharedMisc;
 
+using Shinta;
 using Shinta.WinUi3;
 
 namespace CFileMerge2.Views.MainWindows;
@@ -36,6 +37,7 @@ public sealed partial class MainWindow : WindowEx3
         // 初期化
         SizeToContent = SizeToContent.Height;
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
+        Title = Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized();
         Content = null;
 
         // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する

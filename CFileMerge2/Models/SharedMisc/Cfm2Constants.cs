@@ -69,16 +69,10 @@ internal class Cfm2Constants
     // --------------------------------------------------------------------
 
     public const String APP_ID = "CFileMerge2";
-    public const String APP_NAME_J = "ちょちょいとファイル合併 2 ";
     public const String APP_VER = "Ver 2.70";
-    public const String COPYRIGHT_J = "Copyright (C) 2022 by SHINTA";
-#if DISTRIB_STORE
-    public const String APP_DISTRIB = "ストア版";
-#else
-    public const String APP_DISTRIB = "zip 版";
-#endif
-    public const String DISTRIB_WEB = "https://shinta.coresv.com/software_dev/cfilemerge2-jpn/";
-    public const String SUPPORT_WEB = DISTRIB_WEB + "#Support";
+    public const String APP_COPYRIGHT = "Copyright (C) 2022 by SHINTA";
+    public const String APP_DISTRIB_WEB = "https://shinta.coresv.com/software_dev/cfilemerge2-jpn/";
+    public const String APP_SUPPORT_WEB = APP_DISTRIB_WEB + "#Support";
 
     // --------------------------------------------------------------------
     // 作者情報
@@ -87,6 +81,21 @@ internal class Cfm2Constants
     public const String AUTHOR_WEB = "https://shinta.coresv.com";
     public const String AUTHOR_TWITTER = "https://twitter.com/shinta0806";
     public const String AUTHOR_FANTIA = "https://fantia.jp/fanclubs/65509";
+
+    // --------------------------------------------------------------------
+    // ローカライズキー（複数回使用されることが想定されるもの）
+    // ※単発使用のローカライズキーは即値
+    // --------------------------------------------------------------------
+
+    public const String LK_GENERAL_APP_NAME = "0_AppDisplayName";
+
+
+#if DISTRIB_STORE
+    public const String APP_DISTRIB = "ストア版";
+#else
+    public const String APP_DISTRIB = "zip 版";
+#endif
+
 
     // --------------------------------------------------------------------
     // フォルダー名
@@ -142,7 +151,7 @@ internal class Cfm2Constants
     /// <summary>
     /// その他のラベル
     /// </summary>
-    public const String LABEL_CHECK_RSS = APP_NAME_J + "の最新情報を自動的に確認する (L)";
+    public const String LABEL_CHECK_RSS = LK_GENERAL_APP_NAME + "の最新情報を自動的に確認する (L)";
 
     /// <summary>
     /// ボタン幅のデフォルト

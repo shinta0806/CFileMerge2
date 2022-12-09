@@ -117,15 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppDisplayName" xml:space="preserve">
+  <data name="0_AppDisplayName" xml:space="preserve">
     <value>Chochoito File Merge 2</value>
   </data>
-  <data name="AppDescription" xml:space="preserve">
-    <value>CFileMerge2</value>
-  </data>
-  <data name="Main_Title.Text" xml:space="preserve">
-    <value>Main</value>
-    <comment>Page title for MainPage</comment>
+  <data name="0_AppDescription" xml:space="preserve">
+    <value>A tool for developers that assists in creating static HTML help.</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -142,5 +138,41 @@
   <data name="Warning" xml:space="preserve">
     <value>Warning</value>
     <comment>LogEventLevel</comment>
+  </data>
+  <data name="0_AssociationName" xml:space="preserve">
+    <value>Chochoito File Merge 2 Makefile</value>
+  </data>
+  <data name="0_Language" xml:space="preserve">
+    <value>en-us</value>
+  </data>
+  <data name="MainPage_ButtonBrowseMake.Content" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="MainPage_ButtonCfm2Settings_ToolTip.Content" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MainPage_ButtonHelp_ToolTip.Content" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="MainPage_ButtonRecentMake_ToolTip.Content" xml:space="preserve">
+    <value>Recent makefiles</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItemAbout.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItemHelp.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItemSampleFolder.Text" xml:space="preserve">
+    <value>Sample Folder</value>
+  </data>
+  <data name="MainPage_TextBlockMake.Text" xml:space="preserve">
+    <value>Makefile: </value>
+  </data>
+  <data name="MainPage_ButtonOpenOutFile.Content" xml:space="preserve">
+    <value>Open output file</value>
+  </data>
+  <data name="MainPage_TextBlockGo.Text" xml:space="preserve">
+    <value>Start</value>
   </data>
 </root>

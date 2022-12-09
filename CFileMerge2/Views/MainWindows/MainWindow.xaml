@@ -10,7 +10,6 @@
     PersistenceId="MainWindow"
     IsMaximizable="False"
     IsResizable="False"
-    Title="{x:Bind msm:Cfm2Constants.APP_NAME_J}"
     mc:Ignorable="d">
     <windowex:WindowEx.Backdrop>
         <windowex:MicaSystemBackdrop/>

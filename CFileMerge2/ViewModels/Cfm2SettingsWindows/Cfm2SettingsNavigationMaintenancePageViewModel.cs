@@ -75,7 +75,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
             {
                 if (_checkRss && !value)
                 {
-                    MessageDialog messageDialog = _window.CreateMessageDialog("最新情報の確認を無効にすると、" + Cfm2Constants.APP_NAME_J
+                    MessageDialog messageDialog = _window.CreateMessageDialog("最新情報の確認を無効にすると、" + Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized()
                             + "の新版がリリースされた際の更新内容などが表示されません。\n\n本当に無効にしてもよろしいですか？", Cfm2Constants.LABEL_WARNING);
                     messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_YES));
                     messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_NO));

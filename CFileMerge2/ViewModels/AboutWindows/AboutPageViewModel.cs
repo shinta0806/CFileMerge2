@@ -147,6 +147,6 @@ public class AboutPageViewModel : ObservableRecipient
     /// </summary>
     private void Initialize()
     {
-        _window.Title = Cfm2Constants.APP_NAME_J + "のバージョン情報";
+        _window.Title = Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized() + "のバージョン情報";
     }
 }

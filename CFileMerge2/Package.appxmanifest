@@ -13,7 +13,7 @@
   <Identity
     Name="22724SHINTA.ChochoitoFileMerge2"
     Publisher="CN=C3D46685-F0CB-48EC-96C4-8660C676A069"
-    Version="2.70.41.0" />
+    Version="2.70.47.0" />
 
   <Properties>
     <DisplayName>Chochoito File Merge 2</DisplayName>
@@ -35,8 +35,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="ms-resource:AppDisplayName"
-        Description="ms-resource:AppDescription"
+        DisplayName="ms-resource:0_AppDisplayName"
+        Description="ms-resource:0_AppDescription"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
@@ -65,7 +65,7 @@
                   <uap:SupportedFileTypes>
                       <uap:FileType ContentType="text/html">.cfm2</uap:FileType>
                   </uap:SupportedFileTypes>
-                  <uap:DisplayName>ちょちょいとファイル合併 2 メイクファイル</uap:DisplayName>
+                  <uap:DisplayName>ms-resource:0_AssociationName</uap:DisplayName>
               </uap:FileTypeAssociation>
           </uap:Extension>
       </Extensions>

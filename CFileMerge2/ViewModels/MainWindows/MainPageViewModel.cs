@@ -520,7 +520,7 @@ public class MainPageViewModel : ObservableRecipient
         }
 
         Common.DeleteTempFolder();
-        Log.Information("終了しました：" + Cfm2Constants.APP_NAME_J + " " + Cfm2Constants.APP_VER + " --------------------");
+        Log.Information("終了しました：" + Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized() + " " + Cfm2Constants.APP_VER + " --------------------");
 
         // 改めて閉じる
         App.MainWindow.Close();
