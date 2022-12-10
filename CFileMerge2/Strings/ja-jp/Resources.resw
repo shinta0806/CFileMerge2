@@ -175,4 +175,111 @@
   <data name="MainPage_TextBlockMake.Text" xml:space="preserve">
     <value>メイクファイル (M)：</value>
   </data>
+  <data name="0_AppDistributionStore" xml:space="preserve">
+    <value>パッケージ版</value>
+  </data>
+  <data name="0_AppDistributionZip" xml:space="preserve">
+    <value>zip 版</value>
+  </data>
+  <data name="MainPageViewModel_AppWindowClosing_Confirm" xml:space="preserve">
+    <value>合併作業中です。
+終了してもよろしいですか？</value>
+  </data>
+  <data name="MainPageViewModel_ButtonBrowseMakeClicked_Error" xml:space="preserve">
+    <value>参照時エラー：</value>
+  </data>
+  <data name="MainPageViewModel_ButtonCfm2SettingsClicked_Error" xml:space="preserve">
+    <value>環境設定表示時エラー：</value>
+  </data>
+  <data name="MainPageViewModel_ButtonOpenOutFileClicked_Error" xml:space="preserve">
+    <value>出力ファイルを開く時エラー：</value>
+  </data>
+  <data name="MainPageViewModel_MenuFlyoutItemAboutClicked_Error" xml:space="preserve">
+    <value>バージョン情報表示時エラー：</value>
+  </data>
+  <data name="MainPageViewModel_MenuFlyoutItemRecentMakeClicked_Error" xml:space="preserve">
+    <value>最近使用したメイクファイル適用時エラー：</value>
+  </data>
+  <data name="MainPageViewModel_MenuFlyoutItemSampleFolderClicked_Error" xml:space="preserve">
+    <value>サンプルフォルダー表示時エラー：</value>
+  </data>
+  <data name="MainPageViewModel_MenuFlyoutRecentMakeOpening_Error" xml:space="preserve">
+    <value>最近使用したメイクファイル時エラー：</value>
+  </data>
+  <data name="MainPageViewModel_OpenOutFile_Error" xml:space="preserve">
+    <value>出力ファイルを開く処理時エラー：</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagIncludeFolder_Error_NoExist" xml:space="preserve">
+    <value>インクルードフォルダーが存在しません：</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagInclude_Error_NoPath" xml:space="preserve">
+    <value>{0} タグのパスが指定されていません。</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagOutFile_Error_SameFile" xml:space="preserve">
+    <value>出力先ファイルがメイクファイルと同じです。</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagSet_Warning_NoEq" xml:space="preserve">
+    <value>Set タグが「変数名 = 変数値」の形式になっていません：</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagSet_Warning_NoName" xml:space="preserve">
+    <value>Set タグの変数名が指定されていません：</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagVar_Warning_NoDeclare" xml:space="preserve">
+    <value>Var タグで指定された変数名が Set タグで宣言されていません：</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagVar_Warning_NoName" xml:space="preserve">
+    <value>Var タグの変数名が指定されていません。</value>
+  </data>
+  <data name="MainPageViewModel_GetPath_Error_NoPath" xml:space="preserve">
+    <value>{0} のパスが指定されていません。</value>
+  </data>
+  <data name="MainPageViewModel_MergeAsync_Done" xml:space="preserve">
+    <value>完了しました。
+経過時間：{0} ミリ秒</value>
+  </data>
+  <data name="MainPageViewModel_MergeAsync_Error" xml:space="preserve">
+    <value>合併時エラー：</value>
+  </data>
+  <data name="MainPageViewModel_MergeAsync_Warnings" xml:space="preserve">
+    <value>警告があります：</value>
+  </data>
+  <data name="MainPageViewModel_ParseCfmTag_Warning_NoColon" xml:space="preserve">
+    <value>Cfm タグに区切りコロンがありません：</value>
+  </data>
+  <data name="MainPageViewModel_ParseCfmTag_Warning_NotSupported" xml:space="preserve">
+    <value>サポートされていない Cfm タグです：</value>
+  </data>
+  <data name="MainPageViewModel_ParseFile_Error_CyclicInclude" xml:space="preserve">
+    <value>インクルードが循環しています：</value>
+  </data>
+  <data name="MainPageViewModel_ParseFile_Error_Empty" xml:space="preserve">
+    <value>内容が空です：</value>
+  </data>
+  <data name="MainPageViewModel_ParseFile_Error_Encoding" xml:space="preserve">
+    <value>文字コードを判定できませんでした：</value>
+  </data>
+  <data name="MainPageViewModel_ParseFile_Error_NoFile" xml:space="preserve">
+    <value>ファイルが見つかりません：</value>
+  </data>
+  <data name="MainPageViewModel_ParseFile_Error_NotSpecified" xml:space="preserve">
+    <value>ファイルが指定されていません。</value>
+  </data>
+  <data name="MainPageViewModel_ParseHxTag_Warning_HxId" xml:space="preserve">
+    <value>HTML H タグに ID 属性がないため目次が作成できません：</value>
+  </data>
+  <data name="MainPageViewModel_ParseHxTag_Warning_HxNotClose" xml:space="preserve">
+    <value>HTML H タグが閉じられていないため目次が作成できません：</value>
+  </data>
+  <data name="MainPageViewModel_ParseHxTag_Warning_HxRank" xml:space="preserve">
+    <value>HTML H タグのランクが HTML Living Standard 仕様の範囲外です：</value>
+  </data>
+  <data name="MainPageViewModel_SrcName_AnchorMakeFile" xml:space="preserve">
+    <value>{0} タグのアンカーメイクファイル</value>
+  </data>
+  <data name="MainPageViewModel_SrcName_AnchorOutFolder" xml:space="preserve">
+    <value>アンカー出力先フォルダー</value>
+  </data>
+  <data name="MainPageViewModel_SrcName_Tag" xml:space="preserve">
+    <value>{0}  タグ</value>
+  </data>
 </root>

@@ -9,7 +9,6 @@
 // ----------------------------------------------------------------------------
 
 using System.Diagnostics;
-using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -28,7 +27,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 
 using Serilog;
 using Serilog.Events;
@@ -41,8 +39,6 @@ using Windows.Storage.Pickers;
 using Windows.UI.Popups;
 
 using WinUIEx;
-
-using DragEventArgs = Microsoft.UI.Xaml.DragEventArgs;
 
 namespace CFileMerge2.ViewModels.MainWindows;
 
@@ -137,8 +133,8 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "最近使用したメイクファイル適用時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutItemRecentMakeClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
     #endregion
@@ -180,8 +176,8 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "参照時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_ButtonBrowseMakeClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
     #endregion
@@ -201,17 +197,19 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "環境設定表示時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_ButtonCfm2SettingsClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
     #endregion
 
     #region ヘルプフライアウトの制御
+#pragma warning disable CA1822
     public ICommand MenuFlyoutItemHelpClickedCommand
     {
         get => App.MainWindow.HelpClickedCommand;
     }
+#pragma warning restore CA1822
     #endregion
 
     #region サンプルフォルダーフライアウトの制御
@@ -228,8 +226,8 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "サンプルフォルダー表示時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutItemSampleFolderClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
     #endregion
@@ -249,8 +247,8 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "バージョン情報表示時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutItemAboutClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
     #endregion
@@ -289,8 +287,8 @@ public class MainPageViewModel : ObservableRecipient
                     }
                     catch (Exception ex)
                     {
-                        await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く処理時エラー：\n" + ex.Message);
-                        Log.Information("スタックトレース：\n" + ex.StackTrace);
+                        await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_OpenOutFile_Error".ToLocalized() + "\n" + ex.Message);
+                        SerilogUtils.LogStackTrace(ex);
                         return false;
                     }
                     finally
@@ -307,8 +305,8 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "出力ファイルを開く時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_ButtonOpenOutFileClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
     #endregion
@@ -350,8 +348,8 @@ public class MainPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "最近使用したメイクファイル時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutRecentMakeOpening_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
 
@@ -362,6 +360,17 @@ public class MainPageViewModel : ObservableRecipient
     {
         try
         {
+#if DEBUGz
+            var a = $"a {_mergeInfo.AnchorMakeFullPath}";
+            Log.Debug("PageLoaded() a: " + a);
+            var b = $"b {a}";
+            Log.Debug("PageLoaded() b: " + b);
+            var c = $"hoge".ToLocalized();
+            Log.Debug("PageLoaded() c: " + c);
+            var d = String.Format("hoge".ToLocalized(), a);
+            Log.Debug("PageLoaded() d: " + d);
+#endif
+
             Log.Debug("PageLoaded()");
             Initialize();
             ApplySettings();
@@ -373,7 +382,7 @@ public class MainPageViewModel : ObservableRecipient
         {
             // ユーザー起因では発生しないイベントなのでログのみ
             Log.Error("ページロード時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
 
@@ -495,7 +504,7 @@ public class MainPageViewModel : ObservableRecipient
         if (_progress)
         {
             // 合併中の場合は確認
-            MessageDialog messageDialog = App.MainWindow.CreateMessageDialog("合併作業中です。\n終了してもよろしいですか？", Cfm2Constants.LABEL_CONFIRM);
+            MessageDialog messageDialog = App.MainWindow.CreateMessageDialog("MainPageViewModel_AppWindowClosing_Confirm".ToLocalized(), Cfm2Constants.LABEL_CONFIRM);
             messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_YES));
             messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_NO));
             IUICommand cmd = await messageDialog.ShowAsync();
@@ -560,7 +569,7 @@ public class MainPageViewModel : ObservableRecipient
         }
 
         // アンカーメイクファイル
-        _mergeInfo.AnchorMakeFullPath = GetPathByMakeFullPath(tagValues[0], TagKey.GenerateAnchorFiles.ToString() + " タグのアンカーメイクファイル");
+        _mergeInfo.AnchorMakeFullPath = GetPathByMakeFullPath(tagValues[0], String.Format("MainPageViewModel_SrcName_AnchorMakeFile".ToLocalized(), TagKey.GenerateAnchorFiles.ToString()));
 
         // アンカー出力先
         String outSrc;
@@ -582,7 +591,7 @@ public class MainPageViewModel : ObservableRecipient
                 outSrc = tagValues[1];
             }
         }
-        _mergeInfo.AnchorOutFullFolder = GetPath(outSrc, Path.GetDirectoryName(_mergeInfo.OutFullPath) ?? String.Empty, "アンカー出力先フォルダー") + "\\";
+        _mergeInfo.AnchorOutFullFolder = GetPath(outSrc, Path.GetDirectoryName(_mergeInfo.OutFullPath) ?? String.Empty, "MainPageViewModel_SrcName_AnchorOutFolder".ToLocalized()) + "\\";
 
         // アンカーファイル作成対象
         if (tagValues.Length >= 3)
@@ -604,7 +613,7 @@ public class MainPageViewModel : ObservableRecipient
         String path;
         if (String.IsNullOrEmpty(tagInfo.Value))
         {
-            throw new Exception(Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key] + " タグのパスが指定されていません。");
+            throw new Exception(String.Format("MainPageViewModel_ExecuteCfmTagInclude_Error_NoPath".ToLocalized(), Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key]));
         }
         if (Path.IsPathRooted(tagInfo.Value))
         {
@@ -621,7 +630,6 @@ public class MainPageViewModel : ObservableRecipient
         {
             path += _mergeInfo.IncludeDefaultExt;
         }
-        Debug.WriteLine("ExecuteTagInclude() " + path);
 
         // インクルード
         ParseFile(path, parentLines, parentLine);
@@ -638,7 +646,6 @@ public class MainPageViewModel : ObservableRecipient
         {
             _mergeInfo.IncludeDefaultExt = '.' + _mergeInfo.IncludeDefaultExt;
         }
-        Debug.WriteLine("ExecuteTagIncludeDefaultExt() " + _mergeInfo.IncludeDefaultExt);
     }
 
     /// <summary>
@@ -649,11 +656,10 @@ public class MainPageViewModel : ObservableRecipient
     private void ExecuteCfmTagIncludeFolder(CfmTagInfo tagInfo)
     {
         _mergeInfo.IncludeFullFolder = GetPathByMakeFullPath(tagInfo);
-        Debug.WriteLine("ExecuteTagIncludeFolder() " + _mergeInfo.IncludeFullFolder);
         if (!Directory.Exists(_mergeInfo.IncludeFullFolder))
         {
             // 続行可能といえば続行可能であるが、Include できない際に原因が分かりづらくなるのでここでエラーとする
-            throw new Exception("インクルードフォルダーが存在しません：\n" + tagInfo.Value);
+            throw new Exception("MainPageViewModel_ExecuteCfmTagIncludeFolder_Error_NoExist".ToLocalized() + "\n" + tagInfo.Value);
         }
     }
 
@@ -668,7 +674,7 @@ public class MainPageViewModel : ObservableRecipient
         Debug.WriteLine("ExexuteTagOutFile() " + _mergeInfo.OutFullPath);
         if (String.Compare(_mergeInfo.OutFullPath, _mergeInfo.MakeFullPath, true) == 0)
         {
-            throw new Exception("出力先ファイルがメイクファイルと同じです。");
+            throw new Exception("MainPageViewModel_ExecuteCfmTagOutFile_Error_SameFile".ToLocalized());
         }
     }
 
@@ -682,14 +688,14 @@ public class MainPageViewModel : ObservableRecipient
         Int32 eqPos = tagInfo.Value.IndexOf('=');
         if (eqPos < 0)
         {
-            _mergeInfo.Warnings.Add("Set タグが「変数名 = 変数値」の形式になっていません：" + tagInfo.Value);
+            _mergeInfo.Warnings.Add("MainPageViewModel_ExecuteCfmTagSet_Warning_NoEq".ToLocalized() + tagInfo.Value);
             return;
         }
 
         String varName = tagInfo.Value[0..eqPos].Trim().ToLower();
         if (String.IsNullOrEmpty(varName))
         {
-            _mergeInfo.Warnings.Add("Set タグの変数名が指定されていません：" + tagInfo.Value);
+            _mergeInfo.Warnings.Add("MainPageViewModel_ExecuteCfmTagSet_Warning_NoName".ToLocalized() + tagInfo.Value);
             return;
         }
 
@@ -720,12 +726,12 @@ public class MainPageViewModel : ObservableRecipient
         String varName = tagInfo.Value.Trim().ToLower();
         if (String.IsNullOrEmpty(varName))
         {
-            _mergeInfo.Warnings.Add("Var タグの変数名が指定されていません。");
+            _mergeInfo.Warnings.Add("MainPageViewModel_ExecuteCfmTagVar_Warning_NoName".ToLocalized());
             return;
         }
         if (!_mergeInfo.Vars.ContainsKey(varName))
         {
-            _mergeInfo.Warnings.Add("Var タグで指定された変数名が Set タグで宣言されていません：" + tagInfo.Value);
+            _mergeInfo.Warnings.Add("MainPageViewModel_ExecuteCfmTagVar_Warning_NoDeclare".ToLocalized() + tagInfo.Value);
             return;
         }
 
@@ -740,11 +746,12 @@ public class MainPageViewModel : ObservableRecipient
     /// <param name="srcName">記述元（エラー表示用）</param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    private String GetPath(String path, String basePath, String srcName)
+    private static String GetPath(String path, String basePath, String srcName)
     {
+        Log.Debug("GetPath() srcName: " + srcName);
         if (String.IsNullOrEmpty(path))
         {
-            throw new Exception(srcName + "のパスが指定されていません。");
+            throw new Exception(String.Format("MainPageViewModel_GetPath_Error_NoPath".ToLocalized(), srcName));
         }
         if (Path.IsPathRooted(path))
         {
@@ -778,7 +785,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <exception cref="Exception"></exception>
     private String GetPathByMakeFullPath(CfmTagInfo tagInfo)
     {
-        return GetPathByMakeFullPath(tagInfo.Value, Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key] + " タグ");
+        return GetPathByMakeFullPath(tagInfo.Value, String.Format("MainPageViewModel_SrcName_Tag".ToLocalized(), Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key]));
     }
 
     /// <summary>
@@ -787,7 +794,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <param name="rankString">対象ランクを列挙した文字列（例："13" なら h1 と h3 が対象）</param>
     /// <param name="defaultTargetRanks">取得不可の場合に返すデフォルト対象ランク</param>
     /// <returns></returns>
-    private Boolean[] GetTargetRanks(String rankString, Boolean[] defaultTargetRanks)
+    private static Boolean[] GetTargetRanks(String rankString, Boolean[] defaultTargetRanks)
     {
         if (String.IsNullOrEmpty(rankString))
         {
@@ -820,7 +827,6 @@ public class MainPageViewModel : ObservableRecipient
         {
             _progress = false;
             App.MainWindow.RemoveVeil();
-            Debug.WriteLine("HideProgressArea() " + _progress);
         });
     }
 
@@ -846,7 +852,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// コマンドライン引数を解析してメイクファイルのパスを取得
     /// </summary>
-    private String? MakePathByCommandLine()
+    private static String? MakePathByCommandLine()
     {
         String[] cmds = Environment.GetCommandLineArgs();
 
@@ -913,7 +919,7 @@ public class MainPageViewModel : ObservableRecipient
                 if (_mergeInfo.Warnings.Any())
                 {
                     // 警告あり
-                    String message = "警告があります。\n";
+                    String message = "MainPageViewModel_MergeAsync_Warnings".ToLocalized() + "\n";
                     for (Int32 i = 0; i < _mergeInfo.Warnings.Count; i++)
                     {
                         message += _mergeInfo.Warnings[i] + "\n";
@@ -923,7 +929,8 @@ public class MainPageViewModel : ObservableRecipient
                 else
                 {
                     // 完了
-                    await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Information, "完了しました。\n経過時間：" + (Environment.TickCount - startTick).ToString("#,0") + " ミリ秒");
+                    await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Information,
+                            String.Format("MainPageViewModel_MergeAsync_Done".ToLocalized(), (Environment.TickCount - startTick).ToString("#,0")));
                 }
             }
             catch (OperationCanceledException)
@@ -932,8 +939,8 @@ public class MainPageViewModel : ObservableRecipient
             }
             catch (Exception ex)
             {
-                await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "合併時エラー：\n" + ex.Message);
-                Log.Information("スタックトレース：\n" + ex.StackTrace);
+                await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MergeAsync_Error".ToLocalized() + "\n" + ex.Message);
+                SerilogUtils.LogStackTrace(ex);
             }
             finally
             {
@@ -1058,16 +1065,16 @@ public class MainPageViewModel : ObservableRecipient
         if (colon < 0)
         {
             // キーと値を区切る ':' が無い
-            Debug.WriteLine("ParseTag() 区切りコロン無し, " + tagContent + ", add: " + addColumn);
-            _mergeInfo.Warnings.Add("Cfm タグに区切りコロンがありません：" + tagContent);
+            Log.Debug("ParseTag() 区切りコロン無し, " + tagContent + ", add: " + addColumn);
+            _mergeInfo.Warnings.Add("MainPageViewModel_ParseCfmTag_Warning_NoColon".ToLocalized() + tagContent);
             return (null, addColumn);
         }
 
         Int32 key = Array.IndexOf(Cfm2Constants.CFM_TAG_KEYS, tagContent[0..colon].Trim().ToLower());
         if (key < 0)
         {
-            Debug.WriteLine("ParseTag() サポートされていないキー, " + tagContent + ", add: " + addColumn);
-            _mergeInfo.Warnings.Add("サポートされていない Cfm タグです：" + tagContent);
+            Log.Debug("ParseTag() サポートされていないキー, " + tagContent + ", add: " + addColumn);
+            _mergeInfo.Warnings.Add("MainPageViewModel_ParseCfmTag_Warning_NotSupported" + tagContent);
             return (null, addColumn);
         }
 
@@ -1076,7 +1083,6 @@ public class MainPageViewModel : ObservableRecipient
             Key = (TagKey)key,
             Value = tagContent[(colon + 1)..].Trim(),
         };
-        Debug.WriteLine("ParseTag() [" + tagInfo.Key + "], [" + tagInfo.Value + "] add: " + addColumn);
 
         if (!removeTocTag && tagInfo.Key == TagKey.Toc)
         {
@@ -1170,7 +1176,7 @@ public class MainPageViewModel : ObservableRecipient
             if (_mergeInfo.NumProgressLines % Cfm2Constants.PROGRESS_INTERVAL == 0)
             {
                 SetProgressValue(MergeStep.ParseFile, (Double)_mergeInfo.NumProgressLines / _mergeInfo.NumTotalLines);
-#if DEBUGz
+#if DEBUG
                 Thread.Sleep(100);
 #endif
             }
@@ -1246,15 +1252,15 @@ public class MainPageViewModel : ObservableRecipient
     {
         if (String.IsNullOrEmpty(path))
         {
-            throw new Exception("ファイルが指定されていません。");
+            throw new Exception("MainPageViewModel_ParseFile_Error_NotSpecified".ToLocalized());
         }
         if (!File.Exists(path))
         {
-            throw new Exception("ファイルが見つかりません：\n" + path);
+            throw new Exception("MainPageViewModel_ParseFile_Error_NoFile".ToLocalized() + "\n" + path);
         }
         if (_mergeInfo.IncludeStack.Any(x => String.Compare(x, path, true) == 0))
         {
-            throw new Exception("インクルードが循環しています：\n" + path);
+            throw new Exception("MainPageViewModel_ParseFile_Error_CyclicInclude".ToLocalized() + "\n" + path);
         }
 
         // インクルード履歴プッシュ
@@ -1266,7 +1272,7 @@ public class MainPageViewModel : ObservableRecipient
         Encoding encoding = reader.Read(fileInfo).GetEncoding();
         if (encoding == null)
         {
-            throw new Exception("文字コードを判定できませんでした：\n" + path);
+            throw new Exception("MainPageViewModel_ParseFile_Error_Encoding".ToLocalized() + "\n" + path);
         }
 
         // 改行コード自動判定
@@ -1292,7 +1298,7 @@ public class MainPageViewModel : ObservableRecipient
         String[] childLineStrings = reader.Text.Split(new String[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
         if (childLineStrings.Length == 0)
         {
-            throw new Exception("内容が空です：\n" + path);
+            throw new Exception("MainPageViewModel_ParseFile_Error_Empty".ToLocalized() + "\n" + path);
         }
         _mergeInfo.NumTotalLines += childLineStrings.Length;
         LinkedList<String> childLines = new(childLineStrings);
@@ -1300,7 +1306,6 @@ public class MainPageViewModel : ObservableRecipient
         // このファイルの階層以下を解析
         Debug.Assert(childLines.First != null, "ParseFile() 内容が空");
         ParseCfmTagsForMain(childLines, childLines.First);
-        Debug.WriteLine("ParseFile() chileLines: " + childLines.Count + ", " + path);
 
         // 先頭行の追加
         LinkedListNode<String>? childLine = childLines.First;
@@ -1326,7 +1331,7 @@ public class MainPageViewModel : ObservableRecipient
         // インクルード履歴ポップ
         Debug.Assert(_mergeInfo.IncludeStack.Last() == path, "ParseFile() インクルード履歴破損");
         _mergeInfo.IncludeStack.RemoveAt(_mergeInfo.IncludeStack.Count - 1);
-        Debug.WriteLine("ParseFile() end: " + _mergeInfo.NumProgressLines + " / " + _mergeInfo.NumTotalLines);
+        Log.Debug("ParseFile() end: " + _mergeInfo.NumProgressLines + " / " + _mergeInfo.NumTotalLines);
 
         return (encoding, newLine);
     }
@@ -1356,10 +1361,10 @@ public class MainPageViewModel : ObservableRecipient
         Int32 addColumn = hxMatch.Index + hxMatch.Length;
 
         // ランク確認
-        Int32.TryParse(hxMatch.Groups[1].Value, out Int32 rank);
+        _ = Int32.TryParse(hxMatch.Groups[1].Value, out Int32 rank);
         if (rank < Cfm2Constants.HX_TAG_RANK_MIN || rank > Cfm2Constants.HX_TAG_RANK_MAX)
         {
-            _mergeInfo.Warnings.Add("HTML H タグのランクが HTML Living Standard 仕様の範囲外です：" + hxMatch.Value);
+            _mergeInfo.Warnings.Add("MainPageViewModel_ParseHxTag_Warning_HxRank".ToLocalized() + hxMatch.Value);
             return (addColumn, null);
         }
         if (!targetRanks[rank])
@@ -1373,7 +1378,7 @@ public class MainPageViewModel : ObservableRecipient
         if (!idMatch.Success)
         {
             // ID 属性が無い
-            _mergeInfo.Warnings.Add("HTML H タグに ID 属性がないため目次が作成できません：" + hxMatch.Value);
+            _mergeInfo.Warnings.Add("MainPageViewModel_ParseHxTag_Warning_HxId".ToLocalized() + hxMatch.Value);
             return (addColumn, null);
         }
         Debug.Assert(idMatch.Groups.Count >= 2, "ParseHxTag() idMatch.Groups が不足");
@@ -1384,7 +1389,7 @@ public class MainPageViewModel : ObservableRecipient
         Int32 captionEndPos = line.Value.IndexOf("</h", captionBeginPos, StringComparison.OrdinalIgnoreCase);
         if (captionEndPos < 0)
         {
-            _mergeInfo.Warnings.Add("HTML H タグが閉じられていないため目次が作成できません：" + hxMatch.Value);
+            _mergeInfo.Warnings.Add("MainPageViewModel_ParseHxTag_Warning_HxNotClose".ToLocalized() + hxMatch.Value);
             return (addColumn, null);
         }
         String caption = line.Value[captionBeginPos..captionEndPos].Trim();
@@ -1498,7 +1503,6 @@ public class MainPageViewModel : ObservableRecipient
             ProgressValue = 0.0;
             _progress = true;
             App.MainWindow.AddVeil("ProgressGrid", this);
-            Debug.WriteLine("ShowProgressArea() " + _progress);
         });
     }
 

@@ -13,6 +13,7 @@ using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Services;
 using CFileMerge2.Views;
 using Microsoft.UI.Dispatching;
+using Serilog;
 using Serilog.Events;
 
 using Shinta;

@@ -19,7 +19,7 @@
                 <TextBlock Text="" FontSize="20" HorizontalAlignment="Stretch" HorizontalTextAlignment="Center" />
                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Center" >
                     <TextBlock Text="{x:Bind msm:Cfm2Constants.APP_VER}" />
-                    <TextBlock Text="{x:Bind msm:Cfm2Constants.APP_DISTRIB}" Margin="20,0,0,0" />
+                    <TextBlock Text="{x:Bind msm:Cfm2Constants.LK_GENERAL_APP_DISTRIB}" Margin="20,0,0,0" />
                 </StackPanel>
                 <TextBlock Text="{x:Bind msm:Cfm2Constants.APP_COPYRIGHT}" Margin="0,10,0,0" HorizontalAlignment="Center" />
             </StackPanel>

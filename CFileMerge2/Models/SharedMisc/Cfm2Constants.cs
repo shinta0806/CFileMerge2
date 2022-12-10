@@ -88,14 +88,11 @@ internal class Cfm2Constants
     // --------------------------------------------------------------------
 
     public const String LK_GENERAL_APP_NAME = "0_AppDisplayName";
-
-
 #if DISTRIB_STORE
-    public const String APP_DISTRIB = "ストア版";
+    public const String LK_GENERAL_APP_DISTRIB = "0_AppDistributionStore";
 #else
-    public const String APP_DISTRIB = "zip 版";
+    public const String LK_GENERAL_APP_DISTRIB = "0_AppDistributionZip";
 #endif
-
 
     // --------------------------------------------------------------------
     // フォルダー名

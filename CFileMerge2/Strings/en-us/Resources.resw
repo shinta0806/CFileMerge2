@@ -164,7 +164,7 @@
     <value>Help</value>
   </data>
   <data name="MainPage_MenuFlyoutItemSampleFolder.Text" xml:space="preserve">
-    <value>Sample Folder</value>
+    <value>Sample folder</value>
   </data>
   <data name="MainPage_TextBlockMake.Text" xml:space="preserve">
     <value>Makefile: </value>
@@ -174,5 +174,112 @@
   </data>
   <data name="MainPage_TextBlockGo.Text" xml:space="preserve">
     <value>Start</value>
+  </data>
+  <data name="0_AppDistributionStore" xml:space="preserve">
+    <value>Package edition</value>
+  </data>
+  <data name="0_AppDistributionZip" xml:space="preserve">
+    <value>Zip edition</value>
+  </data>
+  <data name="MainPageViewModel_AppWindowClosing_Confirm" xml:space="preserve">
+    <value>Merger in progress. 
+Are you sure you want to finish?</value>
+  </data>
+  <data name="MainPageViewModel_ButtonBrowseMakeClicked_Error" xml:space="preserve">
+    <value>Browse error:</value>
+  </data>
+  <data name="MainPageViewModel_ButtonCfm2SettingsClicked_Error" xml:space="preserve">
+    <value>Open settings error:</value>
+  </data>
+  <data name="MainPageViewModel_ButtonOpenOutFileClicked_Error" xml:space="preserve">
+    <value>Open out file error:</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagIncludeFolder_Error_NoExist" xml:space="preserve">
+    <value>Include folder does not exist:</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagInclude_Error_NoPath" xml:space="preserve">
+    <value>{0} tag has no path.</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagOutFile_Error_SameFile" xml:space="preserve">
+    <value>The destination file is the same as the makefile.</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagSet_Warning_NoEq" xml:space="preserve">
+    <value>The Set tag is not in the "variable name = variable value" format:</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagSet_Warning_NoName" xml:space="preserve">
+    <value>Variable name in Set tag is not specified:</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagVar_Warning_NoDeclare" xml:space="preserve">
+    <value>The variable name specified in the Var tag is not declared in the Set tag:</value>
+  </data>
+  <data name="MainPageViewModel_ExecuteCfmTagVar_Warning_NoName" xml:space="preserve">
+    <value>The variable name in the Var tag is not specified.</value>
+  </data>
+  <data name="MainPageViewModel_GetPath_Error_NoPath" xml:space="preserve">
+    <value>{0} path is not specified.</value>
+  </data>
+  <data name="MainPageViewModel_MenuFlyoutItemAboutClicked_Error" xml:space="preserve">
+    <value>Open about error:</value>
+  </data>
+  <data name="MainPageViewModel_MenuFlyoutItemRecentMakeClicked_Error" xml:space="preserve">
+    <value>Recent makefile applying error:</value>
+  </data>
+  <data name="MainPageViewModel_MenuFlyoutItemSampleFolderClicked_Error" xml:space="preserve">
+    <value>Open sample folder error:</value>
+  </data>
+  <data name="MainPageViewModel_MenuFlyoutRecentMakeOpening_Error" xml:space="preserve">
+    <value>Recent makefile error:</value>
+  </data>
+  <data name="MainPageViewModel_MergeAsync_Done" xml:space="preserve">
+    <value>Completed.
+Elapsed time: {0} milliseconds</value>
+  </data>
+  <data name="MainPageViewModel_MergeAsync_Error" xml:space="preserve">
+    <value>Merge error:</value>
+  </data>
+  <data name="MainPageViewModel_MergeAsync_Warnings" xml:space="preserve">
+    <value>Warnings:</value>
+  </data>
+  <data name="MainPageViewModel_OpenOutFile_Error" xml:space="preserve">
+    <value>Open out file dealing error:</value>
+  </data>
+  <data name="MainPageViewModel_ParseCfmTag_Warning_NoColon" xml:space="preserve">
+    <value>Cfm tag is missing a delimiter colon:</value>
+  </data>
+  <data name="MainPageViewModel_ParseCfmTag_Warning_NotSupported" xml:space="preserve">
+    <value>Unsupported Cfm tag.</value>
+  </data>
+  <data name="MainPageViewModel_ParseFile_Error_CyclicInclude" xml:space="preserve">
+    <value>Includes are circulating:</value>
+  </data>
+  <data name="MainPageViewModel_ParseFile_Error_Empty" xml:space="preserve">
+    <value>Contents are empty:</value>
+  </data>
+  <data name="MainPageViewModel_ParseFile_Error_Encoding" xml:space="preserve">
+    <value>Could not determine character encoding:</value>
+  </data>
+  <data name="MainPageViewModel_ParseFile_Error_NoFile" xml:space="preserve">
+    <value>File not found:</value>
+  </data>
+  <data name="MainPageViewModel_ParseFile_Error_NotSpecified" xml:space="preserve">
+    <value>File not specified.</value>
+  </data>
+  <data name="MainPageViewModel_ParseHxTag_Warning_HxId" xml:space="preserve">
+    <value>Unable to create a table of contents because the HTML H tag does not have an ID attribute:</value>
+  </data>
+  <data name="MainPageViewModel_ParseHxTag_Warning_HxNotClose" xml:space="preserve">
+    <value>Unable to create a table of contents because the HTML H tag is not closed:</value>
+  </data>
+  <data name="MainPageViewModel_ParseHxTag_Warning_HxRank" xml:space="preserve">
+    <value>The rank of the HTML H tag is outside the scope of the HTML Living Standard specification:</value>
+  </data>
+  <data name="MainPageViewModel_SrcName_AnchorMakeFile" xml:space="preserve">
+    <value>{0} tag's anchor makefile</value>
+  </data>
+  <data name="MainPageViewModel_SrcName_AnchorOutFolder" xml:space="preserve">
+    <value>Anchor out folder</value>
+  </data>
+  <data name="MainPageViewModel_SrcName_Tag" xml:space="preserve">
+    <value>{0} tag</value>
   </data>
 </root>
