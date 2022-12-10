@@ -9,15 +9,15 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Margin="20,15,20,0" >
-        <CheckBox Content="{x:Bind msm:Cfm2Constants.LABEL_CHECK_RSS}" AccessKey="L" IsChecked="{x:Bind ViewModel.CheckRss, Mode=TwoWay}" />
+        <CheckBox Content="{x:Bind ViewModel.CheckBoxCheckRssContent}" AccessKey="L" IsChecked="{x:Bind ViewModel.CheckRss, Mode=TwoWay}" />
         <RelativePanel Margin="0,10,0,0" >
             <ProgressRing IsIndeterminate="True" IsActive="{x:Bind ViewModel.IsProgressRingActive, Mode=OneWay}" RelativePanel.LeftOf="ButtonCheckRss" Margin="0,0,20,0" />
-            <Button Name="ButtonCheckRss" Content="今すぐ最新情報を確認 (A)" AccessKey="A" IsEnabled="{x:Bind ViewModel.IsButtonCheckRssEnabled, Mode=OneWay}" Width="200" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonCheckRssClickedCommand}" />
+            <Button Name="ButtonCheckRss" x:Uid="Cfm2SettingsNavigationMaintenancePage_ButtonCheckRss" AccessKey="A" IsEnabled="{x:Bind ViewModel.IsButtonCheckRssEnabled, Mode=OneWay}" Width="200" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonCheckRssClickedCommand}" />
         </RelativePanel>
-        <TextBlock Text="設定のバックアップ（ファイルに保存）" Margin="0,20,0,0" />
+        <TextBlock x:Uid="Cfm2SettingsNavigationMaintenancePage_TextBlockBackup" Margin="0,20,0,0" />
         <RelativePanel >
-            <Button Name="ButtonBackup" Content="設定のバックアップ (B)" AccessKey="B" Width="200" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonBackupClickedCommand}" />
-            <Button Content="設定の復元 (R)" AccessKey="R" Width="200" Margin="0,10,0,0" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="ButtonBackup" Command="{x:Bind ViewModel.ButtonRestoreClickedCommand}" />
+            <Button Name="ButtonBackup" x:Uid="Cfm2SettingsNavigationMaintenancePage_ButtonBackup" AccessKey="B" Width="200" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonBackupClickedCommand}" />
+            <Button x:Uid="Cfm2SettingsNavigationMaintenancePage_ButtonRestore" AccessKey="R" Width="200" Margin="0,10,0,0" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="ButtonBackup" Command="{x:Bind ViewModel.ButtonRestoreClickedCommand}" />
         </RelativePanel>
     </StackPanel>
 </Page>

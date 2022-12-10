@@ -40,6 +40,7 @@ public sealed partial class Cfm2SettingsWindow : WindowEx3
         // èâä˙âª
         SizeToContent = SizeToContent.Height;
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
+        Title = "Cfm2SettingsWindow_Title".ToLocalized();
         Content = new Cfm2SettingsPage(this);
         WinUi3Common.EnableContextHelp(this, SubclassProc);
 #if false

@@ -209,6 +209,12 @@
   <data name="MainPageViewModel_OpenOutFile_Error" xml:space="preserve">
     <value>出力ファイルを開く処理時エラー：</value>
   </data>
+  <data name="0_ButtonCancel.Content" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="0_ButtonOk.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="AboutPageViewModel_ButtonCheckUpdateClicked_Error" xml:space="preserve">
     <value>更新プログラムの確認ボタンクリック時エラー：</value>
   </data>
@@ -217,9 +223,6 @@
   </data>
   <data name="AboutPage_ButtonCheckUpdate.Content" xml:space="preserve">
     <value>更新プログラムの確認 (U)</value>
-  </data>
-  <data name="AboutPage_ButtonOk.Content" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="AboutPage_TextBlockAppDistrib.Text" xml:space="preserve">
     <value>配布ページ：</value>
@@ -247,6 +250,15 @@
   </data>
   <data name="AboutWindow_Title" xml:space="preserve">
     <value>{0} のバージョン情報</value>
+  </data>
+  <data name="Cfm2SettingsPage_NavigationViewItemMaintenance.Content" xml:space="preserve">
+    <value>メンテナンス</value>
+  </data>
+  <data name="Cfm2SettingsPage_NavigationViewItemSettings.Content" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="Cfm2SettingsWindow_Title" xml:space="preserve">
+    <value>環境設定</value>
   </data>
   <data name="MainPageViewModel_ExecuteCfmTagIncludeFolder_Error_NoExist" xml:space="preserve">
     <value>インクルードフォルダーが存在しません：</value>
@@ -323,5 +335,41 @@
   </data>
   <data name="ProgressGrid_TextBlockProgress.Text" xml:space="preserve">
     <value>処理中...</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePage_ButtonBackup.Content" xml:space="preserve">
+    <value>設定のバックアップ (B)</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePage_ButtonCheckRss.Content" xml:space="preserve">
+    <value>今すぐ最新情報を確認 (A)</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePage_ButtonRestore.Content" xml:space="preserve">
+    <value>設定の復元 (R)</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePage_CheckBoxCheckRss_Content" xml:space="preserve">
+    <value>{0} の最新情報を自動的に確認する (L)</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePage_TextBlockBackup.Text" xml:space="preserve">
+    <value>設定のバックアップ（ファイルに保存）</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_AnchorHint.Text" xml:space="preserve">
+    <value>※GenerateAnchorFiles タグでの指定が優先されます。</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_CheckBoxOverwriteAnchorFiles.Content" xml:space="preserve">
+    <value>既存のアンカーファイルを上書きする (V)</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_TextBlockAnchor.Text" xml:space="preserve">
+    <value>アンカーファイル作成対象</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_TextBlockAnchor_ToolTip.Content" xml:space="preserve">
+    <value>GenerateAnchorFiles タグが指定された際、どの見出しに対するアンカーファイルを作成するか、を設定します。</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_TextBlockToc.Text" xml:space="preserve">
+    <value>目次対象</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_TextBlockTocHint.Text" xml:space="preserve">
+    <value>※Toc タグでの指定が優先されます。</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_TextBlockToc_ToolTip.Content" xml:space="preserve">
+    <value>Toc タグが指定された際、どの見出しに対する目次を作成するか、を設定します。</value>
   </data>
 </root>

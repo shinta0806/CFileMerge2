@@ -16,12 +16,12 @@
         <!-- ナビゲーション -->
         <NavigationView PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" Height="370" SelectionChanged="{x:Bind ViewModel.NavigationViewSelectionChanged}" >
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="設定" Tag="{x:Bind msm:Cfm2SettingsNavigationViewItems.Settings}" IsSelected="True" >
+                <NavigationViewItem x:Uid="Cfm2SettingsPage_NavigationViewItemSettings" Tag="{x:Bind msm:Cfm2SettingsNavigationViewItems.Settings}" IsSelected="True" >
                     <NavigationViewItem.Icon >
                         <FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xF5ED;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="メンテナンス" Tag="{x:Bind msm:Cfm2SettingsNavigationViewItems.Maintenance}" >
+                <NavigationViewItem x:Uid="Cfm2SettingsPage_NavigationViewItemMaintenance" Tag="{x:Bind msm:Cfm2SettingsNavigationViewItems.Maintenance}" >
                     <NavigationViewItem.Icon >
                         <FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE90F;"/>
                     </NavigationViewItem.Icon>
@@ -33,8 +33,8 @@
         
         <!-- ボタン -->
         <RelativePanel Margin="20" >
-            <Button Content="OK" AccessKey="O" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" Style="{StaticResource AccentButtonStyle}" RelativePanel.LeftOf="ButtonCancel" Margin="0,0,20,0" Command="{x:Bind ViewModel.ButtonOkClickedCommand}" />
-            <Button Name="ButtonCancel" Content="キャンセル" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonCancelClickedCommand}" >
+            <Button x:Uid="0_ButtonOk" AccessKey="O" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" Style="{StaticResource AccentButtonStyle}" RelativePanel.LeftOf="ButtonCancel" Margin="0,0,20,0" Command="{x:Bind ViewModel.ButtonOkClickedCommand}" />
+            <Button Name="ButtonCancel" x:Uid="0_ButtonCancel" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonCancelClickedCommand}" >
                 <Button.KeyboardAccelerators >
                     <KeyboardAccelerator Modifiers="None" Key="Escape" Invoked="{x:Bind ViewModel.KeyboardAcceleratorEscapeInvoked}" />
                 </Button.KeyboardAccelerators>

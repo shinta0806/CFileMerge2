@@ -247,7 +247,6 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     /// </summary>
     private void Initialize()
     {
-        _window.Title = "環境設定";
         SettingsToProperties();
     }
 }

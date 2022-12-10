@@ -181,6 +181,12 @@
   <data name="0_AppDistributionZip" xml:space="preserve">
     <value>Zip edition</value>
   </data>
+  <data name="0_ButtonCancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="0_ButtonOk.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="AboutPageViewModel_ButtonCheckUpdateClicked_Error" xml:space="preserve">
     <value>Check for updates error:</value>
   </data>
@@ -190,17 +196,14 @@
   <data name="AboutPage_ButtonCheckUpdate.Content" xml:space="preserve">
     <value>Check for updates</value>
   </data>
-  <data name="AboutPage_ButtonOk.Content" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="AboutPage_TextBlockAppDistrib.Text" xml:space="preserve">
-    <value>Distribution web:</value>
+    <value>Distribution:</value>
   </data>
   <data name="AboutPage_TextBlockAppInfo.Text" xml:space="preserve">
     <value>App Information</value>
   </data>
   <data name="AboutPage_TextBlockAppSupport.Text" xml:space="preserve">
-    <value>Support web:</value>
+    <value>Support:</value>
   </data>
   <data name="AboutPage_TextBlockAuthorEMail.Text" xml:space="preserve">
     <value>Email:</value>
@@ -219,6 +222,15 @@
   </data>
   <data name="AboutWindow_Title" xml:space="preserve">
     <value>About {0}</value>
+  </data>
+  <data name="Cfm2SettingsPage_NavigationViewItemMaintenance.Content" xml:space="preserve">
+    <value>Maintenance</value>
+  </data>
+  <data name="Cfm2SettingsPage_NavigationViewItemSettings.Content" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Cfm2SettingsWindow_Title" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="MainPageViewModel_AppWindowClosing_Confirm" xml:space="preserve">
     <value>Merger in progress. 
@@ -323,5 +335,41 @@ Elapsed time: {0} milliseconds</value>
   </data>
   <data name="ProgressGrid_TextBlockProgress.Text" xml:space="preserve">
     <value>Processing...</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePage_ButtonBackup.Content" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePage_ButtonCheckRss.Content" xml:space="preserve">
+    <value>Check for updates now</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePage_ButtonRestore.Content" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePage_CheckBoxCheckRss_Content" xml:space="preserve">
+    <value>Check for {0} information automatically</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePage_TextBlockBackup.Text" xml:space="preserve">
+    <value>Backup of settings (save to file)</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_AnchorHint.Text" xml:space="preserve">
+    <value>* GenerateAnchorFiles tags take precedence.</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_CheckBoxOverwriteAnchorFiles.Content" xml:space="preserve">
+    <value>Overwrite existing anchor file</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_TextBlockAnchor.Text" xml:space="preserve">
+    <value>Anchor file creation target</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_TextBlockAnchor_ToolTip.Content" xml:space="preserve">
+    <value>GenerateAnchorFiles Sets which anchor files will be created for a given heading when a tag is specified.</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_TextBlockToc.Text" xml:space="preserve">
+    <value>TOC target</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_TextBlockTocHint.Text" xml:space="preserve">
+    <value>* Toc tags take precedence.</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPage_TextBlockToc_ToolTip.Content" xml:space="preserve">
+    <value>Sets which heading to create a table of contents for when a Toc tag is specified.</value>
   </data>
 </root>

@@ -2,7 +2,6 @@
     x:Class="CFileMerge2.Views.Cfm2SettingsWindows.Cfm2SettingsNavigationSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CFileMerge2.Views.Cfm2SettingsWindows"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:msm="using:CFileMerge2.Models.SharedMisc"
@@ -17,10 +16,14 @@
             <StackPanel Width="250" >
                 <RelativePanel>
                     <Border Name="SeparatorTocLeft" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" Width="20" RelativePanel.AlignVerticalCenterWithPanel="True" />
-                    <TextBlock Name="TextBlockToc" Text="目次対象" ToolTipService.ToolTip="Toc タグが指定された際、どの見出しに対する目次を作成するか、を設定します。" Margin="10,0,10,0" RelativePanel.RightOf="SeparatorTocLeft" />
+                    <TextBlock Name="TextBlockToc" x:Uid="Cfm2SettingsNavigationSettingsPage_TextBlockToc" Margin="10,0,10,0" RelativePanel.RightOf="SeparatorTocLeft" >
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="Cfm2SettingsNavigationSettingsPage_TextBlockToc_ToolTip" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
                     <Border Name="SeparatorTocRight" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="TextBlockToc" RelativePanel.AlignRightWithPanel="True" />
                 </RelativePanel>
-                <TextBlock Text="※Toc タグでの指定が優先されます。" Foreground="{x:Bind msm:Cfm2Constants.NOTE_BRUSH}" Margin="20,10,0,0" />
+                <TextBlock x:Uid="Cfm2SettingsNavigationSettingsPage_TextBlockTocHint" Foreground="{x:Bind msm:Cfm2Constants.NOTE_BRUSH}" Margin="20,10,0,0" />
                 <StackPanel Margin="20,10,0,0" >
                     <CheckBox Content="h1" IsChecked="{x:Bind ViewModel.TocTargets[1], Mode=TwoWay}" />
                     <CheckBox Content="h2" IsChecked="{x:Bind ViewModel.TocTargets[2], Mode=TwoWay}" />
@@ -35,10 +38,14 @@
             <StackPanel Width="350" Margin="20,0,0,0" >
                 <RelativePanel >
                     <Border Name="SeparatorAnchorLeft" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" Width="20" RelativePanel.AlignVerticalCenterWithPanel="True" />
-                    <TextBlock Name="TextBlockAnchor" Text="アンカーファイル作成対象" ToolTipService.ToolTip="GenerateAnchorFiles タグが指定された際、どの見出しに対するアンカーファイルを作成するか、を設定します。" Margin="10,0,10,0" RelativePanel.RightOf="SeparatorAnchorLeft" />
+                    <TextBlock Name="TextBlockAnchor" x:Uid="Cfm2SettingsNavigationSettingsPage_TextBlockAnchor" Margin="10,0,10,0" RelativePanel.RightOf="SeparatorAnchorLeft" >
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="Cfm2SettingsNavigationSettingsPage_TextBlockAnchor_ToolTip" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
                     <Border Name="SeparatorAnchorRight" BorderThickness="{x:Bind msm:Cfm2Constants.SEPARATOR_THICKNESS}" BorderBrush="{x:Bind msm:Cfm2Constants.SEPARATOR_BRUSH}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="TextBlockAnchor" RelativePanel.AlignRightWithPanel="True" />
                 </RelativePanel>
-                <TextBlock Text="※GenerateAnchorFiles タグでの指定が優先されます。" Foreground="{x:Bind msm:Cfm2Constants.NOTE_BRUSH}" Margin="20,10,0,0" />
+                <TextBlock x:Uid="Cfm2SettingsNavigationSettingsPage_AnchorHint" Foreground="{x:Bind msm:Cfm2Constants.NOTE_BRUSH}" Margin="20,10,0,0" />
                 <StackPanel Margin="20,10,0,0" >
                     <CheckBox Content="h1" IsChecked="{x:Bind ViewModel.AnchorTargets[1], Mode=TwoWay}" />
                     <CheckBox Content="h2" IsChecked="{x:Bind ViewModel.AnchorTargets[2], Mode=TwoWay}" />
@@ -47,7 +54,7 @@
                     <CheckBox Content="h5" IsChecked="{x:Bind ViewModel.AnchorTargets[5], Mode=TwoWay}" />
                     <CheckBox Content="h6" IsChecked="{x:Bind ViewModel.AnchorTargets[6], Mode=TwoWay}" />
                 </StackPanel>
-                <CheckBox Content="既存のアンカーファイルを上書きする (V)" AccessKey="V" IsChecked="{x:Bind ViewModel.OverwriteAnchorFiles, Mode=TwoWay}" Margin="0,20,0,0" />
+                <CheckBox x:Uid="Cfm2SettingsNavigationSettingsPage_CheckBoxOverwriteAnchorFiles" AccessKey="V" IsChecked="{x:Bind ViewModel.OverwriteAnchorFiles, Mode=TwoWay}" Margin="0,20,0,0" />
             </StackPanel>
         </StackPanel>
 

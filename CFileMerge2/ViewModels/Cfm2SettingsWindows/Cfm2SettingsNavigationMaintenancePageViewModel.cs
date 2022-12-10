@@ -62,6 +62,11 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
     // View 通信用のプロパティー
     // --------------------------------------------------------------------
 
+    public String CheckBoxCheckRssContent
+    {
+        get => String.Format("Cfm2SettingsNavigationMaintenancePage_CheckBoxCheckRss_Content".ToLocalized(), Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized());
+    }
+
     /// <summary>
     /// 最新情報を自動的に確認する
     /// </summary>

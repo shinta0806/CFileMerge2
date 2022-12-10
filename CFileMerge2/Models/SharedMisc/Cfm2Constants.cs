@@ -146,11 +146,6 @@ internal class Cfm2Constants
     public const String LABEL_YES = "はい";
 
     /// <summary>
-    /// その他のラベル
-    /// </summary>
-    public const String LABEL_CHECK_RSS = LK_GENERAL_APP_NAME + "の最新情報を自動的に確認する (L)";
-
-    /// <summary>
     /// ボタン幅のデフォルト
     /// </summary>
     public const Double BUTTON_WIDTH_DEFAULT = 120.0;
