@@ -87,12 +87,22 @@ internal class Cfm2Constants
     // ※単発使用のローカライズキーは即値
     // --------------------------------------------------------------------
 
+    /// <summary>
+    /// アプリの基本情報
+    /// </summary>
     public const String LK_GENERAL_APP_NAME = "0_AppDisplayName";
 #if DISTRIB_STORE
     public const String LK_GENERAL_APP_DISTRIB = "0_AppDistributionStore";
 #else
     public const String LK_GENERAL_APP_DISTRIB = "0_AppDistributionZip";
 #endif
+
+    /// <summary>
+    /// ラベル
+    /// </summary>
+    public const String LK_GENERAL_LABEL_CONFIRM = "0_Confirm";
+    public const String LK_GENERAL_LABEL_NO = "0_No";
+    public const String LK_GENERAL_LABEL_YES = "0_Yes";
 
     // --------------------------------------------------------------------
     // フォルダー名
@@ -138,12 +148,12 @@ internal class Cfm2Constants
     /// <summary>
     /// よく使うラベル
     /// </summary>
-    public const String LABEL_CONFIRM = "確認";
-    public const String LABEL_ERROR = "エラー";
-    public const String LABEL_INFORMATION = "情報";
-    public const String LABEL_NO = "いいえ";
-    public const String LABEL_WARNING = "警告";
-    public const String LABEL_YES = "はい";
+    //public const String LABEL_CONFIRM = "確認";
+    //public const String LABEL_ERROR = "エラー";
+    //public const String LABEL_INFORMATION = "情報";
+    //public const String LABEL_NO = "いいえ";
+    //public const String LABEL_WARNING = "警告";
+    //public const String LABEL_YES = "はい";
 
     /// <summary>
     /// ボタン幅のデフォルト

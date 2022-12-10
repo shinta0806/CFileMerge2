@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Views;
+using Shinta;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
@@ -73,11 +74,11 @@ public class Cfm2SettingsNavigationSettingsPageViewModel : Cfm2SettingsNavigatio
     {
         if (!TocTargets.Contains(true))
         {
-            throw new Exception("目次対象を 1 つ以上選択してください。\n※目次を挿入したくない場合は、Toc タグを使わなければ挿入されません。");
+            throw new Exception("Cfm2SettingsNavigationSettingsPageViewModel_CheckProperties_Error_Toc".ToLocalized());
         }
         if (!AnchorTargets.Contains(true))
         {
-            throw new Exception("アンカーファイル作成対象を 1 つ以上選択してください。\n※アンカーファイルを作成したくない場合は、GenerateAnchorFiles タグを使わなければ作成されません。");
+            throw new Exception("Cfm2SettingsNavigationSettingsPageViewModel_CheckProperties_Error_AnchorFile".ToLocalized());
         }
     }
 

@@ -24,6 +24,7 @@ using Microsoft.UI.Xaml.Input;
 
 using Serilog;
 using Serilog.Events;
+using Shinta;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
@@ -105,8 +106,8 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "OK ボタンクリック時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsPageViewModel_ButtonOkClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
     #endregion
@@ -125,8 +126,8 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "キャンセルボタンクリック時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsPageViewModel_ButtonCancelClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
     #endregion
@@ -185,8 +186,8 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "ナビゲーション選択時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsPageViewModel_NavigationViewSelectionChanged_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
 
@@ -203,7 +204,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         {
             // ユーザー起因では発生しないイベントなのでログのみ
             Log.Error("ページロード時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
 

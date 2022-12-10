@@ -62,10 +62,15 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
     // View 通信用のプロパティー
     // --------------------------------------------------------------------
 
+    /// <summary>
+    /// 最新情報を自動的に確認するのラベル
+    /// </summary>
+#pragma warning disable CA1822
     public String CheckBoxCheckRssContent
     {
         get => String.Format("Cfm2SettingsNavigationMaintenancePage_CheckBoxCheckRss_Content".ToLocalized(), Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized());
     }
+#pragma warning restore CA1822
 
     /// <summary>
     /// 最新情報を自動的に確認する
@@ -80,12 +85,13 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
             {
                 if (_checkRss && !value)
                 {
-                    MessageDialog messageDialog = _window.CreateMessageDialog("最新情報の確認を無効にすると、" + Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized()
-                            + "の新版がリリースされた際の更新内容などが表示されません。\n\n本当に無効にしてもよろしいですか？", Cfm2Constants.LABEL_WARNING);
-                    messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_YES));
-                    messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_NO));
+                    MessageDialog messageDialog = _window.CreateMessageDialog(
+                            String.Format("Cfm2SettingsNavigationMaintenancePageViewModel_CheckRss_Confirm".ToLocalized(), Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized()),
+                            LogEventLevel.Warning.ToString().ToLocalized());
+                    messageDialog.Commands.Add(new UICommand(Cfm2Constants.LK_GENERAL_LABEL_YES.ToLocalized()));
+                    messageDialog.Commands.Add(new UICommand(Cfm2Constants.LK_GENERAL_LABEL_NO.ToLocalized()));
                     IUICommand cmd = await messageDialog.ShowAsync();
-                    if (cmd.Label != Cfm2Constants.LABEL_YES)
+                    if (cmd.Label != Cfm2Constants.LK_GENERAL_LABEL_YES.ToLocalized())
                     {
                         _window.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
                         {
@@ -140,8 +146,8 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
         }
         catch (Exception ex)
         {
-            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "今すぐ最新情報を確認時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsNavigationMaintenancePageViewModel_ButtonCheckRssClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
         finally
         {
@@ -159,13 +165,12 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 
     private async void ButtonBackupClicked()
     {
-        Debug.WriteLine("ButtonBackupClicked()");
         try
         {
             _cfm2SettingsPageViewModel.CheckPropertiesAndPropertiesToSettings();
 
             FileSavePicker fileSavePicker = _window.CreateSaveFilePicker();
-            fileSavePicker.FileTypeChoices.Add("設定ファイル", new List<String>() { Common.FILE_EXT_SETTINGS_ARCHIVE });
+            fileSavePicker.FileTypeChoices.Add("0_FileTypeSta".ToLocalized(), new List<String>() { Common.FILE_EXT_SETTINGS_ARCHIVE });
             fileSavePicker.SuggestedFileName = Cfm2Constants.APP_ID + "Settings_" + DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
 
             StorageFile? file = await fileSavePicker.PickSaveFileAsync();
@@ -177,12 +182,12 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
             File.Delete(file.Path);
             Cfm2Common.LogEnvironmentInfo();
             await CreateBackupAsync(file.Path, Cfm2Common.TempPath() + "\\" + Cfm2Constants.APP_ID + "\\");
-            await _window.ShowLogMessageDialogAsync(LogEventLevel.Information, "設定のバックアップが完了しました。");
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Information, "Cfm2SettingsNavigationMaintenancePageViewModel_ButtonBackupClicked_Done".ToLocalized());
         }
         catch (Exception ex)
         {
-            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "設定のバックアップボタンクリック時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsNavigationMaintenancePageViewModel_ButtonBackupClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
     #endregion
@@ -209,7 +214,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 
             await LoadSettingsArchiveAsync(file.Path);
             _cfm2SettingsPageViewModel.SettingsToProperties();
-            await _window.ShowLogMessageDialogAsync(LogEventLevel.Information, "設定を復元しました。");
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Information, "Cfm2SettingsNavigationMaintenancePageViewModel_ButtonRestoreClicked_Done".ToLocalized());
         }
         catch (OperationCanceledException)
         {
@@ -217,8 +222,8 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
         }
         catch (Exception ex)
         {
-            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "設定の復元ボタンクリック時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsNavigationMaintenancePageViewModel_ButtonRestoreClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
     #endregion
@@ -261,7 +266,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
     /// </summary>
     /// <param name="ext"></param>
     /// <param name="tempFolderPath"></param>
-    private void CopyFiles(String ext, String tempFolderPath)
+    private static void CopyFiles(String ext, String tempFolderPath)
     {
         String[] files = Directory.GetFiles(((LocalSettingsService)App.GetService<ILocalSettingsService>()).Folder(), "*" + ext);
         foreach (String file in files)
@@ -273,7 +278,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
     /// <summary>
     /// バックアップ作成
     /// </summary>
-    private async Task CreateBackupAsync(String destPath, String tempFolderPath)
+    private static async Task CreateBackupAsync(String destPath, String tempFolderPath)
     {
         Directory.CreateDirectory(tempFolderPath);
 
@@ -306,14 +311,14 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
         }
         catch (Exception ex)
         {
-            throw new Exception("設定ファイルを読み込めません。", ex);
+            throw new Exception("Cfm2SettingsNavigationMaintenancePageViewModel_LoadSettingsArchiveAsync_Error_CannotLoad".ToLocalized(), ex);
         }
 
         // 設定読み込み
         String extractPath = unzipFolder + Cfm2Constants.APP_ID + "\\" + FILE_NAME_SETTINGS;
         if (!File.Exists(extractPath))
         {
-            throw new Exception("設定ファイル内の設定を読み込めません。");
+            throw new Exception("Cfm2SettingsNavigationMaintenancePageViewModel_LoadSettingsArchiveAsync_Error_CannotLoad2".ToLocalized());
         }
         String settings = File.ReadAllText(extractPath);
         Cfm2Settings cfm2Settings = await Json.ToObjectAsync<Cfm2Settings>(settings);
@@ -321,12 +326,12 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
         // バージョンチェック
         if (cfm2Settings.PrevLaunchVer != Cfm2Constants.APP_VER)
         {
-            MessageDialog messageDialog = _window.CreateMessageDialog("異なるバージョンの設定を復元しようとしています。\n正常に復元できない可能性がありますが、復元しますか？",
-                    Cfm2Constants.LABEL_WARNING);
-            messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_YES));
-            messageDialog.Commands.Add(new UICommand(Cfm2Constants.LABEL_NO));
+            MessageDialog messageDialog = _window.CreateMessageDialog("Cfm2SettingsNavigationMaintenancePageViewModel_LoadSettingsArchiveAsync_Confirm".ToLocalized(),
+                    LogEventLevel.Warning.ToString().ToLocalized());
+            messageDialog.Commands.Add(new UICommand(Cfm2Constants.LK_GENERAL_LABEL_YES.ToLocalized()));
+            messageDialog.Commands.Add(new UICommand(Cfm2Constants.LK_GENERAL_LABEL_NO.ToLocalized()));
             IUICommand cmd = await messageDialog.ShowAsync();
-            if (cmd.Label != Cfm2Constants.LABEL_YES)
+            if (cmd.Label != Cfm2Constants.LK_GENERAL_LABEL_YES.ToLocalized())
             {
                 throw new OperationCanceledException();
             }

@@ -336,6 +336,48 @@
   <data name="ProgressGrid_TextBlockProgress.Text" xml:space="preserve">
     <value>処理中...</value>
   </data>
+  <data name="0_Confirm" xml:space="preserve">
+    <value>確認</value>
+  </data>
+  <data name="0_FileTypeSta" xml:space="preserve">
+    <value>設定ファイル</value>
+  </data>
+  <data name="0_No" xml:space="preserve">
+    <value>いいえ</value>
+  </data>
+  <data name="0_Yes" xml:space="preserve">
+    <value>はい</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_ButtonBackupClicked_Done" xml:space="preserve">
+    <value>設定のバックアップが完了しました。</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_ButtonBackupClicked_Error" xml:space="preserve">
+    <value>設定のバックアップボタンクリック時エラー：</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_ButtonCheckRssClicked_Error" xml:space="preserve">
+    <value>今すぐ最新情報を確認時エラー：</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_ButtonRestoreClicked_Done" xml:space="preserve">
+    <value>設定を復元しました。</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_ButtonRestoreClicked_Error" xml:space="preserve">
+    <value>設定の復元ボタンクリック時エラー：</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_CheckRss_Confirm" xml:space="preserve">
+    <value>最新情報の確認を無効にすると、{0} の新版がリリースされた際の更新内容などが表示されません。
+
+本当に無効にしてもよろしいですか？</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_LoadSettingsArchiveAsync_Confirm" xml:space="preserve">
+    <value>異なるバージョンの設定を復元しようとしています。
+正常に復元できない可能性がありますが、復元しますか？</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_LoadSettingsArchiveAsync_Error_CannotLoad" xml:space="preserve">
+    <value>設定ファイルを読み込めません。</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_LoadSettingsArchiveAsync_Error_CannotLoad2" xml:space="preserve">
+    <value>設定ファイル内の設定を読み込めません。</value>
+  </data>
   <data name="Cfm2SettingsNavigationMaintenancePage_ButtonBackup.Content" xml:space="preserve">
     <value>設定のバックアップ (B)</value>
   </data>
@@ -350,6 +392,14 @@
   </data>
   <data name="Cfm2SettingsNavigationMaintenancePage_TextBlockBackup.Text" xml:space="preserve">
     <value>設定のバックアップ（ファイルに保存）</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPageViewModel_CheckProperties_Error_AnchorFile" xml:space="preserve">
+    <value>アンカーファイル作成対象を 1 つ以上選択してください。
+※アンカーファイルを作成したくない場合は、GenerateAnchorFiles タグを使わなければ作成されません。</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPageViewModel_CheckProperties_Error_Toc" xml:space="preserve">
+    <value>目次対象を 1 つ以上選択してください。
+※目次を挿入したくない場合は、Toc タグを使わなければ挿入されません。</value>
   </data>
   <data name="Cfm2SettingsNavigationSettingsPage_AnchorHint.Text" xml:space="preserve">
     <value>※GenerateAnchorFiles タグでの指定が優先されます。</value>
@@ -371,5 +421,14 @@
   </data>
   <data name="Cfm2SettingsNavigationSettingsPage_TextBlockToc_ToolTip.Content" xml:space="preserve">
     <value>Toc タグが指定された際、どの見出しに対する目次を作成するか、を設定します。</value>
+  </data>
+  <data name="Cfm2SettingsPageViewModel_ButtonCancelClicked_Error" xml:space="preserve">
+    <value>キャンセルボタンクリック時エラー：</value>
+  </data>
+  <data name="Cfm2SettingsPageViewModel_ButtonOkClicked_Error" xml:space="preserve">
+    <value>OK ボタンクリック時エラー：</value>
+  </data>
+  <data name="Cfm2SettingsPageViewModel_NavigationViewSelectionChanged_Error" xml:space="preserve">
+    <value>ナビゲーション選択時エラー：</value>
   </data>
 </root>

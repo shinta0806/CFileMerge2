@@ -336,11 +336,53 @@ Elapsed time: {0} milliseconds</value>
   <data name="ProgressGrid_TextBlockProgress.Text" xml:space="preserve">
     <value>Processing...</value>
   </data>
+  <data name="0_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="0_FileTypeSta" xml:space="preserve">
+    <value>Settings file</value>
+  </data>
+  <data name="0_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="0_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_ButtonBackupClicked_Done" xml:space="preserve">
+    <value>Settings backuped.</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_ButtonBackupClicked_Error" xml:space="preserve">
+    <value>Backup error:</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_ButtonCheckRssClicked_Error" xml:space="preserve">
+    <value>Check information error:</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_ButtonRestoreClicked_Done" xml:space="preserve">
+    <value>Settings restored.</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_ButtonRestoreClicked_Error" xml:space="preserve">
+    <value>Restore error:</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_CheckRss_Confirm" xml:space="preserve">
+    <value>If you disable check for updates, you will not see updates, etc. when a new version of {0} is released.
+
+Are you sure you want to disable it?</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_LoadSettingsArchiveAsync_Confirm" xml:space="preserve">
+    <value>Trying to restore a different version of settings.
+May not be able to restore successfully, do you want to restore?</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_LoadSettingsArchiveAsync_Error_CannotLoad" xml:space="preserve">
+    <value>Cannot read the settings file.</value>
+  </data>
+  <data name="Cfm2SettingsNavigationMaintenancePageViewModel_LoadSettingsArchiveAsync_Error_CannotLoad2" xml:space="preserve">
+    <value>Cannot read the settings in the settings file.</value>
+  </data>
   <data name="Cfm2SettingsNavigationMaintenancePage_ButtonBackup.Content" xml:space="preserve">
     <value>Backup</value>
   </data>
   <data name="Cfm2SettingsNavigationMaintenancePage_ButtonCheckRss.Content" xml:space="preserve">
-    <value>Check for updates now</value>
+    <value>Check for information now</value>
   </data>
   <data name="Cfm2SettingsNavigationMaintenancePage_ButtonRestore.Content" xml:space="preserve">
     <value>Restore</value>
@@ -350,6 +392,14 @@ Elapsed time: {0} milliseconds</value>
   </data>
   <data name="Cfm2SettingsNavigationMaintenancePage_TextBlockBackup.Text" xml:space="preserve">
     <value>Backup of settings (save to file)</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPageViewModel_CheckProperties_Error_AnchorFile" xml:space="preserve">
+    <value>Please select one or more anchor file targets.
+If you do not want to create anchor files, you do not use the GenerateAnchorFiles tag.</value>
+  </data>
+  <data name="Cfm2SettingsNavigationSettingsPageViewModel_CheckProperties_Error_Toc" xml:space="preserve">
+    <value>Please select one or more table of contents targets.
+If you do not want to insert a table of contents, do not use the Toc tag.</value>
   </data>
   <data name="Cfm2SettingsNavigationSettingsPage_AnchorHint.Text" xml:space="preserve">
     <value>* GenerateAnchorFiles tags take precedence.</value>
@@ -371,5 +421,14 @@ Elapsed time: {0} milliseconds</value>
   </data>
   <data name="Cfm2SettingsNavigationSettingsPage_TextBlockToc_ToolTip.Content" xml:space="preserve">
     <value>Sets which heading to create a table of contents for when a Toc tag is specified.</value>
+  </data>
+  <data name="Cfm2SettingsPageViewModel_ButtonCancelClicked_Error" xml:space="preserve">
+    <value>Cancel button error:</value>
+  </data>
+  <data name="Cfm2SettingsPageViewModel_ButtonOkClicked_Error" xml:space="preserve">
+    <value>OK button error:</value>
+  </data>
+  <data name="Cfm2SettingsPageViewModel_NavigationViewSelectionChanged_Error" xml:space="preserve">
+    <value>Navigation selection error:</value>
   </data>
 </root>
