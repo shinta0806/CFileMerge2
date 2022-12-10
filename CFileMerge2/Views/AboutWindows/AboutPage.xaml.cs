@@ -10,9 +10,6 @@
 
 using CFileMerge2.ViewModels.AboutWindows;
 
-using Microsoft.UI.Xaml.Controls;
-using WinUIEx;
-
 namespace CFileMerge2.Views.AboutWindows;
 
 public sealed partial class AboutPage : PageEx3

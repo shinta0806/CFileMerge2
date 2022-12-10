@@ -8,8 +8,6 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System.Diagnostics;
-using System.Reflection.Metadata;
 using System.Windows.Input;
 
 using CFileMerge2.Models.SharedMisc;
@@ -24,6 +22,7 @@ using Microsoft.UI.Xaml.Input;
 
 using Serilog;
 using Serilog.Events;
+
 using Shinta;
 
 namespace CFileMerge2.ViewModels.AboutWindows;
@@ -89,8 +88,8 @@ public class AboutPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "更新プログラムの確認ボタンクリック時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "AboutPageViewModel_ButtonCheckUpdateClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
     #endregion
@@ -109,8 +108,8 @@ public class AboutPageViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "OK ボタンクリック時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "AboutPageViewModel_ButtonOkClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
     #endregion
@@ -145,7 +144,7 @@ public class AboutPageViewModel : ObservableRecipient
         {
             // ユーザー起因では発生しないイベントなのでログのみ
             Log.Error("ページロード時エラー：\n" + ex.Message);
-            Log.Information("スタックトレース：\n" + ex.StackTrace);
+            SerilogUtils.LogStackTrace(ex);
         }
     }
 

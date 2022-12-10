@@ -209,6 +209,12 @@
   <data name="MainPageViewModel_OpenOutFile_Error" xml:space="preserve">
     <value>出力ファイルを開く処理時エラー：</value>
   </data>
+  <data name="AboutPageViewModel_ButtonCheckUpdateClicked_Error" xml:space="preserve">
+    <value>更新プログラムの確認ボタンクリック時エラー：</value>
+  </data>
+  <data name="AboutPageViewModel_ButtonOkClicked_Error" xml:space="preserve">
+    <value>OK ボタンクリック時エラー：</value>
+  </data>
   <data name="AboutPage_ButtonCheckUpdate.Content" xml:space="preserve">
     <value>更新プログラムの確認 (U)</value>
   </data>

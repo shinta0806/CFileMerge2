@@ -181,6 +181,12 @@
   <data name="0_AppDistributionZip" xml:space="preserve">
     <value>Zip edition</value>
   </data>
+  <data name="AboutPageViewModel_ButtonCheckUpdateClicked_Error" xml:space="preserve">
+    <value>Check for updates error:</value>
+  </data>
+  <data name="AboutPageViewModel_ButtonOkClicked_Error" xml:space="preserve">
+    <value>OK button error:</value>
+  </data>
   <data name="AboutPage_ButtonCheckUpdate.Content" xml:space="preserve">
     <value>Check for updates</value>
   </data>
