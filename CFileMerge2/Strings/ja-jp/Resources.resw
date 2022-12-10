@@ -209,6 +209,39 @@
   <data name="MainPageViewModel_OpenOutFile_Error" xml:space="preserve">
     <value>出力ファイルを開く処理時エラー：</value>
   </data>
+  <data name="AboutPage_ButtonCheckUpdate.Content" xml:space="preserve">
+    <value>更新プログラムの確認 (U)</value>
+  </data>
+  <data name="AboutPage_ButtonOk.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AboutPage_TextBlockAppDistrib.Text" xml:space="preserve">
+    <value>配布ページ：</value>
+  </data>
+  <data name="AboutPage_TextBlockAppInfo.Text" xml:space="preserve">
+    <value>アプリケーション情報</value>
+  </data>
+  <data name="AboutPage_TextBlockAppSupport.Text" xml:space="preserve">
+    <value>サポートページ：</value>
+  </data>
+  <data name="AboutPage_TextBlockAuthorEMail.Text" xml:space="preserve">
+    <value>E メール：</value>
+  </data>
+  <data name="AboutPage_TextBlockAuthorFantia.Text" xml:space="preserve">
+    <value>ファンサイト：</value>
+  </data>
+  <data name="AboutPage_TextBlockAuthorInfo.Text" xml:space="preserve">
+    <value>作者情報</value>
+  </data>
+  <data name="AboutPage_TextBlockAuthorTwitter.Text" xml:space="preserve">
+    <value>Twitter：</value>
+  </data>
+  <data name="AboutPage_TextBlockAuthorWeb.Text" xml:space="preserve">
+    <value>ホームページ：</value>
+  </data>
+  <data name="AboutWindow_Title" xml:space="preserve">
+    <value>{0} のバージョン情報</value>
+  </data>
   <data name="MainPageViewModel_ExecuteCfmTagIncludeFolder_Error_NoExist" xml:space="preserve">
     <value>インクルードフォルダーが存在しません：</value>
   </data>

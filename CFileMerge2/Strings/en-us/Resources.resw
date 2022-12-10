@@ -181,6 +181,39 @@
   <data name="0_AppDistributionZip" xml:space="preserve">
     <value>Zip edition</value>
   </data>
+  <data name="AboutPage_ButtonCheckUpdate.Content" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="AboutPage_ButtonOk.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AboutPage_TextBlockAppDistrib.Text" xml:space="preserve">
+    <value>Distribution web:</value>
+  </data>
+  <data name="AboutPage_TextBlockAppInfo.Text" xml:space="preserve">
+    <value>App Information</value>
+  </data>
+  <data name="AboutPage_TextBlockAppSupport.Text" xml:space="preserve">
+    <value>Support web:</value>
+  </data>
+  <data name="AboutPage_TextBlockAuthorEMail.Text" xml:space="preserve">
+    <value>Email:</value>
+  </data>
+  <data name="AboutPage_TextBlockAuthorFantia.Text" xml:space="preserve">
+    <value>Fansite:</value>
+  </data>
+  <data name="AboutPage_TextBlockAuthorInfo.Text" xml:space="preserve">
+    <value>Author Information</value>
+  </data>
+  <data name="AboutPage_TextBlockAuthorTwitter.Text" xml:space="preserve">
+    <value>Twitter:</value>
+  </data>
+  <data name="AboutPage_TextBlockAuthorWeb.Text" xml:space="preserve">
+    <value>Web:</value>
+  </data>
+  <data name="AboutWindow_Title" xml:space="preserve">
+    <value>About {0}</value>
+  </data>
   <data name="MainPageViewModel_AppWindowClosing_Confirm" xml:space="preserve">
     <value>Merger in progress. 
 Are you sure you want to finish?</value>

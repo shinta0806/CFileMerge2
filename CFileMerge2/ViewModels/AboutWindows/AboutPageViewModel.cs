@@ -52,6 +52,26 @@ public class AboutPageViewModel : ObservableRecipient
     // ====================================================================
 
     // --------------------------------------------------------------------
+    // View 通信用のプロパティー
+    // --------------------------------------------------------------------
+
+    /// <summary>
+    /// アプリケーション名
+    /// </summary>
+    public String AppName
+    {
+        get => Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized();
+    }
+
+    /// <summary>
+    /// 配布形態
+    /// </summary>
+    public String AppDistrib
+    {
+        get => Cfm2Constants.LK_GENERAL_APP_DISTRIB.ToLocalized();
+    }
+
+    // --------------------------------------------------------------------
     // コマンド
     // --------------------------------------------------------------------
 
@@ -147,6 +167,5 @@ public class AboutPageViewModel : ObservableRecipient
     /// </summary>
     private void Initialize()
     {
-        _window.Title = Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized() + "のバージョン情報";
     }
 }
