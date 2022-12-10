@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <!-- 動的生成するため、ビルドアクションを「コンテンツ」にし、付属の xaml.cs は削除し、自動生成の 1 行目の x:Class は削除 -->
+    <!-- 動的生成するため、ビルドアクションを「埋め込みリソース」にし、付属の xaml.cs は削除し、自動生成の 1 行目の x:Class は削除 -->
 
     <Grid Background="#4D000000" Canvas.ZIndex="100" />
 

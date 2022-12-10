@@ -77,6 +77,11 @@
   メインウィンドウが表示されます。<br clear="right">
 </p>
 
+<blockquote>
+  （補足）<br>
+  OS の言語設定が日本語以外の場合、英語表記になります。<br>
+</blockquote>
+
 <h2 id="MakefileShitei">メイクファイル指定</h2>
 
 <p>

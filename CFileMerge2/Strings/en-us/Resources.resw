@@ -282,4 +282,7 @@ Elapsed time: {0} milliseconds</value>
   <data name="MainPageViewModel_SrcName_Tag" xml:space="preserve">
     <value>{0} tag</value>
   </data>
+  <data name="ProgressGrid_TextBlockProgress.Text" xml:space="preserve">
+    <value>Processing...</value>
+  </data>
 </root>

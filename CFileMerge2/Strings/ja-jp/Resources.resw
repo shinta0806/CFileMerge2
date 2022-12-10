@@ -282,4 +282,7 @@
   <data name="MainPageViewModel_SrcName_Tag" xml:space="preserve">
     <value>{0}  タグ</value>
   </data>
+  <data name="ProgressGrid_TextBlockProgress.Text" xml:space="preserve">
+    <value>処理中...</value>
+  </data>
 </root>
