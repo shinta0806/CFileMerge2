@@ -68,7 +68,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 #pragma warning disable CA1822
     public String CheckBoxCheckRssContent
     {
-        get => String.Format("Cfm2SettingsNavigationMaintenancePage_CheckBoxCheckRss_Content".ToLocalized(), Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized());
+        get => String.Format("Cfm2SettingsNavigationMaintenancePage_CheckBoxCheckRss_Content".ToLocalized(), Common.LK_GENERAL_APP_NAME.ToLocalized());
     }
 #pragma warning restore CA1822
 
@@ -86,12 +86,12 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
                 if (_checkRss && !value)
                 {
                     MessageDialog messageDialog = _window.CreateMessageDialog(
-                            String.Format("Cfm2SettingsNavigationMaintenancePageViewModel_CheckRss_Confirm".ToLocalized(), Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized()),
+                            String.Format("Cfm2SettingsNavigationMaintenancePageViewModel_CheckRss_Confirm".ToLocalized(), Common.LK_GENERAL_APP_NAME.ToLocalized()),
                             LogEventLevel.Warning.ToString().ToLocalized());
-                    messageDialog.Commands.Add(new UICommand(Cfm2Constants.LK_GENERAL_LABEL_YES.ToLocalized()));
-                    messageDialog.Commands.Add(new UICommand(Cfm2Constants.LK_GENERAL_LABEL_NO.ToLocalized()));
+                    messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_YES.ToLocalized()));
+                    messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_NO.ToLocalized()));
                     IUICommand cmd = await messageDialog.ShowAsync();
-                    if (cmd.Label != Cfm2Constants.LK_GENERAL_LABEL_YES.ToLocalized())
+                    if (cmd.Label != Common.LK_GENERAL_LABEL_YES.ToLocalized())
                     {
                         _window.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
                         {
@@ -328,10 +328,10 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
         {
             MessageDialog messageDialog = _window.CreateMessageDialog("Cfm2SettingsNavigationMaintenancePageViewModel_LoadSettingsArchiveAsync_Confirm".ToLocalized(),
                     LogEventLevel.Warning.ToString().ToLocalized());
-            messageDialog.Commands.Add(new UICommand(Cfm2Constants.LK_GENERAL_LABEL_YES.ToLocalized()));
-            messageDialog.Commands.Add(new UICommand(Cfm2Constants.LK_GENERAL_LABEL_NO.ToLocalized()));
+            messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_YES.ToLocalized()));
+            messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_NO.ToLocalized()));
             IUICommand cmd = await messageDialog.ShowAsync();
-            if (cmd.Label != Cfm2Constants.LK_GENERAL_LABEL_YES.ToLocalized())
+            if (cmd.Label != Common.LK_GENERAL_LABEL_YES.ToLocalized())
             {
                 throw new OperationCanceledException();
             }

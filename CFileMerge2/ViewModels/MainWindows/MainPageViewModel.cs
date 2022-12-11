@@ -504,11 +504,11 @@ public class MainPageViewModel : ObservableRecipient
         if (_progress)
         {
             // 合併中の場合は確認
-            MessageDialog messageDialog = App.MainWindow.CreateMessageDialog("MainPageViewModel_AppWindowClosing_Confirm".ToLocalized(), Cfm2Constants.LK_GENERAL_LABEL_CONFIRM.ToLocalized());
-            messageDialog.Commands.Add(new UICommand(Cfm2Constants.LK_GENERAL_LABEL_YES.ToLocalized()));
-            messageDialog.Commands.Add(new UICommand(Cfm2Constants.LK_GENERAL_LABEL_NO.ToLocalized()));
+            MessageDialog messageDialog = App.MainWindow.CreateMessageDialog("MainPageViewModel_AppWindowClosing_Confirm".ToLocalized(), Common.LK_GENERAL_LABEL_CONFIRM.ToLocalized());
+            messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_YES.ToLocalized()));
+            messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_NO.ToLocalized()));
             IUICommand cmd = await messageDialog.ShowAsync();
-            if (cmd.Label != Cfm2Constants.LK_GENERAL_LABEL_YES.ToLocalized())
+            if (cmd.Label != Common.LK_GENERAL_LABEL_YES.ToLocalized())
             {
                 // キャンセルが確定
                 return;
@@ -529,7 +529,7 @@ public class MainPageViewModel : ObservableRecipient
         }
 
         Common.DeleteTempFolder();
-        Log.Information("終了しました：" + Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized() + " " + Cfm2Constants.APP_VER + " --------------------");
+        Log.Information("終了しました：" + Common.LK_GENERAL_APP_NAME.ToLocalized() + " " + Cfm2Constants.APP_VER + " --------------------");
 
         // 改めて閉じる
         App.MainWindow.Close();

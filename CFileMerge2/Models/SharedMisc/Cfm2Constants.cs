@@ -83,28 +83,6 @@ internal class Cfm2Constants
     public const String AUTHOR_FANTIA = "https://fantia.jp/fanclubs/65509";
 
     // --------------------------------------------------------------------
-    // ローカライズキー（複数回使用されることが想定されるもの）
-    // ※単発使用のローカライズキーは即値
-    // --------------------------------------------------------------------
-
-    /// <summary>
-    /// アプリの基本情報
-    /// </summary>
-    public const String LK_GENERAL_APP_NAME = "0_AppDisplayName";
-#if DISTRIB_STORE
-    public const String LK_GENERAL_APP_DISTRIB = "0_AppDistributionStore";
-#else
-    public const String LK_GENERAL_APP_DISTRIB = "0_AppDistributionZip";
-#endif
-
-    /// <summary>
-    /// ラベル
-    /// </summary>
-    public const String LK_GENERAL_LABEL_CONFIRM = "0_Confirm";
-    public const String LK_GENERAL_LABEL_NO = "0_No";
-    public const String LK_GENERAL_LABEL_YES = "0_Yes";
-
-    // --------------------------------------------------------------------
     // フォルダー名
     // --------------------------------------------------------------------
 

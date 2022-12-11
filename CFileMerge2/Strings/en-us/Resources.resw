@@ -431,4 +431,32 @@ If you do not want to insert a table of contents, do not use the Toc tag.</value
   <data name="Cfm2SettingsPageViewModel_NavigationViewSelectionChanged_Error" xml:space="preserve">
     <value>Navigation selection error:</value>
   </data>
+  <data name="Cfm2Common_ShowHelpAsync_Error_CannotShowHelp" xml:space="preserve">
+    <value>Could not display help.</value>
+  </data>
+  <data name="Cfm2Common_ShowHelpAsync_Error_NoAnchor" xml:space="preserve">
+    <value>Could not display context-sensitive help:</value>
+  </data>
+  <data name="Cfm2Common_ShowHelpAsync_ShowNormalHelp" xml:space="preserve">
+    <value>Displays regular help.</value>
+  </data>
+  <data name="LatestInfoManager_AskDisplayLatestAsync_Ask" xml:space="preserve">
+    <value>Found {0} newest information.
+Would you like to see them?</value>
+  </data>
+  <data name="LatestInfoManager_AskDisplayLatestAsync_Cancel" xml:space="preserve">
+    <value>Canceled.</value>
+  </data>
+  <data name="LatestInfoManager_CheckAsync_Error" xml:space="preserve">
+    <value>Error when checking latest information:</value>
+  </data>
+  <data name="LatestInfoManager_CheckAsync_NoInfo" xml:space="preserve">
+    <value>There was no update.</value>
+  </data>
+  <data name="LatestInfoManager_DisplayLatest_Error_Not" xml:space="preserve">
+    <value>Could not display the latest information.</value>
+  </data>
+  <data name="LatestInfoManager_DisplayLatest_Error_Part" xml:space="preserve">
+    <value>Some of the latest information could not be displayed.</value>
+  </data>
 </root>

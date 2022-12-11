@@ -57,9 +57,10 @@ public class AboutPageViewModel : ObservableRecipient
     /// <summary>
     /// アプリケーション名
     /// </summary>
+#pragma warning disable CA1822
     public String AppName
     {
-        get => Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized();
+        get => Common.LK_GENERAL_APP_NAME.ToLocalized();
     }
 
     /// <summary>
@@ -67,8 +68,9 @@ public class AboutPageViewModel : ObservableRecipient
     /// </summary>
     public String AppDistrib
     {
-        get => Cfm2Constants.LK_GENERAL_APP_DISTRIB.ToLocalized();
+        get => Common.LK_GENERAL_APP_DISTRIB.ToLocalized();
     }
+#pragma warning restore CA1822
 
     // --------------------------------------------------------------------
     // コマンド
@@ -164,7 +166,7 @@ public class AboutPageViewModel : ObservableRecipient
     /// <summary>
     /// 初期化
     /// </summary>
-    private void Initialize()
+    private static void Initialize()
     {
     }
 }

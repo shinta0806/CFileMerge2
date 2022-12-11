@@ -431,4 +431,32 @@
   <data name="Cfm2SettingsPageViewModel_NavigationViewSelectionChanged_Error" xml:space="preserve">
     <value>ナビゲーション選択時エラー：</value>
   </data>
+  <data name="Cfm2Common_ShowHelpAsync_Error_CannotShowHelp" xml:space="preserve">
+    <value>ヘルプを表示できませんでした。</value>
+  </data>
+  <data name="Cfm2Common_ShowHelpAsync_Error_NoAnchor" xml:space="preserve">
+    <value>状況に応じたヘルプを表示できませんでした：</value>
+  </data>
+  <data name="Cfm2Common_ShowHelpAsync_ShowNormalHelp" xml:space="preserve">
+    <value>通常のヘルプを表示します。</value>
+  </data>
+  <data name="LatestInfoManager_AskDisplayLatestAsync_Ask" xml:space="preserve">
+    <value>最新情報が {0} 件見つかりました。
+表示しますか？</value>
+  </data>
+  <data name="LatestInfoManager_AskDisplayLatestAsync_Cancel" xml:space="preserve">
+    <value>最新情報の表示を中止しました。</value>
+  </data>
+  <data name="LatestInfoManager_CheckAsync_Error" xml:space="preserve">
+    <value>最新情報確認時エラー：</value>
+  </data>
+  <data name="LatestInfoManager_CheckAsync_NoInfo" xml:space="preserve">
+    <value>最新情報はありませんでした。</value>
+  </data>
+  <data name="LatestInfoManager_DisplayLatest_Error_Not" xml:space="preserve">
+    <value>最新情報を表示できませんでした。</value>
+  </data>
+  <data name="LatestInfoManager_DisplayLatest_Error_Part" xml:space="preserve">
+    <value>一部の最新情報を表示できませんでした。</value>
+  </data>
 </root>

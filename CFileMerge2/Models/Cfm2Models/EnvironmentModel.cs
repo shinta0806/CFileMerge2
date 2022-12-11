@@ -157,7 +157,7 @@ internal class EnvironmentModel
         SerilogUtils.CreateLogger(5 * 1024 * 1024, 5, ((LocalSettingsService)App.GetService<ILocalSettingsService>()).Folder() + FILE_NAME_LOG);
 
         // 起動ログ
-        Log.Information("起動しました：" + Cfm2Constants.LK_GENERAL_APP_NAME.ToLocalized() + " " + Cfm2Constants.APP_VER + " ====================");
+        Log.Information("起動しました：" + Common.LK_GENERAL_APP_NAME.ToLocalized() + " " + Cfm2Constants.APP_VER + " ====================");
         Log.Information("プロセス動作モード：" + (Environment.Is64BitProcess ? "64" : "32"));
 #if DEBUG
         Log.Debug("デバッグモード：" + Common.DEBUG_ENABLED_MARK);

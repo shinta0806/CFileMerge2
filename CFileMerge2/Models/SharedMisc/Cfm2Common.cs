@@ -12,8 +12,7 @@ using CFileMerge2.Contracts.Services;
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Services;
 using CFileMerge2.Views;
-using Microsoft.UI.Dispatching;
-using Serilog;
+
 using Serilog.Events;
 
 using Shinta;
@@ -89,8 +88,8 @@ internal class Cfm2Common
                 }
                 catch (Exception ex)
                 {
-                    await window.ShowLogMessageDialogAsync(LogEventLevel.Error, "状況に応じたヘルプを表示できませんでした：\n" + ex.Message + "\n" + helpPath
-                            + "\n通常のヘルプを表示します。");
+                    await window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2Common_ShowHelpAsync_Error_NoAnchor".ToLocalized() + "\n" + ex.Message + "\n" + helpPath
+                            + "\n" + "Cfm2Common_ShowHelpAsync_ShowNormalHelp".ToLocalized());
                 }
             }
 
@@ -100,7 +99,7 @@ internal class Cfm2Common
         }
         catch (Exception ex)
         {
-            await window.ShowLogMessageDialogAsync(LogEventLevel.Error, "ヘルプを表示できませんでした。\n" + ex.Message + "\n" + helpPath);
+            await window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2Common_ShowHelpAsync_Error_CannotShowHelp".ToLocalized() + "\n" + ex.Message + "\n" + helpPath);
         }
     }
 

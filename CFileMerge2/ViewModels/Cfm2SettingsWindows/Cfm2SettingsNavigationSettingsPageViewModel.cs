@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Views;
+
 using Shinta;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
