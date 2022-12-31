@@ -176,7 +176,7 @@
     <value>Start</value>
   </data>
   <data name="0_AppDistributionStore" xml:space="preserve">
-    <value>Package edition</value>
+    <value>Store edition</value>
   </data>
   <data name="0_AppDistributionZip" xml:space="preserve">
     <value>Zip edition</value>

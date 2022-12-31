@@ -176,7 +176,7 @@
     <value>メイクファイル (M)：</value>
   </data>
   <data name="0_AppDistributionStore" xml:space="preserve">
-    <value>パッケージ版</value>
+    <value>ストア版</value>
   </data>
   <data name="0_AppDistributionZip" xml:space="preserve">
     <value>zip 版</value>

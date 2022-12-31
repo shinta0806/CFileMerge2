@@ -1089,8 +1089,13 @@ public class MainPageViewModel : ObservableRecipient
         }
         else
         {
-            // タグは出力しないので削除する
-            line.Value = line.Value.Replace(match.Value, null);
+#if DEBUG
+            if (tagInfo.Key == TagKey.Var)
+            {
+            }
+#endif
+            // タグは出力しないので削除する（Replace だと複数回削除してしまうので Remove）
+            line.Value = line.Value.Remove(column + match.Index, match.Length);
 
             // タグの分、追加位置を差し引く
             addColumn -= match.Length;
@@ -1176,7 +1181,7 @@ public class MainPageViewModel : ObservableRecipient
             if (_mergeInfo.NumProgressLines % Cfm2Constants.PROGRESS_INTERVAL == 0)
             {
                 SetProgressValue(MergeStep.ParseFile, (Double)_mergeInfo.NumProgressLines / _mergeInfo.NumTotalLines);
-#if DEBUG
+#if DEBUGz
                 Thread.Sleep(100);
 #endif
             }
