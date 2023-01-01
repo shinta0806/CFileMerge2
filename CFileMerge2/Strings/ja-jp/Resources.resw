@@ -465,4 +465,14 @@
   <data name="AboutPage_ButtonHistory.Content" xml:space="preserve">
     <value>更新履歴 (H)</value>
   </data>
+  <data name="Cfm2SettingsPageViewModel_ButtonDefaultClicked_Error" xml:space="preserve">
+    <value>初期化ボタンクリック時エラー：</value>
+  </data>
+  <data name="Cfm2SettingsPageViewModel_Default_Confirm" xml:space="preserve">
+    <value>環境設定をすべて初期設定に戻します。
+よろしいですか？</value>
+  </data>
+  <data name="Cfm2SettingsPage_ButtonDefault.Content" xml:space="preserve">
+    <value>初期化 (I)</value>
+  </data>
 </root>

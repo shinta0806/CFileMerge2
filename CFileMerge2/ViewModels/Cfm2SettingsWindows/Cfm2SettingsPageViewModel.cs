@@ -25,6 +25,8 @@ using Microsoft.UI.Xaml.Input;
 using Serilog;
 using Serilog.Events;
 using Shinta;
+using Windows.UI.Popups;
+using WinUIEx;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
@@ -56,6 +58,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
         };
 
         // コマンド
+        ButtonDefaultClickedCommand = new RelayCommand(ButtonDefaultClicked);
         ButtonOkClickedCommand = new RelayCommand(ButtonOkClicked);
         ButtonCancelClickedCommand = new RelayCommand(ButtonCancelClicked);
     }
@@ -85,6 +88,40 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
     // --------------------------------------------------------------------
     // コマンド
     // --------------------------------------------------------------------
+
+    #region 初期化ボタンの制御
+    public ICommand ButtonDefaultClickedCommand
+    {
+        get;
+    }
+
+    private async void ButtonDefaultClicked()
+    {
+        try
+        {
+            MessageDialog messageDialog = _window.CreateMessageDialog("Cfm2SettingsPageViewModel_Default_Confirm".ToLocalized(),
+                    LogEventLevel.Warning.ToString().ToLocalized());
+            messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_YES.ToLocalized()));
+            messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_NO.ToLocalized()));
+            IUICommand cmd = await messageDialog.ShowAsync();
+            if (cmd.Label != Common.LK_GENERAL_LABEL_YES.ToLocalized())
+            {
+                return;
+            }
+
+            // 初期設定
+            Cfm2Model.Instance.EnvModel.Cfm2Settings = new();
+            Cfm2Model.Instance.EnvModel.Cfm2Settings.Adjust();
+            SettingsToProperties();
+            await Cfm2Model.Instance.EnvModel.SaveCfm2SettingsAsync();
+        }
+        catch (Exception ex)
+        {
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsPageViewModel_ButtonDefaultClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
+        }
+    }
+    #endregion
 
     #region OK ボタンの制御
     public ICommand ButtonOkClickedCommand

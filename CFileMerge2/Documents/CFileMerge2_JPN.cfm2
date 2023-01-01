@@ -492,7 +492,7 @@
     alt="" width="256" align="right" hspace="10" vspace="10"></a>
   <!-- Cfm/Var: AppName -->の全体的な動作に関する設定を行います。<br>
   <br>
-  設定後、OK ボタンをクリックすると設定が確定します。<br clear="right">
+  設定後、OK ボタンをクリックすると設定が確定します。初期化ボタンをクリックすると、初期設定に戻すことができます。<br clear="right">
 </p>
 
 <h2 id="Setteitab">設定タブ</h2>

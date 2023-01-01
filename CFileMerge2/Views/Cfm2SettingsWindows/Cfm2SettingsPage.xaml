@@ -33,6 +33,7 @@
         
         <!-- ボタン -->
         <RelativePanel Margin="20" >
+            <Button x:Uid="Cfm2SettingsPage_ButtonDefault" AccessKey="I" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" RelativePanel.AlignLeftWithPanel="True" Command="{x:Bind ViewModel.ButtonDefaultClickedCommand}" />
             <Button x:Uid="0_ButtonOk" AccessKey="O" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" Style="{StaticResource AccentButtonStyle}" RelativePanel.LeftOf="ButtonCancel" Margin="0,0,20,0" Command="{x:Bind ViewModel.ButtonOkClickedCommand}" />
             <Button Name="ButtonCancel" x:Uid="0_ButtonCancel" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonCancelClickedCommand}" >
                 <Button.KeyboardAccelerators >
