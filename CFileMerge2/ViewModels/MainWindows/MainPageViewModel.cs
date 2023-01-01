@@ -1121,6 +1121,7 @@ public class MainPageViewModel : ObservableRecipient
         for (; ; )
         {
             Int32 column = 0;
+            LinkedListNode<String>? removeLine = null;
 
             // 列をたどるループ
             for (; ; )
@@ -1169,6 +1170,13 @@ public class MainPageViewModel : ObservableRecipient
                             Debug.Assert(false, "ParseCfmTagsForMain() Cfm タグ捕捉漏れ");
                             break;
                     }
+
+                    if (String.IsNullOrEmpty(line.Value))
+                    {
+                        // タグの削除によって空行になった場合は行自体を削除
+                        // ただし、ここで削除すると line.Next 等も null になってしまい障害となるので、削除予約をする
+                        removeLine = line;
+                    }
                 }
 
                 // 解析位置（列）を進める
@@ -1181,6 +1189,13 @@ public class MainPageViewModel : ObservableRecipient
 
             // 次の行へ
             line = line.Next;
+
+            // 予約されている場合は行削除
+            if (removeLine != null)
+            {
+                lines.Remove(removeLine);
+            }
+
             _mergeInfo.NumProgressLines++;
             if (_mergeInfo.NumProgressLines % Cfm2Constants.PROGRESS_INTERVAL == 0)
             {
