@@ -11,6 +11,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -385,6 +386,9 @@ public class MainPageViewModel : ObservableRecipient
             Initialize();
             ApplySettings();
 
+            // 環境の変化に対応
+            DoVerChangedIfNeeded();
+
             // 最新情報確認
             await CheckRssIfNeededAsync();
         }
@@ -549,6 +553,45 @@ public class MainPageViewModel : ObservableRecipient
             return Task.CompletedTask;
         }
         return Cfm2Common.CheckLatestInfoAsync(false, App.MainWindow);
+    }
+
+    /// <summary>
+    /// バージョン更新時の処理
+    /// </summary>
+    private void DoVerChangedIfNeeded()
+    {
+        // 更新起動時とパス変更時の記録
+        // 新規起動時は、両フラグが立つのでダブらないように注意
+        String prevLaunchVer = Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchVer;
+        Boolean verChanged = prevLaunchVer != Cfm2Constants.APP_VER;
+        if (verChanged)
+        {
+            // ユーザーにメッセージ表示する前にログしておく
+            if (String.IsNullOrEmpty(prevLaunchVer))
+            {
+                Log.Information("新規起動：" + Cfm2Constants.APP_VER);
+            }
+            else
+            {
+                Log.Information("更新起動：" + prevLaunchVer + "→" + Cfm2Constants.APP_VER);
+            }
+        }
+        String prevLaunchPath = Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchPath;
+        Boolean pathChanged = (String.Compare(prevLaunchPath, Cfm2Model.Instance.EnvModel.ExeFullPath, true) != 0);
+        if (pathChanged && !String.IsNullOrEmpty(prevLaunchPath))
+        {
+            Log.Information("パス変更起動：" + prevLaunchPath + "→" + Cfm2Model.Instance.EnvModel.ExeFullPath);
+        }
+
+        // 更新起動時とパス変更時の処理
+        if (verChanged || pathChanged)
+        {
+            Cfm2Common.LogEnvironmentInfo();
+        }
+        if (verChanged)
+        {
+            NewVersionLaunched();
+        }
     }
 
     /// <summary>
@@ -976,6 +1019,13 @@ public class MainPageViewModel : ObservableRecipient
     }
 
     /// <summary>
+    /// 新バージョンで初回起動された時の処理を行う
+    /// </summary>
+    private void NewVersionLaunched()
+    {
+    }
+
+    /// <summary>
     /// アンカーファイル群を出力
     /// </summary>
     private void OutputAnchors()
@@ -1144,6 +1194,7 @@ public class MainPageViewModel : ObservableRecipient
                         case TagKey.Include:
                             Int32 prevLines = lines.Count;
                             ExecuteCfmTagInclude(tagInfo, lines, line);
+                            ReserveRemoveIfNeeded(line, ref removeLine);
                             Int32 deltaLines = lines.Count - prevLines;
                             for (Int32 i = 0; i < deltaLines; i++)
                             {
@@ -1170,13 +1221,7 @@ public class MainPageViewModel : ObservableRecipient
                             Debug.Assert(false, "ParseCfmTagsForMain() Cfm タグ捕捉漏れ");
                             break;
                     }
-
-                    if (String.IsNullOrEmpty(line.Value))
-                    {
-                        // タグの削除によって空行になった場合は行自体を削除
-                        // ただし、ここで削除すると line.Next 等も null になってしまい障害となるので、削除予約をする
-                        removeLine = line;
-                    }
+                    ReserveRemoveIfNeeded(line, ref removeLine);
                 }
 
                 // 解析位置（列）を進める
@@ -1191,6 +1236,7 @@ public class MainPageViewModel : ObservableRecipient
             line = line.Next;
 
             // 予約されている場合は行削除
+            // line.Next より後で実行する
             if (removeLine != null)
             {
                 lines.Remove(removeLine);
@@ -1477,6 +1523,19 @@ public class MainPageViewModel : ObservableRecipient
             }
         }
         return hxTagInfos;
+    }
+
+    /// <summary>
+    /// 空行なら削除予約
+    /// </summary>
+    /// <param name="line"></param>
+    /// <param name="removeLine"></param>
+    private void ReserveRemoveIfNeeded(LinkedListNode<String> line, ref LinkedListNode<String>? removeLine)
+    {
+        if (String.IsNullOrEmpty(line.Value))
+        {
+            removeLine = line;
+        }
     }
 
     /// <summary>
