@@ -387,7 +387,7 @@ public class MainPageViewModel : ObservableRecipient
             ApplySettings();
 
             // 環境の変化に対応
-            DoVerChangedIfNeeded();
+            await DoVerChangedIfNeededAsync();
 
             // 最新情報確認
             await CheckRssIfNeededAsync();
@@ -558,7 +558,7 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// バージョン更新時の処理
     /// </summary>
-    private void DoVerChangedIfNeeded()
+    private static async Task DoVerChangedIfNeededAsync()
     {
         // 更新起動時とパス変更時の記録
         // 新規起動時は、両フラグが立つのでダブらないように注意
@@ -590,7 +590,7 @@ public class MainPageViewModel : ObservableRecipient
         }
         if (verChanged)
         {
-            NewVersionLaunched();
+            await NewVersionLaunchedAsync();
         }
     }
 
@@ -1021,8 +1021,43 @@ public class MainPageViewModel : ObservableRecipient
     /// <summary>
     /// 新バージョンで初回起動された時の処理を行う
     /// </summary>
-    private void NewVersionLaunched()
+    private static async Task NewVersionLaunchedAsync()
     {
+        String newVerMsg = String.Empty;
+        LogEventLevel logEventLevel = LogEventLevel.Information;
+
+        // α・β警告、ならびに、更新時のメッセージ（2023/01/01）
+        // 更新のご挨拶
+        if (String.IsNullOrEmpty(Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchVer))
+        {
+            // 新規の場合は原則として挨拶しない
+        }
+        else
+        {
+            // 更新
+            newVerMsg = String.Format("MainPageViewModel_Updated".ToLocalized(), Common.LK_GENERAL_APP_NAME.ToLocalized());
+        }
+
+        // α・βの注意
+        if (Cfm2Constants.APP_VER.Contains('α'))
+        {
+            newVerMsg += "\n\n" + "MainPageViewModel_Warning_Alpha".ToLocalized();
+            logEventLevel = LogEventLevel.Warning;
+        }
+        else if (Cfm2Constants.APP_VER.Contains('β'))
+        {
+            newVerMsg += "\n\n" + "MainPageViewModel_Warning_Beta".ToLocalized();
+            logEventLevel = LogEventLevel.Warning;
+        }
+
+        await Cfm2Model.Instance.EnvModel.SaveCfm2SettingsAsync();
+        if (String.IsNullOrEmpty(newVerMsg))
+        {
+            return;
+        }
+
+        // 表示
+        await App.MainWindow.ShowLogMessageDialogAsync(logEventLevel, newVerMsg);
     }
 
     /// <summary>
@@ -1530,7 +1565,7 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     /// <param name="line"></param>
     /// <param name="removeLine"></param>
-    private void ReserveRemoveIfNeeded(LinkedListNode<String> line, ref LinkedListNode<String>? removeLine)
+    private static void ReserveRemoveIfNeeded(LinkedListNode<String> line, ref LinkedListNode<String>? removeLine)
     {
         if (String.IsNullOrEmpty(line.Value))
         {

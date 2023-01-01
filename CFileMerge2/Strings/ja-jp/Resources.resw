@@ -475,4 +475,18 @@
   <data name="Cfm2SettingsPage_ButtonDefault.Content" xml:space="preserve">
     <value>初期化 (I)</value>
   </data>
+  <data name="MainPageViewModel_Updated" xml:space="preserve">
+    <value>【更新起動】
+
+{0} が更新されました。
+更新内容についてはバージョン情報ウィンドウから確認できます。</value>
+  </data>
+  <data name="MainPageViewModel_Warning_Alpha" xml:space="preserve">
+    <value>このバージョンは開発途上のアルファバージョンです。
+使用前にヘルプをよく読み、注意してお使い下さい。</value>
+  </data>
+  <data name="MainPageViewModel_Warning_Beta" xml:space="preserve">
+    <value>このバージョンは開発途上のベータバージョンです。
+使用前にヘルプをよく読み、注意してお使い下さい。</value>
+  </data>
 </root>

@@ -475,4 +475,18 @@ Are you sure?</value>
   <data name="Cfm2SettingsPage_ButtonDefault.Content" xml:space="preserve">
     <value>Default</value>
   </data>
+  <data name="MainPageViewModel_Updated" xml:space="preserve">
+    <value>[Updated]
+
+{0} has been updated.
+You can check the updated contents from the About window.</value>
+  </data>
+  <data name="MainPageViewModel_Warning_Alpha" xml:space="preserve">
+    <value>This version is an alpha version under development.
+Please read the help carefully before use and use with caution.</value>
+  </data>
+  <data name="MainPageViewModel_Warning_Beta" xml:space="preserve">
+    <value>This version is a beta version under development.
+Please read the help carefully before use and use with caution.</value>
+  </data>
 </root>
