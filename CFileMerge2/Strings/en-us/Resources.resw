@@ -459,4 +459,10 @@ Would you like to see them?</value>
   <data name="LatestInfoManager_DisplayLatest_Error_Part" xml:space="preserve">
     <value>Some of the latest information could not be displayed.</value>
   </data>
+  <data name="AboutPageViewModel_ButtonHistoryClicked_Error" xml:space="preserve">
+    <value>History error:</value>
+  </data>
+  <data name="AboutPage_ButtonHistory.Content" xml:space="preserve">
+    <value>History</value>
+  </data>
 </root>

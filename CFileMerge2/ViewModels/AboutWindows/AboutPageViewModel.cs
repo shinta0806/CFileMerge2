@@ -9,7 +9,7 @@
 // ----------------------------------------------------------------------------
 
 using System.Windows.Input;
-
+using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.Views;
 
@@ -43,6 +43,7 @@ public class AboutPageViewModel : ObservableRecipient
 
         // コマンド
         ButtonCheckUpdateClickedCommand = new RelayCommand(ButtonCheckUpdateClicked);
+        ButtonHistoryClickedCommand = new RelayCommand(ButtonHistoryClicked);
         ButtonOkClickedCommand = new RelayCommand(ButtonOkClicked);
     }
 
@@ -93,6 +94,27 @@ public class AboutPageViewModel : ObservableRecipient
             await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "AboutPageViewModel_ButtonCheckUpdateClicked_Error".ToLocalized() + "\n" + ex.Message);
             SerilogUtils.LogStackTrace(ex);
         }
+    }
+    #endregion
+
+    #region 更新履歴ボタンの制御
+    public ICommand ButtonHistoryClickedCommand
+    {
+        get;
+    }
+
+    private async void ButtonHistoryClicked()
+    {
+        try
+        {
+            Common.ShellExecute(Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + FILE_NAME_HISTORY);
+        }
+        catch (Exception ex)
+        {
+            await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "AboutPageViewModel_ButtonHistoryClicked_Error".ToLocalized() + "\n" + ex.Message);
+            SerilogUtils.LogStackTrace(ex);
+        }
+
     }
     #endregion
 
@@ -149,6 +171,12 @@ public class AboutPageViewModel : ObservableRecipient
             SerilogUtils.LogStackTrace(ex);
         }
     }
+
+    // ====================================================================
+    // private 変数
+    // ====================================================================
+
+    private const String FILE_NAME_HISTORY = "CFileMerge2_History_JPN" + Common.FILE_EXT_TXT;
 
     // ====================================================================
     // private 変数

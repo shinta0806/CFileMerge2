@@ -69,7 +69,8 @@
 
         <!-- ボタン -->
         <RelativePanel Margin="0,20,0,0" >
-            <Button x:Uid="AboutPage_ButtonCheckUpdate" AccessKey="U" Command="{x:Bind ViewModel.ButtonCheckUpdateClickedCommand}" />
+            <Button Name="ButtonCheckUpdate" x:Uid="AboutPage_ButtonCheckUpdate" AccessKey="U" Command="{x:Bind ViewModel.ButtonCheckUpdateClickedCommand}" />
+            <Button x:Uid="AboutPage_ButtonHistory" AccessKey="H" RelativePanel.RightOf="ButtonCheckUpdate" Margin="10,0,0,0" Command="{x:Bind ViewModel.ButtonHistoryClickedCommand}" />
             <Button Name="{x:Bind msm:Cfm2Constants.ELEMENT_NAME_BUTTON_OK}" x:Uid="0_ButtonOk" AccessKey="O" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" Style="{StaticResource AccentButtonStyle}" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonOkClickedCommand}" >
                 <Button.KeyboardAccelerators >
                     <KeyboardAccelerator Modifiers="None" Key="Escape" Invoked="{x:Bind ViewModel.KeyboardAcceleratorEscapeInvoked}" />

@@ -459,4 +459,10 @@
   <data name="LatestInfoManager_DisplayLatest_Error_Part" xml:space="preserve">
     <value>一部の最新情報を表示できませんでした。</value>
   </data>
+  <data name="AboutPageViewModel_ButtonHistoryClicked_Error" xml:space="preserve">
+    <value>更新履歴ボタンクリック時エラー：</value>
+  </data>
+  <data name="AboutPage_ButtonHistory.Content" xml:space="preserve">
+    <value>更新履歴 (H)</value>
+  </data>
 </root>
