@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\_Common\Downloader.cs" Link="_Common\Downloader.cs" />
+    <Compile Include="..\..\..\_Common\RecentPathManager.cs" Link="_Common\RecentPathManager.cs" />
     <Compile Include="..\..\..\_Common\ResourceLoaderExtensions.cs" Link="_Common\ResourceLoaderExtensions.cs" />
     <Compile Include="..\..\..\_Common\SerilogUtils.cs" Link="_Common\SerilogUtils.cs" />
     <Compile Include="..\..\..\_Common\ShintaCommon.cs" Link="_Common\ShintaCommon.cs" />

@@ -18,7 +18,7 @@
             <Button Name="ButtonRecentMake" AccessKey="R" IsEnabled="{x:Bind ViewModel.IsRecentMakeEnabled, Mode=OneWay}" Margin="0,0,10,0" RelativePanel.LeftOf="ButtonBrowseMake" >
                 <FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE823;"/>
                 <Button.Flyout>
-                    <MenuFlyout Opening="{x:Bind ViewModel.MenuFlyoutRecentMakeOpening}"/>
+                    <MenuFlyout Opening="{x:Bind ViewModel.MenuFlyoutRecentMakeOpening}" />
                 </Button.Flyout>
                 <ToolTipService.ToolTip>
                     <ToolTip x:Uid="MainPage_ButtonRecentMake_ToolTip" />

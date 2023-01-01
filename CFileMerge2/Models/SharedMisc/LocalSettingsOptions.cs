@@ -12,13 +12,13 @@ namespace CFileMerge2.Models.SharedMisc;
 
 public class LocalSettingsOptions
 {
-    public string? ApplicationDataFolder
+    public String? ApplicationDataFolder
     {
         get;
         set;
     }
 
-    public string? LocalSettingsFile
+    public String? LocalSettingsFile
     {
         get;
         set;

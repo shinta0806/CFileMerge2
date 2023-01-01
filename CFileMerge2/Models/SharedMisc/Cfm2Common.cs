@@ -129,5 +129,4 @@ internal class Cfm2Common
 
     // TempPath() 用カウンター（同じスレッドでもファイル名が分かれるようにするため）
     private static Int32 _tempPathCounter = 0;
-
 }

@@ -8,7 +8,9 @@
 // 
 // ----------------------------------------------------------------------------
 
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -57,6 +59,9 @@ public class MainPageViewModel : ObservableRecipient
         Debug.Assert(Cfm2Constants.CFM_TAG_KEYS.Length == (Int32)TagKey.__End__, "MainPageViewModel() TAG_KEYS が変");
         Debug.Assert(Cfm2Constants.MERGE_STEP_AMOUNT.Length == (Int32)MergeStep.__End__, "MainPageViewModel() MERGE_STEP_AMOUNT が変");
 
+        // 初期化
+        _recentMakeManager = new RecentPathManager(RecentItemType.File, Cfm2Constants.RECENT_MAKE_PATHES_MAX);
+
         // コマンド
         MenuFlyoutItemRecentMakeClickedCommand = new RelayCommand<String>(MenuFlyoutItemRecentMakeClicked);
         ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClicked);
@@ -88,6 +93,9 @@ public class MainPageViewModel : ObservableRecipient
         set => SetProperty(ref _makePath, value);
     }
 
+    /// <summary>
+    /// 最近使用したメイクファイルのボタンを有効にするか
+    /// </summary>
     private Boolean _isRecentMakeEnabled;
     public Boolean IsRecentMakeEnabled
     {
@@ -335,13 +343,15 @@ public class MainPageViewModel : ObservableRecipient
         {
             MenuFlyout menuFlyout = (MenuFlyout)sender;
             menuFlyout.Items.Clear();
-            foreach (String path in Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes)
+
+            ReadOnlyCollection<String> recentPathes = _recentMakeManager.RecentPathes();
+            foreach (String recentPath in recentPathes)
             {
                 MenuFlyoutItem menuFlyoutItem = new()
                 {
-                    Text = Path.GetFileName(path),
+                    Text = Path.GetFileName(recentPath),
                     Command = MenuFlyoutItemRecentMakeClickedCommand,
-                    CommandParameter = path,
+                    CommandParameter = recentPath,
                 };
                 menuFlyout.Items.Add(menuFlyoutItem);
             }
@@ -447,6 +457,11 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     private Boolean _progress;
 
+    /// <summary>
+    /// 最近使用したメイクファイル
+    /// </summary>
+    private readonly RecentPathManager _recentMakeManager;
+
     // ====================================================================
     // private 関数
     // ====================================================================
@@ -456,25 +471,13 @@ public class MainPageViewModel : ObservableRecipient
     /// </summary>
     private void AddRecent(String path)
     {
-        if (Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Contains(path))
-        {
-            // 既に追加されている場合はいったん削除
-            Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Remove(path);
-        }
-
-        // 先頭に追加
-        Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Insert(0, path);
+        _recentMakeManager.Add(path);
+        ReadOnlyCollection<String> recentPathes = _recentMakeManager.RecentPathes();
         App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
-            IsRecentMakeEnabled = true;
+            IsRecentMakeEnabled = recentPathes.Any();
         });
-
-        // 溢れた分は削除
-        if (Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Count > Cfm2Constants.RECENT_MAKE_PATHES_MAX)
-        {
-            Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.RemoveRange(Cfm2Constants.RECENT_MAKE_PATHES_MAX,
-                    Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Count - Cfm2Constants.RECENT_MAKE_PATHES_MAX);
-        }
+        Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes2 = new(recentPathes);
     }
 
     /// <summary>
@@ -846,7 +849,8 @@ public class MainPageViewModel : ObservableRecipient
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
         // その他
-        IsRecentMakeEnabled = Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes.Any();
+        _recentMakeManager.SetPathes(Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes2);
+        IsRecentMakeEnabled = _recentMakeManager.RecentPathes().Any();
     }
 
     /// <summary>

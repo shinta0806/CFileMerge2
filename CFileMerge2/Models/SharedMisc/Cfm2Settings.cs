@@ -90,7 +90,7 @@ internal class Cfm2Settings
     /// 最近使用したメイクファイル
     /// 先頭が最新
     /// </summary>
-    public List<String> RecentMakePathes
+    public List<String> RecentMakePathes2
     {
         get;
         set;

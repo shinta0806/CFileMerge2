@@ -248,5 +248,4 @@ internal class Cfm2Constants
     /// 最近使用したメイクファイルの最大数
     /// </summary>
     public const Int32 RECENT_MAKE_PATHES_MAX = 3;
-
 }
