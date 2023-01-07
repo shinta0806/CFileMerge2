@@ -15,7 +15,7 @@
 using System.Diagnostics;
 
 using CFileMerge2.Models.SharedMisc;
-
+using Serilog;
 using Shinta;
 using Shinta.WinUi3;
 
@@ -35,6 +35,7 @@ public sealed partial class MainWindow : WindowEx3
         InitializeComponent();
 
         // 初期化
+        //Log.Information("MainWindow() Width: " + Width);
         SizeToContent = SizeToContent.Height;
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
         Title = Common.LK_GENERAL_APP_NAME.ToLocalized();
@@ -42,9 +43,10 @@ public sealed partial class MainWindow : WindowEx3
 
         // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
         // ToDo: 効くようになればこのコードは不要
-        Width = 800;
+        // → MainPage で指定する
+        //Width = 800;
 
-        // Height は後で MainPageViewModel により指定されるはずなので、ここでは仮指定
+        // Height は後で MainPage により指定されるはずなので、ここでは仮指定
         // 小さいと本来の高さを測定できないため、多少大きめに指定しておく
         // ToDo: SizeToContent が実装されればこのコードは不要
         Height = 230;
