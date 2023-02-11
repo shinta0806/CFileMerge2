@@ -76,7 +76,7 @@ public sealed partial class Cfm2SettingsWindow : WindowEx3
     /// <returns></returns>
     private IntPtr SubclassProc(IntPtr hwnd, User32.WindowMessage msg, IntPtr wPalam, IntPtr lParam, IntPtr _1, IntPtr _2)
     {
-        Debug.WriteLine("SubclassProc()" + Environment.TickCount.ToString("#,0"));
+        //Debug.WriteLine("SubclassProc()" + Environment.TickCount.ToString("#,0"));
         switch (msg)
         {
             case User32.WindowMessage.WM_SYSCOMMAND:
