@@ -5,9 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CFileMerge2", "CFileMerge2\CFileMerge2.csproj", "{B20217F6-2EFD-4545-8C96-CCB24E8AD06B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CFileMerge2.Core", "CFileMerge2.Core\CFileMerge2.Core.csproj", "{C74040AB-72FD-44D7-8B0F-0126D21193CA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFileMerge2.CsWin32", "CFileMerge2.CsWin32\CFileMerge2.CsWin32.csproj", "{39CB82CF-0FE1-401D-98BC-8BE6F6DC022A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CFileMerge2.CsWin32", "CFileMerge2.CsWin32\CFileMerge2.CsWin32.csproj", "{39CB82CF-0FE1-401D-98BC-8BE6F6DC022A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,14 +27,6 @@ Global
 		{B20217F6-2EFD-4545-8C96-CCB24E8AD06B}.Release|x64.ActiveCfg = Release|x64
 		{B20217F6-2EFD-4545-8C96-CCB24E8AD06B}.Release|x64.Build.0 = Release|x64
 		{B20217F6-2EFD-4545-8C96-CCB24E8AD06B}.Release|x64.Deploy.0 = Release|x64
-		{C74040AB-72FD-44D7-8B0F-0126D21193CA}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{C74040AB-72FD-44D7-8B0F-0126D21193CA}.Debug|Any CPU.Build.0 = Debug|x64
-		{C74040AB-72FD-44D7-8B0F-0126D21193CA}.Debug|x64.ActiveCfg = Debug|x64
-		{C74040AB-72FD-44D7-8B0F-0126D21193CA}.Debug|x64.Build.0 = Debug|x64
-		{C74040AB-72FD-44D7-8B0F-0126D21193CA}.Release|Any CPU.ActiveCfg = Release|x64
-		{C74040AB-72FD-44D7-8B0F-0126D21193CA}.Release|Any CPU.Build.0 = Release|x64
-		{C74040AB-72FD-44D7-8B0F-0126D21193CA}.Release|x64.ActiveCfg = Release|x64
-		{C74040AB-72FD-44D7-8B0F-0126D21193CA}.Release|x64.Build.0 = Release|x64
 		{39CB82CF-0FE1-401D-98BC-8BE6F6DC022A}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{39CB82CF-0FE1-401D-98BC-8BE6F6DC022A}.Debug|x64.ActiveCfg = Debug|x64
 		{39CB82CF-0FE1-401D-98BC-8BE6F6DC022A}.Debug|x64.Build.0 = Debug|x64

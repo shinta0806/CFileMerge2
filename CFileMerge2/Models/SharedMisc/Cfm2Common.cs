@@ -8,17 +8,11 @@
 //
 // ----------------------------------------------------------------------------
 
-using CFileMerge2.Contracts.Services;
 using CFileMerge2.Models.Cfm2Models;
-using CFileMerge2.Services;
 using CFileMerge2.Views;
-
-using Serilog.Events;
 
 using Shinta;
 using Shinta.WinUi3;
-
-using WinUIEx;
 
 namespace CFileMerge2.Models.SharedMisc;
 

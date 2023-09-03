@@ -12,29 +12,14 @@
 // https://docs.microsoft.com/dotnet/core/extensions/logging
 // ----------------------------------------------------------------------------
 
-using System.Diagnostics;
-
-using CFileMerge2.Activation;
-using CFileMerge2.Contracts.Services;
-using CFileMerge2.Core.Contracts.Services;
-using CFileMerge2.Core.Services;
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
-using CFileMerge2.Services;
-using CFileMerge2.ViewModels.MainWindows;
 using CFileMerge2.Views;
 using CFileMerge2.Views.MainWindows;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 
-using Serilog;
-using Serilog.Events;
-
 using Shinta;
-
-using WinUIEx;
 
 namespace CFileMerge2;
 
@@ -50,52 +35,13 @@ public partial class App : Application
 	public App()
 	{
 		InitializeComponent();
-
-		Host = Microsoft.Extensions.Hosting.Host.
-		CreateDefaultBuilder().
-		UseContentRoot(AppContext.BaseDirectory).
-		ConfigureServices((context, services) =>
-		{
-			// Default Activation Handler
-			services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
-
-			// Other Activation Handlers
-
-			// Services
-			services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
-			services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-			services.AddSingleton<IActivationService, ActivationService>();
-			services.AddSingleton<IPageService, PageService>();
-			services.AddSingleton<INavigationService, NavigationService>();
-
-			// Core Services
-			services.AddSingleton<IFileService, FileService>();
-
-			// Views and ViewModels
-			services.AddTransient<MainPageViewModel>();
-			services.AddTransient<MainPage>();
-
-			// Configuration
-			services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
-		}).
-		Build();
-
-		// 集約エラーハンドラー設定
-		UnhandledException += App_UnhandledException;
 	}
 
 	// ====================================================================
 	// public プロパティー
 	// ====================================================================
 
-	/// <summary>
-	/// ホスト
-	/// </summary>
-	public IHost Host
-	{
-		get;
-	}
-
+#if false
 	/// <summary>
 	/// メインウィンドウ
 	/// </summary>
@@ -103,27 +49,7 @@ public partial class App : Application
 	{
 		get;
 	} = new MainWindow();
-
-	// ====================================================================
-	// public 関数
-	// ====================================================================
-
-	/// <summary>
-	/// サービス取得
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <returns></returns>
-	/// <exception cref="ArgumentException"></exception>
-	public static T GetService<T>()
-		where T : class
-	{
-		if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
-		{
-			throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
-		}
-
-		return service;
-	}
+#endif
 
 	// ====================================================================
 	// protected 関数
@@ -133,26 +59,32 @@ public partial class App : Application
 	/// イベントハンドラー：起動
 	/// </summary>
 	/// <param name="args"></param>
-	protected async override void OnLaunched(LaunchActivatedEventArgs args)
+	protected override void OnLaunched(LaunchActivatedEventArgs args)
 	{
 		base.OnLaunched(args);
 
 		// モデル生成
 		_ = Cfm2Model.Instance;
 
-		// テンポラリフォルダー準備
-		Common.InitializeTempFolder();
+		// 集約エラーハンドラー設定
+		UnhandledException += App_UnhandledException;
 
-		// ログ
-		Cfm2Common.LogEnvironmentInfo();
+		// 各種初期化
+		Initialize();
 
-		// 環境設定読み込み
-		// メインウィンドウで読み込むと await の関係でメインページと順番がちぐはぐになったりするので、ここで読み込む必要がある
-		Cfm2Common.LoadNkm3Settings();
-
-		// ここからメインウィンドウが実用になるようだ
-		await App.GetService<IActivationService>().ActivateAsync(args);
+		// メインウィンドウを開く
+		_mainWindow = new();
+		_mainWindow.Activate();
 	}
+
+	// ====================================================================
+	// private 変数
+	// ====================================================================
+
+	/// <summary>
+	/// メインウィンドウ
+	/// </summary>
+	private MainWindow? _mainWindow;
 
 	// ====================================================================
 	// private 関数
@@ -165,9 +97,7 @@ public partial class App : Application
 	/// <param name="args"></param>
 	private async void App_UnhandledException(Object _, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
 	{
-		Debug.WriteLine("App_UnhandledException() " + args.Exception.Message);
-
-		// メインウィンドウのコントロールが未初期化の可能性があるため、まずはログのみ
+		// まずはログのみ
 		String message = "不明なエラーが発生しました。アプリケーションを終了します。\n"
 				+ args.Message + "\n" + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace;
 		Log.Fatal(message);
@@ -175,12 +105,28 @@ public partial class App : Application
 		// 表示
 		try
 		{
-			await App.MainWindow.CreateMessageDialog(message, LogEventLevel.Fatal.ToString().ToLocalized()).ShowAsync();
+			await _mainWindow?.CreateMessageDialog(message, LogEventLevel.Fatal.ToString().ToLocalized()).ShowAsync();
 		}
 		catch (Exception)
 		{
 		}
 
 		Environment.Exit(1);
+	}
+
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	private static void Initialize()
+	{
+		// テンポラリフォルダー準備
+		Common.InitializeTempFolder();
+
+		// ログ
+		Cfm2Common.LogEnvironmentInfo();
+
+		// 環境設定読み込み
+		// メインウィンドウで読み込むと await の関係でメインページと順番がちぐはぐになったりするので、ここで読み込む必要がある
+		Cfm2Common.LoadNkm3Settings();
 	}
 }

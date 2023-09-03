@@ -9,7 +9,6 @@
 // ----------------------------------------------------------------------------
 
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -18,6 +17,7 @@ using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.Views.AboutWindows;
 using CFileMerge2.Views.Cfm2SettingsWindows;
+using CFileMerge2.Views.MainWindows;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -29,17 +29,12 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-using Serilog;
-using Serilog.Events;
-
 using Shinta;
 
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Popups;
-
-using WinUIEx;
 
 namespace CFileMerge2.ViewModels.MainWindows;
 
@@ -52,13 +47,14 @@ public class MainPageViewModel : ObservableRecipient
 	/// <summary>
 	/// メインコンストラクター
 	/// </summary>
-	public MainPageViewModel()
+	public MainPageViewModel(MainWindow mainWindow)
 	{
 		// チェック
 		Debug.Assert(Cfm2Constants.CFM_TAG_KEYS.Length == (Int32)TagKey.__End__, "MainPageViewModel() TAG_KEYS が変");
 		Debug.Assert(Cfm2Constants.MERGE_STEP_AMOUNT.Length == (Int32)MergeStep.__End__, "MainPageViewModel() MERGE_STEP_AMOUNT が変");
 
 		// 初期化
+		_mainWindow = mainWindow;
 		_recentMakeManager = new RecentPathManager(RecentItemType.File, Cfm2Constants.RECENT_MAKE_PATHES_MAX);
 
 		// コマンド
@@ -71,7 +67,7 @@ public class MainPageViewModel : ObservableRecipient
 		ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
 
 		// イベントハンドラー
-		App.MainWindow.AppWindow.Closing += AppWindowClosing;
+		_mainWindow.AppWindow.Closing += AppWindowClosing;
 	}
 
 	// ====================================================================
@@ -140,7 +136,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutItemRecentMakeClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutItemRecentMakeClicked_Error".ToLocalized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -169,7 +165,7 @@ public class MainPageViewModel : ObservableRecipient
 
             MakePath = openFileDialog.FileName;
 #endif
-			FileOpenPicker fileOpenPicker = App.MainWindow.CreateOpenFilePicker();
+			FileOpenPicker fileOpenPicker = _mainWindow.CreateOpenFilePicker();
 			fileOpenPicker.FileTypeFilter.Add(Cfm2Constants.FILE_EXT_CFM2_MAKE);
 			fileOpenPicker.FileTypeFilter.Add("*");
 
@@ -183,7 +179,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_ButtonBrowseMakeClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_ButtonBrowseMakeClicked_Error".ToLocalized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -200,11 +196,11 @@ public class MainPageViewModel : ObservableRecipient
 		try
 		{
 			Cfm2SettingsWindow settingsWindow = new();
-			await App.MainWindow.ShowDialogAsync(settingsWindow);
+			await _mainWindow.ShowDialogAsync(settingsWindow);
 		}
 		catch (Exception ex)
 		{
-			await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_ButtonCfm2SettingsClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_ButtonCfm2SettingsClicked_Error".ToLocalized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -214,7 +210,7 @@ public class MainPageViewModel : ObservableRecipient
 #pragma warning disable CA1822
 	public ICommand MenuFlyoutItemHelpClickedCommand
 	{
-		get => App.MainWindow.HelpClickedCommand;
+		get => _mainWindow.HelpClickedCommand;
 	}
 #pragma warning restore CA1822
 	#endregion
@@ -233,7 +229,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutItemSampleFolderClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutItemSampleFolderClicked_Error".ToLocalized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -250,11 +246,11 @@ public class MainPageViewModel : ObservableRecipient
 		try
 		{
 			AboutWindow aboutWindow = new();
-			await App.MainWindow.ShowDialogAsync(aboutWindow);
+			await _mainWindow.ShowDialogAsync(aboutWindow);
 		}
 		catch (Exception ex)
 		{
-			await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutItemAboutClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutItemAboutClicked_Error".ToLocalized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -294,7 +290,7 @@ public class MainPageViewModel : ObservableRecipient
 					}
 					catch (Exception ex)
 					{
-						await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_OpenOutFile_Error".ToLocalized() + "\n" + ex.Message);
+						await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_OpenOutFile_Error".ToLocalized() + "\n" + ex.Message);
 						SerilogUtils.LogStackTrace(ex);
 						return false;
 					}
@@ -312,7 +308,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_ButtonOpenOutFileClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_ButtonOpenOutFileClicked_Error".ToLocalized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -357,7 +353,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutRecentMakeOpening_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutRecentMakeOpening_Error".ToLocalized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -369,17 +365,6 @@ public class MainPageViewModel : ObservableRecipient
 	{
 		try
 		{
-#if DEBUGz
-            var a = $"a {_mergeInfo.AnchorMakeFullPath}";
-            Log.Debug("PageLoaded() a: " + a);
-            var b = $"b {a}";
-            Log.Debug("PageLoaded() b: " + b);
-            var c = $"hoge".ToLocalized();
-            Log.Debug("PageLoaded() c: " + c);
-            var d = String.Format("hoge".ToLocalized(), a);
-            Log.Debug("PageLoaded() d: " + d);
-#endif
-
 			Log.Debug("PageLoaded()");
 			Initialize();
 			ApplySettings();
@@ -450,6 +435,11 @@ public class MainPageViewModel : ObservableRecipient
 	// ====================================================================
 
 	/// <summary>
+	/// メインウィンドウ
+	/// </summary>
+	private readonly MainWindow _mainWindow;
+
+	/// <summary>
 	/// 合併作業用の情報
 	/// </summary>
 	private MergeInfo _mergeInfo = new();
@@ -475,7 +465,7 @@ public class MainPageViewModel : ObservableRecipient
 	{
 		_recentMakeManager.Add(path);
 		ReadOnlyCollection<String> recentPathes = _recentMakeManager.RecentPathes();
-		App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+		_mainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
 		{
 			IsRecentMakeEnabled = recentPathes.Any();
 		});
@@ -509,7 +499,7 @@ public class MainPageViewModel : ObservableRecipient
 		if (_progress)
 		{
 			// 合併中の場合は確認
-			MessageDialog messageDialog = App.MainWindow.CreateMessageDialog("MainPageViewModel_AppWindowClosing_Confirm".ToLocalized(), Common.LK_GENERAL_LABEL_CONFIRM.ToLocalized());
+			MessageDialog messageDialog = _mainWindow.CreateMessageDialog("MainPageViewModel_AppWindowClosing_Confirm".ToLocalized(), Common.LK_GENERAL_LABEL_CONFIRM.ToLocalized());
 			messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_YES.ToLocalized()));
 			messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_NO.ToLocalized()));
 			IUICommand cmd = await messageDialog.ShowAsync();
@@ -535,26 +525,26 @@ public class MainPageViewModel : ObservableRecipient
 		Log.Information("終了しました：" + Common.LK_GENERAL_APP_NAME.ToLocalized() + " " + Cfm2Constants.APP_VER + " --------------------");
 
 		// 改めて閉じる
-		App.MainWindow.Close();
+		_mainWindow.Close();
 	}
 
 	/// <summary>
 	/// 最新情報確認
 	/// </summary>
 	/// <returns></returns>
-	private static Task CheckRssIfNeededAsync()
+	private Task CheckRssIfNeededAsync()
 	{
 		if (!Cfm2Model.Instance.EnvModel.Cfm2Settings.IsCheckRssNeeded())
 		{
 			return Task.CompletedTask;
 		}
-		return Cfm2Common.CheckLatestInfoAsync(false, App.MainWindow);
+		return Cfm2Common.CheckLatestInfoAsync(false, _mainWindow);
 	}
 
 	/// <summary>
 	/// バージョン更新時の処理
 	/// </summary>
-	private static async Task DoVerChangedIfNeededAsync()
+	private async Task DoVerChangedIfNeededAsync()
 	{
 		// 更新起動時とパス変更時の記録
 		// 新規起動時は、両フラグが立つのでダブらないように注意
@@ -865,10 +855,10 @@ public class MainPageViewModel : ObservableRecipient
 	/// </summary>
 	private void HideProgressArea()
 	{
-		App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+		_mainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
 		{
 			_progress = false;
-			App.MainWindow.RemoveVeil();
+			_mainWindow.RemoveVeil();
 		});
 	}
 
@@ -878,7 +868,7 @@ public class MainPageViewModel : ObservableRecipient
 	private void Initialize()
 	{
 #if DEBUG
-		App.MainWindow.Title = "［デバッグ］" + App.MainWindow.Title;
+		_mainWindow.Title = "［デバッグ］" + _mainWindow.Title;
 #endif
 #if TEST
         Title = "［テスト］" + Title;
@@ -967,12 +957,12 @@ public class MainPageViewModel : ObservableRecipient
 					{
 						message += _mergeInfo.Warnings[i] + "\n";
 					}
-					await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Warning, message);
+					await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Warning, message);
 				}
 				else
 				{
 					// 完了
-					await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Information,
+					await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Information,
 							String.Format("MainPageViewModel_MergeAsync_Done".ToLocalized(), (Environment.TickCount - startTick).ToString("#,0")));
 				}
 			}
@@ -982,7 +972,7 @@ public class MainPageViewModel : ObservableRecipient
 			}
 			catch (Exception ex)
 			{
-				await App.MainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MergeAsync_Error".ToLocalized() + "\n" + ex.Message);
+				await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MergeAsync_Error".ToLocalized() + "\n" + ex.Message);
 				SerilogUtils.LogStackTrace(ex);
 			}
 			finally
@@ -1017,7 +1007,7 @@ public class MainPageViewModel : ObservableRecipient
 	/// <summary>
 	/// 新バージョンで初回起動された時の処理を行う
 	/// </summary>
-	private static async Task NewVersionLaunchedAsync()
+	private async Task NewVersionLaunchedAsync()
 	{
 		String newVerMsg = String.Empty;
 		LogEventLevel logEventLevel = LogEventLevel.Information;
@@ -1053,7 +1043,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 
 		// 表示
-		await App.MainWindow.ShowLogMessageDialogAsync(logEventLevel, newVerMsg);
+		await _mainWindow.ShowLogMessageDialogAsync(logEventLevel, newVerMsg);
 	}
 
 	/// <summary>
@@ -1593,7 +1583,7 @@ public class MainPageViewModel : ObservableRecipient
 		// 進捗率
 		Double progress = amount / total;
 
-		App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+		_mainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
 		{
 			// インクルードにより一時的に進捗率が下がる場合があるが、表示上は下げない
 			if (progress > ProgressValue)
@@ -1608,11 +1598,11 @@ public class MainPageViewModel : ObservableRecipient
 	/// </summary>
 	private void ShowProgressArea()
 	{
-		App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+		_mainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
 		{
 			ProgressValue = 0.0;
 			_progress = true;
-			App.MainWindow.AddVeil("ProgressGrid", this);
+			_mainWindow.AddVeil("ProgressGrid", this);
 		});
 	}
 

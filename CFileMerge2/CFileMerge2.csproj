@@ -80,7 +80,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CFileMerge2.Core\CFileMerge2.Core.csproj" />
     <ProjectReference Include="..\CFileMerge2.CsWin32\CFileMerge2.CsWin32.csproj" />
   </ItemGroup>
   <ItemGroup>

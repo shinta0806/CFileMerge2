@@ -1,4 +1,4 @@
-﻿// ============================================================================
+// ============================================================================
 // 
 // メインウィンドウのコードビハインド
 // 
@@ -12,10 +12,8 @@
 // ToDo: 更新起動メッセージ
 // ----------------------------------------------------------------------------
 
-using System.Diagnostics;
-
 using CFileMerge2.Models.SharedMisc;
-using Serilog;
+
 using Shinta;
 using Shinta.WinUi3;
 
@@ -39,7 +37,7 @@ public sealed partial class MainWindow : WindowEx3
         SizeToContent = SizeToContent.Height;
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
         Title = Common.LK_GENERAL_APP_NAME.ToLocalized();
-        Content = null;
+        Content = new MainPage(this);
 
         // なぜか MainWindow.xaml で Width, Height を指定しても効かないので、ここで指定する
         // ToDo: 効くようになればこのコードは不要

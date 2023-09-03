@@ -8,11 +8,7 @@
 //
 // ----------------------------------------------------------------------------
 
-using CFileMerge2.Contracts.Services;
 using CFileMerge2.Models.SharedMisc;
-using CFileMerge2.Services;
-
-using Serilog;
 
 using Shinta;
 using Shinta.WinUi3;

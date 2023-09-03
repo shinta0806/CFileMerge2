@@ -8,31 +8,23 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System.Diagnostics;
 using System.IO.Compression;
 using System.Windows.Input;
 
-using CFileMerge2.Contracts.Services;
-using CFileMerge2.Core.Helpers;
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
-using CFileMerge2.Services;
 using CFileMerge2.Views;
 
 using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.UI.Dispatching;
 
-using Serilog;
-using Serilog.Events;
-
 using Shinta;
 using Shinta.WinUi3;
+
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Popups;
-
-using WinUIEx;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
