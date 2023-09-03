@@ -1,0 +1,12 @@
+// モジュール
+Comctl32.*
+Kernel32.*
+User32.*
+
+// モジュール外定数
+MONITOR_DPI_TYPE
+SC_CONTEXTHELP
+WM_SYSCOMMAND
+
+// モジュール外関数
+GetDpiForMonitor

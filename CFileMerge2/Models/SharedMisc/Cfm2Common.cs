@@ -1,4 +1,4 @@
-﻿// ============================================================================
+// ============================================================================
 // 
 // ちょちょいとファイル合併 2 共通で使用する関数
 // 
@@ -51,9 +51,10 @@ internal class Cfm2Common
     /// <returns></returns>
     public static LatestInfoManager CreateLatestInfoManager(Boolean forceShow, WindowEx window)
     {
-        return new LatestInfoManager("http://shinta.coresv.com/soft/CFileMerge2_JPN.xml", forceShow, 3, Cfm2Constants.APP_VER,
-                Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Token, window,
-                ((LocalSettingsService)App.GetService<ILocalSettingsService>()).Folder() + "LatestInfo" + Common.FILE_EXT_CONFIG);
+        return new LatestInfoManager("http://shinta.coresv.com/soft/CFileMerge2_JPN.xml", forceShow, 3, Cfm2Constants.APP_VER, window)
+        {
+            CancellationToken = Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Token,
+        };
     }
 
     /// <summary>

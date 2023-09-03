@@ -1,71 +1,63 @@
 // ============================================================================
 // 
-// ŠÂ‹«İ’èƒEƒBƒ“ƒhƒE‚ÌƒR[ƒhƒrƒnƒCƒ“ƒh
+// ç’°å¢ƒè¨­å®šã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚³ãƒ¼ãƒ‰ãƒ“ãƒã‚¤ãƒ³ãƒ‰
 // 
 // ============================================================================
 
 // ----------------------------------------------------------------------------
-// ƒEƒBƒ“ƒhƒE‚Å‚Ì MVVM ‚ª¢“ï‚Å‚ ‚é‚Æv‚í‚ê‚é‚Ì‚ÅAƒEƒBƒ“ƒhƒE‚Ö‚Ì‘€ì‚Íƒy[ƒW‚Ìƒrƒ…[ƒ‚ƒfƒ‹‚Ås‚¤
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã§ã® MVVM ãŒå›°é›£ã§ã‚ã‚‹ã¨æ€ã‚ã‚Œã‚‹ã®ã§ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¸ã®æ“ä½œã¯ãƒšãƒ¼ã‚¸ã®ãƒ“ãƒ¥ãƒ¼ãƒ¢ãƒ‡ãƒ«ã§è¡Œã†
 // ----------------------------------------------------------------------------
-
-using System.Diagnostics;
 
 using CFileMerge2.Models.SharedMisc;
 
 using Microsoft.UI.Windowing;
 
-using PInvoke;
-
-using Serilog;
-using Serilog.Events;
-
 using Shinta;
 using Shinta.WinUi3;
+
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.Shell;
 
 namespace CFileMerge2.Views.Cfm2SettingsWindows;
 
 public sealed partial class Cfm2SettingsWindow : WindowEx3
 {
     // ====================================================================
-    // ƒRƒ“ƒXƒgƒ‰ƒNƒ^[
+    // ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ¼
     // ====================================================================
 
     /// <summary>
-    /// ƒƒCƒ“ƒRƒ“ƒXƒgƒ‰ƒNƒ^[
+    /// ãƒ¡ã‚¤ãƒ³ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ¼
     /// </summary>
     public Cfm2SettingsWindow()
     {
         InitializeComponent();
 
-        // ‰Šú‰»
+        // åˆæœŸåŒ–
         SizeToContent = SizeToContent.Height;
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
         Title = "Cfm2SettingsWindow_Title".ToLocalized();
         Content = new Cfm2SettingsPage(this);
-        _newSubclassProc = new WindowsApi.SubclassProc(SubclassProc);
+        _newSubclassProc = new SUBCLASSPROC(SubclassProc);
         WinUi3Common.EnableContextHelp(this, _newSubclassProc);
-#if false
-        var a = PresenterKind;
-        var b = (OverlappedPresenter)Presenter;
-        b.IsModal = true;
-#endif
     }
 
     // ====================================================================
-    // private •Ï”
+    // private å¤‰æ•°
     // ====================================================================
 
     /// <summary>
-    /// ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ[
+    /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ãƒ¼
     /// </summary>
-    private readonly WindowsApi.SubclassProc _newSubclassProc;
+    private readonly SUBCLASSPROC _newSubclassProc;
 
     // ====================================================================
-    // private ŠÖ”
+    // private é–¢æ•°
     // ====================================================================
 
     /// <summary>
-    /// ƒEƒBƒ“ƒhƒEƒƒbƒZ[ƒWˆ—
+    /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç†
     /// </summary>
     /// <param name="hwnd"></param>
     /// <param name="msg"></param>
@@ -74,13 +66,12 @@ public sealed partial class Cfm2SettingsWindow : WindowEx3
     /// <param name="_1"></param>
     /// <param name="_2"></param>
     /// <returns></returns>
-    private IntPtr SubclassProc(IntPtr hwnd, User32.WindowMessage msg, IntPtr wPalam, IntPtr lParam, IntPtr _1, IntPtr _2)
+    private LRESULT SubclassProc(HWND hWnd, UInt32 msg, WPARAM wPalam, LPARAM lParam, UIntPtr _1, UIntPtr _2)
     {
-        //Debug.WriteLine("SubclassProc()" + Environment.TickCount.ToString("#,0"));
         switch (msg)
         {
-            case User32.WindowMessage.WM_SYSCOMMAND:
-                if ((User32.SysCommands)wPalam == User32.SysCommands.SC_CONTEXTHELP)
+            case PInvoke.WM_SYSCOMMAND:
+                if ((UInt32)wPalam == PInvoke.SC_CONTEXTHELP)
                 {
                     _ = Task.Run(async () =>
                     {
@@ -90,15 +81,17 @@ public sealed partial class Cfm2SettingsWindow : WindowEx3
                         }
                         catch (Exception ex)
                         {
-                            await ShowLogMessageDialogAsync(LogEventLevel.Error, "ƒwƒ‹ƒv•\¦ƒGƒ‰[F\n" + ex.Message);
-                            Log.Information("ƒXƒ^ƒbƒNƒgƒŒ[ƒXF\n" + ex.StackTrace);
+                            await ShowExceptionLogMessageDialogAsync("ãƒ˜ãƒ«ãƒ—è¡¨ç¤ºæ™‚ã‚¨ãƒ©ãƒ¼", ex);
                         }
                     });
-                    return IntPtr.Zero;
+                    return (LRESULT)IntPtr.Zero;
                 }
-                return WindowsApi.DefSubclassProc(hwnd, msg, wPalam, lParam);
+
+                // ãƒ˜ãƒ«ãƒ—ãƒœã‚¿ãƒ³ä»¥å¤–ã¯æ¬¡ã®ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ã«ãŠä»»ã›
+                return PInvoke.DefSubclassProc(hWnd, msg, wPalam, lParam);
             default:
-                return WindowsApi.DefSubclassProc(hwnd, msg, wPalam, lParam);
+                // WM_SYSCOMMAND ä»¥å¤–ã¯æ¬¡ã®ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ã«ãŠä»»ã›
+                return PInvoke.DefSubclassProc(hWnd, msg, wPalam, lParam);
         }
     }
 }

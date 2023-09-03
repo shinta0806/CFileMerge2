@@ -51,10 +51,10 @@
     <Compile Include="..\..\..\_Common\SerilogUtils.cs" Link="_Common\SerilogUtils.cs" />
     <Compile Include="..\..\..\_Common\ShintaCommon.cs" Link="_Common\ShintaCommon.cs" />
     <Compile Include="..\..\..\_Common\WindowsApi.cs" Link="_Common\WindowsApi.cs" />
+    <Compile Include="..\..\..\_Common\WinUi3\JsonManager.cs" Link="_Common\WinUi3\JsonManager.cs" />
     <Compile Include="..\..\..\_Common\WinUi3\LatestInfoManager.cs" Link="_Common\WinUi3\LatestInfoManager.cs" />
     <Compile Include="..\..\..\_Common\WinUi3\MonitorManager.cs" Link="_Common\WinUi3\MonitorManager.cs" />
     <Compile Include="..\..\..\_Common\WinUi3\RssManager.cs" Link="_Common\WinUi3\RssManager.cs" />
-    <Compile Include="..\..\..\_Common\WinUi3\SerializableSettings.cs" Link="_Common\WinUi3\SerializableSettings.cs" />
     <Compile Include="..\..\..\_Common\WinUi3\SystemEnvironment.cs" Link="_Common\WinUi3\SystemEnvironment.cs" />
     <Compile Include="..\..\..\_Common\WinUi3\Views\PageEx2.cs" Link="_Common\WinUi3\Views\PageEx2.cs" />
     <Compile Include="..\..\..\_Common\WinUi3\Views\WindowEx2.cs" Link="_Common\WinUi3\Views\WindowEx2.cs" />
@@ -71,8 +71,6 @@
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="7.0.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230217.4" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
-    <PackageReference Include="PInvoke.SHCore" Version="0.7.124" />
-    <PackageReference Include="PInvoke.User32" Version="0.7.124" />
     <PackageReference Include="ReadJEnc" Version="1.3.1.2" />
     <PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
     <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
@@ -83,6 +81,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CFileMerge2.Core\CFileMerge2.Core.csproj" />
+    <ProjectReference Include="..\CFileMerge2.CsWin32\CFileMerge2.CsWin32.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">
@@ -188,5 +187,12 @@
     <EmbeddedResource Include="Views\Dynamics\ProgressGrid.xaml">
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Dynamics\VeilGrid.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Serilog" />
+    <Using Include="Serilog.Events" />
+    <Using Include="System.Diagnostics" />
+    <Using Include="WinUIEx" />
   </ItemGroup>
 </Project>
