@@ -137,17 +137,6 @@ internal class Cfm2Common
 		}
 	}
 
-	/// <summary>
-	/// テンポラリフォルダー配下のファイル・フォルダー名として使えるパス（呼びだす度に異なる、拡張子なし）
-	/// </summary>
-	/// <returns></returns>
-	public static String TempPath()
-	{
-		// マルチスレッドでも安全にインクリメント
-		Int32 counter = Interlocked.Increment(ref _tempPathCounter);
-		return Common.TempFolderPath() + counter.ToString() + "_" + Environment.CurrentManagedThreadId.ToString();
-	}
-
 	// ====================================================================
 	// private 定数
 	// ====================================================================
@@ -156,11 +145,4 @@ internal class Cfm2Common
 	/// ヘルプファイル名
 	/// </summary>
 	private const String FILE_NAME_HELP_PREFIX = Cfm2Constants.APP_ID + "_JPN";
-
-	// ====================================================================
-	// private 変数
-	// ====================================================================
-
-	// TempPath() 用カウンター（同じスレッドでもファイル名が分かれるようにするため）
-	private static Int32 _tempPathCounter = 0;
 }
