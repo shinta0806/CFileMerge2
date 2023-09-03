@@ -1,4 +1,4 @@
-﻿// ============================================================================
+// ============================================================================
 // 
 // アプリケーションのコードビハインド
 // 
@@ -40,147 +40,147 @@ namespace CFileMerge2;
 
 public partial class App : Application
 {
-    // ====================================================================
-    // コンストラクター
-    // ====================================================================
+	// ====================================================================
+	// コンストラクター
+	// ====================================================================
 
-    /// <summary>
-    /// メインコンストラクター
-    /// </summary>
-    public App()
-    {
-        InitializeComponent();
+	/// <summary>
+	/// メインコンストラクター
+	/// </summary>
+	public App()
+	{
+		InitializeComponent();
 
-        Host = Microsoft.Extensions.Hosting.Host.
-        CreateDefaultBuilder().
-        UseContentRoot(AppContext.BaseDirectory).
-        ConfigureServices((context, services) =>
-        {
-            // Default Activation Handler
-            services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
+		Host = Microsoft.Extensions.Hosting.Host.
+		CreateDefaultBuilder().
+		UseContentRoot(AppContext.BaseDirectory).
+		ConfigureServices((context, services) =>
+		{
+			// Default Activation Handler
+			services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
 
-            // Other Activation Handlers
+			// Other Activation Handlers
 
-            // Services
-            services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
-            services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-            services.AddSingleton<IActivationService, ActivationService>();
-            services.AddSingleton<IPageService, PageService>();
-            services.AddSingleton<INavigationService, NavigationService>();
+			// Services
+			services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+			services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
+			services.AddSingleton<IActivationService, ActivationService>();
+			services.AddSingleton<IPageService, PageService>();
+			services.AddSingleton<INavigationService, NavigationService>();
 
-            // Core Services
-            services.AddSingleton<IFileService, FileService>();
+			// Core Services
+			services.AddSingleton<IFileService, FileService>();
 
-            // Views and ViewModels
-            services.AddTransient<MainPageViewModel>();
-            services.AddTransient<MainPage>();
+			// Views and ViewModels
+			services.AddTransient<MainPageViewModel>();
+			services.AddTransient<MainPage>();
 
-            // Configuration
-            services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
-        }).
-        Build();
+			// Configuration
+			services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+		}).
+		Build();
 
-        // 集約エラーハンドラー設定
-        UnhandledException += App_UnhandledException;
-    }
+		// 集約エラーハンドラー設定
+		UnhandledException += App_UnhandledException;
+	}
 
-    // ====================================================================
-    // public プロパティー
-    // ====================================================================
+	// ====================================================================
+	// public プロパティー
+	// ====================================================================
 
-    /// <summary>
-    /// ホスト
-    /// </summary>
-    public IHost Host
-    {
-        get;
-    }
+	/// <summary>
+	/// ホスト
+	/// </summary>
+	public IHost Host
+	{
+		get;
+	}
 
-    /// <summary>
-    /// メインウィンドウ
-    /// </summary>
-    public static WindowEx3 MainWindow
-    {
-        get;
-    } = new MainWindow();
+	/// <summary>
+	/// メインウィンドウ
+	/// </summary>
+	public static WindowEx3 MainWindow
+	{
+		get;
+	} = new MainWindow();
 
-    // ====================================================================
-    // public 関数
-    // ====================================================================
+	// ====================================================================
+	// public 関数
+	// ====================================================================
 
-    /// <summary>
-    /// サービス取得
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
-    public static T GetService<T>()
-        where T : class
-    {
-        if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
-        {
-            throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
-        }
+	/// <summary>
+	/// サービス取得
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	/// <exception cref="ArgumentException"></exception>
+	public static T GetService<T>()
+		where T : class
+	{
+		if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
+		{
+			throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
+		}
 
-        return service;
-    }
+		return service;
+	}
 
-    // ====================================================================
-    // protected 関数
-    // ====================================================================
+	// ====================================================================
+	// protected 関数
+	// ====================================================================
 
-    /// <summary>
-    /// イベントハンドラー：起動
-    /// </summary>
-    /// <param name="args"></param>
-    protected async override void OnLaunched(LaunchActivatedEventArgs args)
-    {
-        base.OnLaunched(args);
+	/// <summary>
+	/// イベントハンドラー：起動
+	/// </summary>
+	/// <param name="args"></param>
+	protected async override void OnLaunched(LaunchActivatedEventArgs args)
+	{
+		base.OnLaunched(args);
 
-        // モデル生成
-        _ = Cfm2Model.Instance;
+		// モデル生成
+		_ = Cfm2Model.Instance;
 
-        // テンポラリフォルダー準備
-        Common.InitializeTempFolder();
+		// テンポラリフォルダー準備
+		Common.InitializeTempFolder();
 
-        // ログ
-        Cfm2Common.LogEnvironmentInfo();
+		// ログ
+		Cfm2Common.LogEnvironmentInfo();
 
-        // 環境設定読み込み
-        // メインウィンドウで読み込むと await の関係でメインページと順番がちぐはぐになったりするので、ここで読み込む必要がある
-        await Cfm2Model.Instance.EnvModel.LoadCfm2SettingsAsync();
+		// 環境設定読み込み
+		// メインウィンドウで読み込むと await の関係でメインページと順番がちぐはぐになったりするので、ここで読み込む必要がある
+		Cfm2Common.LoadNkm3Settings();
 
-        // ここからメインウィンドウが実用になるようだ
-        await App.GetService<IActivationService>().ActivateAsync(args);
-    }
+		// ここからメインウィンドウが実用になるようだ
+		await App.GetService<IActivationService>().ActivateAsync(args);
+	}
 
-    // ====================================================================
-    // private 関数
-    // ====================================================================
+	// ====================================================================
+	// private 関数
+	// ====================================================================
 
-    /// <summary>
-    /// 集約エラーハンドラー
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    private async void App_UnhandledException(Object _, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
-    {
-        Debug.WriteLine("App_UnhandledException() " + args.Exception.Message);
+	/// <summary>
+	/// 集約エラーハンドラー
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="args"></param>
+	private async void App_UnhandledException(Object _, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
+	{
+		Debug.WriteLine("App_UnhandledException() " + args.Exception.Message);
 
-        // メインウィンドウのコントロールが未初期化の可能性があるため、まずはログのみ
-        String message = "不明なエラーが発生しました。アプリケーションを終了します。\n"
-                + args.Message + "\n" + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace;
-        Log.Fatal(message);
+		// メインウィンドウのコントロールが未初期化の可能性があるため、まずはログのみ
+		String message = "不明なエラーが発生しました。アプリケーションを終了します。\n"
+				+ args.Message + "\n" + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace;
+		Log.Fatal(message);
 
-        // 表示
-        try
-        {
-            await App.MainWindow.CreateMessageDialog(message, LogEventLevel.Fatal.ToString().ToLocalized()).ShowAsync();
-        }
-        catch (Exception)
-        {
-        }
+		// 表示
+		try
+		{
+			await App.MainWindow.CreateMessageDialog(message, LogEventLevel.Fatal.ToString().ToLocalized()).ShowAsync();
+		}
+		catch (Exception)
+		{
+		}
 
-        Environment.Exit(1);
-    }
+		Environment.Exit(1);
+	}
 }

@@ -24,110 +24,143 @@ namespace CFileMerge2.Models.SharedMisc;
 
 internal class Cfm2Common
 {
-    // ====================================================================
-    // public 関数
-    // ====================================================================
+	// ====================================================================
+	// public 関数
+	// ====================================================================
 
-    /// <summary>
-    /// 最新情報の確認
-    /// </summary>
-    /// <param name="forceShow"></param>
-    /// <returns></returns>
-    public static async Task CheckLatestInfoAsync(Boolean forceShow, WindowEx window)
-    {
-        LatestInfoManager latestInfoManager = Cfm2Common.CreateLatestInfoManager(forceShow, window);
-        if (await latestInfoManager.CheckAsync())
-        {
-            Cfm2Model.Instance.EnvModel.Cfm2Settings.RssCheckDate = DateTime.Now.Date;
-            await Cfm2Model.Instance.EnvModel.SaveCfm2SettingsAsync();
-        }
-    }
+	/// <summary>
+	/// 最新情報の確認
+	/// </summary>
+	/// <param name="forceShow"></param>
+	/// <returns></returns>
+	public static async Task CheckLatestInfoAsync(Boolean forceShow, WindowEx window)
+	{
+		LatestInfoManager latestInfoManager = Cfm2Common.CreateLatestInfoManager(forceShow, window);
+		if (await latestInfoManager.CheckAsync())
+		{
+			Cfm2Model.Instance.EnvModel.Cfm2Settings.RssCheckDate = DateTime.Now.Date;
+			SaveCfm2Settings();
+		}
+	}
 
-    /// <summary>
-    /// 最新情報管理者を作成
-    /// </summary>
-    /// <param name="forceShow"></param>
-    /// <param name="window"></param>
-    /// <returns></returns>
-    public static LatestInfoManager CreateLatestInfoManager(Boolean forceShow, WindowEx window)
-    {
-        return new LatestInfoManager("http://shinta.coresv.com/soft/CFileMerge2_JPN.xml", forceShow, 3, Cfm2Constants.APP_VER, window)
-        {
-            CancellationToken = Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Token,
-        };
-    }
+	/// <summary>
+	/// 最新情報管理者を作成
+	/// </summary>
+	/// <param name="forceShow"></param>
+	/// <param name="window"></param>
+	/// <returns></returns>
+	public static LatestInfoManager CreateLatestInfoManager(Boolean forceShow, WindowEx window)
+	{
+		return new LatestInfoManager("http://shinta.coresv.com/soft/CFileMerge2_JPN.xml", forceShow, 3, Cfm2Constants.APP_VER, window)
+		{
+			CancellationToken = Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Token,
+		};
+	}
 
-    /// <summary>
-    /// 環境情報をログする
-    /// </summary>
-    public static void LogEnvironmentInfo()
-    {
-        SystemEnvironment se = new();
-        se.LogEnvironment();
-    }
+	/// <summary>
+	/// 環境設定を読み込み
+	/// </summary>
+	public static void LoadNkm3Settings()
+	{
+		try
+		{
+			Cfm2Model.Instance.EnvModel.Cfm2Settings = Cfm2Model.Instance.EnvModel.JsonManager.Load<Cfm2Settings>(Cfm2Constants.FILE_NAME_CFM2_SETTINGS, false);
+			Cfm2Model.Instance.EnvModel.Cfm2Settings.Adjust();
+		}
+		catch (Exception ex)
+		{
+			SerilogUtils.LogException("環境設定読み込み時エラー", ex);
+		}
+	}
 
-    /// <summary>
-    /// ヘルプの表示
-    /// </summary>
-    /// <param name="anchor"></param>
-    /// <returns></returns>
-    public static async Task ShowHelpAsync(WindowEx3 window, String? anchor = null)
-    {
-        String? helpPath = null;
+	/// <summary>
+	/// 環境情報をログする
+	/// </summary>
+	public static void LogEnvironmentInfo()
+	{
+		SystemEnvironment se = new();
+		se.LogEnvironment();
+	}
 
-        try
-        {
-            // アンカーが指定されている場合は状況依存型ヘルプを表示
-            if (!String.IsNullOrEmpty(anchor))
-            {
-                helpPath = Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + Cfm2Constants.FOLDER_NAME_HELP_PARTS
-                        + FILE_NAME_HELP_PREFIX + "_" + anchor + Common.FILE_EXT_HTML;
-                try
-                {
-                    Common.ShellExecute(helpPath);
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    await window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2Common_ShowHelpAsync_Error_NoAnchor".ToLocalized() + "\n" + ex.Message + "\n" + helpPath
-                            + "\n" + "Cfm2Common_ShowHelpAsync_ShowNormalHelp".ToLocalized());
-                }
-            }
+	/// <summary>
+	/// 環境設定を保存
+	/// </summary>
+	public static void SaveCfm2Settings()
+	{
+		try
+		{
+			Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchVer = Cfm2Constants.APP_VER;
+			Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchPath = Cfm2Model.Instance.EnvModel.ExeFullPath;
+			Cfm2Model.Instance.EnvModel.JsonManager.Save(Cfm2Model.Instance.EnvModel.Cfm2Settings, Cfm2Constants.FILE_NAME_CFM2_SETTINGS, false);
+		}
+		catch (Exception ex)
+		{
+			SerilogUtils.LogException("環境設定保存時エラー", ex);
+		}
+	}
 
-            // アンカーが指定されていない場合・状況依存型ヘルプを表示できなかった場合は通常のヘルプを表示
-            helpPath = Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + FILE_NAME_HELP_PREFIX + Common.FILE_EXT_HTML;
-            Common.ShellExecute(helpPath);
-        }
-        catch (Exception ex)
-        {
-            await window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2Common_ShowHelpAsync_Error_CannotShowHelp".ToLocalized() + "\n" + ex.Message + "\n" + helpPath);
-        }
-    }
+	/// <summary>
+	/// ヘルプの表示
+	/// </summary>
+	/// <param name="anchor"></param>
+	/// <returns></returns>
+	public static async Task ShowHelpAsync(WindowEx3 window, String? anchor = null)
+	{
+		String? helpPath = null;
 
-    /// <summary>
-    /// テンポラリフォルダー配下のファイル・フォルダー名として使えるパス（呼びだす度に異なる、拡張子なし）
-    /// </summary>
-    /// <returns></returns>
-    public static String TempPath()
-    {
-        // マルチスレッドでも安全にインクリメント
-        Int32 counter = Interlocked.Increment(ref _tempPathCounter);
-        return Common.TempFolderPath() + counter.ToString() + "_" + Environment.CurrentManagedThreadId.ToString();
-    }
+		try
+		{
+			// アンカーが指定されている場合は状況依存型ヘルプを表示
+			if (!String.IsNullOrEmpty(anchor))
+			{
+				helpPath = Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + Cfm2Constants.FOLDER_NAME_HELP_PARTS
+						+ FILE_NAME_HELP_PREFIX + "_" + anchor + Common.FILE_EXT_HTML;
+				try
+				{
+					Common.ShellExecute(helpPath);
+					return;
+				}
+				catch (Exception ex)
+				{
+					await window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2Common_ShowHelpAsync_Error_NoAnchor".ToLocalized() + "\n" + ex.Message + "\n" + helpPath
+							+ "\n" + "Cfm2Common_ShowHelpAsync_ShowNormalHelp".ToLocalized());
+				}
+			}
 
-    // ====================================================================
-    // private 定数
-    // ====================================================================
+			// アンカーが指定されていない場合・状況依存型ヘルプを表示できなかった場合は通常のヘルプを表示
+			helpPath = Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + FILE_NAME_HELP_PREFIX + Common.FILE_EXT_HTML;
+			Common.ShellExecute(helpPath);
+		}
+		catch (Exception ex)
+		{
+			await window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2Common_ShowHelpAsync_Error_CannotShowHelp".ToLocalized() + "\n" + ex.Message + "\n" + helpPath);
+		}
+	}
 
-    /// <summary>
-    /// ヘルプファイル名
-    /// </summary>
-    private const String FILE_NAME_HELP_PREFIX = Cfm2Constants.APP_ID + "_JPN";
+	/// <summary>
+	/// テンポラリフォルダー配下のファイル・フォルダー名として使えるパス（呼びだす度に異なる、拡張子なし）
+	/// </summary>
+	/// <returns></returns>
+	public static String TempPath()
+	{
+		// マルチスレッドでも安全にインクリメント
+		Int32 counter = Interlocked.Increment(ref _tempPathCounter);
+		return Common.TempFolderPath() + counter.ToString() + "_" + Environment.CurrentManagedThreadId.ToString();
+	}
 
-    // ====================================================================
-    // private 変数
-    // ====================================================================
+	// ====================================================================
+	// private 定数
+	// ====================================================================
 
-    // TempPath() 用カウンター（同じスレッドでもファイル名が分かれるようにするため）
-    private static Int32 _tempPathCounter = 0;
+	/// <summary>
+	/// ヘルプファイル名
+	/// </summary>
+	private const String FILE_NAME_HELP_PREFIX = Cfm2Constants.APP_ID + "_JPN";
+
+	// ====================================================================
+	// private 変数
+	// ====================================================================
+
+	// TempPath() 用カウンター（同じスレッドでもファイル名が分かれるようにするため）
+	private static Int32 _tempPathCounter = 0;
 }
