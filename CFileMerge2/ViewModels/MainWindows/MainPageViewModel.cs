@@ -544,15 +544,44 @@ public class MainPageViewModel : ObservableRecipient
 	/// <summary>
 	/// バージョン更新時の処理
 	/// </summary>
+	private async Task DoVerChangeedAsync()
+	{
+		// 保存
+		Cfm2Common.SaveCfm2Settings();
+
+		// メッセージ
+		LogEventLevel logEventLevel = LogEventLevel.Information;
+		String message = String.Empty;
+
+		// α・βの注意
+		if (Cfm2Constants.APP_VER.Contains('α'))
+		{
+			message += "MainPageViewModel_Warning_Alpha".ToLocalized() + "\n\n";
+			logEventLevel = LogEventLevel.Warning;
+		}
+		else if (Cfm2Constants.APP_VER.Contains('β'))
+		{
+			message += "MainPageViewModel_Warning_Beta".ToLocalized() + "\n\n";
+			logEventLevel = LogEventLevel.Warning;
+		}
+
+		message += String.Format("MainPageViewModel_Updated".ToLocalized(), Common.LK_GENERAL_APP_NAME.ToLocalized());
+
+		// 表示
+		await _mainWindow.ShowLogMessageDialogAsync(logEventLevel, message);
+	}
+
+	/// <summary>
+	/// バージョン更新時の処理
+	/// </summary>
 	private async Task DoVerChangedIfNeededAsync()
 	{
-		// 更新起動時とパス変更時の記録
-		// 新規起動時は、両フラグが立つのでダブらないように注意
+		// ToDo: 初回起動時はα・βの注意が表示されない
+		// 更新起動確認
 		String prevLaunchVer = Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchVer;
 		Boolean verChanged = prevLaunchVer != Cfm2Constants.APP_VER;
 		if (verChanged)
 		{
-			// ユーザーにメッセージ表示する前にログしておく
 			if (String.IsNullOrEmpty(prevLaunchVer))
 			{
 				Log.Information("新規起動：" + Cfm2Constants.APP_VER);
@@ -560,23 +589,8 @@ public class MainPageViewModel : ObservableRecipient
 			else
 			{
 				Log.Information("更新起動：" + prevLaunchVer + "→" + Cfm2Constants.APP_VER);
+				await DoVerChangeedAsync();
 			}
-		}
-		String prevLaunchPath = Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchPath;
-		Boolean pathChanged = (String.Compare(prevLaunchPath, Cfm2Model.Instance.EnvModel.ExeFullPath, true) != 0);
-		if (pathChanged && !String.IsNullOrEmpty(prevLaunchPath))
-		{
-			Log.Information("パス変更起動：" + prevLaunchPath + "→" + Cfm2Model.Instance.EnvModel.ExeFullPath);
-		}
-
-		// 更新起動時とパス変更時の処理
-		if (verChanged || pathChanged)
-		{
-			Cfm2Common.LogEnvironmentInfo();
-		}
-		if (verChanged)
-		{
-			await NewVersionLaunchedAsync();
 		}
 	}
 
@@ -1002,48 +1016,6 @@ public class MainPageViewModel : ObservableRecipient
 
 		// メイクファイル読み込み（再帰）
 		(_mergeInfo.Encoding, _mergeInfo.NewLine) = ParseFile(_mergeInfo.MakeFullPath, _mergeInfo.Lines, null);
-	}
-
-	/// <summary>
-	/// 新バージョンで初回起動された時の処理を行う
-	/// </summary>
-	private async Task NewVersionLaunchedAsync()
-	{
-		String newVerMsg = String.Empty;
-		LogEventLevel logEventLevel = LogEventLevel.Information;
-
-		// α・β警告、ならびに、更新時のメッセージ（2023/01/01）
-		// 更新のご挨拶
-		if (String.IsNullOrEmpty(Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchVer))
-		{
-			// 新規の場合は原則として挨拶しない
-		}
-		else
-		{
-			// 更新
-			newVerMsg = String.Format("MainPageViewModel_Updated".ToLocalized(), Common.LK_GENERAL_APP_NAME.ToLocalized());
-		}
-
-		// α・βの注意
-		if (Cfm2Constants.APP_VER.Contains('α'))
-		{
-			newVerMsg += "\n\n" + "MainPageViewModel_Warning_Alpha".ToLocalized();
-			logEventLevel = LogEventLevel.Warning;
-		}
-		else if (Cfm2Constants.APP_VER.Contains('β'))
-		{
-			newVerMsg += "\n\n" + "MainPageViewModel_Warning_Beta".ToLocalized();
-			logEventLevel = LogEventLevel.Warning;
-		}
-
-		Cfm2Common.SaveCfm2Settings();
-		if (String.IsNullOrEmpty(newVerMsg))
-		{
-			return;
-		}
-
-		// 表示
-		await _mainWindow.ShowLogMessageDialogAsync(logEventLevel, newVerMsg);
 	}
 
 	/// <summary>
