@@ -1,4 +1,4 @@
-﻿<v:PageEx3
+<v:PageEx3
     x:Class="CFileMerge2.Views.MainWindows.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,71 +11,71 @@
     Loaded="{x:Bind ViewModel.PageLoaded}" 
     mc:Ignorable="d">
 
-    <StackPanel Margin="{x:Bind msm:Cfm2Constants.MARGIN_DEFAULT_THICKNESS}" VerticalAlignment="Top" Canvas.ZIndex="0" >
-        <RelativePanel >
-            <TextBlock Name="TextBlockMake" x:Uid="MainPage_TextBlockMake" RelativePanel.AlignVerticalCenterWithPanel="True" />
-            <TextBox Name="TextBoxMake" Text="{x:Bind ViewModel.MakePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AccessKey="M" Margin="5,0,0,0" RelativePanel.RightOf="TextBlockMake" RelativePanel.LeftOf="ButtonRecentMake" AllowDrop="True" DragOver="{x:Bind ViewModel.TextBlockMakeDragOver}" Drop="{x:Bind ViewModel.TextBoxMakeDrop}" />
-            <Button Name="ButtonRecentMake" AccessKey="R" IsEnabled="{x:Bind ViewModel.IsRecentMakeEnabled, Mode=OneWay}" Margin="0,0,10,0" RelativePanel.LeftOf="ButtonBrowseMake" >
-                <FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE823;"/>
-                <Button.Flyout>
-                    <MenuFlyout Opening="{x:Bind ViewModel.MenuFlyoutRecentMakeOpening}" />
-                </Button.Flyout>
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Uid="MainPage_ButtonRecentMake_ToolTip" />
-                </ToolTipService.ToolTip>
-            </Button>
-            <Button Name="ButtonBrowseMake" x:Uid="MainPage_ButtonBrowseMake" AccessKey="B" Width="100" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonBrowseMakeClickedCommand}" />
-        </RelativePanel>
-        <RelativePanel Margin="0,10,0,0" >
-            <Button Name="ButtonCfm2Settings" AccessKey="E" Command="{x:Bind ViewModel.ButtonCfm2SettingsClickedCommand}" >
-                <FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE713;"/>
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Uid="MainPage_ButtonCfm2Settings_ToolTip" />
-                </ToolTipService.ToolTip>
-            </Button>
-            <Button AccessKey="H" RelativePanel.RightOf="ButtonCfm2Settings" Margin="5,0,0,0" >
-                <FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE9CE;"/>
-                <Button.Flyout>
-                    <MenuFlyout ShouldConstrainToRootBounds="False">
-                        <MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemHelp" Command="{x:Bind ViewModel.MenuFlyoutItemHelpClickedCommand}" >
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE9CE;"/>
-                            </MenuFlyoutItem.Icon>
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="H" />
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemSampleFolder" Command="{x:Bind ViewModel.MenuFlyoutItemSampleFolderClickedCommand}" >
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="S" />
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemAbout" Command="{x:Bind ViewModel.MenuFlyoutItemAboutClickedCommand}" >
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE946;"/>
-                            </MenuFlyoutItem.Icon>
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="A" />
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                    </MenuFlyout>
-                </Button.Flyout>
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Uid="MainPage_ButtonHelp_ToolTip" />
-                </ToolTipService.ToolTip>
-            </Button>
-            <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True" >
-                <Button x:Uid="MainPage_ButtonOpenOutFile" Width="150" AccessKey="O" Command="{x:Bind ViewModel.ButtonOpenOutFileClickedCommand}" />
-                <Button Width="150" Margin="20,0,0,0" Style="{StaticResource AccentButtonStyle}" AccessKey="S" Command="{x:Bind ViewModel.ButtonGoClickedCommand}" >
-                    <StackPanel Orientation="Horizontal">
-                        <!-- E768 Play も良さそう -->
-                        <FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE726;"/>
-                        <TextBlock x:Uid="MainPage_TextBlockGo" Margin="10,0,0,0" />
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-        </RelativePanel>
-    </StackPanel>
+	<StackPanel Padding="{x:Bind msm:Cfm2Constants.MARGIN_DEFAULT_THICKNESS}" VerticalAlignment="Top" Canvas.ZIndex="0" >
+		<RelativePanel >
+			<TextBlock Name="TextBlockMake" x:Uid="MainPage_TextBlockMake" RelativePanel.AlignVerticalCenterWithPanel="True" />
+			<TextBox Name="TextBoxMake" Text="{x:Bind ViewModel.MakePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AccessKey="M" Margin="5,0,0,0" RelativePanel.RightOf="TextBlockMake" RelativePanel.LeftOf="ButtonRecentMake" AllowDrop="True" DragOver="{x:Bind ViewModel.TextBlockMakeDragOver}" Drop="{x:Bind ViewModel.TextBoxMakeDrop}" />
+			<Button Name="ButtonRecentMake" AccessKey="R" IsEnabled="{x:Bind ViewModel.IsRecentMakeEnabled, Mode=OneWay}" Margin="0,0,10,0" RelativePanel.LeftOf="ButtonBrowseMake" >
+				<FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE823;"/>
+				<Button.Flyout>
+					<MenuFlyout Opening="{x:Bind ViewModel.MenuFlyoutRecentMakeOpening}" />
+				</Button.Flyout>
+				<ToolTipService.ToolTip>
+					<ToolTip x:Uid="MainPage_ButtonRecentMake_ToolTip" />
+				</ToolTipService.ToolTip>
+			</Button>
+			<Button Name="ButtonBrowseMake" x:Uid="MainPage_ButtonBrowseMake" AccessKey="B" Width="100" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonBrowseMakeClickedCommand}" />
+		</RelativePanel>
+		<RelativePanel Margin="0,10,0,0" >
+			<Button Name="ButtonCfm2Settings" AccessKey="E" Command="{x:Bind ViewModel.ButtonCfm2SettingsClickedCommand}" >
+				<FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE713;"/>
+				<ToolTipService.ToolTip>
+					<ToolTip x:Uid="MainPage_ButtonCfm2Settings_ToolTip" />
+				</ToolTipService.ToolTip>
+			</Button>
+			<Button AccessKey="H" RelativePanel.RightOf="ButtonCfm2Settings" Margin="5,0,0,0" >
+				<FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE9CE;"/>
+				<Button.Flyout>
+					<MenuFlyout ShouldConstrainToRootBounds="False">
+						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemHelp" Command="{x:Bind ViewModel.MenuFlyoutItemHelpClickedCommand}" >
+							<MenuFlyoutItem.Icon>
+								<FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE9CE;"/>
+							</MenuFlyoutItem.Icon>
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="H" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
+						<MenuFlyoutSeparator/>
+						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemSampleFolder" Command="{x:Bind ViewModel.MenuFlyoutItemSampleFolderClickedCommand}" >
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="S" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
+						<MenuFlyoutSeparator/>
+						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemAbout" Command="{x:Bind ViewModel.MenuFlyoutItemAboutClickedCommand}" >
+							<MenuFlyoutItem.Icon>
+								<FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE946;"/>
+							</MenuFlyoutItem.Icon>
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="A" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
+					</MenuFlyout>
+				</Button.Flyout>
+				<ToolTipService.ToolTip>
+					<ToolTip x:Uid="MainPage_ButtonHelp_ToolTip" />
+				</ToolTipService.ToolTip>
+			</Button>
+			<StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True" >
+				<Button x:Uid="MainPage_ButtonOpenOutFile" Width="150" AccessKey="O" Command="{x:Bind ViewModel.ButtonOpenOutFileClickedCommand}" />
+				<Button Width="150" Margin="20,0,0,0" Style="{StaticResource AccentButtonStyle}" AccessKey="S" Command="{x:Bind ViewModel.ButtonGoClickedCommand}" >
+					<StackPanel Orientation="Horizontal">
+						<!-- E768 Play も良さそう -->
+						<FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE726;"/>
+						<TextBlock x:Uid="MainPage_TextBlockGo" Margin="10,0,0,0" />
+					</StackPanel>
+				</Button>
+			</StackPanel>
+		</RelativePanel>
+	</StackPanel>
 </v:PageEx3>
