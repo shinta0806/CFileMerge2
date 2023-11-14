@@ -1574,7 +1574,7 @@ public class MainPageViewModel : ObservableRecipient
 		{
 			ProgressValue = 0.0;
 			_progress = true;
-			_mainWindow.AddVeil("ProgressGrid", this);
+			_mainWindow.AddVeil();
 		});
 	}
 
