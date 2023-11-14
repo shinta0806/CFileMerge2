@@ -1,4 +1,4 @@
-﻿// ============================================================================
+// ============================================================================
 // 
 // バージョン情報ページの ViewModel
 // 
@@ -9,6 +9,7 @@
 // ----------------------------------------------------------------------------
 
 using System.Windows.Input;
+
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.Views;
@@ -19,9 +20,6 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-
-using Serilog;
-using Serilog.Events;
 
 using Shinta;
 

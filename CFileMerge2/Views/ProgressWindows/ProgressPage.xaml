@@ -1,0 +1,20 @@
+<v:PageEx3
+    x:Class="CFileMerge2.Views.ProgressWindows.ProgressPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:v="using:CFileMerge2.Views"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    mc:Ignorable="d"
+	Loaded="{x:Bind ViewModel.PageLoaded}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" >
+
+		<StackPanel Margin="20" Orientation="Horizontal" >
+			<TextBlock x:Uid="ProgressGrid_TextBlockProgress" />
+			<ProgressBar Minimum="0" Maximum="1" Value="{x:Bind ViewModel.ProgressValue, Mode=OneWay}" Width="200" Margin="20,0,0,0" />
+		</StackPanel>
+
+	</StackPanel>
+</v:PageEx3>
