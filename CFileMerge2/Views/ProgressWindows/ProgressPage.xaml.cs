@@ -22,10 +22,10 @@ public sealed partial class ProgressPage : PageEx3
 	/// メインコンストラクター
 	/// </summary>
 	/// <param name="progressWindow"></param>
-	public ProgressPage(ProgressWindow progressWindow, String makePath)
+	public ProgressPage(ProgressWindow progressWindow, String makePath, Boolean onlyCore)
 		: base(progressWindow)
 	{
-		ViewModel = new(progressWindow, makePath);
+		ViewModel = new(progressWindow, makePath, onlyCore);
 		InitializeComponent();
 	}
 

@@ -24,7 +24,7 @@ public sealed partial class ProgressWindow : WindowEx3
 	/// <summary>
 	/// メインコンストラクター
 	/// </summary>
-	public ProgressWindow(String makePath)
+	public ProgressWindow(String makePath, Boolean onlyCore)
 	{
 		InitializeComponent();
 
@@ -32,6 +32,6 @@ public sealed partial class ProgressWindow : WindowEx3
 		SizeToContent = SizeToContent.WidthAndHeight;
 		AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
 		Title = "ProgressWindow_Title".ToLocalized();
-		Content = new ProgressPage(this, makePath);
+		Content = new ProgressPage(this, makePath, onlyCore);
 	}
 }

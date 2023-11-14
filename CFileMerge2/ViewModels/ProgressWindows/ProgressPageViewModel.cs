@@ -8,18 +8,21 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System.Text.RegularExpressions;
 using System.Text;
+using System.Text.RegularExpressions;
+
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
-using CFileMerge2.Views.MainWindows;
 using CFileMerge2.Views.ProgressWindows;
 
 using CommunityToolkit.Mvvm.ComponentModel;
+
 using Hnx8.ReadJEnc;
-using Microsoft.UI.Xaml;
-using Shinta;
+
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
+
+using Shinta;
 
 namespace CFileMerge2.ViewModels.ProgressWindows;
 
@@ -33,11 +36,12 @@ public class ProgressPageViewModel : ObservableRecipient
 	/// メインコンストラクター
 	/// </summary>
 	/// <param name="progressWindow"></param>
-	public ProgressPageViewModel(ProgressWindow progressWindow, String makePath)
+	public ProgressPageViewModel(ProgressWindow progressWindow, String makePath, Boolean onlyCore)
 	{
 		// 初期化
 		_progressWindow = progressWindow;
 		_makePath = makePath;
+		_onlyCore = onlyCore;
 	}
 
 	// ====================================================================
@@ -89,21 +93,25 @@ public class ProgressPageViewModel : ObservableRecipient
 			}
 
 			// 報告
-			if (MergeInfo.Warnings.Any())
+			if (!_onlyCore)
+
 			{
-				// 警告あり
-				String message = "MainPageViewModel_MergeAsync_Warnings".ToLocalized() + "\n";
-				for (Int32 i = 0; i < MergeInfo.Warnings.Count; i++)
+				if (MergeInfo.Warnings.Any())
 				{
-					message += MergeInfo.Warnings[i] + "\n";
+					// 警告あり
+					String message = "MainPageViewModel_MergeAsync_Warnings".ToLocalized() + "\n";
+					for (Int32 i = 0; i < MergeInfo.Warnings.Count; i++)
+					{
+						message += MergeInfo.Warnings[i] + "\n";
+					}
+					await _progressWindow.ShowLogMessageDialogAsync(LogEventLevel.Warning, message);
 				}
-				await _progressWindow.ShowLogMessageDialogAsync(LogEventLevel.Warning, message);
-			}
-			else
-			{
-				// 完了
-				await _progressWindow.ShowLogMessageDialogAsync(LogEventLevel.Information,
-					String.Format("MainPageViewModel_MergeAsync_Done".ToLocalized(), (Environment.TickCount - startTick).ToString("#,0")));
+				else
+				{
+					// 完了
+					await _progressWindow.ShowLogMessageDialogAsync(LogEventLevel.Information,
+						String.Format("MainPageViewModel_MergeAsync_Done".ToLocalized(), (Environment.TickCount - startTick).ToString("#,0")));
+				}
 			}
 		}
 		catch (OperationCanceledException ex)
@@ -134,14 +142,19 @@ public class ProgressPageViewModel : ObservableRecipient
 	// ====================================================================
 
 	/// <summary>
+	/// 進捗ウィンドウ
+	/// </summary>
+	private readonly ProgressWindow _progressWindow;
+
+	/// <summary>
 	/// メイクファイルのパス（相対パスも可）
 	/// </summary>
 	private readonly String _makePath;
 
 	/// <summary>
-	/// 進捗ウィンドウ
+	/// コア処理のみ実施
 	/// </summary>
-	private readonly ProgressWindow _progressWindow;
+	private readonly Boolean _onlyCore;
 
 	// ====================================================================
 	// private 関数
@@ -430,6 +443,10 @@ public class ProgressPageViewModel : ObservableRecipient
 		try
 		{
 			MergeCore();
+			if (_onlyCore)
+			{
+				return exception;
+			}
 
 			// 目次作成
 			SetProgressValue(MergeStep.InsertToc, 0.0);
@@ -452,7 +469,7 @@ public class ProgressPageViewModel : ObservableRecipient
 			SetProgressValue(MergeStep.OutputAnchor, 100.0);
 
 #if DEBUGz
-                Thread.Sleep(5 * 1000);
+			Thread.Sleep(5 * 1000);
 #endif
 
 		}
@@ -705,7 +722,7 @@ public class ProgressPageViewModel : ObservableRecipient
 			{
 				SetProgressValue(MergeStep.ParseFile, (Double)MergeInfo.NumProgressLines / MergeInfo.NumTotalLines);
 #if DEBUGz
-                Thread.Sleep(100);
+				Thread.Sleep(100);
 #endif
 			}
 			if (line == null)

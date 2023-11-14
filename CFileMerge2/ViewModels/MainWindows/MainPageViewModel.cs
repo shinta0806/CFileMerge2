@@ -244,52 +244,20 @@ public class MainPageViewModel : ObservableRecipient
 	{
 		try
 		{
-#if false
-			Boolean open = true;
-
-			if (String.IsNullOrEmpty(_mergeInfo.OutFullPath))
+			if (String.IsNullOrEmpty(_outFullPath))
 			{
-				open = await Task.Run(async () =>
-				{
-					try
-					{
-						Debug.Assert(!_progress, "ButtonOpenOutFileClicked() 既に実行中");
-						Log.Information("出力ファイルを開きます：" + MakePath);
-						ShowProgressArea();
-						MergeCore();
-#if DEBUGz
-                        Thread.Sleep(3 * 1000);
-#endif
-						return true;
-					}
-					catch (OperationCanceledException)
-					{
-						Log.Information("出力ファイルを開くのを中止しました。");
-						return false;
-					}
-					catch (Exception ex)
-					{
-						await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_OpenOutFile_Error".ToLocalized() + "\n" + ex.Message);
-						SerilogUtils.LogStackTrace(ex);
-						return false;
-					}
-					finally
-					{
-						HideProgressArea();
-					}
-				});
+				(ProgressWindow progressWindow, ProgressPageViewModel progressPageViewModel) = CreateProgressWindow(true);
+				await _mainWindow.ShowDialogAsync(progressWindow);
+				_outFullPath = progressPageViewModel.MergeInfo.OutFullPath;
 			}
-
-			if (open)
+			if (!String.IsNullOrEmpty(_outFullPath))
 			{
-				Common.ShellExecute(_mergeInfo.OutFullPath);
+				Common.ShellExecute(_outFullPath);
 			}
-#endif
 		}
 		catch (Exception ex)
 		{
-			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_ButtonOpenOutFileClicked_Error".ToLocalized() + "\n" + ex.Message);
-			SerilogUtils.LogStackTrace(ex);
+			await _mainWindow.ShowExceptionLogMessageDialogAsync("MainPageViewModel_ButtonOpenOutFileClicked_Error".ToLocalized(), ex);
 		}
 	}
 	#endregion
@@ -304,8 +272,9 @@ public class MainPageViewModel : ObservableRecipient
 	{
 		try
 		{
-			(ProgressWindow progressWindow, ProgressPageViewModel progressPageViewModel) = CreateProgressWindow();
+			(ProgressWindow progressWindow, ProgressPageViewModel progressPageViewModel) = CreateProgressWindow(false);
 			await _mainWindow.ShowDialogAsync(progressWindow);
+			_outFullPath = progressPageViewModel.MergeInfo.OutFullPath;
 
 			// 最近使用したメイクファイル追加
 			AddRecent(progressPageViewModel.MergeInfo.MakeFullPath);
@@ -425,9 +394,9 @@ public class MainPageViewModel : ObservableRecipient
 	private readonly MainWindow _mainWindow;
 
 	/// <summary>
-	/// 処理中
+	/// 出力ファイル
 	/// </summary>
-	//private Boolean _progress;
+	private String? _outFullPath;
 
 	/// <summary>
 	/// 最近使用したメイクファイル
@@ -499,9 +468,9 @@ public class MainPageViewModel : ObservableRecipient
 	/// 進捗ウィンドウを作成
 	/// </summary>
 	/// <returns></returns>
-	private (ProgressWindow, ProgressPageViewModel) CreateProgressWindow()
+	private (ProgressWindow, ProgressPageViewModel) CreateProgressWindow(Boolean onlyCore)
 	{
-		ProgressWindow progressWindow = new(MakePath);
+		ProgressWindow progressWindow = new(MakePath, onlyCore);
 		return (progressWindow, ((ProgressPage)progressWindow.Content).ViewModel);
 	}
 
