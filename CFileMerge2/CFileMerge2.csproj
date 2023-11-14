@@ -41,8 +41,6 @@
     <None Remove="Views\Cfm2SettingsWindow.xaml" />
     <None Remove="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationMaintenancePage.xaml" />
     <None Remove="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationSettingsPage.xaml" />
-    <None Remove="Views\Dynamics\ProgressGrid.xaml" />
-    <None Remove="Views\Dynamics\VeilGrid.xaml" />
     <None Remove="Views\ProgressWindows\ProgressPage.xaml" />
     <None Remove="Views\ProgressWindows\ProgressWindow.xaml" />
   </ItemGroup>
@@ -183,17 +181,6 @@
 
   <ItemGroup>
     <PRIResource Remove="Views\Cfm2SettingsWindow\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Views\Dynamics\ProgressGrid.xaml" />
-    <None Remove="Views\Dynamics\VeilGrid.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Dynamics\ProgressGrid.xaml">
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Dynamics\VeilGrid.xaml" />
   </ItemGroup>
 
   <ItemGroup>

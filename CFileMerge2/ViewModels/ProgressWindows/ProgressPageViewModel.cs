@@ -16,6 +16,7 @@ using CFileMerge2.Models.SharedMisc;
 using CFileMerge2.Views.ProgressWindows;
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 using Hnx8.ReadJEnc;
 
@@ -23,6 +24,8 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 
 using Shinta;
+
+using Windows.UI.Popups;
 
 namespace CFileMerge2.ViewModels.ProgressWindows;
 
@@ -42,6 +45,9 @@ public class ProgressPageViewModel : ObservableRecipient
 		_progressWindow = progressWindow;
 		_makePath = makePath;
 		_onlyCore = onlyCore;
+
+		// コマンド
+		ButtonAbortClickedCommand = new RelayCommand(ButtonAbortClicked);
 	}
 
 	// ====================================================================
@@ -73,6 +79,37 @@ public class ProgressPageViewModel : ObservableRecipient
 	{
 		get;
 	} = new();
+
+	// --------------------------------------------------------------------
+	// コマンド
+	// --------------------------------------------------------------------
+
+	#region 中止ボタンの制御
+	public RelayCommand ButtonAbortClickedCommand
+	{
+		get;
+	}
+
+	private async void ButtonAbortClicked()
+	{
+		try
+		{
+			MessageDialog messageDialog = _progressWindow.CreateMessageDialog("MainPageViewModel_AppWindowClosing_Confirm".ToLocalized(), Common.LK_GENERAL_LABEL_CONFIRM.ToLocalized());
+			messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_YES.ToLocalized()));
+			messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_NO.ToLocalized()));
+			IUICommand cmd = await messageDialog.ShowAsync();
+			if (cmd.Label != Common.LK_GENERAL_LABEL_YES.ToLocalized())
+			{
+				return;
+			}
+			_cancellationTokenSource.Cancel();
+		}
+		catch (Exception ex)
+		{
+			await _progressWindow.ShowExceptionLogMessageDialogAsync("ProgressPageViewModel_ButtonAbortClicked_Error".ToLocalized(), ex);
+		}
+	}
+	#endregion
 
 	// ====================================================================
 	// public 関数
@@ -155,6 +192,11 @@ public class ProgressPageViewModel : ObservableRecipient
 	/// コア処理のみ実施
 	/// </summary>
 	private readonly Boolean _onlyCore;
+
+	/// <summary>
+	/// キャンセル用
+	/// </summary>
+	private readonly CancellationTokenSource _cancellationTokenSource = new();
 
 	// ====================================================================
 	// private 関数
@@ -721,7 +763,7 @@ public class ProgressPageViewModel : ObservableRecipient
 			if (MergeInfo.NumProgressLines % Cfm2Constants.PROGRESS_INTERVAL == 0)
 			{
 				SetProgressValue(MergeStep.ParseFile, (Double)MergeInfo.NumProgressLines / MergeInfo.NumTotalLines);
-#if DEBUGz
+#if DEBUG
 				Thread.Sleep(100);
 #endif
 			}
@@ -729,7 +771,7 @@ public class ProgressPageViewModel : ObservableRecipient
 			{
 				break;
 			}
-			Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Token.ThrowIfCancellationRequested();
+			_cancellationTokenSource.Token.ThrowIfCancellationRequested();
 		}
 	}
 

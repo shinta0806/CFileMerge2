@@ -333,7 +333,7 @@ Elapsed time: {0} milliseconds</value>
   <data name="MainPageViewModel_SrcName_Tag" xml:space="preserve">
     <value>{0} tag</value>
   </data>
-  <data name="ProgressGrid_TextBlockProgress.Text" xml:space="preserve">
+  <data name="ProgressPage_TextBlockProgress.Text" xml:space="preserve">
     <value>Processing...</value>
   </data>
   <data name="0_Confirm" xml:space="preserve">
@@ -488,5 +488,8 @@ Please read the help carefully before use and use with caution.</value>
   <data name="MainPageViewModel_Warning_Beta" xml:space="preserve">
     <value>This version is a beta version under development.
 Please read the help carefully before use and use with caution.</value>
+  </data>
+  <data name="ProgressPage_ButtonAbort.Content" xml:space="preserve">
+    <value>Abort</value>
   </data>
 </root>

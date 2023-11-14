@@ -5,16 +5,11 @@
 // ============================================================================
 
 // ----------------------------------------------------------------------------
-// The .NET Generic Host provides dependency injection, configuration, logging, and other services.
-// https://docs.microsoft.com/dotnet/core/extensions/generic-host
-// https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
-// https://docs.microsoft.com/dotnet/core/extensions/configuration
-// https://docs.microsoft.com/dotnet/core/extensions/logging
+// 
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
-using CFileMerge2.Views;
 using CFileMerge2.Views.MainWindows;
 
 using Microsoft.UI.Xaml;
@@ -36,20 +31,6 @@ public partial class App : Application
 	{
 		InitializeComponent();
 	}
-
-	// ====================================================================
-	// public プロパティー
-	// ====================================================================
-
-#if false
-	/// <summary>
-	/// メインウィンドウ
-	/// </summary>
-	public static WindowEx3 MainWindow
-	{
-		get;
-	} = new MainWindow();
-#endif
 
 	// ====================================================================
 	// protected 関数
@@ -99,7 +80,7 @@ public partial class App : Application
 	{
 		// まずはログのみ
 		String message = "不明なエラーが発生しました。アプリケーションを終了します。\n"
-				+ args.Message + "\n" + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace;
+			+ args.Message + "\n" + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace;
 		Log.Fatal(message);
 
 		// 表示

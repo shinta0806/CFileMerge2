@@ -146,7 +146,7 @@
     <value>ja-jp</value>
   </data>
   <data name="MainPage_ButtonBrowseMake.Content" xml:space="preserve">
-    <value>参照 (B)</value>
+    <value>参照(B)</value>
   </data>
   <data name="MainPage_ButtonCfm2Settings_ToolTip.Content" xml:space="preserve">
     <value>環境設定</value>
@@ -155,7 +155,7 @@
     <value>ヘルプ</value>
   </data>
   <data name="MainPage_ButtonOpenOutFile.Content" xml:space="preserve">
-    <value>出力ファイルを開く (O)</value>
+    <value>出力ファイルを開く(O)</value>
   </data>
   <data name="MainPage_ButtonRecentMake_ToolTip.Content" xml:space="preserve">
     <value>最近使用したメイクファイル</value>
@@ -173,7 +173,7 @@
     <value>スタート</value>
   </data>
   <data name="MainPage_TextBlockMake.Text" xml:space="preserve">
-    <value>メイクファイル (M)：</value>
+    <value>メイクファイル(M)：</value>
   </data>
   <data name="0_AppDistributionStore" xml:space="preserve">
     <value>ストア版</value>
@@ -222,7 +222,7 @@
     <value>OK ボタンクリック時エラー：</value>
   </data>
   <data name="AboutPage_ButtonCheckUpdate.Content" xml:space="preserve">
-    <value>更新プログラムの確認 (U)</value>
+    <value>更新プログラムの確認(U)</value>
   </data>
   <data name="AboutPage_TextBlockAppDistrib.Text" xml:space="preserve">
     <value>配布ページ：</value>
@@ -333,7 +333,7 @@
   <data name="MainPageViewModel_SrcName_Tag" xml:space="preserve">
     <value>{0}  タグ</value>
   </data>
-  <data name="ProgressGrid_TextBlockProgress.Text" xml:space="preserve">
+  <data name="ProgressPage_TextBlockProgress.Text" xml:space="preserve">
     <value>処理中...</value>
   </data>
   <data name="0_Confirm" xml:space="preserve">
@@ -379,16 +379,16 @@
     <value>設定ファイル内の設定を読み込めません。</value>
   </data>
   <data name="Cfm2SettingsNavigationMaintenancePage_ButtonBackup.Content" xml:space="preserve">
-    <value>設定のバックアップ (B)</value>
+    <value>設定のバックアップ(B)</value>
   </data>
   <data name="Cfm2SettingsNavigationMaintenancePage_ButtonCheckRss.Content" xml:space="preserve">
-    <value>今すぐ最新情報を確認 (A)</value>
+    <value>今すぐ最新情報を確認(A)</value>
   </data>
   <data name="Cfm2SettingsNavigationMaintenancePage_ButtonRestore.Content" xml:space="preserve">
-    <value>設定の復元 (R)</value>
+    <value>設定の復元(R)</value>
   </data>
   <data name="Cfm2SettingsNavigationMaintenancePage_CheckBoxCheckRss_Content" xml:space="preserve">
-    <value>{0} の最新情報を自動的に確認する (L)</value>
+    <value>{0} の最新情報を自動的に確認する(L)</value>
   </data>
   <data name="Cfm2SettingsNavigationMaintenancePage_TextBlockBackup.Text" xml:space="preserve">
     <value>設定のバックアップ（ファイルに保存）</value>
@@ -405,7 +405,7 @@
     <value>※GenerateAnchorFiles タグでの指定が優先されます。</value>
   </data>
   <data name="Cfm2SettingsNavigationSettingsPage_CheckBoxOverwriteAnchorFiles.Content" xml:space="preserve">
-    <value>既存のアンカーファイルを上書きする (V)</value>
+    <value>既存のアンカーファイルを上書きする(V)</value>
   </data>
   <data name="Cfm2SettingsNavigationSettingsPage_TextBlockAnchor.Text" xml:space="preserve">
     <value>アンカーファイル作成対象</value>
@@ -463,7 +463,7 @@
     <value>更新履歴ボタンクリック時エラー：</value>
   </data>
   <data name="AboutPage_ButtonHistory.Content" xml:space="preserve">
-    <value>更新履歴 (H)</value>
+    <value>更新履歴(H)</value>
   </data>
   <data name="Cfm2SettingsPageViewModel_ButtonDefaultClicked_Error" xml:space="preserve">
     <value>初期化ボタンクリック時エラー：</value>
@@ -473,7 +473,7 @@
 よろしいですか？</value>
   </data>
   <data name="Cfm2SettingsPage_ButtonDefault.Content" xml:space="preserve">
-    <value>初期化 (I)</value>
+    <value>初期化(I)</value>
   </data>
   <data name="MainPageViewModel_Updated" xml:space="preserve">
     <value>【更新起動】
@@ -488,5 +488,11 @@
   <data name="MainPageViewModel_Warning_Beta" xml:space="preserve">
     <value>このバージョンは開発途上のベータバージョンです。
 使用前にヘルプをよく読み、注意してお使い下さい。</value>
+  </data>
+  <data name="ProgressPageViewModel_ButtonAbortClicked_Error" xml:space="preserve">
+    <value>中止時エラー：</value>
+  </data>
+  <data name="ProgressPage_ButtonAbort.Content" xml:space="preserve">
+    <value>中止(A)</value>
   </data>
 </root>

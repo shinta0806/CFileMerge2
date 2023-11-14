@@ -14,9 +14,6 @@ using CFileMerge2.Models.SharedMisc;
 
 using CommunityToolkit.Mvvm.Input;
 
-using Serilog;
-using Serilog.Events;
-
 using Shinta.WinUi3.Views;
 
 namespace CFileMerge2.Views;

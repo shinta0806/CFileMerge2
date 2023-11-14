@@ -12,8 +12,9 @@
 	<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" >
 
 		<StackPanel Margin="20" Orientation="Horizontal" >
-			<TextBlock x:Uid="ProgressGrid_TextBlockProgress" />
+			<TextBlock x:Uid="ProgressPage_TextBlockProgress" />
 			<ProgressBar Minimum="0" Maximum="1" Value="{x:Bind ViewModel.ProgressValue, Mode=OneWay}" Width="200" Margin="20,0,0,0" />
+			<Button x:Uid="ProgressPage_ButtonAbort" AccessKey="A" Margin="20,0,0,0" Command="{x:Bind ViewModel.ButtonAbortClickedCommand}" />
 		</StackPanel>
 
 	</StackPanel>
