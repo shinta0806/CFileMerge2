@@ -135,16 +135,6 @@ internal class Cfm2Constants
 	// --------------------------------------------------------------------
 
 	/// <summary>
-	/// よく使うラベル
-	/// </summary>
-	//public const String LABEL_CONFIRM = "確認";
-	//public const String LABEL_ERROR = "エラー";
-	//public const String LABEL_INFORMATION = "情報";
-	//public const String LABEL_NO = "いいえ";
-	//public const String LABEL_WARNING = "警告";
-	//public const String LABEL_YES = "はい";
-
-	/// <summary>
 	/// ボタン幅のデフォルト
 	/// </summary>
 	public const Double BUTTON_WIDTH_DEFAULT = 120.0;
