@@ -94,7 +94,7 @@ public partial class App : Application
 		// 表示
 		try
 		{
-			await _mainWindow?.CreateMessageDialog(message, Localize.GeneralView_Fatal.Localized()).ShowAsync();
+			await _mainWindow?.CreateMessageDialog(message, Localize.Fatal.Localized()).ShowAsync();
 		}
 		catch (Exception)
 		{

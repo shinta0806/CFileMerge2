@@ -88,29 +88,8 @@
 <data name="GeneralView_ButtonOk.Content" xml:space="preserve">
 <value>OK</value>
 </data>
-<data name="GeneralView_Confirm" xml:space="preserve">
-<value>Confirm</value>
-</data>
-<data name="GeneralView_Fatal" xml:space="preserve">
-<value>Fatal</value>
-</data>
-<data name="GeneralView_Error" xml:space="preserve">
-<value>Error</value>
-</data>
-<data name="GeneralView_Warning" xml:space="preserve">
-<value>Warning</value>
-</data>
-<data name="GeneralView_Information" xml:space="preserve">
-<value>Information</value>
-</data>
 <data name="GeneralView_FileTypeSta" xml:space="preserve">
 <value>Settings file</value>
-</data>
-<data name="GeneralView_Yes" xml:space="preserve">
-<value>Yes</value>
-</data>
-<data name="GeneralView_No" xml:space="preserve">
-<value>No</value>
 </data>
 <data name="GeneralView_Error_CannotShowHelp" xml:space="preserve">
 <value>Could not display help.</value>
@@ -426,6 +405,30 @@ May not be able to restore successfully, do you want to restore?</value>
 </data>
 <data name="Cfm2SettingsNavigationMaintenancePageViewModel_Error_LoadSettingsArchiveAsync_CannotLoad2" xml:space="preserve">
 <value>Cannot read the settings in the settings file.</value>
+</data>
+<data name="Confirm" xml:space="preserve">
+<value>Confirm</value>
+</data>
+<data name="No" xml:space="preserve">
+<value>No</value>
+</data>
+<data name="Ok" xml:space="preserve">
+<value>OK</value>
+</data>
+<data name="Yes" xml:space="preserve">
+<value>Yes</value>
+</data>
+<data name="Fatal" xml:space="preserve">
+<value>Fatal</value>
+</data>
+<data name="Error" xml:space="preserve">
+<value>Error</value>
+</data>
+<data name="Warning" xml:space="preserve">
+<value>Warning</value>
+</data>
+<data name="Information" xml:space="preserve">
+<value>Information</value>
 </data>
 <data name="LatestInfoManager_Ask_AskDisplayLatestAsync" xml:space="preserve">
 <value>Found {0} newest information.

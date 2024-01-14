@@ -80,11 +80,11 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 				{
 					MessageDialog messageDialog = _window.CreateMessageDialog(
 						String.Format(Localize.Cfm2SettingsNavigationMaintenancePageViewModel_Confirm_CheckRss.Localized(), Localize.AppInfo_AppName.Localized()),
-						Localize.GeneralView_Warning.Localized());
-					messageDialog.Commands.Add(new UICommand(Localize.GeneralView_Yes.Localized()));
-					messageDialog.Commands.Add(new UICommand(Localize.GeneralView_No.Localized()));
+						Localize.Warning.Localized());
+					messageDialog.Commands.Add(new UICommand(Localize.Yes.Localized()));
+					messageDialog.Commands.Add(new UICommand(Localize.No.Localized()));
 					IUICommand cmd = await messageDialog.ShowAsync();
-					if (cmd.Label != Localize.GeneralView_Yes.Localized())
+					if (cmd.Label != Localize.Yes.Localized())
 					{
 						_window.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
 						{

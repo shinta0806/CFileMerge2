@@ -1,4 +1,4 @@
-﻿<v:PageEx3
+<v:PageEx3
     x:Class="CFileMerge2.Views.Cfm2SettingsWindows.Cfm2SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -34,8 +34,8 @@
         <!-- ボタン -->
         <RelativePanel Margin="20" >
             <Button x:Uid="Cfm2SettingsPage_ButtonDefault" AccessKey="I" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" RelativePanel.AlignLeftWithPanel="True" Command="{x:Bind ViewModel.ButtonDefaultClickedCommand}" />
-            <Button x:Uid="0_ButtonOk" AccessKey="O" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" Style="{StaticResource AccentButtonStyle}" RelativePanel.LeftOf="ButtonCancel" Margin="0,0,20,0" Command="{x:Bind ViewModel.ButtonOkClickedCommand}" />
-            <Button Name="ButtonCancel" x:Uid="0_ButtonCancel" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonCancelClickedCommand}" >
+			<Button x:Uid="GeneralView_ButtonOk" AccessKey="O" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" Style="{StaticResource AccentButtonStyle}" RelativePanel.LeftOf="ButtonCancel" Margin="0,0,20,0" Command="{x:Bind ViewModel.ButtonOkClickedCommand}" />
+			<Button Name="ButtonCancel" x:Uid="GeneralView_ButtonCancel" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonCancelClickedCommand}" >
                 <Button.KeyboardAccelerators >
                     <KeyboardAccelerator Modifiers="None" Key="Escape" Invoked="{x:Bind ViewModel.KeyboardAcceleratorEscapeInvoked}" />
                 </Button.KeyboardAccelerators>

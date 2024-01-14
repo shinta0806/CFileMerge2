@@ -8,14 +8,7 @@ App info,AppInfo,AppName,,ちょちょいとファイル合併 2,Chochoito File 
 ,AppInfo,AssociationName,,ちょちょいとファイル合併 2 メイクファイル,Chochoito File Merge 2 Makefile
 General UI parts,GeneralView,ButtonCancel.Content,,キャンセル,Cancel
 ,GeneralView,ButtonOk.Content,,OK,OK
-,GeneralView,Confirm,,確認,Confirm
-,GeneralView,Fatal,,致命的エラー,Fatal
-,GeneralView,Error,,エラー,Error
-,GeneralView,Warning,,警告,Warning
-,GeneralView,Information,,情報,Information
 ,GeneralView,FileTypeSta,,設定ファイル,Settings file
-,GeneralView,Yes,,はい,Yes
-,GeneralView,No,,いいえ,No
 ,GeneralView,Error,CannotShowHelp,ヘルプを表示できませんでした。,Could not display help.
 ,GeneralView,Error,NoAnchor,状況に応じたヘルプを表示できませんでした：,Could not display context-sensitive help:
 ,GeneralView,Information,ShowNormalHelp,通常のヘルプを表示します。,Displays regular help.
@@ -141,6 +134,14 @@ Are you sure you want to disable it?"
 May not be able to restore successfully, do you want to restore?"
 ,Cfm2SettingsNavigationMaintenancePageViewModel,Error,LoadSettingsArchiveAsync_CannotLoad,設定ファイルを読み込めません。,Cannot read the settings file.
 ,Cfm2SettingsNavigationMaintenancePageViewModel,Error,LoadSettingsArchiveAsync_CannotLoad2,設定ファイル内の設定を読み込めません。,Cannot read the settings in the settings file.
+Lib: General words & enum,Confirm,,,確認,Confirm
+,No,,,いいえ,No
+,Ok,,,OK,OK
+,Yes,,,はい,Yes
+,Fatal,,,致命的エラー,Fatal
+,Error,,,エラー,Error
+,Warning,,,警告,Warning
+,Information,,,情報,Information
 Lib: LatestInfoManager,LatestInfoManager,Ask,AskDisplayLatestAsync,"最新情報が {0} 件見つかりました。
 表示しますか？","Found {0} newest information.
 Would you like to see them?"

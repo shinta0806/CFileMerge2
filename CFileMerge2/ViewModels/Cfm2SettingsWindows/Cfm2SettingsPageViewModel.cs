@@ -99,11 +99,11 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
 		try
 		{
 			MessageDialog messageDialog = _window.CreateMessageDialog(Localize.Cfm2SettingsPageViewModel_Confirm_Default.Localized(),
-				Localize.GeneralView_Warning.Localized());
-			messageDialog.Commands.Add(new UICommand(Localize.GeneralView_Yes.Localized()));
-			messageDialog.Commands.Add(new UICommand(Localize.GeneralView_No.Localized()));
+				Localize.Warning.Localized());
+			messageDialog.Commands.Add(new UICommand(Localize.Yes.Localized()));
+			messageDialog.Commands.Add(new UICommand(Localize.No.Localized()));
 			IUICommand cmd = await messageDialog.ShowAsync();
-			if (cmd.Label != Localize.GeneralView_Yes.Localized())
+			if (cmd.Label != Localize.Yes.Localized())
 			{
 				return;
 			}

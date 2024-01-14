@@ -95,11 +95,11 @@ public class ProgressPageViewModel : ObservableRecipient
 	{
 		try
 		{
-			MessageDialog messageDialog = _progressWindow.CreateMessageDialog(Localize.ProgressPageViewModel_Confirm_Abort.Localized(), Localize.GeneralView_Confirm.Localized());
-			messageDialog.Commands.Add(new UICommand(Localize.GeneralView_Yes.Localized()));
-			messageDialog.Commands.Add(new UICommand(Localize.GeneralView_No.Localized()));
+			MessageDialog messageDialog = _progressWindow.CreateMessageDialog(Localize.ProgressPageViewModel_Confirm_Abort.Localized(), Localize.Confirm.Localized());
+			messageDialog.Commands.Add(new UICommand(Localize.Yes.Localized()));
+			messageDialog.Commands.Add(new UICommand(Localize.No.Localized()));
 			IUICommand cmd = await messageDialog.ShowAsync();
-			if (cmd.Label != Localize.GeneralView_Yes.Localized())
+			if (cmd.Label != Localize.Yes.Localized())
 			{
 				return;
 			}
