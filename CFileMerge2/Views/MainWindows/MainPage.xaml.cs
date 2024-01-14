@@ -62,8 +62,8 @@ public sealed partial class MainPage : PageEx3
 	{
 		// 自動で横幅を復元した場合、ユーザーが表示スケールの変更を繰り返すと横幅がどんどん大きくなってしまう（チケット 37）
 		// 表示スケールを考慮した横幅をここで指定する
-		Int32 height = _window.AppWindow.Size.Height;
-		Double scale = WinUi3Common.DisplayScale(_window);
-		_window.AppWindow.Resize(new SizeInt32((Int32)(800 * scale), height));
+		Int32 height = Window.AppWindow.Size.Height;
+		Double scale = WinUi3Common.DisplayScale(Window);
+		Window.AppWindow.Resize(new SizeInt32((Int32)(800 * scale), height));
 	}
 }
