@@ -9,6 +9,7 @@
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.Models.Cfm2Models;
+using CFileMerge2.Strings;
 using CFileMerge2.Views;
 
 using Shinta;
@@ -108,7 +109,7 @@ internal class Cfm2Common
 			if (!String.IsNullOrEmpty(anchor))
 			{
 				helpPath = Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + Cfm2Constants.FOLDER_NAME_HELP_PARTS
-						+ FILE_NAME_HELP_PREFIX + "_" + anchor + Common.FILE_EXT_HTML;
+					+ FILE_NAME_HELP_PREFIX + "_" + anchor + Common.FILE_EXT_HTML;
 				try
 				{
 					Common.ShellExecute(helpPath);
@@ -116,8 +117,8 @@ internal class Cfm2Common
 				}
 				catch (Exception ex)
 				{
-					await window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2Common_ShowHelpAsync_Error_NoAnchor".ToLocalized() + "\n" + ex.Message + "\n" + helpPath
-							+ "\n" + "Cfm2Common_ShowHelpAsync_ShowNormalHelp".ToLocalized());
+					await window.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.GeneralView_Error_NoAnchor.Localized() + "\n" + ex.Message + "\n" + helpPath
+						+ "\n" + Localize.GeneralView_Information_ShowNormalHelp.Localized());
 				}
 			}
 
@@ -127,7 +128,7 @@ internal class Cfm2Common
 		}
 		catch (Exception ex)
 		{
-			await window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2Common_ShowHelpAsync_Error_CannotShowHelp".ToLocalized() + "\n" + ex.Message + "\n" + helpPath);
+			await window.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.GeneralView_Error_CannotShowHelp.Localized() + "\n" + ex.Message + "\n" + helpPath);
 		}
 	}
 

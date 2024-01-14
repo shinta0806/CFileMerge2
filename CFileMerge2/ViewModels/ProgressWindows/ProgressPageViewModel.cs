@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
+using CFileMerge2.Strings;
 using CFileMerge2.Views.ProgressWindows;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -94,11 +95,11 @@ public class ProgressPageViewModel : ObservableRecipient
 	{
 		try
 		{
-			MessageDialog messageDialog = _progressWindow.CreateMessageDialog("MainPageViewModel_AppWindowClosing_Confirm".ToLocalized(), Common.LK_GENERAL_LABEL_CONFIRM.ToLocalized());
-			messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_YES.ToLocalized()));
-			messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_NO.ToLocalized()));
+			MessageDialog messageDialog = _progressWindow.CreateMessageDialog(Localize.ProgressPageViewModel_Confirm_Abort.Localized(), Localize.GeneralView_Confirm.Localized());
+			messageDialog.Commands.Add(new UICommand(Localize.GeneralView_Yes.Localized()));
+			messageDialog.Commands.Add(new UICommand(Localize.GeneralView_No.Localized()));
 			IUICommand cmd = await messageDialog.ShowAsync();
-			if (cmd.Label != Common.LK_GENERAL_LABEL_YES.ToLocalized())
+			if (cmd.Label != Localize.GeneralView_Yes.Localized())
 			{
 				return;
 			}
@@ -106,7 +107,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _progressWindow.ShowExceptionLogMessageDialogAsync("ProgressPageViewModel_ButtonAbortClicked_Error".ToLocalized(), ex);
+			await _progressWindow.ShowExceptionLogMessageDialogAsync(Localize.ProgressPageViewModel_Error_ButtonAbortClicked.Localized(), ex);
 		}
 	}
 	#endregion
@@ -136,7 +137,7 @@ public class ProgressPageViewModel : ObservableRecipient
 				if (MergeInfo.Warnings.Any())
 				{
 					// 警告あり
-					String message = "MainPageViewModel_MergeAsync_Warnings".ToLocalized() + "\n";
+					String message = Localize.MainPageViewModel_Warning_MergeAsync.Localized() + "\n";
 					for (Int32 i = 0; i < MergeInfo.Warnings.Count; i++)
 					{
 						message += MergeInfo.Warnings[i] + "\n";
@@ -147,7 +148,7 @@ public class ProgressPageViewModel : ObservableRecipient
 				{
 					// 完了
 					await _progressWindow.ShowLogMessageDialogAsync(LogEventLevel.Information,
-						String.Format("MainPageViewModel_MergeAsync_Done".ToLocalized(), (Environment.TickCount - startTick).ToString("#,0")));
+						String.Format(Localize.MainPageViewModel_Done_MergeAsync.Localized(), (Environment.TickCount - startTick).ToString("#,0")));
 				}
 			}
 		}
@@ -157,7 +158,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _progressWindow.ShowExceptionLogMessageDialogAsync("MainPageViewModel_MergeAsync_Error".ToLocalized(), ex);
+			await _progressWindow.ShowExceptionLogMessageDialogAsync(Localize.MainPageViewModel_Error_MergeAsync.Localized(), ex);
 		}
 		finally
 		{
@@ -223,7 +224,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		}
 
 		// アンカーメイクファイル
-		MergeInfo.AnchorMakeFullPath = GetPathByMakeFullPath(tagValues[0], String.Format("MainPageViewModel_SrcName_AnchorMakeFile".ToLocalized(), TagKey.GenerateAnchorFiles.ToString()));
+		MergeInfo.AnchorMakeFullPath = GetPathByMakeFullPath(tagValues[0], String.Format(Localize.MainPageViewModel_SrcName_AnchorMakeFile.Localized(), TagKey.GenerateAnchorFiles.ToString()));
 
 		// アンカー出力先
 		String outSrc;
@@ -245,7 +246,7 @@ public class ProgressPageViewModel : ObservableRecipient
 				outSrc = tagValues[1];
 			}
 		}
-		MergeInfo.AnchorOutFullFolder = GetPath(outSrc, Path.GetDirectoryName(MergeInfo.OutFullPath) ?? String.Empty, "MainPageViewModel_SrcName_AnchorOutFolder".ToLocalized()) + "\\";
+		MergeInfo.AnchorOutFullFolder = GetPath(outSrc, Path.GetDirectoryName(MergeInfo.OutFullPath) ?? String.Empty, Localize.MainPageViewModel_SrcName_AnchorOutFolder.Localized()) + "\\";
 
 		// アンカーファイル作成対象
 		if (tagValues.Length >= 3)
@@ -267,7 +268,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		String path;
 		if (String.IsNullOrEmpty(tagInfo.Value))
 		{
-			throw new Exception(String.Format("MainPageViewModel_ExecuteCfmTagInclude_Error_NoPath".ToLocalized(), Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key]));
+			throw new Exception(String.Format(Localize.MainPageViewModel_Error_ExecuteCfmTagInclude_NoPath.Localized(), Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key]));
 		}
 		if (Path.IsPathRooted(tagInfo.Value))
 		{
@@ -313,7 +314,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		if (!Directory.Exists(MergeInfo.IncludeFullFolder))
 		{
 			// 続行可能といえば続行可能であるが、Include できない際に原因が分かりづらくなるのでここでエラーとする
-			throw new Exception("MainPageViewModel_ExecuteCfmTagIncludeFolder_Error_NoExist".ToLocalized() + "\n" + tagInfo.Value);
+			throw new Exception(Localize.MainPageViewModel_Error_ExecuteCfmTagIncludeFolder_NoExist.Localized() + "\n" + tagInfo.Value);
 		}
 	}
 
@@ -328,7 +329,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		Debug.WriteLine("ExexuteTagOutFile() " + MergeInfo.OutFullPath);
 		if (String.Compare(MergeInfo.OutFullPath, MergeInfo.MakeFullPath, true) == 0)
 		{
-			throw new Exception("MainPageViewModel_ExecuteCfmTagOutFile_Error_SameFile".ToLocalized());
+			throw new Exception(Localize.MainPageViewModel_Error_ExecuteCfmTagOutFile_SameFile.Localized());
 		}
 	}
 
@@ -342,14 +343,14 @@ public class ProgressPageViewModel : ObservableRecipient
 		Int32 eqPos = tagInfo.Value.IndexOf('=');
 		if (eqPos < 0)
 		{
-			MergeInfo.Warnings.Add("MainPageViewModel_ExecuteCfmTagSet_Warning_NoEq".ToLocalized() + tagInfo.Value);
+			MergeInfo.Warnings.Add(Localize.MainPageViewModel_Warning_ExecuteCfmTagSet_NoEq.Localized() + tagInfo.Value);
 			return;
 		}
 
 		String varName = tagInfo.Value[0..eqPos].Trim().ToLower();
 		if (String.IsNullOrEmpty(varName))
 		{
-			MergeInfo.Warnings.Add("MainPageViewModel_ExecuteCfmTagSet_Warning_NoName".ToLocalized() + tagInfo.Value);
+			MergeInfo.Warnings.Add(Localize.MainPageViewModel_Warning_ExecuteCfmTagSet_NoName.Localized() + tagInfo.Value);
 			return;
 		}
 
@@ -380,12 +381,12 @@ public class ProgressPageViewModel : ObservableRecipient
 		String varName = tagInfo.Value.Trim().ToLower();
 		if (String.IsNullOrEmpty(varName))
 		{
-			MergeInfo.Warnings.Add("MainPageViewModel_ExecuteCfmTagVar_Warning_NoName".ToLocalized());
+			MergeInfo.Warnings.Add(Localize.MainPageViewModel_Warning_ExecuteCfmTagVar_NoName.Localized());
 			return;
 		}
 		if (!MergeInfo.Vars.ContainsKey(varName))
 		{
-			MergeInfo.Warnings.Add("MainPageViewModel_ExecuteCfmTagVar_Warning_NoDeclare".ToLocalized() + tagInfo.Value);
+			MergeInfo.Warnings.Add(Localize.MainPageViewModel_Warning_ExecuteCfmTagVar_NoDeclare.Localized() + tagInfo.Value);
 			return;
 		}
 
@@ -405,7 +406,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		Log.Debug("GetPath() srcName: " + srcName);
 		if (String.IsNullOrEmpty(path))
 		{
-			throw new Exception(String.Format("MainPageViewModel_GetPath_Error_NoPath".ToLocalized(), srcName));
+			throw new Exception(String.Format(Localize.MainPageViewModel_Error_GetPath_NoPath.Localized(), srcName));
 		}
 		if (Path.IsPathRooted(path))
 		{
@@ -439,7 +440,7 @@ public class ProgressPageViewModel : ObservableRecipient
 	/// <exception cref="Exception"></exception>
 	private String GetPathByMakeFullPath(CfmTagInfo tagInfo)
 	{
-		return GetPathByMakeFullPath(tagInfo.Value, String.Format("MainPageViewModel_SrcName_Tag".ToLocalized(), Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key]));
+		return GetPathByMakeFullPath(tagInfo.Value, String.Format(Localize.MainPageViewModel_SrcName_Tag.Localized(), Cfm2Constants.CFM_TAG_KEYS[(Int32)tagInfo.Key]));
 	}
 
 	/// <summary>
@@ -637,7 +638,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		{
 			// キーと値を区切る ':' が無い
 			Log.Debug("ParseTag() 区切りコロン無し, " + tagContent + ", add: " + addColumn);
-			MergeInfo.Warnings.Add("MainPageViewModel_ParseCfmTag_Warning_NoColon".ToLocalized() + tagContent);
+			MergeInfo.Warnings.Add(Localize.MainPageViewModel_Warning_ParseCfmTag_NoColon.Localized() + tagContent);
 			return (null, addColumn);
 		}
 
@@ -645,7 +646,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		if (key < 0)
 		{
 			Log.Debug("ParseTag() サポートされていないキー, " + tagContent + ", add: " + addColumn);
-			MergeInfo.Warnings.Add("MainPageViewModel_ParseCfmTag_Warning_NotSupported" + tagContent);
+			MergeInfo.Warnings.Add(Localize.MainPageViewModel_Warning_ParseCfmTag_NotSupported.Localized() + tagContent);
 			return (null, addColumn);
 		}
 
@@ -839,15 +840,15 @@ public class ProgressPageViewModel : ObservableRecipient
 	{
 		if (String.IsNullOrEmpty(path))
 		{
-			throw new Exception("MainPageViewModel_ParseFile_Error_NotSpecified".ToLocalized());
+			throw new Exception(Localize.MainPageViewModel_Error_ParseFile_NotSpecified.Localized());
 		}
 		if (!File.Exists(path))
 		{
-			throw new Exception("MainPageViewModel_ParseFile_Error_NoFile".ToLocalized() + "\n" + path);
+			throw new Exception(Localize.MainPageViewModel_Error_ParseFile_NoFile.Localized() + "\n" + path);
 		}
 		if (MergeInfo.IncludeStack.Any(x => String.Compare(x, path, true) == 0))
 		{
-			throw new Exception("MainPageViewModel_ParseFile_Error_CyclicInclude".ToLocalized() + "\n" + path);
+			throw new Exception(Localize.MainPageViewModel_Error_ParseFile_CyclicInclude.Localized() + "\n" + path);
 		}
 
 		// インクルード履歴プッシュ
@@ -856,7 +857,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		// 文字コード自動判別
 		FileInfo fileInfo = new(path);
 		using FileReader reader = new(fileInfo);
-		Encoding encoding = reader.Read(fileInfo).GetEncoding() ?? throw new Exception("MainPageViewModel_ParseFile_Error_Encoding".ToLocalized() + "\n" + path);
+		Encoding encoding = reader.Read(fileInfo).GetEncoding() ?? throw new Exception(Localize.MainPageViewModel_Error_ParseFile_Encoding.Localized() + "\n" + path);
 
 		// 改行コード自動判定
 		String newLine;
@@ -881,7 +882,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		String[] childLineStrings = reader.Text.Split(new String[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 		if (childLineStrings.Length == 0)
 		{
-			throw new Exception("MainPageViewModel_ParseFile_Error_Empty".ToLocalized() + "\n" + path);
+			throw new Exception(Localize.MainPageViewModel_Error_ParseFile_Empty.Localized() + "\n" + path);
 		}
 		MergeInfo.NumTotalLines += childLineStrings.Length;
 		LinkedList<String> childLines = new(childLineStrings);
@@ -947,7 +948,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		_ = Int32.TryParse(hxMatch.Groups[1].Value, out Int32 rank);
 		if (rank < Cfm2Constants.HX_TAG_RANK_MIN || rank > Cfm2Constants.HX_TAG_RANK_MAX)
 		{
-			MergeInfo.Warnings.Add("MainPageViewModel_ParseHxTag_Warning_HxRank".ToLocalized() + hxMatch.Value);
+			MergeInfo.Warnings.Add(Localize.MainPageViewModel_Warning_ParseHxTag_HxRank.Localized() + hxMatch.Value);
 			return (addColumn, null);
 		}
 		if (!targetRanks[rank])
@@ -961,7 +962,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		if (!idMatch.Success)
 		{
 			// ID 属性が無い
-			MergeInfo.Warnings.Add("MainPageViewModel_ParseHxTag_Warning_HxId".ToLocalized() + hxMatch.Value);
+			MergeInfo.Warnings.Add(Localize.MainPageViewModel_Warning_ParseHxTag_HxId.Localized() + hxMatch.Value);
 			return (addColumn, null);
 		}
 		Debug.Assert(idMatch.Groups.Count >= 2, "ParseHxTag() idMatch.Groups が不足");
@@ -972,7 +973,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		Int32 captionEndPos = line.Value.IndexOf("</h", captionBeginPos, StringComparison.OrdinalIgnoreCase);
 		if (captionEndPos < 0)
 		{
-			MergeInfo.Warnings.Add("MainPageViewModel_ParseHxTag_Warning_HxNotClose".ToLocalized() + hxMatch.Value);
+			MergeInfo.Warnings.Add(Localize.MainPageViewModel_Warning_ParseHxTag_HxNotClose.Localized() + hxMatch.Value);
 			return (addColumn, null);
 		}
 		String caption = line.Value[captionBeginPos..captionEndPos].Trim();

@@ -13,6 +13,7 @@ using System.Windows.Input;
 
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
+using CFileMerge2.Strings;
 using CFileMerge2.Views;
 
 using CommunityToolkit.Mvvm.Input;
@@ -60,7 +61,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 #pragma warning disable CA1822
 	public String CheckBoxCheckRssContent
 	{
-		get => String.Format("Cfm2SettingsNavigationMaintenancePage_CheckBoxCheckRss_Content".ToLocalized(), Common.LK_GENERAL_APP_NAME.ToLocalized());
+		get => String.Format(Localize.Cfm2SettingsNavigationMaintenancePage_CheckBoxCheckRss_Content.Localized(), Localize.AppInfo_AppName.Localized());
 	}
 #pragma warning restore CA1822
 
@@ -78,12 +79,12 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 				if (_checkRss && !value)
 				{
 					MessageDialog messageDialog = _window.CreateMessageDialog(
-							String.Format("Cfm2SettingsNavigationMaintenancePageViewModel_CheckRss_Confirm".ToLocalized(), Common.LK_GENERAL_APP_NAME.ToLocalized()),
-							LogEventLevel.Warning.ToString().ToLocalized());
-					messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_YES.ToLocalized()));
-					messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_NO.ToLocalized()));
+						String.Format(Localize.Cfm2SettingsNavigationMaintenancePageViewModel_Confirm_CheckRss.Localized(), Localize.AppInfo_AppName.Localized()),
+						Localize.GeneralView_Warning.Localized());
+					messageDialog.Commands.Add(new UICommand(Localize.GeneralView_Yes.Localized()));
+					messageDialog.Commands.Add(new UICommand(Localize.GeneralView_No.Localized()));
 					IUICommand cmd = await messageDialog.ShowAsync();
-					if (cmd.Label != Common.LK_GENERAL_LABEL_YES.ToLocalized())
+					if (cmd.Label != Localize.GeneralView_Yes.Localized())
 					{
 						_window.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
 						{
@@ -138,7 +139,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 		}
 		catch (Exception ex)
 		{
-			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsNavigationMaintenancePageViewModel_ButtonCheckRssClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.Cfm2SettingsNavigationMaintenancePageViewModel_Error_ButtonCheckRssClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 		finally
@@ -162,7 +163,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 			_cfm2SettingsPageViewModel.CheckPropertiesAndPropertiesToSettings();
 
 			FileSavePicker fileSavePicker = _window.CreateSaveFilePicker();
-			fileSavePicker.FileTypeChoices.Add("0_FileTypeSta".ToLocalized(), new List<String>() { Common.FILE_EXT_SETTINGS_ARCHIVE });
+			fileSavePicker.FileTypeChoices.Add(Localize.GeneralView_FileTypeSta.Localized(), new List<String>() { Common.FILE_EXT_SETTINGS_ARCHIVE });
 			fileSavePicker.SuggestedFileName = Cfm2Constants.APP_ID + "Settings_" + DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
 
 			StorageFile? file = await fileSavePicker.PickSaveFileAsync();
@@ -174,11 +175,11 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 			File.Delete(file.Path);
 			Cfm2Common.LogEnvironmentInfo();
 			CreateBackup(file.Path);
-			await _window.ShowLogMessageDialogAsync(LogEventLevel.Information, "Cfm2SettingsNavigationMaintenancePageViewModel_ButtonBackupClicked_Done".ToLocalized());
+			await _window.ShowLogMessageDialogAsync(LogEventLevel.Information, Localize.Cfm2SettingsNavigationMaintenancePageViewModel_Done_ButtonBackupClicked.Localized());
 		}
 		catch (Exception ex)
 		{
-			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsNavigationMaintenancePageViewModel_ButtonBackupClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.Cfm2SettingsNavigationMaintenancePageViewModel_Error_ButtonBackupClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -206,7 +207,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 
 			Restore(file.Path);
 			_cfm2SettingsPageViewModel.SettingsToProperties();
-			await _window.ShowLogMessageDialogAsync(LogEventLevel.Information, "Cfm2SettingsNavigationMaintenancePageViewModel_ButtonRestoreClicked_Done".ToLocalized());
+			await _window.ShowLogMessageDialogAsync(LogEventLevel.Information, Localize.Cfm2SettingsNavigationMaintenancePageViewModel_Done_ButtonRestoreClicked.Localized());
 		}
 		catch (OperationCanceledException)
 		{
@@ -214,7 +215,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 		}
 		catch (Exception ex)
 		{
-			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsNavigationMaintenancePageViewModel_ButtonRestoreClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.Cfm2SettingsNavigationMaintenancePageViewModel_Error_ButtonRestoreClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -305,7 +306,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 		}
 		catch (Exception ex)
 		{
-			throw new Exception("Cfm2SettingsNavigationMaintenancePageViewModel_LoadSettingsArchiveAsync_Error_CannotLoad".ToLocalized(), ex);
+			throw new Exception(Localize.Cfm2SettingsNavigationMaintenancePageViewModel_Error_LoadSettingsArchiveAsync_CannotLoad.Localized(), ex);
 		}
 		unzipFolder += Common.AppId() + "\\";
 

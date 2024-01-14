@@ -1,0 +1,151 @@
+Description,ID-Large,ID-Middle,ID-Small,ja-jp,en-us
+BCP47 language-region,Meta,Language,,ja-jp,en-us
+Add your name at the end,Meta,Translators,,SHINTA,SHINTA
+App info,AppInfo,AppName,,ちょちょいとファイル合併 2,Chochoito File Merge 2
+,AppInfo,Distribution,Store,ストア版,Store edition
+,AppInfo,Distribution,Zip,zip 版,Zip edition
+,AppInfo,Description,,静的 HTML によるヘルプの作成をアシストする、開発者向けのツールです。,A tool for developers that assists in creating static HTML help.
+,AppInfo,AssociationName,,ちょちょいとファイル合併 2 メイクファイル,Chochoito File Merge 2 Makefile
+General UI parts,GeneralView,ButtonCancel.Content,,キャンセル,Cancel
+,GeneralView,ButtonOk.Content,,OK,OK
+,GeneralView,Confirm,,確認,Confirm
+,GeneralView,Fatal,,致命的エラー,Fatal
+,GeneralView,Error,,エラー,Error
+,GeneralView,Warning,,警告,Warning
+,GeneralView,Information,,情報,Information
+,GeneralView,FileTypeSta,,設定ファイル,Settings file
+,GeneralView,Yes,,はい,Yes
+,GeneralView,No,,いいえ,No
+,GeneralView,Error,CannotShowHelp,ヘルプを表示できませんでした。,Could not display help.
+,GeneralView,Error,NoAnchor,状況に応じたヘルプを表示できませんでした：,Could not display context-sensitive help:
+,GeneralView,Information,ShowNormalHelp,通常のヘルプを表示します。,Displays regular help.
+App,App,Fatal,UnhandledException,不明なエラーが発生しました。アプリケーションを終了します。,Unknown error occurred. Terminate the application.
+Main Window,MainPage,ButtonBrowseMake.Content,,参照(B),Browse
+,MainPage,ButtonCfm2Settings,ToolTip.Content,環境設定,Settings
+,MainPage,ButtonHelp,ToolTip.Content,ヘルプ,Help
+,MainPage,ButtonOpenOutFile.Content,,出力ファイルを開く(O),Open output file
+,MainPage,ButtonRecentMake,ToolTip.Content,最近使用したメイクファイル,Recent makefiles
+,MainPage,MenuFlyoutItemAbout.Text,,バージョン情報,About
+,MainPage,MenuFlyoutItemHelp.Text,,ヘルプ,Help
+,MainPage,MenuFlyoutItemSampleFolder.Text,,サンプルフォルダー,Sample folder
+,MainPage,TextBlockGo.Text,,スタート,Start
+,MainPage,TextBlockMake.Text,,メイクファイル(M)：,Makefile: 
+,MainPageViewModel,Error,ButtonBrowseMakeClicked,参照時エラー：,Browse error:
+,MainPageViewModel,Error,ButtonCfm2SettingsClicked,環境設定表示時エラー：,Open settings error:
+,MainPageViewModel,Error,ButtonOpenOutFileClicked,出力ファイルを開く時エラー：,Open out file error:
+,MainPageViewModel,Error,ButtonGoClicked,合併時エラー：,Merge error:
+,MainPageViewModel,Error,ExecuteCfmTagInclude_NoPath,{0} タグのパスが指定されていません。,{0} tag has no path.
+,MainPageViewModel,Error,ExecuteCfmTagIncludeFolder_NoExist,インクルードフォルダーが存在しません：,Include folder does not exist:
+,MainPageViewModel,Error,ExecuteCfmTagOutFile_SameFile,出力先ファイルがメイクファイルと同じです。,The destination file is the same as the makefile.
+,MainPageViewModel,Warning,ExecuteCfmTagSet_NoEq,Set タグが「変数名 = 変数値」の形式になっていません：,"The Set tag is not in the ""variable name = variable value"" format:"
+,MainPageViewModel,Warning,ExecuteCfmTagSet_NoName,Set タグの変数名が指定されていません：,Variable name in Set tag is not specified:
+,MainPageViewModel,Warning,ExecuteCfmTagVar_NoDeclare,Var タグで指定された変数名が Set タグで宣言されていません：,The variable name specified in the Var tag is not declared in the Set tag:
+,MainPageViewModel,Warning,ExecuteCfmTagVar_NoName,Var タグの変数名が指定されていません。,The variable name in the Var tag is not specified.
+,MainPageViewModel,Error,GetPath_NoPath,{0} のパスが指定されていません。,{0} path is not specified.
+,MainPageViewModel,Error,MenuFlyoutItemAboutClicked,バージョン情報表示時エラー：,Open about error:
+,MainPageViewModel,Error,MenuFlyoutItemRecentMakeClicked,最近使用したメイクファイル適用時エラー：,Recent makefile applying error:
+,MainPageViewModel,Error,MenuFlyoutItemSampleFolderClicked,サンプルフォルダー表示時エラー：,Open sample folder error:
+,MainPageViewModel,Error,MenuFlyoutRecentMakeOpening,最近使用したメイクファイル時エラー：,Recent makefile error:
+,MainPageViewModel,Done,MergeAsync,"完了しました。
+経過時間：{0} ミリ秒","Completed.
+Elapsed time: {0} milliseconds"
+,MainPageViewModel,Error,MergeAsync,合併時エラー：,Merge error:
+,MainPageViewModel,Warning,MergeAsync,警告があります：,Warnings:
+,MainPageViewModel,Error,OpenOutFile,出力ファイルを開く処理時エラー：,Open out file dealing error:
+,MainPageViewModel,Warning,ParseCfmTag_NoColon,Cfm タグに区切りコロンがありません：,Cfm tag is missing a delimiter colon:
+,MainPageViewModel,Warning,ParseCfmTag_NotSupported,サポートされていない Cfm タグです：,Unsupported Cfm tag.
+,MainPageViewModel,Error,ParseFile_CyclicInclude,インクルードが循環しています：,Includes are circulating:
+,MainPageViewModel,Error,ParseFile_Empty,内容が空です：,Contents are empty:
+,MainPageViewModel,Error,ParseFile_Encoding,文字コードを判定できませんでした：,Could not determine character encoding:
+,MainPageViewModel,Error,ParseFile_NoFile,ファイルが見つかりません：,File not found:
+,MainPageViewModel,Error,ParseFile_NotSpecified,ファイルが指定されていません。,File not specified.
+,MainPageViewModel,Warning,ParseHxTag_HxId,HTML H タグに ID 属性がないため目次が作成できません：,Unable to create a table of contents because the HTML H tag does not have an ID attribute:
+,MainPageViewModel,Warning,ParseHxTag_HxNotClose,HTML H タグが閉じられていないため目次が作成できません：,Unable to create a table of contents because the HTML H tag is not closed:
+,MainPageViewModel,Warning,ParseHxTag_HxRank,HTML H タグのランクが HTML Living Standard 仕様の範囲外です：,The rank of the HTML H tag is outside the scope of the HTML Living Standard specification:
+,MainPageViewModel,SrcName,AnchorMakeFile,{0} タグのアンカーメイクファイル,{0} tag's anchor makefile
+,MainPageViewModel,SrcName,AnchorOutFolder,アンカー出力先フォルダー,Anchor out folder
+,MainPageViewModel,SrcName,Tag,{0}  タグ,{0} tag
+,MainPageViewModel,Updated,,"【更新起動】
+
+{0} が更新されました。
+更新内容についてはバージョン情報ウィンドウから確認できます。","[Updated]
+
+{0} has been updated.
+You can check the updated contents from the About window."
+,MainPageViewModel,Warning,Alpha,"このバージョンは開発途上のアルファバージョンです。
+使用前にヘルプをよく読み、注意してお使い下さい。","This version is an alpha version under development.
+Please read the help carefully before use and use with caution."
+,MainPageViewModel,Warning,Beta,"このバージョンは開発途上のベータバージョンです。
+使用前にヘルプをよく読み、注意してお使い下さい。","This version is a beta version under development.
+Please read the help carefully before use and use with caution."
+Progress Window,ProgressWindow,Title,,合併中,Merging
+,ProgressPage,ButtonAbort.Content,,中止(A),Abort
+,ProgressPage,TextBlockProgress.Text,,処理中...,Processing...
+,ProgressPageViewModel,Confirm,Abort,"合併作業中です。
+中止してもよろしいですか？","Merger in progress. 
+Are you sure you want to abort?"
+,ProgressPageViewModel,Error,ButtonAbortClicked,中止時エラー：,Abort error: 
+About Window,AboutWindow,Title,,{0} のバージョン情報,About {0}
+,AboutPage,ButtonCheckUpdate.Content,,更新プログラムの確認(U),Check for updates
+,AboutPage,ButtonHistory.Content,,更新履歴(H),History
+,AboutPage,TextBlockAppDistrib.Text,,配布ページ：,Distribution:
+,AboutPage,TextBlockAppInfo.Text,,アプリケーション情報,App Information
+,AboutPage,TextBlockAppSupport.Text,,サポートページ：,Support:
+,AboutPage,TextBlockAuthorEMail.Text,,E メール：,Email:
+,AboutPage,TextBlockAuthorFantia.Text,,ファンサイト：,Fansite:
+,AboutPage,TextBlockAuthorInfo.Text,,作者情報,Author Information
+,AboutPage,TextBlockAuthorTwitter.Text,,Twitter：,Twitter:
+,AboutPage,TextBlockAuthorWeb.Text,,ホームページ：,Web:
+,AboutPageViewModel,Error,ButtonCheckUpdateClicked,更新プログラムの確認ボタンクリック時エラー：,Check for updates error:
+,AboutPageViewModel,Error,ButtonHistoryClicked,更新履歴ボタンクリック時エラー：,History error:
+,AboutPageViewModel,Error,ButtonOkClicked,OK ボタンクリック時エラー：,OK button error:
+Settings Window,Cfm2SettingsWindow,Title,,環境設定,Settings
+,Cfm2SettingsPage,ButtonDefault.Content,,初期化(I),Default
+,Cfm2SettingsPage,NavigationViewItemMaintenance.Content,,メンテナンス,Maintenance
+,Cfm2SettingsPage,NavigationViewItemSettings.Content,,設定,Settings
+,Cfm2SettingsPageViewModel,Error,ButtonCancelClicked,キャンセルボタンクリック時エラー：,Cancel button error:
+,Cfm2SettingsPageViewModel,Error,ButtonDefaultClicked,初期化ボタンクリック時エラー：,Default button error:
+,Cfm2SettingsPageViewModel,Error,ButtonOkClicked,OK ボタンクリック時エラー：,OK button error:
+,Cfm2SettingsPageViewModel,Confirm,Default,"環境設定をすべて初期設定に戻します。
+よろしいですか？","Reset all settings to default.
+Are you sure?"
+,Cfm2SettingsPageViewModel,Error,NavigationViewSelectionChanged,ナビゲーション選択時エラー：,Navigation selection error:
+,Cfm2SettingsNavigationSettingsPage,AnchorHint.Text,,※GenerateAnchorFiles タグでの指定が優先されます。,* GenerateAnchorFiles tags take precedence.
+,Cfm2SettingsNavigationSettingsPage,CheckBoxOverwriteAnchorFiles.Content,,既存のアンカーファイルを上書きする(V),Overwrite existing anchor file
+,Cfm2SettingsNavigationSettingsPage,TextBlockAnchor.Text,,アンカーファイル作成対象,Anchor file creation target
+,Cfm2SettingsNavigationSettingsPage,TextBlockAnchor_ToolTip.Content,,GenerateAnchorFiles タグが指定された際、どの見出しに対するアンカーファイルを作成するか、を設定します。,GenerateAnchorFiles Sets which anchor files will be created for a given heading when a tag is specified.
+,Cfm2SettingsNavigationSettingsPage,TextBlockToc.Text,,目次対象,TOC target
+,Cfm2SettingsNavigationSettingsPage,TextBlockToc_ToolTip.Content,,Toc タグが指定された際、どの見出しに対する目次を作成するか、を設定します。,Sets which heading to create a table of contents for when a Toc tag is specified.
+,Cfm2SettingsNavigationSettingsPage,TextBlockTocHint.Text,,※Toc タグでの指定が優先されます。,* Toc tags take precedence.
+,Cfm2SettingsNavigationSettingsPageViewModel,Error,CheckProperties_AnchorFile,"アンカーファイル作成対象を 1 つ以上選択してください。
+※アンカーファイルを作成したくない場合は、GenerateAnchorFiles タグを使わなければ作成されません。","Please select one or more anchor file targets.
+If you do not want to create anchor files, you do not use the GenerateAnchorFiles tag."
+,Cfm2SettingsNavigationSettingsPageViewModel,Error,CheckProperties_Toc,"目次対象を 1 つ以上選択してください。
+※目次を挿入したくない場合は、Toc タグを使わなければ挿入されません。","Please select one or more table of contents targets.
+If you do not want to insert a table of contents, do not use the Toc tag."
+,Cfm2SettingsNavigationMaintenancePage,ButtonBackup.Content,,設定のバックアップ(B),Backup
+,Cfm2SettingsNavigationMaintenancePage,ButtonCheckRss.Content,,今すぐ最新情報を確認(A),Check for information now
+,Cfm2SettingsNavigationMaintenancePage,ButtonRestore.Content,,設定の復元(R),Restore
+,Cfm2SettingsNavigationMaintenancePage,CheckBoxCheckRss_Content,,{0} の最新情報を自動的に確認する(L),Check for {0} information automatically
+,Cfm2SettingsNavigationMaintenancePage,TextBlockBackup.Text,,設定のバックアップ（ファイルに保存）,Backup of settings (save to file)
+,Cfm2SettingsNavigationMaintenancePageViewModel,Done,ButtonBackupClicked,設定のバックアップが完了しました。,Settings backuped.
+,Cfm2SettingsNavigationMaintenancePageViewModel,Error,ButtonBackupClicked,設定のバックアップボタンクリック時エラー：,Backup error:
+,Cfm2SettingsNavigationMaintenancePageViewModel,Error,ButtonCheckRssClicked,今すぐ最新情報を確認時エラー：,Check information error:
+,Cfm2SettingsNavigationMaintenancePageViewModel,Done,ButtonRestoreClicked,設定を復元しました。,Settings restored.
+,Cfm2SettingsNavigationMaintenancePageViewModel,Error,ButtonRestoreClicked,設定の復元ボタンクリック時エラー：,Restore error:
+,Cfm2SettingsNavigationMaintenancePageViewModel,Confirm,CheckRss,"最新情報の確認を無効にすると、{0} の新版がリリースされた際の更新内容などが表示されません。
+本当に無効にしてもよろしいですか？","If you disable check for updates, you will not see updates, etc. when a new version of {0} is released.
+Are you sure you want to disable it?"
+,Cfm2SettingsNavigationMaintenancePageViewModel,Confirm,LoadSettingsArchiveAsync,"異なるバージョンの設定を復元しようとしています。
+正常に復元できない可能性がありますが、復元しますか？","Trying to restore a different version of settings.
+May not be able to restore successfully, do you want to restore?"
+,Cfm2SettingsNavigationMaintenancePageViewModel,Error,LoadSettingsArchiveAsync_CannotLoad,設定ファイルを読み込めません。,Cannot read the settings file.
+,Cfm2SettingsNavigationMaintenancePageViewModel,Error,LoadSettingsArchiveAsync_CannotLoad2,設定ファイル内の設定を読み込めません。,Cannot read the settings in the settings file.
+Lib: LatestInfoManager,LatestInfoManager,Ask,AskDisplayLatestAsync,"最新情報が {0} 件見つかりました。
+表示しますか？","Found {0} newest information.
+Would you like to see them?"
+,LatestInfoManager,Cancel,AskDisplayLatestAsync,最新情報の表示を中止しました。,Canceled.
+,LatestInfoManager,Error,CheckAsync,最新情報確認時エラー：,Error when checking latest information:
+,LatestInfoManager,NoInfo,CheckAsync,最新情報はありませんでした。,There was no update.
+,LatestInfoManager,Error,DisplayLatest_Not,最新情報を表示できませんでした。,Could not display the latest information.
+,LatestInfoManager,Error,DisplayLatest_Part,一部の最新情報を表示できませんでした。,Some of the latest information could not be displayed.

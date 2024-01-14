@@ -12,6 +12,7 @@ using System.Windows.Input;
 
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
+using CFileMerge2.Strings;
 using CFileMerge2.Views;
 using CFileMerge2.Views.Cfm2SettingsWindows;
 
@@ -22,11 +23,9 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 
-using Serilog;
-using Serilog.Events;
 using Shinta;
+
 using Windows.UI.Popups;
-using WinUIEx;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
@@ -99,12 +98,12 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
 	{
 		try
 		{
-			MessageDialog messageDialog = _window.CreateMessageDialog("Cfm2SettingsPageViewModel_Default_Confirm".ToLocalized(),
-					LogEventLevel.Warning.ToString().ToLocalized());
-			messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_YES.ToLocalized()));
-			messageDialog.Commands.Add(new UICommand(Common.LK_GENERAL_LABEL_NO.ToLocalized()));
+			MessageDialog messageDialog = _window.CreateMessageDialog(Localize.Cfm2SettingsPageViewModel_Confirm_Default.Localized(),
+				Localize.GeneralView_Warning.Localized());
+			messageDialog.Commands.Add(new UICommand(Localize.GeneralView_Yes.Localized()));
+			messageDialog.Commands.Add(new UICommand(Localize.GeneralView_No.Localized()));
 			IUICommand cmd = await messageDialog.ShowAsync();
-			if (cmd.Label != Common.LK_GENERAL_LABEL_YES.ToLocalized())
+			if (cmd.Label != Localize.GeneralView_Yes.Localized())
 			{
 				return;
 			}
@@ -117,7 +116,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsPageViewModel_ButtonDefaultClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.Cfm2SettingsPageViewModel_Error_ButtonDefaultClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -143,7 +142,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsPageViewModel_ButtonOkClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.Cfm2SettingsPageViewModel_Error_ButtonOkClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -163,7 +162,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsPageViewModel_ButtonCancelClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.Cfm2SettingsPageViewModel_Error_ButtonCancelClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -223,7 +222,7 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, "Cfm2SettingsPageViewModel_NavigationViewSelectionChanged_Error".ToLocalized() + "\n" + ex.Message);
+			await _window.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.Cfm2SettingsPageViewModel_Error_NavigationViewSelectionChanged.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}

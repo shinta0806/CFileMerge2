@@ -15,6 +15,7 @@ using System.Windows.Input;
 
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
+using CFileMerge2.Strings;
 using CFileMerge2.ViewModels.ProgressWindows;
 using CFileMerge2.Views.AboutWindows;
 using CFileMerge2.Views.Cfm2SettingsWindows;
@@ -127,7 +128,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutItemRecentMakeClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemRecentMakeClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -157,7 +158,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_ButtonBrowseMakeClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_ButtonBrowseMakeClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -178,7 +179,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_ButtonCfm2SettingsClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_ButtonCfm2SettingsClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -207,7 +208,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutItemSampleFolderClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemSampleFolderClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -228,7 +229,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutItemAboutClicked_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemAboutClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -257,7 +258,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _mainWindow.ShowExceptionLogMessageDialogAsync("MainPageViewModel_ButtonOpenOutFileClicked_Error".ToLocalized(), ex);
+			await _mainWindow.ShowExceptionLogMessageDialogAsync(Localize.MainPageViewModel_Error_ButtonOpenOutFileClicked.Localized(), ex);
 		}
 	}
 	#endregion
@@ -281,7 +282,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _mainWindow.ShowExceptionLogMessageDialogAsync("MainPageViewModel_ButtonGoClicked_Error".ToLocalized(), ex);
+			await _mainWindow.ShowExceptionLogMessageDialogAsync(Localize.MainPageViewModel_Error_ButtonGoClicked.Localized(), ex);
 		}
 	}
 	#endregion
@@ -316,7 +317,7 @@ public class MainPageViewModel : ObservableRecipient
 		}
 		catch (Exception ex)
 		{
-			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, "MainPageViewModel_MenuFlyoutRecentMakeOpening_Error".ToLocalized() + "\n" + ex.Message);
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutRecentMakeOpening.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
@@ -442,13 +443,20 @@ public class MainPageViewModel : ObservableRecipient
 	/// </summary>
 	private void AppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
 	{
-		// 終了処理
-		Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Cancel();
-		Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath = MakePath;
-		Cfm2Common.SaveCfm2Settings();
+		try
+		{
+			// 終了処理
+			Cfm2Model.Instance.EnvModel.AppCancellationTokenSource.Cancel();
+			Cfm2Model.Instance.EnvModel.Cfm2Settings.MakePath = MakePath;
+			Cfm2Common.SaveCfm2Settings();
 
-		Common.DeleteTempFolder();
-		Log.Information("終了しました：" + Common.LK_GENERAL_APP_NAME.ToLocalized() + " " + Cfm2Constants.APP_VER + " --------------------");
+			Common.DeleteTempFolder();
+			Log.Information("終了しました：" + Localize.AppInfo_AppName.Localized() + " " + Cfm2Constants.APP_VER + " --------------------");
+		}
+		catch (Exception ex)
+		{
+			SerilogUtils.LogException("終了時エラー", ex);
+		}
 	}
 
 	/// <summary>
@@ -489,16 +497,16 @@ public class MainPageViewModel : ObservableRecipient
 		// α・βの注意
 		if (Cfm2Constants.APP_VER.Contains('α'))
 		{
-			message += "MainPageViewModel_Warning_Alpha".ToLocalized() + "\n\n";
+			message += Localize.MainPageViewModel_Warning_Alpha.Localized() + "\n\n";
 			logEventLevel = LogEventLevel.Warning;
 		}
 		else if (Cfm2Constants.APP_VER.Contains('β'))
 		{
-			message += "MainPageViewModel_Warning_Beta".ToLocalized() + "\n\n";
+			message += Localize.MainPageViewModel_Warning_Beta.Localized() + "\n\n";
 			logEventLevel = LogEventLevel.Warning;
 		}
 
-		message += String.Format("MainPageViewModel_Updated".ToLocalized(), Common.LK_GENERAL_APP_NAME.ToLocalized());
+		message += String.Format(Localize.MainPageViewModel_Updated.Localized(), Localize.AppInfo_AppName.Localized());
 
 		// 表示
 		await _mainWindow.ShowLogMessageDialogAsync(logEventLevel, message);
@@ -558,7 +566,7 @@ public class MainPageViewModel : ObservableRecipient
 		{
 			String cmd = cmds[i];
 
-			if (Path.GetExtension(cmd).ToLower() == Cfm2Constants.FILE_EXT_CFM2_MAKE)
+			if (String.Equals(Path.GetExtension(cmd), Cfm2Constants.FILE_EXT_CFM2_MAKE, StringComparison.OrdinalIgnoreCase))
 			{
 				// プロジェクトファイルが exe にドロップされた場合
 				return cmd;

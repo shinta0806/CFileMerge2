@@ -9,8 +9,8 @@
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.Models.SharedMisc;
+using CFileMerge2.Strings;
 
-using Shinta;
 using Shinta.WinUi3;
 
 namespace CFileMerge2.Views.ProgressWindows;
@@ -31,7 +31,7 @@ public sealed partial class ProgressWindow : WindowEx3
 		// 初期化
 		SizeToContent = SizeToContent.WidthAndHeight;
 		AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
-		Title = "ProgressWindow_Title".ToLocalized();
+		Title = Localize.ProgressWindow_Title.Localized();
 		Content = new ProgressPage(this, makePath, onlyCore);
 	}
 }

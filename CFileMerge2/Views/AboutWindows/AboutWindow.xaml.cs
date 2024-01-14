@@ -1,4 +1,4 @@
-﻿// ============================================================================
+// ============================================================================
 // 
 // バージョン情報ウィンドウのコードビハインド
 // 
@@ -9,29 +9,29 @@
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.Models.SharedMisc;
+using CFileMerge2.Strings;
 
-using Shinta;
 using Shinta.WinUi3;
 
 namespace CFileMerge2.Views.AboutWindows;
 
 public sealed partial class AboutWindow : WindowEx3
 {
-    // ====================================================================
-    // コンストラクター
-    // ====================================================================
+	// ====================================================================
+	// コンストラクター
+	// ====================================================================
 
-    /// <summary>
-    /// メインコンストラクター
-    /// </summary>
-    public AboutWindow()
-    {
-        InitializeComponent();
+	/// <summary>
+	/// メインコンストラクター
+	/// </summary>
+	public AboutWindow()
+	{
+		InitializeComponent();
 
-        // 初期化
-        SizeToContent = SizeToContent.Height;
-        AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
-        Title = String.Format("AboutWindow_Title".ToLocalized(), Common.LK_GENERAL_APP_NAME.ToLocalized());
-        Content = new AboutPage(this);
-    }
+		// 初期化
+		SizeToContent = SizeToContent.Height;
+		AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, Cfm2Constants.CONTENT_PATH_ICON));
+		Title = String.Format(Localize.AboutWindow_Title.Localized(), Localize.AppInfo_AppName.Localized());
+		Content = new AboutPage(this);
+	}
 }

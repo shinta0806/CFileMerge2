@@ -9,6 +9,7 @@
 // ----------------------------------------------------------------------------
 
 using CFileMerge2.Models.SharedMisc;
+using CFileMerge2.Strings;
 
 using Shinta;
 using Shinta.WinUi3;
@@ -43,7 +44,11 @@ internal class EnvironmentModel
 	/// <summary>
 	/// 環境設定
 	/// </summary>
-	public Cfm2Settings Cfm2Settings { get; set; } = new();
+	public Cfm2Settings Cfm2Settings
+	{
+		get;
+		set;
+	} = new();
 
 	/// <summary>
 	/// EXE フルパス
@@ -57,7 +62,7 @@ internal class EnvironmentModel
 			{
 				// 単一ファイル時にも内容が格納される GetCommandLineArgs を用いる（Assembly 系の Location は不可）
 				_exeFullPath = Environment.GetCommandLineArgs()[0];
-				if (Path.GetExtension(_exeFullPath).ToLower() != Common.FILE_EXT_EXE)
+				if (!String.Equals(Path.GetExtension(_exeFullPath), Common.FILE_EXT_EXE, StringComparison.OrdinalIgnoreCase))
 				{
 					_exeFullPath = Path.ChangeExtension(_exeFullPath, Common.FILE_EXT_EXE);
 				}
@@ -120,7 +125,7 @@ internal class EnvironmentModel
 		SerilogUtils.CreateLogger(5 * 1024 * 1024, 5, WinUi3Common.SettingsFolder() + FILE_NAME_LOG);
 
 		// 起動ログ
-		Log.Information("起動しました：" + Common.LK_GENERAL_APP_NAME.ToLocalized() + " " + Cfm2Constants.APP_VER + " ====================");
+		Log.Information("起動しました：" + Localize.AppInfo_AppName.Localized() + " " + Cfm2Constants.APP_VER + " ====================");
 		Log.Information("プロセス動作モード：" + (Environment.Is64BitProcess ? "64" : "32"));
 #if DEBUG
 		Log.Debug("デバッグモード：" + Common.DEBUG_ENABLED_MARK);

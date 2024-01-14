@@ -10,6 +10,7 @@
 
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
+using CFileMerge2.Strings;
 using CFileMerge2.Views.MainWindows;
 
 using Microsoft.UI.Xaml;
@@ -48,7 +49,7 @@ public partial class App : Application
 		_ = Cfm2Model.Instance;
 
 		// 集約エラーハンドラー設定
-		UnhandledException += App_UnhandledException;
+		UnhandledException += AppUnhandledException;
 
 		// 各種初期化
 		Initialize();
@@ -76,17 +77,24 @@ public partial class App : Application
 	/// </summary>
 	/// <param name="sender"></param>
 	/// <param name="args"></param>
-	private async void App_UnhandledException(Object _, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
+	private async void AppUnhandledException(Object _, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
 	{
 		// まずはログのみ
-		String message = "不明なエラーが発生しました。アプリケーションを終了します。\n"
-			+ args.Message + "\n" + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace;
+		String message = String.Empty;
+		try
+		{
+			message += Localize.App_Fatal_UnhandledException.Localized() + "\n";
+		}
+		catch (Exception)
+		{
+		}
+		message += args.Message + "\n" + args.Exception.Message + "\n" + args.Exception.InnerException?.Message + "\n" + args.Exception.StackTrace;
 		Log.Fatal(message);
 
 		// 表示
 		try
 		{
-			await _mainWindow?.CreateMessageDialog(message, LogEventLevel.Fatal.ToString().ToLocalized()).ShowAsync();
+			await _mainWindow?.CreateMessageDialog(message, Localize.GeneralView_Fatal.Localized()).ShowAsync();
 		}
 		catch (Exception)
 		{
