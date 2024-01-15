@@ -43,20 +43,27 @@ public partial class App : Application
 	/// <param name="args"></param>
 	protected override void OnLaunched(LaunchActivatedEventArgs args)
 	{
-		base.OnLaunched(args);
+		try
+		{
+			base.OnLaunched(args);
 
-		// モデル生成
-		_ = Cfm2Model.Instance;
+			// モデル生成
+			_ = Cfm2Model.Instance;
 
-		// 集約エラーハンドラー設定
-		UnhandledException += AppUnhandledException;
+			// 集約エラーハンドラー設定
+			UnhandledException += AppUnhandledException;
 
-		// 各種初期化
-		Initialize();
+			// 各種初期化
+			Initialize();
 
-		// メインウィンドウを開く
-		_mainWindow = new();
-		_mainWindow.Activate();
+			// メインウィンドウを開く
+			_mainWindow = new();
+			_mainWindow.Activate();
+		}
+		catch (Exception ex)
+		{
+			SerilogUtils.LogException("起動時エラー", ex);
+		}
 	}
 
 	// ====================================================================
@@ -77,7 +84,7 @@ public partial class App : Application
 	/// </summary>
 	/// <param name="sender"></param>
 	/// <param name="args"></param>
-	private async void AppUnhandledException(Object _, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
+	private void AppUnhandledException(Object _, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
 	{
 		// まずはログのみ
 		String message = String.Empty;
@@ -94,7 +101,8 @@ public partial class App : Application
 		// 表示
 		try
 		{
-			await _mainWindow?.CreateMessageDialog(message, Localize.Fatal.Localized()).ShowAsync();
+			// 集約エラーハンドラーの中で await するとデバッガーにも拾われないエラーが発生するので、Wait() にする
+			_mainWindow?.CreateMessageDialog(message, Localize.Fatal.Localized()).ShowAsync().AsTask().Wait();
 		}
 		catch (Exception)
 		{
