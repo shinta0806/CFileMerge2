@@ -59,7 +59,7 @@ internal class Cfm2Common
 	{
 		try
 		{
-			Cfm2Model.Instance.EnvModel.Cfm2Settings = Cfm2Model.Instance.EnvModel.JsonManager.Load<Cfm2Settings>(Cfm2Constants.FILE_NAME_CFM2_SETTINGS, false);
+			Cfm2Model.Instance.EnvModel.Cfm2Settings = Cfm2Model.Instance.EnvModel.JsonManager.Load<Cfm2Settings>(Cfm2Constants.FILE_NAME_CFM2_SETTINGS, false, null);
 			Cfm2Model.Instance.EnvModel.Cfm2Settings.Adjust();
 		}
 		catch (Exception ex)
