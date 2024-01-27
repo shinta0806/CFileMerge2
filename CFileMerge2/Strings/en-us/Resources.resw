@@ -82,6 +82,12 @@
 <data name="AppInfo_AssociationName" xml:space="preserve">
 <value>Chochoito File Merge 2 Makefile</value>
 </data>
+<data name="File_HelpWithoutExtension" xml:space="preserve">
+<value>CFileMerge2_en-us</value>
+</data>
+<data name="File_HistoryWithoutExtension" xml:space="preserve">
+<value>CFileMerge2_History_ja-jp</value>
+</data>
 <data name="GeneralView_ButtonCancel.Content" xml:space="preserve">
 <value>Cancel</value>
 </data>

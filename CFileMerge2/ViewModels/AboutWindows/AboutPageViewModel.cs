@@ -106,7 +106,7 @@ public class AboutPageViewModel : ObservableRecipient
 	{
 		try
 		{
-			Common.ShellExecute(Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + FILE_NAME_HISTORY);
+			Common.ShellExecute(Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + Localize.File_HistoryWithoutExtension.Localized() + Common.FILE_EXT_TXT);
 		}
 		catch (Exception ex)
 		{
@@ -175,7 +175,7 @@ public class AboutPageViewModel : ObservableRecipient
 	// private 変数
 	// ====================================================================
 
-	private const String FILE_NAME_HISTORY = "CFileMerge2_History_JPN" + Common.FILE_EXT_TXT;
+	//private const String FILE_NAME_HISTORY = "CFileMerge2_History_JPN" + Common.FILE_EXT_TXT;
 
 	// ====================================================================
 	// private 変数

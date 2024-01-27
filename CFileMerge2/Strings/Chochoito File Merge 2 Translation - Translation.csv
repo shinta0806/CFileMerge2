@@ -6,6 +6,8 @@ App info,AppInfo,AppName,,ちょちょいとファイル合併 2,Chochoito File 
 ,AppInfo,Distribution,Zip,zip 版,Zip edition
 ,AppInfo,Description,,静的 HTML によるヘルプの作成をアシストする、開発者向けのツールです。,A tool for developers that assists in creating static HTML help.
 ,AppInfo,AssociationName,,ちょちょいとファイル合併 2 メイクファイル,Chochoito File Merge 2 Makefile
+Files,File,HelpWithoutExtension,,CFileMerge2_ja-jp,CFileMerge2_en-us
+,File,HistoryWithoutExtension,,CFileMerge2_History_ja-jp,CFileMerge2_History_ja-jp
 General UI parts,GeneralView,ButtonCancel.Content,,キャンセル,Cancel
 ,GeneralView,ButtonOk.Content,,OK,OK
 ,GeneralView,FileTypeSta,,設定ファイル,Settings file

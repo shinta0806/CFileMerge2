@@ -109,7 +109,7 @@ internal class Cfm2Common
 			if (!String.IsNullOrEmpty(anchor))
 			{
 				helpPath = Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + Cfm2Constants.FOLDER_NAME_HELP_PARTS
-					+ FILE_NAME_HELP_PREFIX + "_" + anchor + Common.FILE_EXT_HTML;
+					+ Localize.File_HelpWithoutExtension.Localized() + "_" + anchor + Common.FILE_EXT_HTML;
 				try
 				{
 					Common.ShellExecute(helpPath);
@@ -123,7 +123,7 @@ internal class Cfm2Common
 			}
 
 			// アンカーが指定されていない場合・状況依存型ヘルプを表示できなかった場合は通常のヘルプを表示
-			helpPath = Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + FILE_NAME_HELP_PREFIX + Common.FILE_EXT_HTML;
+			helpPath = Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + Localize.File_HelpWithoutExtension.Localized() + Common.FILE_EXT_HTML;
 			Common.ShellExecute(helpPath);
 		}
 		catch (Exception ex)
@@ -131,13 +131,4 @@ internal class Cfm2Common
 			await window.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.GeneralView_Error_CannotShowHelp.Localized() + "\n" + ex.Message + "\n" + helpPath);
 		}
 	}
-
-	// ====================================================================
-	// private 定数
-	// ====================================================================
-
-	/// <summary>
-	/// ヘルプファイル名
-	/// </summary>
-	private const String FILE_NAME_HELP_PREFIX = Cfm2Constants.APP_ID + "_JPN";
 }

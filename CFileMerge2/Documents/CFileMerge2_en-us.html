@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Chochoito File Merge 2 Ver 3.3 ヘルプ</title>
+<link rel="stylesheet" href="HelpParts/SHIHelpG3.css" type="text/css">
+<script src="HelpParts/jquery.min.js"></script>
+<script src="HelpParts/Scroll.js"></script>
+</head>
+<body>
+
+<!-- Return to top button -->
+<div id="Top"></div>
+<a href="#Top">
+<div id="PageTopButton">
+  <div id="PageTopButtonText">▲</div>
+</div>
+</a>
+
+<!-- *** Main content *** -->
+<div id="MainCol">
+
+<h1 id="Hajimeni">Introduction</h1>
+
+<h2 id="Gaiyou">Overview</h2>
+
+<p>
+  <a class="HoverZoomImgContainer" href="HelpParts/CFileMerge2_Icon.png" target="_blank">
+    <img class="HoverZoomImg2x" src="HelpParts/CFileMerge2_Icon.png"></a>
+  Chochoito File Merge 2 is a tool for developers that assists in creating static HTML help.<br>
+  <br>
+  By creating a make file,<br>
+</p>
+<ul>
+  <li>Include and merge separate files</li>
+  <li>Table of contents insertion</li>
+  <li>Variable display</li>
+</ul>
+<p>
+  and so on.<br>
+  <br>
+  Incidentally, this help was also created with Chochoito File Merge 2, and the table of contents on the left side was also inserted automatically.<br clear="right">
+</p>
+
+<blockquote>
+  (Supplement)<br>
+  Images shown in this help at a reduced size will enlarge slightly when hovered over with the mouse, and will be displayed at full size when clicked on.<br>
+</blockquote>
+
+<blockquote>
+  (Supplement)<br>
+  If the content differs from the Japanese help, the Japanese help takes precedence.<br>
+</blockquote>
+
+<h2 id="Dousakankyou">Operating environment</h2>
+
+<p>
+  Please see the support information on the <a href="https://shinta.coresv.com/software_dev/cfilemerge2-jpn/#Support" target="_blank">official Chochoito File Merge 2 page</a>.<br>
+</p>
+
+<h2 id="Install">Installation</h2>
+
+<p>
+  Get Chochoito File Merge 2 from the <a href="https://www.microsoft.com/store/apps/9P71TMZL65WG" target="_blank">Microsoft Store</a> to complete the installation.<br>
+  <br>
+  Updates (version upgrades) are automatic. When an updated version is released, it will be automatically updated after you have used Chochoito File Merge 2 several times, so you usually do not need to do any updating. If you want to update immediately instead of waiting for an automatic update, please update at the Microsoft Store.<br>
+</p>
+
+<h1 id="Tutorial">Tutorial</h1>
+
+<p>
+  This section describes the sequence of steps to create HTML help with Chochoito File Merge 2.<br>
+</p>
+
+<h2 id="Kido">Launch</h2>
+
+<p>
+  <a class="HoverZoomImgContainer" href="HelpParts/CFileMerge2_StartMenu.png" target="_blank">
+    <img class="HoverZoomImg2x" src="HelpParts/CFileMerge2_StartMenu.png"></a>
+    Chochoito File Merge 2 is registered in the "C" position in the Start menu, click on it to launch it.<br clear="right">
+  <br>
+  <a class="HoverZoomImgContainer" href="HelpParts/CFileMerge2_MainWindow_Launched.png" target="_blank">
+    <img class="HoverZoomImg2x" src="HelpParts/CFileMerge2_MainWindow_Launched.png"></a>
+    The main window appears.<br clear="right">
+</p>
+
+<blockquote>
+  (Supplement)<br>
+  The display language depends on the language setting of the OS.<br>
+</blockquote>
+
+<h2 id="MakefileShitei">Make file specification</h2>
+
+<p>
+  Specify a make file to create HTML help.<br>
+  <br>
+  In this tutorial, we will specify a make file that is provided as a sample.<br>
+  <br>
+  click on the <img src="HelpParts/CFileMerge2_ButtonHelp.png" alt="" height="32" class="InlineImg"> (Help button) and the "Sample Folder" menu to open the folder where the samples are available.<br>
+  <br>
+  Drag and drop "SampleMakeFile.cfm2" in the sample folder into the "Make File" field.<br>
+</p>
+
+<blockquote>
+  (Attention)<br>
+  The sample folder also contains the following files, which are samples referenced in the make file. Please specify "SampleMakeFile.cfm2" in the Make File field.<br>
+  <ul>
+    <li>SampleAnchorMakeFile.cfm2anchor...Anchor Make File. Used for anchor file creation.</li>
+    <li>SampleIncludeFile.cfm2include...Sample to be included.</li>
+  </ul>
+</blockquote>
+
+<p>
+  In addition to drag and drop, you can also use the Browse button or enter directly into the "Make File" field.<br>
+  <br>
+  To enter directly in the "Make File" field, enter "Documents\Samples\SampleMakeFile.cfm2" as a full path or relative path.<br>
+</p>
+
+<p>
+  <a class="HoverZoomImgContainer" href="HelpParts/CFileMerge2_MakefileBrowser.png" target="_blank">
+    <img class="HoverZoomImg2x" src="HelpParts/CFileMerge2_MakefileBrowser.png"></a>
+  The contents of the make file are HTML files. Therefore, you can view the contents of the sample make file by opening it in a Web browser.<br>
+  <br>
+  Make files differ from regular HTML files in that they contain embedded "Cfm tags" in the form of HTML comments.<br>
+  <br>
+  For example, if the Cfm tag "&lt;!-- Cfm/Toc: --&gt;" is embedded, a table of contents will be inserted at that location.<br>
+  <br>
+  If you open the sample make file in a text editor, you can see how the Cfm tag looks like.<br clear="right">
+</p>
+
+<h2 id="HtmlHelpSakusei">HTML Help Creation</h2>
+
+<p>
+  After specifying the make file, click the "Start" button to create HTML help.<br>
+  <br>
+  In the sample make file, the Cfm tag specifies the path to the HTML help, which is created in "C:\Temp\Sample.html".<br>
+  <br>
+  <a class="HoverZoomImgContainer" href="HelpParts/CFileMerge2_SampleToc.png" target="_blank">
+    <img class="HoverZoomImg2x" src="HelpParts/CFileMerge2_SampleToc.png"></a>
+    Clicking the "Open Output File" button will open the generated HTML help in your browser.<br>
+  <br>
+  A table of contents is inserted at the top of the HTML help. Since this is HTML, you can freely change the format of the table of contents using CSS.<br>
+  <br>
+  In addition, several HTML files are created in the HelpParts folder, which are called anchor files. When you open an anchor file, you are immediately taken to the HTML Help, but not to the beginning of the HTML Help, but to the corresponding heading.<br>
+  <br>
+  This concludes the tutorial.<br>
+  <br>
+  See the next chapter and beyond for more detailed instructions.<br clear="right">
+</p>
+
+<h1 id="Kankyousettei">Settings</h1>
+
+<p>
+  <a class="HoverZoomImgContainer" href="HelpParts/CFileMerge2_Cfm2SettingsWindow.png" target="_blank">
+    <img class="HoverZoomImg2x" src="HelpParts/CFileMerge2_Cfm2SettingsWindow.png"></a>
+  Configures settings related to the overall operation of Chochoito File Merge 2.<br>
+  <br>
+  After setting, click the OK button to confirm the setting. Click the Initialize button to restore the default settings.<br clear="right">
+</p>
+
+
+<h1 id="Onegai">Request</h1>
+
+<h2 id="NiconicoUser">Nico Nico Douga users</h2>
+
+<p>
+  If you have a Nico Nico Douga account, it would be great if you could follow <a href="https://www.nicovideo.jp/user/9520206" target="_blank">SHINTA's account</a>.<br>
+</p>
+
+<h2 id="Creatorshien">Creator Support</h2>
+
+<h3 id="Fantia">Nico Nico Douga Creator Support</h3>
+
+<p>
+  <a href="https://creator-support.nicovideo.jp/registration/9520206" target="_blank"><img src="HelpParts/CreatorSupport.png" alt="" align="right" border="0" hspace="10" vspace="10"></a>
+  If you could support me through the <a href="https://creator-support.nicovideo.jp/registration/9520206" target="_blank">Nico Nico Douga creator support system</a>, it would help me with development costs, etc. Thank you in advance.<br clear="right">
+</p>
+
+<h3 id="Fantia">Fantia</h3>
+
+<p>
+  <a href="https://fantia.jp/fanclubs/65509" target="_blank"><img src="HelpParts/Fantia.png" alt=""
+      width="256" align="right" border="0" hspace="10" vspace="10"></a>
+  <a href="https://fantia.jp/fanclubs/65509" target="_blank">SHINTA's fan site</a> including Chochoito File Merge 2 has been opened within the creator support site "Fantia".<br>
+  <br>
+  We have a free plan, and we encourage you to enroll.<br>
+  <br>
+  If you would like to join our paid plan, it would help me with development costs, etc. Thank you.<br clear="right">
+</p>
+
+<h1 id="Sonota">Miscellaneous</h1>
+
+<h2 id="License">License</h2>
+
+<p>
+  The following licenses apply to Chochoito File Merge 2.<br>
+</p>
+<ul>
+  <li><a href="http://creativecommons.org/licenses/by-nc-nd/2.1/jp/" target="_blank">CC BY-NC-ND 2.1 JP</a></li>
+</ul>
+<p>
+  *Except for portions provided by third parties. The portions provided by third parties are subject to the original license.<br>
+  *If you wish to use the space for commercial purposes, please consult with me in advance as we may be able to accommodate you on a case-by-case basis.<br>
+</p>
+
+<h2 id="Kaiteirireki">History</h2>
+
+<p>
+  See below for the revision history of Chochoito File Merge 2.<br>
+</p>
+<ul>
+  <li><a href="CFileMerge2_History_ja-jp.txt" target="_blank">CFileMerge2_History_ja-jp.txt</a></li>
+</ul>
+
+<h2 id="Katsuyoujirei">Examples of utilization</h2>
+
+<p>
+  Applications that utilize Chochoito File Merge 2 to create help include, for example, the following:<br>
+</p>
+
+<ul>
+  <li><a href="https://shinta.coresv.com/software/easykeychanger_jpn/" target="_blank">Easy Key Cahnger</a> (<a href="https://github.com/shinta0806/EasyKeyChanger/blob/master/Documents/EasyKeyChanger_JPN.cfm2" target="_blank">Make file</a>)</li>
+  <li><a href="https://shinta.coresv.com/software_dev/cfilemerge2-jpn/" target="_blank">Chochoito File Merge 2</a> (<a href="https://github.com/shinta0806/CFileMerge2/blob/master/CFileMerge2/Documents/CFileMerge2_JPN.cfm2" target="_blank">Make file</a>)</li>
+  <li><a href="https://shinta.coresv.com/software/yukalister-nebula-jpn/" target="_blank">YukaLister 4 NEBULA</a> (<a href="https://github.com/shinta0806/YukaListerNebula/blob/master/YukaLister/Documents/YukaListerNebula_JPN.cfm2" target="_blank">Make file</a>)</li>
+</ul>
+
+<h2 id="Shaji">Thanks</h2>
+
+<p>
+  Several software is used in the operation of Chochoito File Merge 2. Thank you very much. Regarding the license of each software, etc., the documents are included in the <a href="ThirdPartyDocuments" target="_blank">ThirdPartyDocuments</a> folder.<br>
+</p>
+
+</div><!-- MainCol -->
+
+<!-- ★★★　左側メニュー　★★★ -->
+<a name="LColMenu"></a>
+<div id="LCol">
+
+<div class="TocArea">
+  <div class="TocItemH1"><a href="#Hajimeni">Introduction</a></div>
+  <div class="TocItemH2"><a href="#Gaiyou">Overview</a></div>
+  <div class="TocItemH2"><a href="#Dousakankyou">Operating environment</a></div>
+  <div class="TocItemH2"><a href="#Install">Installation</a></div>
+  <div class="TocItemH1"><a href="#Tutorial">Tutorial</a></div>
+  <div class="TocItemH2"><a href="#Kido">Launch</a></div>
+  <div class="TocItemH2"><a href="#MakefileShitei">Make file specification</a></div>
+  <div class="TocItemH2"><a href="#HtmlHelpSakusei">HTML Help Creation</a></div>
+  <div class="TocItemH1"><a href="#Kankyousettei">Settings</a></div>
+  <div class="TocItemH1"><a href="#Onegai">Request</a></div>
+  <div class="TocItemH2"><a href="#NiconicoUser">Nico Nico Douga users</a></div>
+  <div class="TocItemH2"><a href="#Creatorshien">Creator Support</a></div>
+  <div class="TocItemH1"><a href="#Sonota">Miscellaneous</a></div>
+  <div class="TocItemH2"><a href="#License">License</a></div>
+  <div class="TocItemH2"><a href="#Kaiteirireki">History</a></div>
+  <div class="TocItemH2"><a href="#Katsuyoujirei">Examples of utilization</a></div>
+  <div class="TocItemH2"><a href="#Shaji">Thanks</a></div>
+</div>
+
+</div><!-- LCol -->
+
+</body>
+
+</html>

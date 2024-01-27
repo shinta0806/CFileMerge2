@@ -19,6 +19,8 @@ internal enum Localize
 	AppInfo_Distribution_Zip,
 	AppInfo_Description,
 	AppInfo_AssociationName,
+	File_HelpWithoutExtension,
+	File_HistoryWithoutExtension,
 	GeneralView_FileTypeSta,
 	GeneralView_Error_CannotShowHelp,
 	GeneralView_Error_NoAnchor,
