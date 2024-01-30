@@ -131,6 +131,15 @@ internal class Cfm2Constants
 	public const String CONTENT_PATH_ICON = "Assets/WindowIcon.ico";
 
 	// --------------------------------------------------------------------
+	// URL
+	// --------------------------------------------------------------------
+
+	/// <summary>
+	/// よくある質問
+	/// </summary>
+	public const String URL_FAQ = "https://github.com/shinta0806/CFileMerge2/issues?q=label%3Aquestion+sort%3Aupdated-desc";
+
+	// --------------------------------------------------------------------
 	// UI
 	// --------------------------------------------------------------------
 

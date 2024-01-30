@@ -63,6 +63,7 @@ public class MainPageViewModel : ObservableRecipient
 		MenuFlyoutItemRecentMakeClickedCommand = new RelayCommand<String>(MenuFlyoutItemRecentMakeClicked);
 		ButtonBrowseMakeClickedCommand = new RelayCommand(ButtonBrowseMakeClicked);
 		ButtonCfm2SettingsClickedCommand = new RelayCommand(ButtonCfm2SettingsClicked);
+		MenuFlyoutItemFaqClickedCommand = new RelayCommand(MenuFlyoutItemFaqClicked);
 		MenuFlyoutItemSampleFolderClickedCommand = new RelayCommand(MenuFlyoutItemSampleFolderClicked);
 		MenuFlyoutItemAboutClickedCommand = new RelayCommand(MenuFlyoutItemAboutClicked);
 		ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
@@ -192,6 +193,26 @@ public class MainPageViewModel : ObservableRecipient
 		get => _mainWindow.HelpClickedCommand;
 	}
 #pragma warning restore CA1822
+	#endregion
+
+	#region よくある質問フライアウトの制御
+	public RelayCommand MenuFlyoutItemFaqClickedCommand
+	{
+		get;
+	}
+
+	private async void MenuFlyoutItemFaqClicked()
+	{
+		try
+		{
+			Common.ShellExecute(Cfm2Constants.URL_FAQ);
+		}
+		catch (Exception ex)
+		{
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemFaqClicked.Localized() + "\n" + ex.Message);
+			SerilogUtils.LogStackTrace(ex);
+		}
+	}
 	#endregion
 
 	#region サンプルフォルダーフライアウトの制御

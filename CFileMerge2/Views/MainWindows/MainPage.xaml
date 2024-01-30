@@ -45,6 +45,11 @@
 								<KeyboardAccelerator Key="H" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
+						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemFaq" Command="{x:Bind ViewModel.MenuFlyoutItemFaqClickedCommand}" >
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="Q" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
 						<MenuFlyoutSeparator/>
 						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemSampleFolder" Command="{x:Bind ViewModel.MenuFlyoutItemSampleFolderClickedCommand}" >
 							<MenuFlyoutItem.KeyboardAccelerators>
