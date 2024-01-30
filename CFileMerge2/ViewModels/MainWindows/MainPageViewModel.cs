@@ -188,7 +188,7 @@ public class MainPageViewModel : ObservableRecipient
 
 	#region ヘルプフライアウトの制御
 #pragma warning disable CA1822
-	public ICommand MenuFlyoutItemHelpClickedCommand
+	public RelayCommand<String> MenuFlyoutItemHelpClickedCommand
 	{
 		get => _mainWindow.HelpClickedCommand;
 	}
@@ -213,6 +213,15 @@ public class MainPageViewModel : ObservableRecipient
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
+	#endregion
+
+	#region チュートリアルフライアウトの制御
+#pragma warning disable CA1822
+	public RelayCommand<String> MenuFlyoutItemTutorialClickedCommand
+	{
+		get => _mainWindow.HelpClickedCommand;
+	}
+#pragma warning restore CA1822
 	#endregion
 
 	#region サンプルフォルダーフライアウトの制御

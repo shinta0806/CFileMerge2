@@ -127,6 +127,9 @@
   <data name="MainPage_MenuFlyoutItemFaq.Text" xml:space="preserve">
     <value>FAQ</value>
   </data>
+  <data name="MainPage_MenuFlyoutItemTutorial.Text" xml:space="preserve">
+    <value>Tutorial</value>
+  </data>
   <data name="MainPage_MenuFlyoutItemSampleFolder.Text" xml:space="preserve">
     <value>Sample folder</value>
   </data>

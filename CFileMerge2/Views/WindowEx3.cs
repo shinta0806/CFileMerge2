@@ -42,7 +42,7 @@ public class WindowEx3 : WindowEx2
     // --------------------------------------------------------------------
 
     #region ヘルプリンクの制御
-    public ICommand HelpClickedCommand
+    public RelayCommand<String> HelpClickedCommand
     {
         get;
     }

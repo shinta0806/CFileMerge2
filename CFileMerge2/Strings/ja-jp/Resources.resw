@@ -127,6 +127,9 @@
   <data name="MainPage_MenuFlyoutItemFaq.Text" xml:space="preserve">
     <value>よくある質問</value>
   </data>
+  <data name="MainPage_MenuFlyoutItemTutorial.Text" xml:space="preserve">
+    <value>チュートリアル</value>
+  </data>
   <data name="MainPage_MenuFlyoutItemSampleFolder.Text" xml:space="preserve">
     <value>サンプルフォルダー</value>
   </data>
