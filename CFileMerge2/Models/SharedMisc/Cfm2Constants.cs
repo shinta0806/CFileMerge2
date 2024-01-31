@@ -82,6 +82,7 @@ internal class Cfm2Constants
 
 	public const String AUTHOR_WEB = "https://shinta.coresv.com";
 	public const String AUTHOR_TWITTER = "https://twitter.com/shinta0806";
+	public const String AUTHOR_CREATOR_SUPPORT = "https://creator-support.nicovideo.jp/registration/9520206";
 	public const String AUTHOR_FANTIA = "https://fantia.jp/fanclubs/65509";
 
 	// --------------------------------------------------------------------

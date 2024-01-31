@@ -24,6 +24,7 @@ Main Window,MainPage,ButtonBrowseMake.Content,,参照(B),Browse
 ,MainPage,MenuFlyoutItemFaq.Text,,よくある質問,FAQ
 ,MainPage,MenuFlyoutItemTutorial.Text,,チュートリアル,Tutorial
 ,MainPage,MenuFlyoutItemSampleFolder.Text,,サンプルフォルダー,Sample folder
+,MainPage,MenuFlyoutItemCreatorSupport.Text,,クリエイターサポート,Creator support
 ,MainPage,MenuFlyoutItemAbout.Text,,バージョン情報,About
 ,MainPage,TextBlockGo.Text,,スタート,Start
 ,MainPage,TextBlockMake.Text,,メイクファイル(M)：,Makefile: 
@@ -43,6 +44,7 @@ Main Window,MainPage,ButtonBrowseMake.Content,,参照(B),Browse
 ,MainPageViewModel,Error,MenuFlyoutRecentMakeOpening,最近使用したメイクファイル時エラー：,Recent makefile error:
 ,MainPageViewModel,Error,MenuFlyoutItemFaqClicked,よくある質問表示時エラー：,Open FAQ error:
 ,MainPageViewModel,Error,MenuFlyoutItemSampleFolderClicked,サンプルフォルダー表示時エラー：,Open sample folder error:
+,MainPageViewModel,Error,MenuFlyoutItemCreatorSupportClicked,クリエイターサポート表示時エラー：,Open creator support error:
 ,MainPageViewModel,Error,MenuFlyoutItemAboutClicked,バージョン情報表示時エラー：,Open about error:
 ,MainPageViewModel,Done,MergeAsync,"完了しました。
 経過時間：{0} ミリ秒","Completed.

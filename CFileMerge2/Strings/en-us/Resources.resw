@@ -133,6 +133,9 @@
   <data name="MainPage_MenuFlyoutItemSampleFolder.Text" xml:space="preserve">
     <value>Sample folder</value>
   </data>
+  <data name="MainPage_MenuFlyoutItemCreatorSupport.Text" xml:space="preserve">
+    <value>Creator support</value>
+  </data>
   <data name="MainPage_MenuFlyoutItemAbout.Text" xml:space="preserve">
     <value>About</value>
   </data>
@@ -189,6 +192,9 @@
   </data>
   <data name="MainPageViewModel_Error_MenuFlyoutItemSampleFolderClicked" xml:space="preserve">
     <value>Open sample folder error:</value>
+  </data>
+  <data name="MainPageViewModel_Error_MenuFlyoutItemCreatorSupportClicked" xml:space="preserve">
+    <value>Open creator support error:</value>
   </data>
   <data name="MainPageViewModel_Error_MenuFlyoutItemAboutClicked" xml:space="preserve">
     <value>Open about error:</value>

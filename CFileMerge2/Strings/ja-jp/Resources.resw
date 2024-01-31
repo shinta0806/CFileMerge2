@@ -133,6 +133,9 @@
   <data name="MainPage_MenuFlyoutItemSampleFolder.Text" xml:space="preserve">
     <value>サンプルフォルダー</value>
   </data>
+  <data name="MainPage_MenuFlyoutItemCreatorSupport.Text" xml:space="preserve">
+    <value>クリエイターサポート</value>
+  </data>
   <data name="MainPage_MenuFlyoutItemAbout.Text" xml:space="preserve">
     <value>バージョン情報</value>
   </data>
@@ -189,6 +192,9 @@
   </data>
   <data name="MainPageViewModel_Error_MenuFlyoutItemSampleFolderClicked" xml:space="preserve">
     <value>サンプルフォルダー表示時エラー：</value>
+  </data>
+  <data name="MainPageViewModel_Error_MenuFlyoutItemCreatorSupportClicked" xml:space="preserve">
+    <value>クリエイターサポート表示時エラー：</value>
   </data>
   <data name="MainPageViewModel_Error_MenuFlyoutItemAboutClicked" xml:space="preserve">
     <value>バージョン情報表示時エラー：</value>

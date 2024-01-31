@@ -65,6 +65,7 @@ public class MainPageViewModel : ObservableRecipient
 		ButtonCfm2SettingsClickedCommand = new RelayCommand(ButtonCfm2SettingsClicked);
 		MenuFlyoutItemFaqClickedCommand = new RelayCommand(MenuFlyoutItemFaqClicked);
 		MenuFlyoutItemSampleFolderClickedCommand = new RelayCommand(MenuFlyoutItemSampleFolderClicked);
+		MenuFlyoutItemCreatorSupportClickedCommand = new RelayCommand(MenuFlyoutItemCreatorSupportClicked);
 		MenuFlyoutItemAboutClickedCommand = new RelayCommand(MenuFlyoutItemAboutClicked);
 		ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
 		ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
@@ -110,7 +111,7 @@ public class MainPageViewModel : ObservableRecipient
 	// --------------------------------------------------------------------
 
 	#region 最近使用したメイクファイルフライアウトの制御
-	public ICommand MenuFlyoutItemRecentMakeClickedCommand
+	public RelayCommand<String> MenuFlyoutItemRecentMakeClickedCommand
 	{
 		get;
 	}
@@ -136,7 +137,7 @@ public class MainPageViewModel : ObservableRecipient
 	#endregion
 
 	#region 参照ボタンの制御
-	public ICommand ButtonBrowseMakeClickedCommand
+	public RelayCommand ButtonBrowseMakeClickedCommand
 	{
 		get;
 	}
@@ -166,7 +167,7 @@ public class MainPageViewModel : ObservableRecipient
 	#endregion
 
 	#region 環境設定ボタンの制御
-	public ICommand ButtonCfm2SettingsClickedCommand
+	public RelayCommand ButtonCfm2SettingsClickedCommand
 	{
 		get;
 	}
@@ -225,7 +226,7 @@ public class MainPageViewModel : ObservableRecipient
 	#endregion
 
 	#region サンプルフォルダーフライアウトの制御
-	public ICommand MenuFlyoutItemSampleFolderClickedCommand
+	public RelayCommand MenuFlyoutItemSampleFolderClickedCommand
 	{
 		get;
 	}
@@ -244,8 +245,28 @@ public class MainPageViewModel : ObservableRecipient
 	}
 	#endregion
 
+	#region クリエイターサポートフライアウトの制御
+	public RelayCommand MenuFlyoutItemCreatorSupportClickedCommand
+	{
+		get;
+	}
+
+	private async void MenuFlyoutItemCreatorSupportClicked()
+	{
+		try
+		{
+			Common.ShellExecute(Cfm2Constants.AUTHOR_CREATOR_SUPPORT);
+		}
+		catch (Exception ex)
+		{
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemCreatorSupportClicked.Localized() + "\n" + ex.Message);
+			SerilogUtils.LogStackTrace(ex);
+		}
+	}
+	#endregion
+
 	#region バージョン情報フライアウトの制御
-	public ICommand MenuFlyoutItemAboutClickedCommand
+	public RelayCommand MenuFlyoutItemAboutClickedCommand
 	{
 		get;
 	}
@@ -266,7 +287,7 @@ public class MainPageViewModel : ObservableRecipient
 	#endregion
 
 	#region 出力ファイルを開くボタンの制御
-	public ICommand ButtonOpenOutFileClickedCommand
+	public RelayCommand ButtonOpenOutFileClickedCommand
 	{
 		get;
 	}
@@ -294,7 +315,7 @@ public class MainPageViewModel : ObservableRecipient
 	#endregion
 
 	#region スタートボタンの制御
-	public ICommand ButtonGoClickedCommand
+	public RelayCommand ButtonGoClickedCommand
 	{
 		get;
 	}

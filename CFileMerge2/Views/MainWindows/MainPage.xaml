@@ -62,6 +62,12 @@
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
 						<MenuFlyoutSeparator/>
+						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemCreatorSupport" Command="{x:Bind ViewModel.MenuFlyoutItemCreatorSupportClickedCommand}" >
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="C" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
+						<MenuFlyoutSeparator/>
 						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemAbout" Command="{x:Bind ViewModel.MenuFlyoutItemAboutClickedCommand}" >
 							<MenuFlyoutItem.Icon>
 								<FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE946;"/>
