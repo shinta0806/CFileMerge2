@@ -63,6 +63,7 @@ public class MainPageViewModel : ObservableRecipient
 		MenuFlyoutItemSampleFolderClickedCommand = new RelayCommand(MenuFlyoutItemSampleFolderClicked);
 		MenuFlyoutItemCreatorSupportClickedCommand = new RelayCommand(MenuFlyoutItemCreatorSupportClicked);
 		MenuFlyoutItemFantiaClickedCommand = new RelayCommand(MenuFlyoutItemFantiaClicked);
+		MenuFlyoutItemCheckUpdateClickedCommand = new RelayCommand(MenuFlyoutItemCheckUpdateClicked);
 		MenuFlyoutItemAboutClickedCommand = new RelayCommand(MenuFlyoutItemAboutClicked);
 		ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
 		ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
@@ -277,6 +278,26 @@ public class MainPageViewModel : ObservableRecipient
 		catch (Exception ex)
 		{
 			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemFantiaClicked.Localized() + "\n" + ex.Message);
+			SerilogUtils.LogStackTrace(ex);
+		}
+	}
+	#endregion
+
+	#region 更新プログラムの確認フライアウトの制御
+	public RelayCommand MenuFlyoutItemCheckUpdateClickedCommand
+	{
+		get;
+	}
+
+	private async void MenuFlyoutItemCheckUpdateClicked()
+	{
+		try
+		{
+			Common.OpenMicrosoftStore(Cfm2Constants.STORE_PRODUCT_ID);
+		}
+		catch (Exception ex)
+		{
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemCheckUpdateClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}

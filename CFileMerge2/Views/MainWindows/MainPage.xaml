@@ -94,6 +94,13 @@
 						</MenuFlyoutItem>
 						<MenuFlyoutSeparator/>
 
+						<!-- 更新プログラムの確認 -->
+						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemCheckUpdate" Command="{x:Bind ViewModel.MenuFlyoutItemCheckUpdateClickedCommand}" >
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="U" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
+
 						<!-- バージョン情報 -->
 						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemAbout" Command="{x:Bind ViewModel.MenuFlyoutItemAboutClickedCommand}" >
 							<MenuFlyoutItem.Icon>
@@ -103,6 +110,7 @@
 								<KeyboardAccelerator Key="A" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
+						
 					</MenuFlyout>
 				</Button.Flyout>
 				<ToolTipService.ToolTip>

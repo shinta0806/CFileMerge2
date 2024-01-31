@@ -26,6 +26,7 @@ Main Window,MainPage,ButtonBrowseMake.Content,,参照(B),Browse
 ,MainPage,MenuFlyoutItemSampleFolder.Text,,サンプルフォルダー,Sample folder
 ,MainPage,MenuFlyoutItemCreatorSupport.Text,,クリエイターサポート,Creator support
 ,MainPage,MenuFlyoutItemFantia.Text,,ファンサイト,Fan site
+,MainPage,MenuFlyoutItemCheckUpdate.Text,,更新プログラムの確認,Check for update
 ,MainPage,MenuFlyoutItemAbout.Text,,バージョン情報,About
 ,MainPage,TextBlockGo.Text,,スタート,Start
 ,MainPage,TextBlockMake.Text,,メイクファイル(M)：,Makefile: 
@@ -47,6 +48,7 @@ Main Window,MainPage,ButtonBrowseMake.Content,,参照(B),Browse
 ,MainPageViewModel,Error,MenuFlyoutItemSampleFolderClicked,サンプルフォルダー表示時エラー：,Open sample folder error:
 ,MainPageViewModel,Error,MenuFlyoutItemCreatorSupportClicked,クリエイターサポート表示時エラー：,Open creator support error:
 ,MainPageViewModel,Error,MenuFlyoutItemFantiaClicked,ファンサイト表示時エラー：,Open fan site error:
+,MainPageViewModel,Error,MenuFlyoutItemCheckUpdateClicked,更新プログラムの確認時エラー：,Check for update error:
 ,MainPageViewModel,Error,MenuFlyoutItemAboutClicked,バージョン情報表示時エラー：,Open about error:
 ,MainPageViewModel,Done,MergeAsync,"完了しました。
 経過時間：{0} ミリ秒","Completed.
