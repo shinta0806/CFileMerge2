@@ -101,6 +101,13 @@
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
 
+						<!-- 更新履歴 -->
+						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemHistory" Command="{x:Bind ViewModel.MenuFlyoutItemHistoryClickedCommand}" >
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="I" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
+
 						<!-- バージョン情報 -->
 						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemAbout" Command="{x:Bind ViewModel.MenuFlyoutItemAboutClickedCommand}" >
 							<MenuFlyoutItem.Icon>

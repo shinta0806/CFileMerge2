@@ -64,6 +64,7 @@ public class MainPageViewModel : ObservableRecipient
 		MenuFlyoutItemCreatorSupportClickedCommand = new RelayCommand(MenuFlyoutItemCreatorSupportClicked);
 		MenuFlyoutItemFantiaClickedCommand = new RelayCommand(MenuFlyoutItemFantiaClicked);
 		MenuFlyoutItemCheckUpdateClickedCommand = new RelayCommand(MenuFlyoutItemCheckUpdateClicked);
+		MenuFlyoutItemHistoryClickedCommand = new RelayCommand(MenuFlyoutItemHistoryClicked);
 		MenuFlyoutItemAboutClickedCommand = new RelayCommand(MenuFlyoutItemAboutClicked);
 		ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
 		ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
@@ -298,6 +299,26 @@ public class MainPageViewModel : ObservableRecipient
 		catch (Exception ex)
 		{
 			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemCheckUpdateClicked.Localized() + "\n" + ex.Message);
+			SerilogUtils.LogStackTrace(ex);
+		}
+	}
+	#endregion
+
+	#region 更新履歴フライアウトの制御
+	public RelayCommand MenuFlyoutItemHistoryClickedCommand
+	{
+		get;
+	}
+
+	private async void MenuFlyoutItemHistoryClicked()
+	{
+		try
+		{
+			Common.ShellExecute(Cfm2Model.Instance.EnvModel.ExeFullFolder + Cfm2Constants.FOLDER_NAME_DOCUMENTS + Localize.File_HistoryWithoutExtension.Localized() + Common.FILE_EXT_TXT);
+		}
+		catch (Exception ex)
+		{
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemHistoryClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}

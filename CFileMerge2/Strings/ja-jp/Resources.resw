@@ -142,6 +142,9 @@
   <data name="MainPage_MenuFlyoutItemCheckUpdate.Text" xml:space="preserve">
     <value>更新プログラムの確認</value>
   </data>
+  <data name="MainPage_MenuFlyoutItemHistory.Text" xml:space="preserve">
+    <value>更新履歴</value>
+  </data>
   <data name="MainPage_MenuFlyoutItemAbout.Text" xml:space="preserve">
     <value>バージョン情報</value>
   </data>
@@ -207,6 +210,9 @@
   </data>
   <data name="MainPageViewModel_Error_MenuFlyoutItemCheckUpdateClicked" xml:space="preserve">
     <value>更新プログラムの確認時エラー：</value>
+  </data>
+  <data name="MainPageViewModel_Error_MenuFlyoutItemHistoryClicked" xml:space="preserve">
+    <value>更新履歴表示時エラー：</value>
   </data>
   <data name="MainPageViewModel_Error_MenuFlyoutItemAboutClicked" xml:space="preserve">
     <value>バージョン情報表示時エラー：</value>
