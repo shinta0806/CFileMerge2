@@ -136,6 +136,9 @@
   <data name="MainPage_MenuFlyoutItemCreatorSupport.Text" xml:space="preserve">
     <value>Creator support</value>
   </data>
+  <data name="MainPage_MenuFlyoutItemFantia.Text" xml:space="preserve">
+    <value>Fan site</value>
+  </data>
   <data name="MainPage_MenuFlyoutItemAbout.Text" xml:space="preserve">
     <value>About</value>
   </data>
@@ -195,6 +198,9 @@
   </data>
   <data name="MainPageViewModel_Error_MenuFlyoutItemCreatorSupportClicked" xml:space="preserve">
     <value>Open creator support error:</value>
+  </data>
+  <data name="MainPageViewModel_Error_MenuFlyoutItemFantiaClicked" xml:space="preserve">
+    <value>Open fan site error:</value>
   </data>
   <data name="MainPageViewModel_Error_MenuFlyoutItemAboutClicked" xml:space="preserve">
     <value>Open about error:</value>

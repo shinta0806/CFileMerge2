@@ -11,6 +11,8 @@
     mc:Ignorable="d">
 
 	<StackPanel Padding="{x:Bind msm:Cfm2Constants.MARGIN_DEFAULT_THICKNESS}" VerticalAlignment="Top" Canvas.ZIndex="0" >
+
+		<!-- メイクファイル -->
 		<RelativePanel >
 			<TextBlock Name="TextBlockMake" x:Uid="MainPage_TextBlockMake" RelativePanel.AlignVerticalCenterWithPanel="True" />
 			<TextBox Name="TextBoxMake" Text="{x:Bind ViewModel.MakePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AccessKey="M" Margin="5,0,0,0" RelativePanel.RightOf="TextBlockMake" RelativePanel.LeftOf="ButtonRecentMake" AllowDrop="True" DragOver="{x:Bind ViewModel.TextBlockMakeDragOver}" Drop="{x:Bind ViewModel.TextBoxMakeDrop}" />
@@ -26,17 +28,25 @@
 			<Button Name="ButtonBrowseMake" x:Uid="MainPage_ButtonBrowseMake" AccessKey="B" Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" 
 					RelativePanel.AlignRightWithPanel="True" Command="{x:Bind ViewModel.ButtonBrowseMakeClickedCommand}" />
 		</RelativePanel>
+
+		<!-- 下部ボタン -->
 		<RelativePanel Margin="0,10,0,0" >
+
+			<!-- 環境設定 -->
 			<Button Name="ButtonCfm2Settings" AccessKey="E" Command="{x:Bind ViewModel.ButtonCfm2SettingsClickedCommand}" >
 				<FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE713;"/>
 				<ToolTipService.ToolTip>
 					<ToolTip x:Uid="MainPage_ButtonCfm2Settings_ToolTip" />
 				</ToolTipService.ToolTip>
 			</Button>
+
+			<!-- ヘルプメニュー -->
 			<Button AccessKey="H" RelativePanel.RightOf="ButtonCfm2Settings" Margin="5,0,0,0" >
 				<FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE9CE;"/>
 				<Button.Flyout>
 					<MenuFlyout ShouldConstrainToRootBounds="False">
+
+						<!-- ヘルプ -->
 						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemHelp" Command="{x:Bind ViewModel.MenuFlyoutItemHelpClickedCommand}" >
 							<MenuFlyoutItem.Icon>
 								<FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE9CE;"/>
@@ -45,29 +55,46 @@
 								<KeyboardAccelerator Key="H" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
+
+						<!-- よくある質問 -->
 						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemFaq" Command="{x:Bind ViewModel.MenuFlyoutItemFaqClickedCommand}" >
 							<MenuFlyoutItem.KeyboardAccelerators>
 								<KeyboardAccelerator Key="Q" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
 						<MenuFlyoutSeparator/>
+
+						<!-- チュートリアル -->
 						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemTutorial" Command="{x:Bind ViewModel.MenuFlyoutItemTutorialClickedCommand}" CommandParameter="Tutorial" >
 							<MenuFlyoutItem.KeyboardAccelerators>
 								<KeyboardAccelerator Key="T" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
+
+						<!-- サンプルフォルダー -->
 						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemSampleFolder" Command="{x:Bind ViewModel.MenuFlyoutItemSampleFolderClickedCommand}" >
 							<MenuFlyoutItem.KeyboardAccelerators>
 								<KeyboardAccelerator Key="S" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
 						<MenuFlyoutSeparator/>
+
+						<!-- クリエイターサポート -->
 						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemCreatorSupport" Command="{x:Bind ViewModel.MenuFlyoutItemCreatorSupportClickedCommand}" >
 							<MenuFlyoutItem.KeyboardAccelerators>
 								<KeyboardAccelerator Key="C" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
+
+						<!-- ファンサイト -->
+						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemFantia" Command="{x:Bind ViewModel.MenuFlyoutItemFantiaClickedCommand}" >
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="F" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
 						<MenuFlyoutSeparator/>
+
+						<!-- バージョン情報 -->
 						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemAbout" Command="{x:Bind ViewModel.MenuFlyoutItemAboutClickedCommand}" >
 							<MenuFlyoutItem.Icon>
 								<FontIcon FontFamily="{x:Bind msm:Cfm2Constants.ICON_FONT}" Glyph="&#xE946;"/>
@@ -82,8 +109,13 @@
 					<ToolTip x:Uid="MainPage_ButtonHelp_ToolTip" />
 				</ToolTipService.ToolTip>
 			</Button>
+
 			<StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True" >
+
+				<!-- 出力ファイルを開く -->
 				<Button x:Uid="MainPage_ButtonOpenOutFile" Width="150" AccessKey="O" Command="{x:Bind ViewModel.ButtonOpenOutFileClickedCommand}" />
+
+				<!-- スタート -->
 				<Button Width="{x:Bind msm:Cfm2Constants.BUTTON_WIDTH_DEFAULT}" Margin="10,0,0,0" Style="{StaticResource AccentButtonStyle}" AccessKey="S" 
 						Command="{x:Bind ViewModel.ButtonGoClickedCommand}" >
 					<StackPanel Orientation="Horizontal">

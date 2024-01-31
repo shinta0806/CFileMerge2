@@ -43,6 +43,7 @@ internal enum Localize
 	MainPageViewModel_Error_MenuFlyoutItemFaqClicked,
 	MainPageViewModel_Error_MenuFlyoutItemSampleFolderClicked,
 	MainPageViewModel_Error_MenuFlyoutItemCreatorSupportClicked,
+	MainPageViewModel_Error_MenuFlyoutItemFantiaClicked,
 	MainPageViewModel_Error_MenuFlyoutItemAboutClicked,
 	MainPageViewModel_Done_MergeAsync,
 	MainPageViewModel_Error_MergeAsync,

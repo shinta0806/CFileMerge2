@@ -10,8 +10,6 @@
 
 using System.Collections.ObjectModel;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows.Input;
 
 using CFileMerge2.Models.Cfm2Models;
 using CFileMerge2.Models.SharedMisc;
@@ -21,10 +19,9 @@ using CFileMerge2.Views.AboutWindows;
 using CFileMerge2.Views.Cfm2SettingsWindows;
 using CFileMerge2.Views.MainWindows;
 using CFileMerge2.Views.ProgressWindows;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
-using Hnx8.ReadJEnc;
 
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
@@ -36,7 +33,6 @@ using Shinta;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.UI.Popups;
 
 namespace CFileMerge2.ViewModels.MainWindows;
 
@@ -66,6 +62,7 @@ public class MainPageViewModel : ObservableRecipient
 		MenuFlyoutItemFaqClickedCommand = new RelayCommand(MenuFlyoutItemFaqClicked);
 		MenuFlyoutItemSampleFolderClickedCommand = new RelayCommand(MenuFlyoutItemSampleFolderClicked);
 		MenuFlyoutItemCreatorSupportClickedCommand = new RelayCommand(MenuFlyoutItemCreatorSupportClicked);
+		MenuFlyoutItemFantiaClickedCommand = new RelayCommand(MenuFlyoutItemFantiaClicked);
 		MenuFlyoutItemAboutClickedCommand = new RelayCommand(MenuFlyoutItemAboutClicked);
 		ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
 		ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
@@ -260,6 +257,26 @@ public class MainPageViewModel : ObservableRecipient
 		catch (Exception ex)
 		{
 			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemCreatorSupportClicked.Localized() + "\n" + ex.Message);
+			SerilogUtils.LogStackTrace(ex);
+		}
+	}
+	#endregion
+
+	#region ファンサイトフライアウトの制御
+	public RelayCommand MenuFlyoutItemFantiaClickedCommand
+	{
+		get;
+	}
+
+	private async void MenuFlyoutItemFantiaClicked()
+	{
+		try
+		{
+			Common.ShellExecute(Cfm2Constants.AUTHOR_FANTIA);
+		}
+		catch (Exception ex)
+		{
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemFantiaClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}
