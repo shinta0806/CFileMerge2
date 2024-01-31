@@ -107,6 +107,13 @@
 								<KeyboardAccelerator Key="I" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
+						
+						<!-- 翻訳プロジェクト -->
+						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemTranslation" Command="{x:Bind ViewModel.MenuFlyoutItemTranslationClickedCommand}" >
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="L" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
 
 						<!-- バージョン情報 -->
 						<MenuFlyoutItem x:Uid="MainPage_MenuFlyoutItemAbout" Command="{x:Bind ViewModel.MenuFlyoutItemAboutClickedCommand}" >

@@ -65,6 +65,7 @@ public class MainPageViewModel : ObservableRecipient
 		MenuFlyoutItemFantiaClickedCommand = new RelayCommand(MenuFlyoutItemFantiaClicked);
 		MenuFlyoutItemCheckUpdateClickedCommand = new RelayCommand(MenuFlyoutItemCheckUpdateClicked);
 		MenuFlyoutItemHistoryClickedCommand = new RelayCommand(MenuFlyoutItemHistoryClicked);
+		MenuFlyoutItemTranslationClickedCommand = new RelayCommand(MenuFlyoutItemTranslationClicked);
 		MenuFlyoutItemAboutClickedCommand = new RelayCommand(MenuFlyoutItemAboutClicked);
 		ButtonOpenOutFileClickedCommand = new RelayCommand(ButtonOpenOutFileClicked);
 		ButtonGoClickedCommand = new RelayCommand(ButtonGoClicked);
@@ -319,6 +320,26 @@ public class MainPageViewModel : ObservableRecipient
 		catch (Exception ex)
 		{
 			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemHistoryClicked.Localized() + "\n" + ex.Message);
+			SerilogUtils.LogStackTrace(ex);
+		}
+	}
+	#endregion
+
+	#region 翻訳プロジェクトフライアウトの制御
+	public RelayCommand MenuFlyoutItemTranslationClickedCommand
+	{
+		get;
+	}
+
+	private async void MenuFlyoutItemTranslationClicked()
+	{
+		try
+		{
+			Common.ShellExecute(Cfm2Constants.APP_TRANSLATION_WEB);
+		}
+		catch (Exception ex)
+		{
+			await _mainWindow.ShowLogMessageDialogAsync(LogEventLevel.Error, Localize.MainPageViewModel_Error_MenuFlyoutItemTranslationClicked.Localized() + "\n" + ex.Message);
 			SerilogUtils.LogStackTrace(ex);
 		}
 	}

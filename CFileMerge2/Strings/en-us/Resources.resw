@@ -145,6 +145,9 @@
   <data name="MainPage_MenuFlyoutItemHistory.Text" xml:space="preserve">
     <value>History</value>
   </data>
+  <data name="MainPage_MenuFlyoutItemTranslation.Text" xml:space="preserve">
+    <value>Translation project</value>
+  </data>
   <data name="MainPage_MenuFlyoutItemAbout.Text" xml:space="preserve">
     <value>About</value>
   </data>
@@ -213,6 +216,9 @@
   </data>
   <data name="MainPageViewModel_Error_MenuFlyoutItemHistoryClicked" xml:space="preserve">
     <value>Open history error:</value>
+  </data>
+  <data name="MainPageViewModel_Error_MenuFlyoutItemTranslationClicked" xml:space="preserve">
+    <value>Open translation project error:</value>
   </data>
   <data name="MainPageViewModel_Error_MenuFlyoutItemAboutClicked" xml:space="preserve">
     <value>Open about error:</value>
