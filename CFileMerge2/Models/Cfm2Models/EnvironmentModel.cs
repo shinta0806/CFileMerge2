@@ -122,7 +122,7 @@ internal class EnvironmentModel
 	private static void SetLog()
 	{
 		// ロガー生成
-		SerilogUtils.CreateLogger(5 * 1024 * 1024, 5, WinUi3Common.SettingsFolder() + FILE_NAME_LOG);
+		SerilogUtils.CreateLogger(5 * 1024 * 1024, 5, CommonWindows.SettingsFolder() + FILE_NAME_LOG);
 
 		// 起動ログ
 		Log.Information("起動しました：" + Localize.AppInfo_AppName.Localized() + " " + Cfm2Constants.APP_VER + " ====================");

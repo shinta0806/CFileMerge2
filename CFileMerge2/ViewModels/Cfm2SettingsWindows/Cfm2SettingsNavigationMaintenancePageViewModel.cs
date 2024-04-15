@@ -163,7 +163,7 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 			_cfm2SettingsPageViewModel.CheckPropertiesAndPropertiesToSettings();
 
 			FileSavePicker fileSavePicker = _window.CreateSaveFilePicker();
-			fileSavePicker.FileTypeChoices.Add(Localize.GeneralView_FileTypeSta.Localized(), new List<String>() { Common.FILE_EXT_SETTINGS_ARCHIVE });
+			fileSavePicker.FileTypeChoices.Add(Localize.GeneralView_FileTypeSta.Localized(), [Common.FILE_EXT_SETTINGS_ARCHIVE]);
 			fileSavePicker.SuggestedFileName = Cfm2Constants.APP_ID + "Settings_" + DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
 
 			StorageFile? file = await fileSavePicker.PickSaveFileAsync();
@@ -252,10 +252,10 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 	/// <param name="tempFolderPath"></param>
 	private static void BackupFiles(String ext, String tempFolderPath)
 	{
-		String[] files = Directory.GetFiles(WinUi3Common.SettingsFolder(), "*" + ext, SearchOption.AllDirectories);
+		String[] files = Directory.GetFiles(CommonWindows.SettingsFolder(), "*" + ext, SearchOption.AllDirectories);
 		foreach (String file in files)
 		{
-			String subfolderAndLeaf = file[WinUi3Common.SettingsFolder().Length..];
+			String subfolderAndLeaf = file[CommonWindows.SettingsFolder().Length..];
 			String? subfolder = Path.GetDirectoryName(subfolderAndLeaf);
 			if (!String.IsNullOrEmpty(subfolder))
 			{
@@ -335,13 +335,13 @@ public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNaviga
 			{
 				try
 				{
-					Directory.CreateDirectory(WinUi3Common.SettingsFolder() + subfolder);
+					Directory.CreateDirectory(CommonWindows.SettingsFolder() + subfolder);
 				}
 				catch (Exception)
 				{
 				}
 			}
-			File.Copy(file, WinUi3Common.SettingsFolder() + subfolderAndLeaf, true);
+			File.Copy(file, CommonWindows.SettingsFolder() + subfolderAndLeaf, true);
 		}
 	}
 }

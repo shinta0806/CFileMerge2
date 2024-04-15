@@ -46,12 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\_Common\Downloader.cs" Link="_Common\Downloader.cs" />
+    <Compile Include="..\..\..\_Common\JsonManager.cs" Link="_Common\JsonManager.cs" />
     <Compile Include="..\..\..\_Common\RecentPathManager.cs" Link="_Common\RecentPathManager.cs" />
     <Compile Include="..\..\..\_Common\ResourceLoaderExtensions.cs" Link="_Common\ResourceLoaderExtensions.cs" />
     <Compile Include="..\..\..\_Common\SerilogUtils.cs" Link="_Common\SerilogUtils.cs" />
     <Compile Include="..\..\..\_Common\ShintaCommon.cs" Link="_Common\ShintaCommon.cs" />
+    <Compile Include="..\..\..\_Common\ShintaCommonWindows.cs" Link="_Common\ShintaCommonWindows.cs" />
     <Compile Include="..\..\..\_Common\WindowsApi.cs" Link="_Common\WindowsApi.cs" />
-    <Compile Include="..\..\..\_Common\WinUi3\JsonManager.cs" Link="_Common\WinUi3\JsonManager.cs" />
     <Compile Include="..\..\..\_Common\WinUi3\LatestInfoManager.cs" Link="_Common\WinUi3\LatestInfoManager.cs" />
     <Compile Include="..\..\..\_Common\WinUi3\MonitorManager.cs" Link="_Common\WinUi3\MonitorManager.cs" />
     <Compile Include="..\..\..\_Common\WinUi3\RssManager.cs" Link="_Common\WinUi3\RssManager.cs" />
@@ -164,12 +165,12 @@
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0049;IDE0074;CA1860</NoWarn>
+    <NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0028;IDE0049;IDE0074;IDE0290;CA1860</NoWarn>
     <DefineConstants>DISTRIB_STORE</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0049;IDE0074;CA1860</NoWarn>
+    <NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0028;IDE0049;IDE0074;IDE0290;CA1860</NoWarn>
     <DefineConstants>DISTRIB_STORE</DefineConstants>
   </PropertyGroup>
 
