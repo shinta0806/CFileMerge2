@@ -29,29 +29,7 @@ public class WindowEx3 : WindowEx2
 	/// </summary>
 	public WindowEx3()
 	{
-		// コマンド
-		HelpClickedCommand = new RelayCommand<String>(HelpClicked);
 	}
-
-	// ====================================================================
-	// public プロパティー
-	// ====================================================================
-
-	// --------------------------------------------------------------------
-	// コマンド
-	// --------------------------------------------------------------------
-
-	#region ヘルプリンクの制御
-	public RelayCommand<String> HelpClickedCommand
-	{
-		get;
-	}
-
-	private async void HelpClicked(String? parameter)
-	{
-		await ShowHelpAsync(parameter);
-	}
-	#endregion
 
 	// ====================================================================
 	// protected 関数
@@ -61,9 +39,9 @@ public class WindowEx3 : WindowEx2
 	/// ヘルプを表示
 	/// </summary>
 	/// <returns></returns>
-	protected async override void ShowHelp()
+	protected async override void ShowHelp(String? parameter)
 	{
-		await ShowHelpAsync(HelpButtonParameter);
+		await ShowHelpAsync(parameter);
 	}
 
 	// ====================================================================
