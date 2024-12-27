@@ -5,8 +5,9 @@
 <!-- Cfm/IncludeDefaultExt: html -->
 <!-- Cfm/Set: AppName = Chochoito File Merge 2 -->
 <!-- Cfm/Set: AppMajVer = Ver 3.3 -->
+<!-- Cfm/Set: Favicon = CFileMerge2_Icon.png -->
 <!-- Cfm/Include: ヘッダー_en-us -->
-<!-- Cfm/GenerateAnchorFiles:../../../../_Common/HelpIncludes/AnchorMakeFile.cfm2, HelpParts, 12 -->
+<!-- Cfm/GenerateAnchorFiles:../../../../_Common/HelpIncludes/AnchorMakeFile_en-us.cfm2, HelpParts, 12 -->
 <body>
 
 <!-- Return to top button -->
