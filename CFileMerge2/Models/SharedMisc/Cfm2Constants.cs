@@ -72,7 +72,7 @@ internal class Cfm2Constants
 
 	public const String APP_ID = "CFileMerge2";
 	public const String APP_VER = "Ver 3.38";
-	public const String APP_COPYRIGHT = "Copyright (C) 2022-2024 by SHINTA";
+	public const String APP_COPYRIGHT = "Copyright (C) 2022-2025 by SHINTA";
 	public const String APP_DISTRIB_WEB = "https://shinta.coresv.com/software_dev/cfilemerge2-jpn/";
 	public const String APP_SUPPORT_WEB = APP_DISTRIB_WEB + "#Support";
 	public const String APP_TRANSLATION_WEB = "https://docs.google.com/spreadsheets/d/1h3Ea7LamyQ2o5cnRxBxaVrzi6HuOM-EUij6h7mtBnGA/edit?usp=sharing";
