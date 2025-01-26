@@ -28,6 +28,7 @@
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWPF>False</UseWPF>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Views\Cfm2SettingsWindow\**" />
@@ -165,12 +166,12 @@
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0028;IDE0049;IDE0074;IDE0290;CA1860</NoWarn>
+    <NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0028;IDE0049;IDE0074;IDE0079;IDE0290;CA1860</NoWarn>
     <DefineConstants>DISTRIB_STORE</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0028;IDE0049;IDE0074;IDE0290;CA1860</NoWarn>
+    <NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0028;IDE0049;IDE0074;IDE0079;IDE0290;CA1860</NoWarn>
     <DefineConstants>DISTRIB_STORE</DefineConstants>
   </PropertyGroup>
 

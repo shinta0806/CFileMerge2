@@ -30,7 +30,7 @@ using Windows.UI.Popups;
 
 namespace CFileMerge2.ViewModels.ProgressWindows;
 
-public class ProgressPageViewModel : ObservableRecipient
+public partial class ProgressPageViewModel : ObservableRecipient
 {
 	// ====================================================================
 	// コンストラクター
@@ -879,7 +879,7 @@ public class ProgressPageViewModel : ObservableRecipient
 		}
 
 		// このファイルの階層以下の内容
-		String[] childLineStrings = reader.Text.Split(new String[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+		String[] childLineStrings = reader.Text.Split(["\r\n", "\r", "\n"], StringSplitOptions.None);
 		if (childLineStrings.Length == 0)
 		{
 			throw new Exception(Localize.MainPageViewModel_Error_ParseFile_Empty.Localized() + "\n" + path);

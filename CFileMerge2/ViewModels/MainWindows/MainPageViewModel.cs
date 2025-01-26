@@ -36,7 +36,7 @@ using Windows.Storage.Pickers;
 
 namespace CFileMerge2.ViewModels.MainWindows;
 
-public class MainPageViewModel : ObservableRecipient
+public partial class MainPageViewModel : ObservableRecipient
 {
 	// ====================================================================
 	// コンストラクター

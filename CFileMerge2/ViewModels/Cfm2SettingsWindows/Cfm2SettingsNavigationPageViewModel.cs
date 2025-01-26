@@ -1,4 +1,4 @@
-﻿// ============================================================================
+// ============================================================================
 // 
 // 環境設定ページのナビゲーションページの ViewModel 基底クラス
 // 
@@ -12,7 +12,7 @@ using CFileMerge2.Views;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
-public class Cfm2SettingsNavigationPageViewModel : NavigationPageViewModel
+public partial class Cfm2SettingsNavigationPageViewModel : NavigationPageViewModel
 {
     // ====================================================================
     // コンストラクター

@@ -29,7 +29,7 @@ using Windows.UI.Popups;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
-public class Cfm2SettingsPageViewModel : ObservableRecipient
+public partial class Cfm2SettingsPageViewModel : ObservableRecipient
 {
 	// ====================================================================
 	// コンストラクター
@@ -44,17 +44,17 @@ public class Cfm2SettingsPageViewModel : ObservableRecipient
 		_window = window;
 		Cfm2SettingsNavigationSettingsPage settingsPage = new(window, this);
 		Cfm2SettingsNavigationMaintenancePage maintenancePage = new(window, this);
-		_pages = new Page[]
-		{
+		_pages =
+		[
 			settingsPage,
 			maintenancePage,
-		};
+		];
 		_navigationViewContent = settingsPage;
-		_pageViewModels = new NavigationPageViewModel[]
-		{
+		_pageViewModels =
+		[
 			settingsPage.ViewModel,
 			maintenancePage.ViewModel,
-		};
+		];
 
 		// コマンド
 		ButtonDefaultClickedCommand = new RelayCommand(ButtonDefaultClicked);

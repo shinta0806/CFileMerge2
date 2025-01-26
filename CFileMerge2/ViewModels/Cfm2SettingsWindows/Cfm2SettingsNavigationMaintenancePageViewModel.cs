@@ -29,7 +29,7 @@ using Windows.UI.Popups;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
-public class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNavigationPageViewModel
+public partial class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2SettingsNavigationPageViewModel
 {
 	// ====================================================================
 	// コンストラクター

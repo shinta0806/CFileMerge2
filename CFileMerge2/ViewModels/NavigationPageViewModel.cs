@@ -1,4 +1,4 @@
-﻿// ============================================================================
+// ============================================================================
 // 
 // ナビゲーションページの ViewModel 基底クラス
 // 
@@ -14,7 +14,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CFileMerge2.ViewModels;
 
-public class NavigationPageViewModel : ObservableRecipient
+public partial class NavigationPageViewModel : ObservableRecipient
 {
     // ====================================================================
     // コンストラクター

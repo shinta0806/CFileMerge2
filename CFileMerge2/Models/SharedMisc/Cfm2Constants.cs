@@ -207,7 +207,7 @@ internal class Cfm2Constants
 	/// <summary>
 	/// TagKey に対応するタグキー文字列（小文字にする）
 	/// </summary>
-	public static readonly String[] CFM_TAG_KEYS = { "outfile", "includefolder", "includedefaultext", "include", "set", "var", "toc", "generateanchorfiles", "anchorpath" };
+	public static readonly String[] CFM_TAG_KEYS = ["outfile", "includefolder", "includedefaultext", "include", "set", "var", "toc", "generateanchorfiles", "anchorpath"];
 
 	// --------------------------------------------------------------------
 	// HTML タグ
@@ -240,7 +240,7 @@ internal class Cfm2Constants
 	/// <summary>
 	/// MergeStep ごとの概算作業量（ParseFile を 100 とする）
 	/// </summary>
-	public static readonly Int32[] MERGE_STEP_AMOUNT = { 100, 100, 5, 50 };
+	public static readonly Int32[] MERGE_STEP_AMOUNT = [100, 100, 5, 50];
 
 	/// <summary>
 	/// 何行ごとに進捗表示するか

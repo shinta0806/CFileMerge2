@@ -26,7 +26,7 @@ using Shinta;
 
 namespace CFileMerge2.ViewModels.AboutWindows;
 
-public class AboutPageViewModel : ObservableRecipient
+public partial class AboutPageViewModel : ObservableRecipient
 {
 	// ====================================================================
 	// コンストラクター

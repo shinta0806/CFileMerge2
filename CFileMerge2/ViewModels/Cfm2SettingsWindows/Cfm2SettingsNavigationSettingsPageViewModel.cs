@@ -16,7 +16,7 @@ using CFileMerge2.Views;
 
 namespace CFileMerge2.ViewModels.Cfm2SettingsWindows;
 
-public class Cfm2SettingsNavigationSettingsPageViewModel : Cfm2SettingsNavigationPageViewModel
+public partial class Cfm2SettingsNavigationSettingsPageViewModel : Cfm2SettingsNavigationPageViewModel
 {
 	// ====================================================================
 	// コンストラクター
