@@ -8,6 +8,8 @@
 // 
 // ----------------------------------------------------------------------------
 
+using System.Text.Json.Serialization;
+
 namespace CFileMerge2.Models.SharedMisc;
 
 internal class Cfm2Settings
@@ -186,4 +188,10 @@ internal class Cfm2Settings
 			TocTargets[2] = true;
 		}
 	}
+}
+
+[JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true)]
+[JsonSerializable(typeof(Cfm2Settings))]
+internal partial class Cfm2SettingsJsonSerializerContext : JsonSerializerContext
+{
 }

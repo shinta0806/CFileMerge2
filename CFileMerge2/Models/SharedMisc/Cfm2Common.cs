@@ -55,11 +55,12 @@ internal class Cfm2Common
 	/// <summary>
 	/// 環境設定を読み込み
 	/// </summary>
-	public static void LoadNkm3Settings()
+	public static void LoadCfm2Settings()
 	{
 		try
 		{
-			Cfm2Model.Instance.EnvModel.Cfm2Settings = Cfm2Model.Instance.EnvModel.JsonManager.Load<Cfm2Settings>(Cfm2Constants.FILE_NAME_CFM2_SETTINGS, false, null);
+			Cfm2Model.Instance.EnvModel.Cfm2Settings
+				= Cfm2Model.Instance.EnvModel.JsonManager.LoadAot(Cfm2Constants.FILE_NAME_CFM2_SETTINGS, false, Cfm2SettingsJsonSerializerContext.Default.Cfm2Settings);
 			Cfm2Model.Instance.EnvModel.Cfm2Settings.Adjust();
 		}
 		catch (Exception ex)
@@ -86,7 +87,8 @@ internal class Cfm2Common
 		{
 			Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchVer = Cfm2Constants.APP_VER;
 			Cfm2Model.Instance.EnvModel.Cfm2Settings.PrevLaunchPath = Cfm2Model.Instance.EnvModel.ExeFullPath;
-			Cfm2Model.Instance.EnvModel.JsonManager.Save(Cfm2Model.Instance.EnvModel.Cfm2Settings, Cfm2Constants.FILE_NAME_CFM2_SETTINGS, false);
+			Cfm2Model.Instance.EnvModel.JsonManager.SaveAot(Cfm2Model.Instance.EnvModel.Cfm2Settings, Cfm2Constants.FILE_NAME_CFM2_SETTINGS, false,
+				Cfm2SettingsJsonSerializerContext.Default.Cfm2Settings);
 		}
 		catch (Exception ex)
 		{

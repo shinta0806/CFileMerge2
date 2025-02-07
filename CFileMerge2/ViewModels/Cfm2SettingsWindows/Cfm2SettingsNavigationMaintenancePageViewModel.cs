@@ -316,7 +316,7 @@ public partial class Cfm2SettingsNavigationMaintenancePageViewModel : Cfm2Settin
 		// ログは復元しない
 
 		// 環境設定読み込み
-		Cfm2Common.LoadNkm3Settings();
+		Cfm2Common.LoadCfm2Settings();
 	}
 
 	/// <summary>

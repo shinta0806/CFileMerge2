@@ -124,6 +124,6 @@ public partial class App : Application
 
 		// 環境設定読み込み
 		// メインウィンドウで読み込むと await の関係でメインページと順番がちぐはぐになったりするので、ここで読み込む必要がある
-		Cfm2Common.LoadNkm3Settings();
+		Cfm2Common.LoadCfm2Settings();
 	}
 }
