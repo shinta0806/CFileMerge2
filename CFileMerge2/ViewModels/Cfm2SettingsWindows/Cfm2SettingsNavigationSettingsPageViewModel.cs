@@ -28,8 +28,8 @@ public partial class Cfm2SettingsNavigationSettingsPageViewModel : Cfm2SettingsN
 	public Cfm2SettingsNavigationSettingsPageViewModel(WindowEx3 window, Cfm2SettingsPageViewModel cfm2SettingsPageViewModel)
 			: base(window, cfm2SettingsPageViewModel)
 	{
-		TocTargets = new(Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets);
-		AnchorTargets = new(Cfm2Model.Instance.EnvModel.Cfm2Settings.AnchorTargets);
+		TocTargets = [.. Cfm2Model.Instance.EnvModel.Cfm2Settings.TocTargets];
+		AnchorTargets = [.. Cfm2Model.Instance.EnvModel.Cfm2Settings.AnchorTargets];
 	}
 
 	// ====================================================================

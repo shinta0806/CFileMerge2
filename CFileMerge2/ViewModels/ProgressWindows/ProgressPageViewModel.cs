@@ -384,13 +384,13 @@ public partial class ProgressPageViewModel : ObservableRecipient
 			MergeInfo.Warnings.Add(Localize.MainPageViewModel_Warning_ExecuteCfmTagVar_NoName.Localized());
 			return;
 		}
-		if (!MergeInfo.Vars.ContainsKey(varName))
+		if (!MergeInfo.Vars.TryGetValue(varName, out String? varValue))
 		{
 			MergeInfo.Warnings.Add(Localize.MainPageViewModel_Warning_ExecuteCfmTagVar_NoDeclare.Localized() + tagInfo.Value);
 			return;
 		}
 
-		line.Value = line.Value.Insert(column, MergeInfo.Vars[varName]);
+		line.Value = line.Value.Insert(column, varValue);
 	}
 
 	/// <summary>
@@ -586,7 +586,7 @@ public partial class ProgressPageViewModel : ObservableRecipient
 			}
 			else
 			{
-				List<String> anchorFileContents = new(lines);
+				List<String> anchorFileContents = [.. lines];
 
 				// アンカー置換
 				for (Int32 j = 0; j < anchorPositionIndexes.Count; j++)

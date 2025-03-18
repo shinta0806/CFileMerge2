@@ -168,12 +168,11 @@
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0028;IDE0049;IDE0074;IDE0079;IDE0290;CA1860</NoWarn>
-    <DefineConstants>DISTRIB_STORE</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0028;IDE0049;IDE0074;IDE0079;IDE0290;CA1860</NoWarn>
-    <DefineConstants>DISTRIB_STORE</DefineConstants>
+    <DefineConstants>$(DefineConstants);USE_AOT</DefineConstants>
   </PropertyGroup>
 
   <Target Name="_RemoveFrameworkReferences" BeforeTargets="_ConvertItems;_CalculateInputsForGenerateCurrentProjectAppxManifest">

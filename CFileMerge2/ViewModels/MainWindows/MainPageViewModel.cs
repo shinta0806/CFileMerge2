@@ -550,7 +550,7 @@ public partial class MainPageViewModel : ObservableRecipient
 		{
 			IsRecentMakeEnabled = recentPathes.Any();
 		});
-		Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes2 = new(recentPathes);
+		Cfm2Model.Instance.EnvModel.Cfm2Settings.RecentMakePathes2 = [.. recentPathes];
 	}
 
 	/// <summary>
