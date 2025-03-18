@@ -29,6 +29,7 @@
     <UseWindowsForms>False</UseWindowsForms>
     <UseWPF>False</UseWPF>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <PublishAot>True</PublishAot>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Views\Cfm2SettingsWindow\**" />
