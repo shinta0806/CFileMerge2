@@ -1,194 +1,221 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-    <RootNamespace>CFileMerge2</RootNamespace>
-    <ApplicationIcon>Assets/WindowIcon.ico</ApplicationIcon>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Platforms>x64</Platforms>
-    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
-    <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
-	<ImplicitUsings>enable</ImplicitUsings>
-	<Nullable>enable</Nullable>
-	<UseWinUI>true</UseWinUI>
-    <EnableMsixTooling>true</EnableMsixTooling>
-    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
-    <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
-    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
-    <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>70E31C752E4138EECC94DBFD84EBF5ED54C96381</PackageCertificateThumbprint>
-    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-    <UseWindowsForms>False</UseWindowsForms>
-    <UseWPF>False</UseWPF>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <PublishAot>True</PublishAot>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Views\Cfm2SettingsWindow\**" />
-    <EmbeddedResource Remove="Views\Cfm2SettingsWindow\**" />
-    <None Remove="Views\Cfm2SettingsWindow\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Views\AboutPage.xaml" />
-    <None Remove="Views\AboutWindow.xaml" />
-    <None Remove="Views\Cfm2SettingsPage.xaml" />
-    <None Remove="Views\Cfm2SettingsWindow.xaml" />
-    <None Remove="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationMaintenancePage.xaml" />
-    <None Remove="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationSettingsPage.xaml" />
-    <None Remove="Views\ProgressWindows\ProgressPage.xaml" />
-    <None Remove="Views\ProgressWindows\ProgressWindow.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\..\_Common\Downloader.cs" Link="_Common\Downloader.cs" />
-    <Compile Include="..\..\..\_Common\JsonManager.cs" Link="_Common\JsonManager.cs" />
-    <Compile Include="..\..\..\_Common\RecentPathManager.cs" Link="_Common\RecentPathManager.cs" />
-    <Compile Include="..\..\..\_Common\ResourceLoaderExtensions.cs" Link="_Common\ResourceLoaderExtensions.cs" />
-    <Compile Include="..\..\..\_Common\SerilogUtils.cs" Link="_Common\SerilogUtils.cs" />
-    <Compile Include="..\..\..\_Common\ShintaCommon.cs" Link="_Common\ShintaCommon.cs" />
-    <Compile Include="..\..\..\_Common\ShintaCommonWindows.cs" Link="_Common\ShintaCommonWindows.cs" />
-    <Compile Include="..\..\..\_Common\SystemEnvironment.cs" Link="_Common\SystemEnvironment.cs" />
-    <Compile Include="..\..\..\_Common\WindowsApi.cs" Link="_Common\WindowsApi.cs" />
-    <Compile Include="..\..\..\_Common\WinUi3\LatestInfoManager.cs" Link="_Common\WinUi3\LatestInfoManager.cs" />
-    <Compile Include="..\..\..\_Common\WinUi3\MonitorManager.cs" Link="_Common\WinUi3\MonitorManager.cs" />
-    <Compile Include="..\..\..\_Common\WinUi3\RssManager.cs" Link="_Common\WinUi3\RssManager.cs" />
-    <Compile Include="..\..\..\_Common\WinUi3\Views\PageEx2.cs" Link="_Common\WinUi3\Views\PageEx2.cs" />
-    <Compile Include="..\..\..\_Common\WinUi3\Views\WindowEx2.cs" Link="_Common\WinUi3\Views\WindowEx2.cs" />
-    <Compile Include="..\..\..\_Common\WinUi3\WinUi3Common.cs" Link="_Common\WinUi3\WinUi3Common.cs" />
-  </ItemGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
+		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+		<RootNamespace>CFileMerge2</RootNamespace>
+		<ApplicationIcon>Assets/WindowIcon.ico</ApplicationIcon>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<Platforms>x64</Platforms>
+		<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+		<PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UseWinUI>true</UseWinUI>
+		<EnableMsixTooling>true</EnableMsixTooling>
+		<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+		<SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+		<GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
+		<GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+		<AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+		<GenerateTestArtifacts>True</GenerateTestArtifacts>
+		<AppxBundle>Always</AppxBundle>
+		<AppxBundlePlatforms>x64</AppxBundlePlatforms>
+		<DefaultLanguage>en-US</DefaultLanguage>
+		<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+		<PackageCertificateThumbprint>70E31C752E4138EECC94DBFD84EBF5ED54C96381</PackageCertificateThumbprint>
+		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+		<UseWindowsForms>False</UseWindowsForms>
+		<UseWPF>False</UseWPF>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 
-  <ItemGroup>
-    <Manifest Include="$(ApplicationManifest)" />
-  </ItemGroup>
+		<!-- Native AOT にする -->
+		<PublishAot>True</PublishAot>
 
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.3" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250228001" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
-    <PackageReference Include="ReadJEnc" Version="1.3.1.2" />
-    <PackageReference Include="Serilog.Enrichers.Process" Version="3.0.0" />
-    <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
-    <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
-    <PackageReference Include="WinUIEx" Version="2.5.1" />
-  </ItemGroup>
+		<!-- AOT 互換性を宣言：これにより IsTrimmable も true になり、トリミング警告が表示されるようになる -->
+		<!-- 互換性を宣言せずに警告表示だけしたい場合は、代わりに EnableTrimAnalyzer を指定する -->
+		<IsAotCompatible>true</IsAotCompatible>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CFileMerge2.CsWin32\CFileMerge2.CsWin32.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+		<!-- 分析の警告 -->
+		<SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
 
-  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
-    <ProjectCapability Include="Msix" />
-  </ItemGroup>
+		<!-- 詳細な警告の表示 -->
+		<TrimmerSingleWarn>false</TrimmerSingleWarn>
 
-  <ItemGroup>
-    <Folder Include="Strings\ja-jp\" />
-    <Folder Include="Views\MainWindows\" />
-    <Folder Include="Views\AboutWindows\" />
-    <Folder Include="_Common\WinUi3\Views\" />
-  </ItemGroup>
+		<!-- AOT デプロイ最適化：デフォルトでは混合アプローチだが、Size / Speed を指定可能 -->
+		<!-- ほぼデフォルトプロジェクトの時のインストール後サイズ（TrimMode full）：Speed 6.21 MB、未指定（バランス）5.97 MB、Size 5.75 MB -->
+		<!--
+		<OptimizationPreference>Speed</OptimizationPreference>
+		-->
 
-  <ItemGroup>
-    <None Update="Documents\*.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Documents\*.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Documents\HelpParts\*.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Documents\HelpParts\*.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Documents\HelpParts\*.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Documents\HelpParts\*.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Documents\Samples\*.cfm2*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Documents\ThirdPartyDocuments\GongSolutionsWPFDragDrop\LICENSE">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Documents\ThirdPartyDocuments\jQuery\*.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Documents\ThirdPartyDocuments\ReadJEnc\LICENSE">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Views\Overlays\VeilRelativePanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationMaintenancePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationSettingsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Views\Cfm2SettingsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Views\Cfm2SettingsWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Views\AboutPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Views\AboutWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <Page Update="Views\ProgressWindows\ProgressPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\ProgressWindows\ProgressWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
+		<!-- トリミングの最小単位：デフォルトは full、partial にするとオプトインしたアセンブリのみをトリミングする -->
+		<!-- ほぼデフォルトプロジェクトの時のインストール後サイズ（デプロイ最適化未指定）：AOT 無効 27.4 MB、partial 8.02 MB、full 5.97 MB -->
+		<TrimMode>partial</TrimMode>
 
-  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
-    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0028;IDE0049;IDE0074;IDE0079;IDE0290;CA1860</NoWarn>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0028;IDE0049;IDE0074;IDE0079;IDE0290;CA1860</NoWarn>
-    <DefineConstants>$(DefineConstants);USE_AOT</DefineConstants>
-  </PropertyGroup>
+		<!-- その他コメント -->
+		<!-- CsWin32 使用時は "allowMarshaling": false が必要 https://github.com/microsoft/CsWin32/discussions/1169 -->
 
-  <Target Name="_RemoveFrameworkReferences" BeforeTargets="_ConvertItems;_CalculateInputsForGenerateCurrentProjectAppxManifest">
-    <ItemGroup>
-      <FrameworkSdkReference Remove="@(FrameworkSdkReference)" Condition="$([System.String]::Copy('%(FrameworkSdkReference.SDKName)').StartsWith('Microsoft.WindowsAppRuntime.'))" />
-    </ItemGroup>
-  </Target>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Views\Cfm2SettingsWindow\**" />
+		<EmbeddedResource Remove="Views\Cfm2SettingsWindow\**" />
+		<None Remove="Views\Cfm2SettingsWindow\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Views\AboutPage.xaml" />
+		<None Remove="Views\AboutWindow.xaml" />
+		<None Remove="Views\Cfm2SettingsPage.xaml" />
+		<None Remove="Views\Cfm2SettingsWindow.xaml" />
+		<None Remove="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationMaintenancePage.xaml" />
+		<None Remove="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationSettingsPage.xaml" />
+		<None Remove="Views\ProgressWindows\ProgressPage.xaml" />
+		<None Remove="Views\ProgressWindows\ProgressWindow.xaml" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\..\..\_Common\Downloader.cs" Link="_Common\Downloader.cs" />
+		<Compile Include="..\..\..\_Common\JsonManager.cs" Link="_Common\JsonManager.cs" />
+		<Compile Include="..\..\..\_Common\RecentPathManager.cs" Link="_Common\RecentPathManager.cs" />
+		<Compile Include="..\..\..\_Common\ResourceLoaderExtensions.cs" Link="_Common\ResourceLoaderExtensions.cs" />
+		<Compile Include="..\..\..\_Common\SerilogUtils.cs" Link="_Common\SerilogUtils.cs" />
+		<Compile Include="..\..\..\_Common\ShintaCommon.cs" Link="_Common\ShintaCommon.cs" />
+		<Compile Include="..\..\..\_Common\ShintaCommonWindows.cs" Link="_Common\ShintaCommonWindows.cs" />
+		<Compile Include="..\..\..\_Common\SystemEnvironment.cs" Link="_Common\SystemEnvironment.cs" />
+		<Compile Include="..\..\..\_Common\WindowsApi.cs" Link="_Common\WindowsApi.cs" />
+		<Compile Include="..\..\..\_Common\WinUi3\LatestInfoManager.cs" Link="_Common\WinUi3\LatestInfoManager.cs" />
+		<Compile Include="..\..\..\_Common\WinUi3\MonitorManager.cs" Link="_Common\WinUi3\MonitorManager.cs" />
+		<Compile Include="..\..\..\_Common\WinUi3\RssManager.cs" Link="_Common\WinUi3\RssManager.cs" />
+		<Compile Include="..\..\..\_Common\WinUi3\Views\PageEx2.cs" Link="_Common\WinUi3\Views\PageEx2.cs" />
+		<Compile Include="..\..\..\_Common\WinUi3\Views\WindowEx2.cs" Link="_Common\WinUi3\Views\WindowEx2.cs" />
+		<Compile Include="..\..\..\_Common\WinUi3\WinUi3Common.cs" Link="_Common\WinUi3\WinUi3Common.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PRIResource Remove="Views\Cfm2SettingsWindow\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Manifest Include="$(ApplicationManifest)" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Using Include="Serilog" />
-    <Using Include="Serilog.Events" />
-    <Using Include="System.Diagnostics" />
-    <Using Include="WinUIEx" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
+		<PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.3" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250228001" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
+		<PackageReference Include="ReadJEnc" Version="1.3.1.2" />
+		<PackageReference Include="Serilog.Enrichers.Process" Version="3.0.0" />
+		<PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
+		<PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+		<PackageReference Include="WinUIEx" Version="2.5.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\CFileMerge2.CsWin32\CFileMerge2.CsWin32.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+		<ProjectCapability Include="Msix" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Strings\ja-jp\" />
+		<Folder Include="Views\MainWindows\" />
+		<Folder Include="Views\AboutWindows\" />
+		<Folder Include="_Common\WinUi3\Views\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Documents\*.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Documents\*.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Documents\HelpParts\*.css">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Documents\HelpParts\*.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Documents\HelpParts\*.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Documents\HelpParts\*.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Documents\Samples\*.cfm2*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Documents\ThirdPartyDocuments\GongSolutionsWPFDragDrop\LICENSE">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Documents\ThirdPartyDocuments\jQuery\*.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Documents\ThirdPartyDocuments\ReadJEnc\LICENSE">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Views\Overlays\VeilRelativePanel.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</None>
+		<None Update="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationMaintenancePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</None>
+		<None Update="Views\Cfm2SettingsWindows\Cfm2SettingsNavigationSettingsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</None>
+		<None Update="Views\Cfm2SettingsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</None>
+		<None Update="Views\Cfm2SettingsWindow.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</None>
+		<None Update="Views\AboutPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</None>
+		<None Update="Views\AboutWindow.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</None>
+		<Page Update="Views\ProgressWindows\ProgressPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Update="Views\ProgressWindows\ProgressWindow.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+		<HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0028;IDE0049;IDE0074;IDE0079;IDE0290;CA1860</NoWarn>
+		<DefineConstants>$(DefineConstants);USE_AOT</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<NoWarn>IDE0007;IDE0017;IDE0025;IDE0027;IDE0028;IDE0049;IDE0074;IDE0079;IDE0290;CA1860</NoWarn>
+		<DefineConstants>$(DefineConstants);USE_AOT</DefineConstants>
+	</PropertyGroup>
+
+	<Target Name="_RemoveFrameworkReferences" BeforeTargets="_ConvertItems;_CalculateInputsForGenerateCurrentProjectAppxManifest">
+		<ItemGroup>
+			<FrameworkSdkReference Remove="@(FrameworkSdkReference)" Condition="$([System.String]::Copy('%(FrameworkSdkReference.SDKName)').StartsWith('Microsoft.WindowsAppRuntime.'))" />
+		</ItemGroup>
+	</Target>
+
+	<ItemGroup>
+		<PRIResource Remove="Views\Cfm2SettingsWindow\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="Serilog" />
+		<Using Include="Serilog.Events" />
+		<Using Include="System.Diagnostics" />
+		<Using Include="WinUIEx" />
+	</ItemGroup>
 </Project>
