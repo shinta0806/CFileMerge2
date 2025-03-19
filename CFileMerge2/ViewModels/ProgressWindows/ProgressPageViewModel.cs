@@ -623,8 +623,8 @@ public partial class ProgressPageViewModel : ObservableRecipient
 			return (null, column);
 		}
 
-		Match match = Regex.Match(line.Value[column..], @"\<\!\-\-\s*?cfm\/(.+?)\-\-\>", RegexOptions.IgnoreCase);
-		if (!match.Success)
+		Match? match = RegexCfmTag().Matches(line.Value[column..]).Cast<Match>().FirstOrDefault();
+		if (match == null)
 		{
 			// Cfm タグが無い
 			return (null, line.Value.Length);
@@ -934,8 +934,8 @@ public partial class ProgressPageViewModel : ObservableRecipient
 			return (column, null);
 		}
 
-		Match hxMatch = Regex.Match(line.Value[column..], @"\<h([1-6])\s.+?\>", RegexOptions.IgnoreCase);
-		if (!hxMatch.Success)
+		Match? hxMatch = RegexHtmlHx().Matches(line.Value[column..]).Cast<Match>().FirstOrDefault();
+		if (hxMatch == null)
 		{
 			// Hx タグが無い
 			return (line.Value.Length, null);
@@ -958,8 +958,8 @@ public partial class ProgressPageViewModel : ObservableRecipient
 		}
 
 		// ID 属性を抽出する
-		Match idMatch = Regex.Match(hxMatch.Value, @"id\s*?=\s*?" + "\"" + "(.+?)" + "\"", RegexOptions.IgnoreCase);
-		if (!idMatch.Success)
+		Match? idMatch = RegexHtmlId().Matches(hxMatch.Value).Cast<Match>().FirstOrDefault();
+		if (idMatch == null)
 		{
 			// ID 属性が無い
 			MergeInfo.Warnings.Add(Localize.MainPageViewModel_Warning_ParseHxTag_HxId.Localized() + hxMatch.Value);
@@ -1038,6 +1038,27 @@ public partial class ProgressPageViewModel : ObservableRecipient
 		}
 		return hxTagInfos;
 	}
+
+	/// <summary>
+	/// Cfm タグを抽出するための正規表現
+	/// </summary>
+	/// <returns></returns>
+	[GeneratedRegex(@"\<\!\-\-\s*?cfm\/(.+?)\-\-\>", RegexOptions.IgnoreCase)]
+	private static partial Regex RegexCfmTag();
+
+	/// <summary>
+	/// HTML Hx タグを抽出するための正規表現
+	/// </summary>
+	/// <returns></returns>
+	[GeneratedRegex(@"\<h([1-6])\s.+?\>", RegexOptions.IgnoreCase)]
+	private static partial Regex RegexHtmlHx();
+
+	/// <summary>
+	/// HTML ID 属性を抽出するための正規表現
+	/// </summary>
+	/// <returns></returns>
+	[GeneratedRegex(@"id\s*?=\s*?" + "\"" + "(.+?)" + "\"", RegexOptions.IgnoreCase)]
+	private static partial Regex RegexHtmlId();
 
 	/// <summary>
 	/// 空行なら削除予約
